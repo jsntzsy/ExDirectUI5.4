@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{137510d6-4bb5-4c45-8fb1-d2fbbd4cd3e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kernel">
+      <UniqueIdentifier>{a2356200-e69c-48fd-80c8-51a8f4d0d326}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing">
+      <UniqueIdentifier>{6a44d0d9-630e-48de-8b19-e0865d43a94d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resouce">
+      <UniqueIdentifier>{3e235b32-265f-45bf-9a6c-34c874d7f518}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="element">
+      <UniqueIdentifier>{77a63077-c2e7-4022-b7ee-46cf198ebaf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="control">
+      <UniqueIdentifier>{cd43fb64-7af9-4760-8c63-e2905e568696}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{d14001a6-9d3b-401c-b6d6-0d45315cd07c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application">
+      <UniqueIdentifier>{fc812b61-b166-4a4b-a222-2ebb40c79a69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kernel\memory">
+      <UniqueIdentifier>{d0cddf58-2db9-4aca-8767-6c8cdf3c0c89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kernel\data">
+      <UniqueIdentifier>{ea4184c4-93ac-4b9d-a56d-9c7e060d06a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kernel\atom">
+      <UniqueIdentifier>{8f437dde-4854-4664-ab1f-b7411863af1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debug">
+      <UniqueIdentifier>{de17992e-3a64-459c-aa00-66c5c8beb65a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing\render">
+      <UniqueIdentifier>{f08d7ac2-ddff-4d7c-baa1-8ac58fe7b901}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing\image_decoder">
+      <UniqueIdentifier>{62a6f6a9-fa1d-454c-9b04-1cdd9fec7ab7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing\bitmap_builder">
+      <UniqueIdentifier>{03463062-d395-44d0-9bd0-e813630225df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="element\ui_element">
+      <UniqueIdentifier>{eddee026-9e77-4e92-ac22-e318351d5c0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="element\window">
+      <UniqueIdentifier>{391f81f5-896c-47fd-bb85-2413862d75bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="element\control">
+      <UniqueIdentifier>{74fe8b04-87cc-4fc1-82c8-94e1ffcf2092}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="control\base_set">
+      <UniqueIdentifier>{9e121777-2521-4ff0-9bed-2936c8151fda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="control\framework_set">
+      <UniqueIdentifier>{c95bf851-830b-40e5-b229-f63b6dae210b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="control\data_set">
+      <UniqueIdentifier>{79248f2f-a60d-4a4c-b78a-a8e5f925b713}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="control\extend_set">
+      <UniqueIdentifier>{7a2c3c00-b7e5-4094-a1b4-4730db7a08a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\engine">
+      <UniqueIdentifier>{9c040310-d2f7-468e-95a9-3bbcb3939370}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debug\status">
+      <UniqueIdentifier>{8529b2b7-835d-4479-9aac-cadc13ad775b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debug\exception">
+      <UniqueIdentifier>{afa05f4f-6391-403f-950d-079406aa9992}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debug\log">
+      <UniqueIdentifier>{2a1c7669-fbb2-46c8-a0f4-508f6ae9e428}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debug\spy">
+      <UniqueIdentifier>{7eecbc78-169b-48bc-b22e-77d8c2acfe41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debug\hook">
+      <UniqueIdentifier>{43972cbc-df96-481b-ab0e-f74ef32feffd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\animation">
+      <UniqueIdentifier>{5c81efb6-2310-4410-bce8-6cd93415cdb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\easing">
+      <UniqueIdentifier>{ec7a30a1-a62d-4d2d-95bd-20c91392ff36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\xxx">
+      <UniqueIdentifier>{e0b7c614-b97a-4770-82cb-08227806bd8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resouce\res_pol">
+      <UniqueIdentifier>{40b59794-2c0d-4425-b49d-f2df06691e25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resouce\package">
+      <UniqueIdentifier>{0b78baaa-1f33-4b6b-914f-9f87c6fca59a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resouce\theme">
+      <UniqueIdentifier>{788debc7-0c72-4047-94d3-4cb294e72009}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ExDirectUI.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\config.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\assist.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\atom.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\define.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\status.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common\object.i.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common\object_impl.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="API.def">
+      <Filter>源文件</Filter>
+    </None>
+  </ItemGroup>
+</Project>

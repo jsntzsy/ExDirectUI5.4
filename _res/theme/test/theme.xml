@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Theme name="default" version="1.0" author="EternalZSY">
+
+    <Window>
+        <Color name="background" value="#FFF3"/>
+        <Color name="foreground" value="#000" />
+        <Color name="border" value="#3333"/>
+        <Number name="opacity" value="255" />
+        <Number name="sizebox-width" value="6" />
+        <Size name="min-size" value="300,200" />
+        <Size name="max-size" value="0,0" />
+        <Rect name="round" value="0" />
+        <Shadow name="shadow" type="param" normal="#0003" active="#0009" size="10" offset="0,3" padding="10,7,10,13" />
+    </Window>
+
+    <Button>
+        <Rect name="padding" value="4" />
+        <Color name="foreground" value="#000" />
+        <Opacity name="opacity" normal="255" disable="50%" />
+        <Animation name="animation" type="fade" duration="200" frame="10" easing="linear" />
+        
+        <StateImage name="background-texture" file="button.png" normal="0,0,69,24" hover="0,24,69,48" press="0,48,69,72" focus-blend="0,72,69,96" grids="5"/>
+    </Button>
+
+    <CheckBox>
+        <Rect name="padding" value="4" />
+        <Color name="foreground" value="#000" />
+        <Opacity name="opacity" normal="255" disable="50%" />
+        <Animation name="animation" type="fade" duration="200" frame="10" easing="linear" />
+        
+        <Number name="box-size" value="17" />
+        <StateImage name="uncheck-box-texture" file="checkbox.png" normal="0,0,17,17" hover="17,0,34,17" press="34,0,51,17" mode="scale-fill"/>
+        <StateImage name="check-box-texture" file="checkbox.png" normal="17,17,34,34" hover="17,17,34,34" press="34,17,51,34" mode="scale-fill"/>
+        <StateImage name="half-box-texture" file="checkbox.png" normal="17,34,34,51" hover="17,34,34,51" press="34,34,51,51" mode="scale-fill"/>
+    </CheckBox>
+
+    <RadioButton>
+        <Rect name="padding" value="4" />
+        <Color name="foreground" value="#000" />
+        <Opacity name="opacity" normal="255" disable="50%" />
+        <Animation name="animation" type="fade" duration="200" frame="10" easing="linear" />
+        
+        <Number name="box-size" value="17" />
+        <StateImage name="uncheck-box-texture" file="radiobutton.png" normal="0,0,17,17" hover="17,0,34,17" press="34,0,51,17" mode="scale-fill"/>
+        <StateImage name="check-box-texture" file="radiobutton.png" normal="17,17,34,34" hover="17,17,34,34" press="34,17,51,34" mode="scale-fill"/>
+    </RadioButton>
+
+    <ScrollBar>
+        <Rect name="part-size" value="12,12,12,10" /><!--part-size:左上按钮尺寸/右下按钮尺寸/滑块尺寸/滑块最小尺寸-->
+        
+        <StateImage name="v-button1-texture" file="scroll.v.png" normal="0,0,12,12" hover="12,0,24,12" press="24,0,36,12"  mode="center" flag="private"/>
+        <StateImage name="v-button2-texture" file="scroll.v.png" normal="0,32,12,44" hover="12,32,24,44" press="24,32,36,44" mode="center" flag="private"/>
+        <StateImage name="v-block-texture" file="scroll.v.png" normal="0,12,12,32" hover="12,12,24,32" press="36,12,48,32" grids="5,4,5,4" flag="private"/>
+
+        <StateImage name="h-button1-texture" file="scroll.h.png" normal="0,0,12,12" hover="0,12,12,24" press="0,24,12,36"  mode="center" flag="private"/>
+        <StateImage name="h-button2-texture" file="scroll.h.png" normal="32,0,44,12" hover="32,12,44,24" press="32,24,44,36" mode="center" flag="private"/>
+        <StateImage name="h-block-texture" file="scroll.h.png" normal="12,0,32,12" hover="12,12,32,24" press="12,24,32,36" grids="5,4,5,4" flag="private"/>
+
+        <Opacity name="opacity" normal="255" disable="0%" />
+        <Animation name="animation" type="fade" duration="200" frame="10" easing="linear" />
+    </ScrollBar>
+
+    <SysButton base="Button">
+    
+        <Number name="icon-split" value="5" />
+        <Rect name="padding" value="7,5,0,7" />
+        <Size name="btn-size" value="30,30" />
+
+        <StateImage name="close-texture" file="sysbtn.close.png" normal="0,0,30,30" hover="31,0,61,30" press="62,0,92,30" mode="scale" flag="private" />
+        <StateImage name="max-texture" file="sysbtn.max.png" normal="0,0,30,30" hover="31,0,61,30" press="62,0,92,30" mode="scale" flag="private" />
+        <StateImage name="restore-texture" file="sysbtn.restore.png" normal="0,0,30,30" hover="31,0,61,30" press="62,0,92,30" mode="scale" flag="private" />
+        <StateImage name="min-texture" file="sysbtn.min.png" normal="0,0,30,30" hover="31,0,61,30" press="62,0,92,30" mode="scale" flag="private" />
+        <StateImage name="setting-texture" file="sysbtn.setting.png" normal="0,0,30,30" hover="31,0,61,30" press="62,0,92,30" mode="scale" flag="private" />
+        <StateImage name="menu-texture" file="sysbtn.menu.png" normal="0,0,30,30" hover="31,0,61,30" press="62,0,92,30" mode="scale" flag="private" />
+        <StateImage name="help-texture" file="sysbtn.help.png" normal="0,0,30,30" hover="31,0,61,30" press="62,0,92,30" mode="scale" flag="private" />
+
+    </SysButton>
+
+    <Edit>
+        <Rect name="padding" value="5"/>
+        
+        <StateColor name="background-texture" normal="#CCC" hover="#FFF" focus="#FFF" />
+
+    </Edit>
+
+</Theme>

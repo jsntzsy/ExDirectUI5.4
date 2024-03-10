@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+
+
+<Theme name="default" version="1.0" author="EternalZSY">
+
+    <!--
+        <Number name="" value="数值：可以是整数、小数、百分数、0x16进制数 具体根据参数要求传" />
+        <String name="" value="" />
+        <Data name="" />
+        <Color name="" value="颜色值：可以是整数、0xAARRGGBB、#RRGGBBAA、#RRGGBB、#RGBA、#RGB的形式" /> 
+        
+        <Size name="" value="X,Y整数" />
+        <SizeF name="" value="X,Y 可以是百分数" />
+        <Rect name="" value="左,顶,右,底 整数" />
+        <RectF name="" value=""左,顶,右,底 可以是百分数" />
+
+        <Shadow name="shadow" type="none"/>
+        <Shadow name="shadow" type="param" normal="正常阴影色" active="激活阴影色" size="阴影尺寸" offset="x,y(阴影偏移量)" padding="左顶右底(窗口非阴影区内边距)"/>
+        <Shadow name="shadow" type="image" file="图像文件名" normal="正常态源矩形" active="激活态源矩形" alpha-normal="正常态透明度(0-255)" alpha-active="激活态透明度" grids="宫格信息" padding="左顶右底" />
+        
+        <Animation name="" type="" duration="" frame="" param="" easing="" />
+        
+        <Image name="" file="图像文件名" />
+        <DisplayImage name="" file="图像文件名" src="源矩形" padding="图像内边距" mode="绘制模式" show="显示模式" alpha="透明度" />
+        <StateImage name="" file="图像文件名" normal="正常态源矩形" hover="点燃态源矩形" press="按下态源矩形" focus="焦点态源矩形" focus-blend="焦点态叠加图源矩形" disable="禁用态源矩形" grids="宫格信息" alpha="透明度" />
+        <StateColor name="" normal="正常态颜色" hover="点燃态颜色" press="按下态颜色" focus="焦点态颜色" disable="禁用态颜色" />
+        
+        <Style name="style" common="控件通用风格" ctrl="控件风格" text-format="文本格式" />
+        <Opacity name="opacity" normal="透明度0-255" disable="禁用时透明度的百分比 50%" />
+
+        <Opacity name="opacity" normal="255" disable="100%" />
+        <Font name="font" font="字体名称" size="字体尺寸" style="字体风格" file="字体所属文件(系统字体不填)" />
+
+        其他待补充
+        其中这些属性不一定都要填，有的可以通过其他参数推导，比如 StateColor的 disable等，如果不设置就为normal的值， 或者 image-shadow的padding如果没有，那就按宫格矩形设置
+        
+
+
+        name的命名规则：
+
+        background、foreground、border 背景、前景（主要是文本）、边框颜色
+        
+        style 控件的默认风格
+        opacity 透明度
+
+        xx-image 表示图像，是可以直接设置的属性，不是绘制的贴图 (如背景图片、图标等)
+
+        round 圆角度 (左上,右上,右下,左下的顺序)
+        padding 内边距
+
+        animation 动画信息
+
+        xx-texture 这个是绘制的贴图,不是可以设置的图像属性 (如按钮背景贴图、选择框的√贴图等)
+        xxx-colors 渲染时的颜色,一般是通过获取主题属性拿到的 (如编辑框焦点时的边框颜色等)
+
+    -->
+
+
+    <Window>
+        <Color name="background" value="#FFF"/>
+        <Color name="foreground" value="#000" />
+        <Color name="border" value="#333"/>
+        <Number name="opacity" value="255" />
+        
+        <!--<DisplayImage name="background-image" file="" src="" padding="" mode="" show="" alpha="" />-->
+
+        <!--<Font name="font" name="" size="" style="" file="" />-->
+
+        <Number name="sizebox-width" value="6" />
+        <Size name="min-size" value="300,200" />
+        <Size name="max-size" value="0,0" />
+
+        <Rect name="round" value="0" />
+
+        <Shadow name="shadow" type="param" normal="#0003" active="#0009" size="10" offset="0,-3" padding="" />
+        <!--<Shadow name="shadow" type="image" file="" normal="" active="" alpha-normal="" alpha-active="" grids="" padding="" />-->
+
+        <Animation name="animation-show" type="" duration="" frame="" param="" easing="" />
+        <Animation name="animation-hide" type="" duration="" frame="" param="" easing="" />
+
+    </Window>
+
+    <Static>
+        <Style name="style" common="" ctrl="" text-format="" />
+        <Color name="foreground" value="#000" />
+        <Opacity name="opacity" normal="255" disable="100%" />
+    </Static>
+
+    <Button>
+        <Style name="style" common="" ctrl="" text-format="" />
+        <Rect name="padding" value="4" />
+        <StateImage name="background-texture" file="button.png" normal="0,0,69,24" hover="0,24,69,48" press="0,48,69,72" focus-blend="0,72,69,96" grids="5" alpha="255" />
+        <Color name="foreground" value="#000" />
+        <Opacity name="opacity" normal="255" disable="50%" />
+        <Animation name="animation" type="" duration="" frame="" easing="" />
+    </Button>
+
+    <SysButton>
+        <Style name="style" common="" ctrl="" text-format="" />
+        <StateImage name="close-texture" file="sysbtn.close.png" normal="" mode=""/>
+        <StateImage name="min-texture" file="sysbtn.min.png" normal="" mode=""/>
+        <StateImage name="max-texture" file="sysbtn.max.png" normal="" mode=""/>
+        <StateImage name="restore-texture" file="sysbtn.restore.png" normal="" mode=""/>
+        <StateImage name="setting-texture" file="sysbtn.setting.png" normal="" mode=""/>
+        <StateImage name="menu-texture" file="sysbtn.menu.png" normal="" mode=""/>
+        <StateImage name="setting-texture" file="sysbtn.setting.png" normal="" mode=""/>
+        <StateImage name="help-texture" file="sysbtn.help.png" normal="" mode=""/>
+        <Opacity name="opacity" normal="255" disable="100%" />
+        <Animation name="animation" type="" duration="" frame="" easing="" />
+    </SysButton>
+
+    <CheckBox>
+        <Style name="style" common="" ctrl="" text-format="" />
+        <StateImage name="none-texture" file="checkbox.png" normal="" press="" press=""/>
+        <StateImage name="half-texture" file="checkbox.png" normal="" press="" press=""/>
+        <StateImage name="check-texture" file="checkbox.png" normal="" press="" press=""/>
+    </CheckBox>
+    
+    <RadioButton>
+        <Style name="style" common="" ctrl="" text-format="" />
+        <StateImage name="none-texture" file="radiobutton.png" normal="" press="" press=""/>
+        <StateImage name="check-texture" file="radiobutton.png" normal="" press="" press=""/>
+    </RadioButton>
+
+    <Switch>
+        <Style name="style" common="" ctrl="" text-format="" />
+        <StateImage name="background-none-texture" file="switch.png" normal="" press="" press=""/>
+        <StateImage name="background-check-texture" file="switch.png" normal="" press="" press=""/>
+        <StateImage name="block-none-texture" file="switch.png" normal="" press="" press=""/>
+        <StateImage name="block-check-texture" file="switch.png" normal="" press="" press=""/>
+    </Switch>
+
+    <Edit>
+        <Style name="style" common="" ctrl="" text-format="" />
+        <Rect name="padding" value="4" />
+        <StateColor name="background-colors" normal="#FFF" />
+        <Color name="foreground" value="#000" />
+        <StateColor name="border-colors" normal="#CCC" hover="999" focus="#33F" />
+    </Edit>
+
+    <GroupBox>
+        <Style name="style" common="" ctrl="" text-format="" />
+        <Color name="background" value="#FFFA" />
+        <Color name="foreground" value="#000" />
+        <Color name="border" value="#666" />
+        <Rect name="border-radius" value="5,5,0,0" />
+    </GroupBox>
+
+</Theme>
