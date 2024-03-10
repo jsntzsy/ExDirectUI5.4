@@ -35,14 +35,22 @@
 		return S_OK;									\
 	}
 
+#define EX_INTERFACE_MULTI_IMPLIMENT()										\
+	EXMETHOD ULONG EXOBJCALL AddRef() override {							\
+		return ExObjectBase::AddRef();										\
+	}																		\
+	EXMETHOD ULONG EXOBJCALL Release() override {							\
+		return ExObjectBase::Release();										\
+	}
+	
 
 namespace ExDirectUI
 {
-	template<class T>
-	class ExObjectBase : public T
+	class ExObjectBase : public IUnknown
 	{
 	public:
 		virtual ~ExObjectBase() {}
+
 
 	public:
 
