@@ -9,3 +9,5 @@
 #pragma once
 
 #include "ExDirectUI.h"
+using namespace ExDirectUI;
+

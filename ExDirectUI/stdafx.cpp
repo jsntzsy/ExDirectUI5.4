@@ -9,5 +9,3 @@
 
 #include "stdafx.h"
 
-
-

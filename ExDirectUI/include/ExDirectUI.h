@@ -24,7 +24,7 @@
 
 #include "config.h"
 #include "assist.h"
-
+#include "define.h"
 #include "status.h"
 
 #include "common/object.i.h"
