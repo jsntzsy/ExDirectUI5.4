@@ -31,5 +31,8 @@
 #include "common/interfaces/object.i.h"
 
 #include "kernel/memory.h"
+#ifndef EX_CFG_NO_TAKE_OVER_NEW
+#include "kernel/new.h"
+#endif // EX_CFG_NO_TAKE_OVER_NEW
 
 

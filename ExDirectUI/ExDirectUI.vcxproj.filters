@@ -209,6 +209,9 @@
     <ClInclude Include="src\debug\mem_leak.h">
       <Filter>debug\mem_leak</Filter>
     </ClInclude>
+    <ClInclude Include="include\kernel\new.h">
+      <Filter>kernel\memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="API.def">

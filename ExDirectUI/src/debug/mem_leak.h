@@ -45,9 +45,5 @@ namespace ExDirectUI
 		ExLock m_lock{};
 	};
 
-	LPVOID EXAPI EXCALL ExMemAllocD(size_t size, LPCWSTR file,int line);
-	LPVOID EXAPI EXCALL ExMemReAllocD(LPVOID ptr, size_t new_size, LPCWSTR file, int line);
-	void EXAPI EXCALL ExMemFreeD(LPVOID ptr);
-
 #endif // EX_CFG_DEBUG_MEMORY_LEAK
 }

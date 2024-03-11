@@ -102,18 +102,30 @@ namespace ExDirectUI
 	{
 		_Locked(m_lock);
 
+		OutputDebugStringW(L"========= ExDirectUI Dump Memory Leaks Begin =========\n");
+
 		//遍历链表
+		uint32_t index = 0;
 		ExMemBlock* block = m_blocks;
 		uint64_t now = GetTickCount64();
 		while (block) {
 
 			//输出信息
-			//Ex_Log(L"Memory leak detected: %p, %d bytes, allocated at %s(%d), %d ms ago", 
-			//	block->ptr, block->size, block->file, block->line, now - block->alloc_time);
+			wchar_t buffer[EX_CFG_SIZEOF_FORMAT_BUF]{};
+#ifdef EX_CFG_DEBUG_CALL_INFO
+			swprintf_s(buffer, L"%s(%d): %u. %p (%zuBytes) %llums\n",
+				block->file, block->line, ++index, block->ptr, block->size, now - block->alloc_time);
+#else 
+			swprintf_s(buffer, L"%u. %p (%zuBytes) %llums\n",
+				++index, block->ptr, block->size, now - block->alloc_time);
+#endif // EX_CFG_DEBUG_CALL_INFO
+			OutputDebugStringW(buffer);
 
 			//继续遍历
 			block = block->next;
 		}
+
+		OutputDebugStringW(L"========= ExDirectUI Dump Memory Leaks Finish ========\n");
 	}
 
 	LPVOID EXAPI EXCALL ExMemAllocD(size_t size, LPCWSTR file, int line)

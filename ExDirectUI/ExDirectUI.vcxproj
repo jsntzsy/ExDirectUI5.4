@@ -205,6 +205,7 @@
     <ClInclude Include="include\define.h" />
     <ClInclude Include="include\ExDirectUI.h" />
     <ClInclude Include="include\kernel\memory.h" />
+    <ClInclude Include="include\kernel\new.h" />
     <ClInclude Include="include\status.h" />
     <ClInclude Include="src\debug\mem_leak.h" />
     <ClInclude Include="stdafx.h" />
