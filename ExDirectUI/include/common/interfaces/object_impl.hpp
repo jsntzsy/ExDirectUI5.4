@@ -46,7 +46,7 @@
 
 namespace ExDirectUI
 {
-	class ExObjectBase : public IUnknown
+	class ExObjectBase : public IExObject
 	{
 	public:
 		virtual ~ExObjectBase() {}

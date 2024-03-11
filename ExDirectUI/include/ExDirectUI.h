@@ -20,12 +20,13 @@
 #include <algorithm>
 
 #include <Windows.h>
-#include <Unknwn.h>
+#include <WindowsX.h>
 
 #include "config.h"
 #include "assist.h"
 #include "define.h"
 #include "status.h"
 
-#include "common/object.i.h"
+#include "common/types.h"
+#include "common/interfaces/object.i.h"
 

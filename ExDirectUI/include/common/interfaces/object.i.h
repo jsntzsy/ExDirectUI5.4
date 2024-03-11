@@ -7,6 +7,7 @@
  * @copyright
  */
 #pragma once
+#include <Unknwn.h>
 
 namespace ExDirectUI
 {

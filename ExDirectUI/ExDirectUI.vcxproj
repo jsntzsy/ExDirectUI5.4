@@ -186,8 +186,19 @@
   <ItemGroup>
     <ClInclude Include="include\assist.h" />
     <ClInclude Include="include\atom.h" />
-    <ClInclude Include="include\common\object.i.h" />
-    <ClInclude Include="include\common\object_impl.hpp" />
+    <ClInclude Include="include\common\interfaces\object.i.h" />
+    <ClInclude Include="include\common\interfaces\object_impl.hpp" />
+    <ClInclude Include="include\common\interfaces\unknown_impl.hpp" />
+    <ClInclude Include="include\common\types.h" />
+    <ClInclude Include="include\common\types\color.h" />
+    <ClInclude Include="include\common\types\coordinate.h" />
+    <ClInclude Include="include\common\utils\auto_handle.hpp" />
+    <ClInclude Include="include\common\utils\auto_ptr.hpp" />
+    <ClInclude Include="include\common\utils\base64.hpp" />
+    <ClInclude Include="include\common\utils\locker.hpp" />
+    <ClInclude Include="include\common\utils\mem_pool.hpp" />
+    <ClInclude Include="include\common\utils\singleton.hpp" />
+    <ClInclude Include="include\common\utils\string.hpp" />
     <ClInclude Include="include\config.h" />
     <ClInclude Include="include\define.h" />
     <ClInclude Include="include\ExDirectUI.h" />
