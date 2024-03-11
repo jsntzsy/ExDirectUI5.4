@@ -9,7 +9,7 @@
 #pragma once
 #include <Windows.h>
 //#include "kernel/memory.h"
-#include "locker.hpp"
+#include "lock.hpp"
 
 namespace ExDirectUI
 {
@@ -29,16 +29,16 @@ namespace ExDirectUI
 			Clear();
 		}
 
-		T* Alloc() may_throw
+		T* Alloc() 
 		{
-			_Locked(m_locker);
+			_Locked(m_lock);
 
 			// 没有空闲块了,则申请新组
 			if (m_blocks_free == nullptr)
 			{
 				//申请新组
 				ExMemChunkInfo* chunk_new = (ExMemChunkInfo*)ExMemAlloc(sizeof(ExMemChunkInfo));
-				throw_if_false(chunk_new, ES_MEM_ALLOC_FAILED, L"内存组分配失败");
+				//throw_if_false(chunk_new, ES_MEM_ALLOC_FAILED, L"内存组分配失败");
 				//if (!chunk_new)
 				//{
 				//	ExDbgThrow(ES_MEM_ALLOC_FAILED, __CALLINFO__);					
@@ -68,7 +68,7 @@ namespace ExDirectUI
 
 		void Free(T* ptr)
 		{
-			_Locked(m_locker);
+			_Locked(m_lock);
 
 			ExMemBlockInfo* block = (ExMemBlockInfo*)ptr;
 
@@ -80,7 +80,7 @@ namespace ExDirectUI
 
 		void Clear()
 		{
-			_Locked(m_locker);
+			_Locked(m_lock);
 
 			ExMemChunkInfo* chunk;
 			while (m_chunks)
@@ -118,7 +118,7 @@ namespace ExDirectUI
 		ExMemChunkInfo* m_chunks;
 
 		//线程锁
-		ExLocker m_locker;
+		ExLock m_lock;
 
 	};
 
@@ -140,9 +140,9 @@ namespace ExDirectUI
 			Clear();
 		}
 
-		LPVOID Alloc() may_throw
+		LPVOID Alloc() 
 		{
-			_Locked(m_locker);
+			_Locked(m_lock);
 
 			// 如果没有空块,则申请新组
 			if (m_block_head_free == nullptr)
@@ -150,7 +150,7 @@ namespace ExDirectUI
 				//申请新组
 				ExMemChunkHeader* chunk_new = (ExMemChunkHeader*)ExMemAlloc(sizeof(ExMemChunkHeader) +
 					(sizeof(ExMemBlockHeader) + m_block_size) * m_block_count);
-				throw_if_false(chunk_new, ES_MEM_ALLOC_FAILED, L"内存组分配失败");
+				//throw_if_false(chunk_new, ES_MEM_ALLOC_FAILED, L"内存组分配失败");
 
 				chunk_new->next = nullptr;
 
@@ -185,7 +185,7 @@ namespace ExDirectUI
 
 		void Free(LPVOID p)
 		{
-			_Locked(m_locker);
+			_Locked(m_lock);
 			ExMemBlockHeader* block = ((ExMemBlockHeader*)p) - 1;
 
 			//将此块加入空块头
@@ -195,7 +195,7 @@ namespace ExDirectUI
 
 		void Clear()
 		{
-			_Locked(m_locker);
+			_Locked(m_lock);
 
 			//遍历所有组,释放
 			ExMemChunkHeader* chunk;
@@ -241,7 +241,7 @@ namespace ExDirectUI
 		ExMemChunkHeader* m_chunk_head;
 
 		// 锁
-		ExLocker m_locker;
+		ExLock m_lock;
 
 	};
 

@@ -176,6 +176,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="src\debug\mem_leak.cpp" />
     <ClCompile Include="src\kernel\memory.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -196,7 +197,7 @@
     <ClInclude Include="include\common\utils\auto_handle.hpp" />
     <ClInclude Include="include\common\utils\auto_ptr.hpp" />
     <ClInclude Include="include\common\utils\base64.hpp" />
-    <ClInclude Include="include\common\utils\locker.hpp" />
+    <ClInclude Include="include\common\utils\lock.hpp" />
     <ClInclude Include="include\common\utils\mem_pool.hpp" />
     <ClInclude Include="include\common\utils\singleton.hpp" />
     <ClInclude Include="include\common\utils\string.hpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="include\ExDirectUI.h" />
     <ClInclude Include="include\kernel\memory.h" />
     <ClInclude Include="include\status.h" />
+    <ClInclude Include="src\debug\mem_leak.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

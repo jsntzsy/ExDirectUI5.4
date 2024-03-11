@@ -13,7 +13,7 @@ namespace ExDirectUI
 	class ExSingleton
 	{
 	public:
-		static T* GetInstance()
+		static T* Instance()
 		{
 			static T s_instance;
 			return &s_instance;

@@ -1,5 +1,5 @@
 ﻿/**
- * @file locker.hpp
+ * @file lock.hpp
  * @brief 线程锁功能实现文件
  * @author EternalZSY
  * @version 5.4.0.0
@@ -14,11 +14,11 @@ namespace ExDirectUI
 	class ExLockRegion;
 	
 	/// 线程锁
-	class ExLocker
+	class ExLock
 	{
 	public:
-		ExLocker() { InitializeCriticalSection(&m_cs); }
-		~ExLocker() { DeleteCriticalSection(&m_cs); }
+		ExLock() { InitializeCriticalSection(&m_cs); }
+		~ExLock() { DeleteCriticalSection(&m_cs); }
 		void Lock() { EnterCriticalSection(&m_cs); }
 		void UnLock() { LeaveCriticalSection(&m_cs); }
 		
@@ -35,15 +35,15 @@ namespace ExDirectUI
 		ExLockRegion(ExLockRegion& r) = delete;
 		
 	public:
-		ExLockRegion(ExLocker& locker) :m_locker(locker) { locker.Lock(); }
+		ExLockRegion(ExLock& locker) :m_locker(locker) { locker.Lock(); }
 		~ExLockRegion() { m_locker.UnLock(); }
 
 	private:
-		ExLocker& m_locker;
-		friend class ExLocker;
+		ExLock& m_locker;
+		friend class ExLock;
 	};
 
-	inline ExLockRegion ExLocker::LockRegion() { return ExLockRegion(*this); }
+	inline ExLockRegion ExLock::LockRegion() { return ExLockRegion(*this); }
 
 	// REMARK:不确定Release模式下会不会被优化掉，需要测试
 #define _Locked(locker)		volatile ExLockRegion __LOCK_REGION__(locker)
