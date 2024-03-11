@@ -8,6 +8,7 @@
  */
 #pragma once
 #include <Unknwn.h>
+#include "define.h"
 
 namespace ExDirectUI
 {

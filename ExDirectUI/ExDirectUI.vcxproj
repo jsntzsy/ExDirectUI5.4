@@ -182,6 +182,7 @@
     <ClCompile Include="src\kernel\atom.cpp" />
     <ClCompile Include="src\kernel\data.cpp" />
     <ClCompile Include="src\kernel\memory.cpp" />
+    <ClCompile Include="src\kernel\module.cpp" />
     <ClCompile Include="src\kernel\winapi.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -194,9 +195,6 @@
     <ClInclude Include="include\app\engine.h" />
     <ClInclude Include="include\assist.h" />
     <ClInclude Include="include\atom.h" />
-    <ClInclude Include="include\common\interfaces\object.i.h" />
-    <ClInclude Include="include\common\interfaces\object_impl.hpp" />
-    <ClInclude Include="include\common\interfaces\unknown_impl.hpp" />
     <ClInclude Include="include\common\types.h" />
     <ClInclude Include="include\common\types\color.h" />
     <ClInclude Include="include\common\types\coordinate.h" />
@@ -212,13 +210,19 @@
     <ClInclude Include="include\debug\status_handle.h" />
     <ClInclude Include="include\define.h" />
     <ClInclude Include="include\ExDirectUI.h" />
+    <ClInclude Include="include\interface\module.i.h" />
+    <ClInclude Include="include\interface\object.i.h" />
+    <ClInclude Include="include\interface\object_impl.hpp" />
+    <ClInclude Include="include\interface\unknown_impl.hpp" />
     <ClInclude Include="include\kernel\atom.h" />
     <ClInclude Include="include\kernel\data.h" />
     <ClInclude Include="include\kernel\memory.h" />
+    <ClInclude Include="include\kernel\module.h" />
     <ClInclude Include="include\kernel\new.h" />
     <ClInclude Include="include\status.h" />
     <ClInclude Include="src\app\engine.h" />
     <ClInclude Include="src\debug\mem_leak.h" />
+    <ClInclude Include="src\kernel\module.h" />
     <ClInclude Include="src\kernel\winapi.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>

@@ -115,9 +115,6 @@
     <Filter Include="resouce\theme">
       <UniqueIdentifier>{788debc7-0c72-4047-94d3-4cb294e72009}</UniqueIdentifier>
     </Filter>
-    <Filter Include="common\interfaces">
-      <UniqueIdentifier>{db602a9f-de5e-4cb9-b18c-2b7b395a0985}</UniqueIdentifier>
-    </Filter>
     <Filter Include="common\types">
       <UniqueIdentifier>{6e914ccb-0106-4f3a-9b79-09432c8262e0}</UniqueIdentifier>
     </Filter>
@@ -129,6 +126,12 @@
     </Filter>
     <Filter Include="kernel\winapi">
       <UniqueIdentifier>{824449c0-baf0-4a18-891d-14ec90701eab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kernel\module">
+      <UniqueIdentifier>{fb8098d9-d5ae-48c2-920f-213cfc58aee7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interface">
+      <UniqueIdentifier>{278da846-4573-4cde-a2d2-aee96cc747d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +161,9 @@
     </ClCompile>
     <ClCompile Include="src\kernel\atom.cpp">
       <Filter>kernel\atom</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kernel\module.cpp">
+      <Filter>kernel\module</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -209,15 +215,6 @@
     <ClInclude Include="include\common\types\coordinate.h">
       <Filter>common\types</Filter>
     </ClInclude>
-    <ClInclude Include="include\common\interfaces\object.i.h">
-      <Filter>common\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="include\common\interfaces\object_impl.hpp">
-      <Filter>common\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="include\common\interfaces\unknown_impl.hpp">
-      <Filter>common\interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="include\common\types.h">
       <Filter>common</Filter>
     </ClInclude>
@@ -250,6 +247,24 @@
     </ClInclude>
     <ClInclude Include="include\kernel\atom.h">
       <Filter>kernel\atom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kernel\module.h">
+      <Filter>kernel\module</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kernel\module.h">
+      <Filter>kernel\module</Filter>
+    </ClInclude>
+    <ClInclude Include="include\interface\object_impl.hpp">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\interface\unknown_impl.hpp">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\interface\module.i.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\interface\object.i.h">
+      <Filter>interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -100,6 +100,9 @@
 //类函数宏的调用“XXX”参数不足
 #pragma warning(disable: 4003)
 
+//“XXX”: 类型名称以前使用“class”现在使用的是“struct”
+#pragma warning(disable: 4099)
+
 #pragma endregion
 
 

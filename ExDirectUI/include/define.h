@@ -29,7 +29,7 @@
 #pragma region 接口相关声明
 
 #define EXOBJCALL STDMETHODCALLTYPE
-#define EXINTERFACE(iid)	__interface __declspec(uuid(iid)) __declspec(novtable)
+#define EXINTERFACE(iid)	interface __declspec(uuid(iid)) __declspec(novtable)
 #define EXMETHOD virtual __declspec(nothrow)
 #define EXSTDMETHOD EXMETHOD ::HRESULT EXOBJCALL
 
@@ -101,6 +101,13 @@
 
 #pragma endregion
 
+
+#pragma region 去除define
+
+#undef LoadModule
+#undef FreeModule
+
+#pragma endregion
 
 
 

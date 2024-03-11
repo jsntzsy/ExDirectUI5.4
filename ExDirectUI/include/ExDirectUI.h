@@ -28,7 +28,7 @@
 #include "status.h"
 
 #include "common/types.h"
-#include "common/interfaces/object.i.h"
+#include "interface/object.i.h"
 
 #include "kernel/memory.h"
 #include "kernel/atom.h"
