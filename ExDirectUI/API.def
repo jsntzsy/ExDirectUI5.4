@@ -30,4 +30,8 @@ EXPORTS
 		ExStatusHandleEx
 	
 
+;应用层
+	;引擎管理
+		ExEngineInit
+		ExEngineUnInit
 

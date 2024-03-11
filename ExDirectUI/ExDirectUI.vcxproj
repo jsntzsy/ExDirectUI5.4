@@ -176,10 +176,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="src\app\engine.cpp" />
     <ClCompile Include="src\debug\mem_leak.cpp" />
     <ClCompile Include="src\debug\status_handle.cpp" />
     <ClCompile Include="src\kernel\data.cpp" />
     <ClCompile Include="src\kernel\memory.cpp" />
+    <ClCompile Include="src\kernel\winapi.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -188,6 +190,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\app\engine.h" />
     <ClInclude Include="include\assist.h" />
     <ClInclude Include="include\atom.h" />
     <ClInclude Include="include\common\interfaces\object.i.h" />
@@ -212,7 +215,9 @@
     <ClInclude Include="include\kernel\memory.h" />
     <ClInclude Include="include\kernel\new.h" />
     <ClInclude Include="include\status.h" />
+    <ClInclude Include="src\app\engine.h" />
     <ClInclude Include="src\debug\mem_leak.h" />
+    <ClInclude Include="src\kernel\winapi.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

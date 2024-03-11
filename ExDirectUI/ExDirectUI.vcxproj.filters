@@ -127,6 +127,9 @@
     <Filter Include="debug\mem_leak">
       <UniqueIdentifier>{9ecf558d-4ae5-4436-8bdb-3f2c47081c19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kernel\winapi">
+      <UniqueIdentifier>{824449c0-baf0-4a18-891d-14ec90701eab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -146,6 +149,12 @@
     </ClCompile>
     <ClCompile Include="src\kernel\data.cpp">
       <Filter>kernel\data</Filter>
+    </ClCompile>
+    <ClCompile Include="src\app\engine.cpp">
+      <Filter>application\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kernel\winapi.cpp">
+      <Filter>kernel\winapi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +235,15 @@
     </ClInclude>
     <ClInclude Include="include\kernel\data.h">
       <Filter>kernel\data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\engine.h">
+      <Filter>application\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\app\engine.h">
+      <Filter>application\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kernel\winapi.h">
+      <Filter>kernel\winapi</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

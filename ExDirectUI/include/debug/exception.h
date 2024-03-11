@@ -10,9 +10,7 @@
 
 namespace ExDirectUI
 {
-	/**
-	 * @brief ExDirectUI异常
-	 */
+	/// ExDirectUI异常
 	class ExException
 	{
 	public:
