@@ -132,6 +132,9 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\kernel\memory.cpp">
+      <Filter>kernel\memory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -193,6 +196,9 @@
     </ClInclude>
     <ClInclude Include="include\common\types.h">
       <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kernel\memory.h">
+      <Filter>kernel\memory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

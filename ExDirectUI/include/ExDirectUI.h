@@ -30,3 +30,6 @@
 #include "common/types.h"
 #include "common/interfaces/object.i.h"
 
+#include "kernel/memory.h"
+
+

@@ -1,3 +1,17 @@
 ﻿LIBRARY ExDirectUI.dll
 
 EXPORTS
+
+;公共函数
+
+
+
+;内核层
+	;内存管理
+		ExMemAlloc
+		ExMemFree
+		ExMemReAlloc
+		ExMemGetSize
+
+
+

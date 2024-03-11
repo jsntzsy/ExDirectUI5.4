@@ -8,7 +8,7 @@
  */
 
 #include "stdafx.h"
-#include "common/object_impl.hpp"
+#include "common/interfaces/object_impl.hpp"
 
 BOOL APIENTRY DllMain(HMODULE module_handle, DWORD reason, LPVOID reserved)
 {

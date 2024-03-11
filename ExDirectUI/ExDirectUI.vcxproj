@@ -176,6 +176,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="src\kernel\memory.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -202,6 +203,7 @@
     <ClInclude Include="include\config.h" />
     <ClInclude Include="include\define.h" />
     <ClInclude Include="include\ExDirectUI.h" />
+    <ClInclude Include="include\kernel\memory.h" />
     <ClInclude Include="include\status.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
