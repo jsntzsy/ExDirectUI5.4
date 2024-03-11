@@ -141,6 +141,9 @@
     <ClCompile Include="src\debug\mem_leak.cpp">
       <Filter>debug\mem_leak</Filter>
     </ClCompile>
+    <ClCompile Include="src\debug\status_handle.cpp">
+      <Filter>debug\status</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -211,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="include\kernel\new.h">
       <Filter>kernel\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="include\debug\status_handle.h">
+      <Filter>debug\status</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

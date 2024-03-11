@@ -42,15 +42,36 @@
 #pragma region 调试中断
 
 #ifdef EX_CFG_DEBUG_INTERRUPT
-#include <assert.h>
-#define EX_DEBUG_BREAK()	__debugbreak()
 
+#include <assert.h>
+#define ExDbgBreak()				_CrtDbgBreak()		
+#define ExAssert(exp_is_true)		assert(exp_is_true)
+#define ExAssertMsg(exp_is_true,message)																	\
+		(void)(																								\
+            (!!(exp_is_true)) ||																			\
+            (_wassert(message, __CALLINFO__), 0)															\
+        )																									\
+
+
+#define ExAssertFmt(exp_is_true, format, ...)																\
+						(void) ((!!(exp_is_true)) ||														\
+						(1 != _CrtDbgReportW(_CRT_ASSERT, __CALLINFO__, nullptr, format, __VA_ARGS__)) ||	\
+						(ExDbgBreak(), 0))
+
+#define ExAssertFmtCallInfo(exp_is_true, file, line, format, ...)											\
+						(void) ((!!(exp_is_true)) ||														\
+						(1 != _CrtDbgReportW(_CRT_ASSERT, file, line, nullptr, format, __VA_ARGS__)) ||		\
+						(ExDbgBreak(), 0))
 
 #else
-#define EX_DEBUG_BREAK()
+
+#define ExDbgBreak()												(FALSE)
+#define ExAssert(exp_is_true)										(exp_is_true)
+#define ExAssertMsg(exp_is_true,message)							(exp_is_true)
+#define ExAssertFmt(exp_is_true, format, ...)						(exp_is_true)
+#define ExAssertFmtCallInfo(exp_is_true, file,line, format, ...)	(exp_is_true)
 
 #endif // EX_CFG_DEBUG_INTERRUPT
-
 
 #pragma endregion
 
@@ -68,9 +89,11 @@
 #pragma region 参数检查
 
 #ifdef EX_CFG_DEBUG_CHECK_PARAM
-#define EX_PARAM_CHECK(EXP)		{if(!(EXP)) return E_INVALIDARG;}
+#define EX_PARAM_CHECK(EXP)				{if(!(EXP)){ ExAssertMsg(EXP, L"InvalidParam: " #EXP); return E_INVALIDARG;}}
+#define EX_PARAM_CHECK_RET(EXP,RET)		{if(!(EXP)){ ExAssertMsg(EXP, L"InvalidParam: " #EXP); return RET;}}
 #else
 #define EX_PARAM_CHECK(EXP)
+#define EX_PARAM_CHECK_RET(EXP,RET)
 #endif // EX_CFG_DEBUG_CHECK_PARAM
 
 #pragma endregion

@@ -177,6 +177,7 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="src\debug\mem_leak.cpp" />
+    <ClCompile Include="src\debug\status_handle.cpp" />
     <ClCompile Include="src\kernel\memory.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -202,6 +203,7 @@
     <ClInclude Include="include\common\utils\singleton.hpp" />
     <ClInclude Include="include\common\utils\string.hpp" />
     <ClInclude Include="include\config.h" />
+    <ClInclude Include="include\debug\status_handle.h" />
     <ClInclude Include="include\define.h" />
     <ClInclude Include="include\ExDirectUI.h" />
     <ClInclude Include="include\kernel\memory.h" />

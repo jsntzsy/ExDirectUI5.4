@@ -28,6 +28,7 @@ namespace ExDirectUI
 {
 	HRESULT EXAPI APIENTRY ExDbgEntry(HINSTANCE instance)
 	{
+		
 
 		return S_OK;
 	}
