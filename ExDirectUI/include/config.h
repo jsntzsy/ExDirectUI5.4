@@ -97,6 +97,9 @@
 // 非成员运算符 new 或 delete 函数均不可声明为内联函数
 #pragma warning(disable: 4595) 
 
+//类函数宏的调用“XXX”参数不足
+#pragma warning(disable: 4003)
+
 #pragma endregion
 
 

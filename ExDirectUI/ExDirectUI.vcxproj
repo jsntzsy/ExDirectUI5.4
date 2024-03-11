@@ -203,6 +203,7 @@
     <ClInclude Include="include\common\utils\singleton.hpp" />
     <ClInclude Include="include\common\utils\string.hpp" />
     <ClInclude Include="include\config.h" />
+    <ClInclude Include="include\debug\exception.h" />
     <ClInclude Include="include\debug\status_handle.h" />
     <ClInclude Include="include\define.h" />
     <ClInclude Include="include\ExDirectUI.h" />

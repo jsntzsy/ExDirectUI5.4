@@ -39,4 +39,5 @@
 
 
 #include "debug/status_handle.h"
+#include "debug/exception.h"
 

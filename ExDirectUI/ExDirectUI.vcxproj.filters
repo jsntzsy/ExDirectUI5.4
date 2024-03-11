@@ -218,6 +218,9 @@
     <ClInclude Include="include\debug\status_handle.h">
       <Filter>debug\status</Filter>
     </ClInclude>
+    <ClInclude Include="include\debug\exception.h">
+      <Filter>debug\exception</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="API.def">
