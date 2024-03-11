@@ -17,9 +17,15 @@ namespace ExDirectUI
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
-	HRESULT status = ExDbgEntry(hInstance);
-
-
-	return status;
+	try {
+		ExEngineInitInfo eii{};
+		eii.instance = hInstance;
+		HRESULT status = ExEngineInit(&eii);
+		throw_if_failed(status, L"引擎初始化失败");
+		status = ExDbgEntry(hInstance);
+		ExEngineUnInit();
+		return status;
+	}
+	catch_default({});
 }
 

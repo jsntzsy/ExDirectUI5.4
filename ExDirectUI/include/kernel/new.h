@@ -8,6 +8,8 @@
  */
 #pragma once
 
+#ifndef EX_CFG_NO_TAKEOVER_NEW
+
 #ifdef EX_CFG_DEBUG_CALL_INFO
 
 inline void* operator new(size_t size) { return ::ExDirectUI::ExMemAllocD(size, nullptr, 0); }
@@ -21,15 +23,16 @@ inline void operator delete(void* p, LPCWSTR file, int line) { ::ExDirectUI::ExM
 inline void operator delete[](void* p, LPCWSTR file, int line) { ::ExDirectUI::ExMemFreeD(p); }
 
 #define NEW new(__CALLINFO__)
-
 #else
-
 inline void* operator new(size_t size) { return ::ExDirectUI::ExMemAlloc(size); }
 inline void* operator new[](size_t size) { return ::ExDirectUI::ExMemAlloc(size); }
 inline void operator delete(void* p) { ::ExDirectUI::ExMemFree(p); }
 inline void operator delete[](void* p) { ::ExDirectUI::ExMemFree(p); }
 
 #define NEW new
-
 #endif
+#else
+#define NEW new
+#endif // 
+
 

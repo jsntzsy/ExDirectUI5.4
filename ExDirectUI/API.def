@@ -17,8 +17,11 @@ EXPORTS
 		ExDataFree
 		ExDataResize
 		ExDataCopy
-
-
+	;原子号计算
+		ExAtomData
+		ExAtomStrCase
+		ExAtomStrNoCase
+		ExAtomFile
 
 
 ;调试层

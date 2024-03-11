@@ -9,6 +9,7 @@
 
 #include "stdafx.h"
 #include "kernel/data.h"
+#include <fstream>
 
 namespace ExDirectUI
 {
@@ -18,7 +19,7 @@ namespace ExDirectUI
 
 		//申请内存
 		byte_t* data = (byte_t*)exalloc(size);
-		handle_if_false(data, EE_MEM_ALLOC_FAILED, L"申请数据块内存失败");
+		handle_if_false(data, E_OUTOFMEMORY, L"申请数据块内存失败");
 
 		//设置到数据块
 		r_data->data = data;
@@ -45,7 +46,7 @@ namespace ExDirectUI
 
 		//重新申请内存
 		byte_t* new_data = (byte_t*)exrealloc(data->data, new_size);
-		handle_if_false(new_data, EE_MEM_ALLOC_FAILED, L"重新分配数据块内存失败");
+		handle_if_false(new_data, E_OUTOFMEMORY, L"重新分配数据块内存失败");
 
 		//设置到数据块
 		data->data = new_data;
@@ -67,7 +68,7 @@ namespace ExDirectUI
 
 		//申请内存
 		byte_t* new_data = (byte_t*)exalloc(new_size);
-		handle_if_false(new_data, EE_MEM_ALLOC_FAILED, L"申请数据块内存失败");
+		handle_if_false(new_data, E_OUTOFMEMORY, L"申请数据块内存失败");
 
 		//拷贝数据
 		memcpy(new_data, data->data, min(data->size, new_size));
@@ -75,6 +76,69 @@ namespace ExDirectUI
 		//设置到数据块
 		r_new_data->data = new_data;
 		r_new_data->size = new_size;
+		return S_OK;
+	}
+	HRESULT EXAPI EXCALL ExDataReadFile(LPCWSTR file, ExData* r_data)
+	{
+		CHECK_PARAM(file);
+		CHECK_PARAM(r_data);
+
+		//打开文件
+		std::fstream fs(file, std::ios::in | std::ios::binary);
+		handle_if_false(fs.is_open(), EE_IO, L"打开文件失败");
+
+		//获取文件大小
+		fs.seekg(0, std::ios::end);
+		size_t size = fs.tellg();
+
+		//申请内存
+		byte_t* data = (byte_t*)exalloc(size);
+		handle_if_false(data, E_OUTOFMEMORY, L"申请数据块内存失败");
+
+		try
+		{
+			//读取文件
+			fs.seekg(0, std::ios::beg);
+			throw_if_false(fs.read((char*)data, size), EE_IO, L"读取文件失败");
+			
+			//关闭文件
+			fs.close();
+			
+			//设置到数据块
+			r_data->data = data;
+			r_data->size = size;
+			return S_OK;
+		}
+		catch_default({ if (data) { exfree(data); } });
+	}
+	HRESULT EXAPI EXCALL ExDataWriteFile(LPCWSTR file, const byte_t data, size_t size)
+	{
+		CHECK_PARAM(file);
+
+		//打开文件
+		std::fstream fs(file, std::ios::out | std::ios::binary | std::ios::trunc);
+		handle_if_false(fs.is_open(), EE_IO, L"打开文件失败");
+
+		//写入文件
+		handle_if_false(fs.write((const char*)data, size), EE_IO, L"写入文件失败");
+		
+		fs.close();
+		return S_OK;
+	}
+	HRESULT EXAPI EXCALL ExDataGetFileSize(LPCWSTR file, size_t* r_size)
+	{
+		CHECK_PARAM(file);
+		CHECK_PARAM(r_size);
+
+		//打开文件
+		std::fstream fs(file, std::ios::in | std::ios::binary);
+		handle_if_false(fs.is_open(), EE_IO, L"打开文件失败");
+		
+		//获取文件大小
+		fs.seekg(0, std::ios::end);
+		*r_size = fs.tellg();
+		
+		fs.close();
 		return S_OK;
 	}
 }

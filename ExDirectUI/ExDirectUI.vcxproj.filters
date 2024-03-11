@@ -156,6 +156,9 @@
     <ClCompile Include="src\kernel\winapi.cpp">
       <Filter>kernel\winapi</Filter>
     </ClCompile>
+    <ClCompile Include="src\kernel\atom.cpp">
+      <Filter>kernel\atom</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -244,6 +247,9 @@
     </ClInclude>
     <ClInclude Include="src\kernel\winapi.h">
       <Filter>kernel\winapi</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kernel\atom.h">
+      <Filter>kernel\atom</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

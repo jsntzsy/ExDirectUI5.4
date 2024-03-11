@@ -10,7 +10,7 @@
 
 namespace ExDirectUI
 {
-	typedef DWORD(WINAPI* _RtlComputeCrc32Proc)(DWORD init_value, void* ptr, DWORD size);
+	typedef DWORD(WINAPI* _RtlComputeCrc32Proc)(DWORD init_value, const void* ptr, DWORD size);
 
 	extern HMODULE g_winapi_ntdll;
 	extern HMODULE g_winapi_user32;

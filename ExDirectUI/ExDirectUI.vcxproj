@@ -179,6 +179,7 @@
     <ClCompile Include="src\app\engine.cpp" />
     <ClCompile Include="src\debug\mem_leak.cpp" />
     <ClCompile Include="src\debug\status_handle.cpp" />
+    <ClCompile Include="src\kernel\atom.cpp" />
     <ClCompile Include="src\kernel\data.cpp" />
     <ClCompile Include="src\kernel\memory.cpp" />
     <ClCompile Include="src\kernel\winapi.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="include\debug\status_handle.h" />
     <ClInclude Include="include\define.h" />
     <ClInclude Include="include\ExDirectUI.h" />
+    <ClInclude Include="include\kernel\atom.h" />
     <ClInclude Include="include\kernel\data.h" />
     <ClInclude Include="include\kernel\memory.h" />
     <ClInclude Include="include\kernel\new.h" />

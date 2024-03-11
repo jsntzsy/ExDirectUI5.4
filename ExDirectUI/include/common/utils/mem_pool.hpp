@@ -38,7 +38,7 @@ namespace ExDirectUI
 			{
 				//申请新组
 				ExMemChunkInfo* chunk_new = (ExMemChunkInfo*)ExMemAlloc(sizeof(ExMemChunkInfo));
-				throw_if_false(chunk_new, EE_MEM_ALLOC_FAILED, L"内存组分配失败");
+				throw_if_false(chunk_new, E_OUTOFMEMORY, L"内存组分配失败");
 
 				//链入申请的内存组链表
 				chunk_new->next = nullptr;
@@ -145,7 +145,7 @@ namespace ExDirectUI
 				//申请新组
 				ExMemChunkHeader* chunk_new = (ExMemChunkHeader*)ExMemAlloc(sizeof(ExMemChunkHeader) +
 					(sizeof(ExMemBlockHeader) + m_block_size) * m_block_count);
-				throw_if_false(chunk_new, EE_MEM_ALLOC_FAILED, L"内存组分配失败");
+				throw_if_false(chunk_new, E_OUTOFMEMORY, L"内存组分配失败");
 
 				chunk_new->next = nullptr;
 
