@@ -128,21 +128,21 @@ namespace ExDirectUI
 		OutputDebugStringW(L"========= ExDirectUI Dump Memory Leaks Finish ========\n");
 	}
 
-	LPVOID EXAPI EXCALL ExMemAllocD(size_t size, LPCWSTR file, int line)
+	EXTERN_C LPVOID EXAPI EXCALL ExMemAllocD(size_t size, LPCWSTR file, int line)
 	{
 		LPVOID ptr = ExMemAlloc(size);
 		ExMemLeakChecker::Instance()->Add(ptr, size, file, line);
 		return ptr;
 	}
 
-	LPVOID EXAPI EXCALL ExMemReAllocD(LPVOID ptr, size_t new_size, LPCWSTR file, int line)
+	EXTERN_C LPVOID EXAPI EXCALL ExMemReAllocD(LPVOID ptr, size_t new_size, LPCWSTR file, int line)
 	{
 		LPVOID new_ptr = ExMemReAlloc(ptr, new_size);
 		ExMemLeakChecker::Instance()->Modify(ptr, new_ptr, new_size, file, line);
 		return new_ptr;
 	}
 
-	void EXAPI EXCALL ExMemFreeD(LPVOID ptr)
+	EXTERN_C void EXAPI EXCALL ExMemFreeD(LPVOID ptr)
 	{
 		ExMemLeakChecker::Instance()->Remove(ptr);
 		ExMemFree(ptr);

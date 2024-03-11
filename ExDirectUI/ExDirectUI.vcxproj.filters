@@ -144,6 +144,9 @@
     <ClCompile Include="src\debug\status_handle.cpp">
       <Filter>debug\status</Filter>
     </ClCompile>
+    <ClCompile Include="src\kernel\data.cpp">
+      <Filter>kernel\data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -220,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="include\debug\exception.h">
       <Filter>debug\exception</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kernel\data.h">
+      <Filter>kernel\data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

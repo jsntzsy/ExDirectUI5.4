@@ -12,7 +12,7 @@
 
 namespace ExDirectUI
 {
-	HRESULT EXAPI APIENTRY ExDbgEntry(HINSTANCE instance);
+	EXTERN_C HRESULT EXAPI APIENTRY ExDbgEntry(HINSTANCE instance);
 }
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)

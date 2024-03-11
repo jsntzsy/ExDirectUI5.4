@@ -12,6 +12,7 @@
 
 #define EXCALL __stdcall
 #define NOTHROW noexcept
+#define EXTERN_C extern "C"
 
 #if defined(EX_CFG_BUILD_TO_LIB) || defined(EX_CFG_BUILD_IN_LIB)
 #define EXAPI 
@@ -89,11 +90,11 @@
 #pragma region 参数检查
 
 #ifdef EX_CFG_DEBUG_CHECK_PARAM
-#define EX_PARAM_CHECK(EXP)				{if(!(EXP)){ ExAssertMsg(EXP, L"InvalidParam: " #EXP); return E_INVALIDARG;}}
-#define EX_PARAM_CHECK_RET(EXP,RET)		{if(!(EXP)){ ExAssertMsg(EXP, L"InvalidParam: " #EXP); return RET;}}
+#define CHECK_PARAM(EXP)				{if(!(EXP)){ ExAssertMsg(EXP, L"InvalidParam: " #EXP); return E_INVALIDARG;}}
+#define CHECK_PARAM_RET(EXP,RET)		{if(!(EXP)){ ExAssertMsg(EXP, L"InvalidParam: " #EXP); return RET;}}
 #else
-#define EX_PARAM_CHECK(EXP)
-#define EX_PARAM_CHECK_RET(EXP,RET)
+#define CHECK_PARAM(EXP)
+#define CHECK_PARAM_RET(EXP,RET)
 #endif // EX_CFG_DEBUG_CHECK_PARAM
 
 #pragma endregion

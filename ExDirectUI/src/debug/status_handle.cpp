@@ -30,7 +30,7 @@ namespace ExDirectUI
 
 	LPCWSTR EXAPI EXCALL ExStatusGetText(HRESULT status, bool* free)
 	{
-		EX_PARAM_CHECK_RET(free, nullptr);
+		CHECK_PARAM_RET(free, nullptr);
 
 		LPWSTR text = nullptr;
 		*free = false;

@@ -26,7 +26,7 @@ BOOL APIENTRY DllMain(HMODULE module_handle, DWORD reason, LPVOID reserved)
 
 namespace ExDirectUI
 {
-	HRESULT EXAPI APIENTRY ExDbgEntry(HINSTANCE instance)
+	EXTERN_C HRESULT EXAPI APIENTRY ExDbgEntry(HINSTANCE instance)
 	{
 
 

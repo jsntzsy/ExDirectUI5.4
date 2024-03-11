@@ -46,9 +46,9 @@ namespace ExDirectUI
 
 #ifdef EX_CFG_DEBUG_MEMORY_LEAK
 
-	LPVOID EXAPI EXCALL ExMemAllocD(size_t size, LPCWSTR file, int line);
-	LPVOID EXAPI EXCALL ExMemReAllocD(LPVOID ptr, size_t new_size, LPCWSTR file, int line);
-	void EXAPI EXCALL ExMemFreeD(LPVOID ptr);
+	EXTERN_C LPVOID EXAPI EXCALL ExMemAllocD(size_t size, LPCWSTR file, int line);
+	EXTERN_C LPVOID EXAPI EXCALL ExMemReAllocD(LPVOID ptr, size_t new_size, LPCWSTR file, int line);
+	EXTERN_C void EXAPI EXCALL ExMemFreeD(LPVOID ptr);
 
 #define exalloc(size) ExMemAllocD(size, __CALLINFO__)
 #define exrealloc(ptr, new_size) ExMemReAllocD(ptr, new_size, __CALLINFO__)

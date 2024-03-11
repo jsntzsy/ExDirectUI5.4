@@ -12,6 +12,22 @@ EXPORTS
 		ExMemFree
 		ExMemReAlloc
 		ExMemGetSize
+	;数据块管理
+		ExDataAlloc
+		ExDataFree
+		ExDataResize
+		ExDataCopy
 
+
+
+
+;调试层
+	;状态处理
+		ExStatusSetUserHandler
+		ExStatusGetUserHandler
+		ExStatusGetText
+		ExStatusHandle
+		ExStatusHandleEx
+	
 
 
