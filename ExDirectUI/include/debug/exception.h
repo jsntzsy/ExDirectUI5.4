@@ -49,7 +49,7 @@ namespace ExDirectUI
 		inline HRESULT handle() const
 		{
 			return ExStatusHandle(m_status,
-				m_file.size() != 0 ? m_file.c_str() : nullptr, m_line, 
+				m_file.size() != 0 ? m_file.c_str() : nullptr, m_line,
 				m_message.c_str()
 			);
 		}
@@ -61,15 +61,27 @@ namespace ExDirectUI
 		int m_line;
 	};
 
-#define throw_ex(status, message)	throw ExException(status, message, __CALLINFO__)						// 抛出异常
-#define throw_if_false(exp, status, mesage) if(!(exp)) { throw_ex(status,message); }						// 错误则抛出异常
-#define throw_if_failed(hr, message) { HRESULT _HR_ = hr; if(FAILED(_HR_)){ throw_ex(_HR_, message); } }	// 失败则抛出异常
-#define throw_if_notok(hr, message) { HRESULT _HR_ = hr; if(_HR_ != S_OK){ throw_ex(_HR_, message); } }		// 不成功抛出异常
+#define throw_ex(status,message)	throw ExException(status, message, __CALLINFO__)					// 抛出异常
+#define throw_if_false(exp,status,message) if(!(exp)) { throw_ex(status,message); }						// 错误则抛出异常
+#define throw_if_failed(hr,message) { HRESULT _HR_ = hr; if(FAILED(_HR_)){ throw_ex(_HR_, message); }}	// 失败则抛出异常
+#define throw_if_notok(hr,message) { HRESULT _HR_ = hr; if(_HR_ != S_OK){ throw_ex(_HR_, message); }}	// 不成功则抛出异常
 
 #define catch_return(todo)		catch(ExException& e) { todo; return e.handle(); }		// 捕获异常并返回
 #define catch_continue(todo)	catch(ExException& e) { todo; e.handle(); }				// 捕获异常并继续执行
 #define catch_ignore(todo)		catch(ExException& e) { todo; }							// 捕获异常但忽略
 #define catch_throw(todo)		catch(ExException& e) { todo; throw; }					// 捕获异常并继续抛出
 #define catch_default			catch_return											// 默认捕获异常
+
+	// 错误则处理异常
+#define handle_if_false(exp,status,message) \
+	if(!(exp)) { return ExStatusHandle(status,__CALLINFO__,message); }
+
+	// 失败则处理异常
+#define handle_if_failed(hr,message) \
+	{ HRESULT _HR_ = hr; if(FAILED(_HR_)){ return ExStatusHandle(_HR_,__CALLINFO__, message); }}
+
+	// 不成功则处理异常
+#define handle_if_notok(hr,message) \
+	{ HRESULT _HR_ = hr; if(_HR_ != S_OK){ return ExStatusHandle(_HR_,__CALLINFO__, message); }}
 
 }

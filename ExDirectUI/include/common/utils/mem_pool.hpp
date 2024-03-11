@@ -8,7 +8,7 @@
  */
 #pragma once
 #include <Windows.h>
-//#include "kernel/memory.h"
+ //#include "kernel/memory.h"
 #include "lock.hpp"
 
 namespace ExDirectUI
@@ -19,7 +19,7 @@ namespace ExDirectUI
 	template<typename T, size_t BLOCK_NUM = 16>
 	class ExMemPool
 	{
-	public: 
+	public:
 		ExMemPool() :m_blocks_free(nullptr), m_chunks(nullptr)
 		{
 		}
@@ -29,7 +29,7 @@ namespace ExDirectUI
 			Clear();
 		}
 
-		T* Alloc() 
+		T* Alloc()
 		{
 			_Locked(m_lock);
 
@@ -38,12 +38,7 @@ namespace ExDirectUI
 			{
 				//申请新组
 				ExMemChunkInfo* chunk_new = (ExMemChunkInfo*)ExMemAlloc(sizeof(ExMemChunkInfo));
-				//throw_if_false(chunk_new, ES_MEM_ALLOC_FAILED, L"内存组分配失败");
-				//if (!chunk_new)
-				//{
-				//	ExDbgThrow(ES_MEM_ALLOC_FAILED, __CALLINFO__);					
-				//	return nullptr;
-				//}
+				throw_if_false(chunk_new, EE_MEM_ALLOC_FAILED, L"内存组分配失败");
 
 				//链入申请的内存组链表
 				chunk_new->next = nullptr;
@@ -52,8 +47,9 @@ namespace ExDirectUI
 
 				//把新组的内存块链入空闲块链表
 				m_blocks_free = &(chunk_new->blocks[0]);
-				for (size_t i = 1; i < BLOCK_NUM; i++)
+				for (size_t i = 1; i < BLOCK_NUM; i++) {
 					chunk_new->blocks[i - 1].next = &(chunk_new->blocks[i]);
+				}
 				chunk_new->blocks[BLOCK_NUM - 1].next = nullptr;
 
 			}
@@ -83,8 +79,7 @@ namespace ExDirectUI
 			_Locked(m_lock);
 
 			ExMemChunkInfo* chunk;
-			while (m_chunks)
-			{
+			while (m_chunks) {
 				chunk = m_chunks;
 				m_chunks = m_chunks->next;
 				ExMemFree(chunk);
@@ -140,7 +135,7 @@ namespace ExDirectUI
 			Clear();
 		}
 
-		LPVOID Alloc() 
+		LPVOID Alloc()
 		{
 			_Locked(m_lock);
 
@@ -150,7 +145,7 @@ namespace ExDirectUI
 				//申请新组
 				ExMemChunkHeader* chunk_new = (ExMemChunkHeader*)ExMemAlloc(sizeof(ExMemChunkHeader) +
 					(sizeof(ExMemBlockHeader) + m_block_size) * m_block_count);
-				//throw_if_false(chunk_new, ES_MEM_ALLOC_FAILED, L"内存组分配失败");
+				throw_if_false(chunk_new, EE_MEM_ALLOC_FAILED, L"内存组分配失败");
 
 				chunk_new->next = nullptr;
 
@@ -160,8 +155,7 @@ namespace ExDirectUI
 				ExMemBlockHeader* block = nullptr;
 
 				// 链上申请的所有块
-				for (size_t i = 1; i < m_block_count; i++)
-				{
+				for (size_t i = 1; i < m_block_count; i++) {
 					block = (ExMemBlockHeader*)block_ptr;
 					block_ptr += sizeof(ExMemBlockHeader) + m_block_size;
 					block->next = (ExMemBlockHeader*)block_ptr;
@@ -199,8 +193,7 @@ namespace ExDirectUI
 
 			//遍历所有组,释放
 			ExMemChunkHeader* chunk;
-			while (m_chunk_head)
-			{
+			while (m_chunk_head) {
 				chunk = m_chunk_head->next;
 				ExMemFree(m_chunk_head);
 				m_chunk_head = chunk;
@@ -244,9 +237,6 @@ namespace ExDirectUI
 		ExLock m_lock;
 
 	};
-
-
-
 
 
 }
