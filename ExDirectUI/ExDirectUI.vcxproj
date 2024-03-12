@@ -183,6 +183,7 @@
     <ClCompile Include="src\kernel\data.cpp" />
     <ClCompile Include="src\kernel\memory.cpp" />
     <ClCompile Include="src\kernel\module.cpp" />
+    <ClCompile Include="src\kernel\module_utils.cpp" />
     <ClCompile Include="src\kernel\winapi.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -223,6 +224,7 @@
     <ClInclude Include="src\app\engine.h" />
     <ClInclude Include="src\debug\mem_leak.h" />
     <ClInclude Include="src\kernel\module.h" />
+    <ClInclude Include="src\kernel\module_utils.h" />
     <ClInclude Include="src\kernel\winapi.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>

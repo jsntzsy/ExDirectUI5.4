@@ -12,6 +12,7 @@
 
 #define EXCALL __stdcall
 #define NOTHROW noexcept
+#define MAYTHROW 
 #define EXTERN_C extern "C"
 
 #if defined(EX_CFG_BUILD_TO_LIB) || defined(EX_CFG_BUILD_IN_LIB)

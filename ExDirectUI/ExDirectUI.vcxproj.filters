@@ -165,6 +165,9 @@
     <ClCompile Include="src\kernel\module.cpp">
       <Filter>kernel\module</Filter>
     </ClCompile>
+    <ClCompile Include="src\kernel\module_utils.cpp">
+      <Filter>kernel\module</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -265,6 +268,9 @@
     </ClInclude>
     <ClInclude Include="include\interface\object.i.h">
       <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kernel\module_utils.h">
+      <Filter>kernel\module</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

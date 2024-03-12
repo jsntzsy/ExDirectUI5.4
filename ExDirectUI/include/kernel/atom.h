@@ -55,7 +55,10 @@ namespace ExDirectUI
 	{
 		return ExAtomStrNoCase(str);
 	}
-
+	inline EXATOM EXCALL ExAtom(const void* ptr, size_t size)
+	{
+		return ExAtomData(ptr, size);
+	}
 	template<typename T>
 	inline EXATOM EXCALL ExAtom(const T& p)
 	{

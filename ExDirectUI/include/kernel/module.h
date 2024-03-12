@@ -13,16 +13,29 @@ namespace ExDirectUI
 	/// 模块文件加载器
 	struct ExModuleFileLoader
 	{
-		HMODULE(WINAPI* LoadModule)(const LPVOID data, WPARAM waram, LPARAM lparam);
+		/// 加载模块
+		HMODULE(WINAPI* LoadModule)(const LPVOID file, WPARAM waram, LPARAM lparam);
+
+		/// 释放模块
 		bool(WINAPI* FreeModule)(HMODULE module_handle);
+
+		/// 获取模块函数
 		FARPROC(WINAPI* GetProcAddress)(HMODULE module_handle, LPCSTR proc_name);
 	};
 	
 	/// 模块类型
 	enum ExModuleType
 	{
-		EX_MODULE_UNKNOWN,		///< 模块类型：未知
-		
+		EX_MODULE_UNKNOWN,				///< 模块类型：未知
+		EX_MODULE_IMAGE_DECODER,		///< 模块类型：图像解码器
+		EX_MODULE_RENDER,				///< 模块类型：渲染器
+	};
+
+	/// 模块标志
+	enum ExModuleFlags
+	{
+		EX_MODULE_FLAG_NONE = 0x0000,			///< 模块标志：无
+		EX_MODULE_FLAG_CAN_UNLOAD = 0x0001,		///< 模块标志：可卸载
 	};
 
 	/// 模块信息
@@ -59,6 +72,14 @@ namespace ExDirectUI
 	
 	////////////////////////////
 
-	
+	HRESULT EXAPI EXCALL ExModuleLoadFromFile(const LPVOID file, WPARAM waram, LPARAM lparam, EXATOM* r_module_id);
+	HRESULT EXAPI EXCALL ExModuleLoadFromHandle(HMODULE module_handle, EXATOM* r_module_id);
+	HRESULT EXAPI EXCALL ExModuleLoadFromEntry(ExModuleEntryProc entry_proc, EXATOM* r_module_id);
+
+	HRESULT EXAPI EXCALL ExModuleUnload(EXATOM module_id);
+
+	HRESULT EXAPI EXCALL ExModuleGetInfo(EXATOM module_id, ExModuleInfo* r_info);
+	HRESULT EXAPI EXCALL ExModuleInvoke(EXATOM module_id, uint32_t msg, WPARAM wparam, LPARAM lparam, LRESULT* r_result);
+
 	
 }
