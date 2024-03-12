@@ -69,21 +69,26 @@ namespace ExDirectUI
 	{
 		ExAssert(_RtlComputeCrc32);
 		CHECK_PARAM_RET(file, EXATOM_UNKNOWN);
-		
+
 		//打开文件
 		std::fstream fs;
 		fs.open(file, std::ios::in | std::ios::binary);
-		throw_if_false(fs.is_open(), EE_IO, L"打开文件失败");
+		if (!fs.is_open()) { 
+			ExStatusHandle(EE_IO, __CALLINFO__, L"打开文件失败");
+			return EXATOM_UNKNOWN; 
+		}
 
 		//循环读入缓冲,并计算原子号
 		EXATOM atom = 0;
-		char buffer[EX_CFG_SIZEOF_ATOM_FILE]{};
-		while (fs.read(buffer, sizeof(buffer))) {
-			atom = _RtlComputeCrc32(atom, buffer, fs.gcount());
+		byte_t buffer[EX_CFG_SIZEOF_ATOM_FILE]{};
+		while (!fs.eof()) {
+			fs.read((char*)buffer, sizeof(buffer));
+			size_t readed = fs.gcount();
+			if(readed > 0) {
+				atom = _RtlComputeCrc32(atom, buffer, (uint32_t)readed);
+			}
+			else { break; }
 		}
-		
-		//如果读取失败,则返回未知原子号
-		if (!fs.eof()) { return EXATOM_UNKNOWN; }
 		
 		return atom == EXATOM_UNKNOWN ? (EXATOM_UNKNOWN + 1) : atom;
 	}

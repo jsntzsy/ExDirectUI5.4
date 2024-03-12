@@ -32,6 +32,7 @@
 
 #include "kernel/memory.h"
 #include "kernel/atom.h"
+#include "kernel/data.h"
 #include "kernel/new.h"
 
 

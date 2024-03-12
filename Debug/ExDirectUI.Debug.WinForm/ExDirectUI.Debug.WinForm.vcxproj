@@ -24,6 +24,7 @@
     <ProjectGuid>{552e5ddd-1104-4af4-97aa-54c7117ff53b}</ProjectGuid>
     <RootNamespace>DebugWinFromExDirectUI</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>ExDirectUI.Debug.WinForm</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

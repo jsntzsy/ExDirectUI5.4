@@ -17,6 +17,12 @@ namespace ExDirectUI
 	{
 		CHECK_PARAM(r_data);
 
+		if (size == 0) { 
+			r_data->data = nullptr; 
+			r_data->size = 0; 
+			return S_OK; 
+		}
+
 		//申请内存
 		byte_t* data = (byte_t*)exalloc(size);
 		handle_if_false(data, E_OUTOFMEMORY, L"申请数据块内存失败");
@@ -43,6 +49,11 @@ namespace ExDirectUI
 	{
 		CHECK_PARAM(data);
 		if (new_size == data->size) { return S_OK; }
+		if (new_size == 0) {
+			SAFE_FREE(data->data, exfree);
+			data->size = 0;
+			return S_OK;
+		}
 
 		//重新申请内存
 		byte_t* new_data = (byte_t*)exrealloc(data->data, new_size);
@@ -101,9 +112,6 @@ namespace ExDirectUI
 			fs.seekg(0, std::ios::beg);
 			throw_if_false(fs.read((char*)data, size), EE_IO, L"读取文件失败");
 			
-			//关闭文件
-			fs.close();
-			
 			//设置到数据块
 			r_data->data = data;
 			r_data->size = size;
@@ -111,7 +119,7 @@ namespace ExDirectUI
 		}
 		catch_default({ if (data) { exfree(data); } });
 	}
-	HRESULT EXAPI EXCALL ExDataWriteFile(LPCWSTR file, const byte_t data, size_t size)
+	HRESULT EXAPI EXCALL ExDataWriteFile(LPCWSTR file, const byte_t* data, size_t size)
 	{
 		CHECK_PARAM(file);
 
@@ -119,10 +127,14 @@ namespace ExDirectUI
 		std::fstream fs(file, std::ios::out | std::ios::binary | std::ios::trunc);
 		handle_if_false(fs.is_open(), EE_IO, L"打开文件失败");
 
+		//如果数据为空，则直接关闭文件
+		if (data == nullptr || size == 0) {
+			fs.close();
+			return S_OK;
+		}
+
 		//写入文件
 		handle_if_false(fs.write((const char*)data, size), EE_IO, L"写入文件失败");
-		
-		fs.close();
 		return S_OK;
 	}
 	HRESULT EXAPI EXCALL ExDataGetFileSize(LPCWSTR file, size_t* r_size)
@@ -137,8 +149,6 @@ namespace ExDirectUI
 		//获取文件大小
 		fs.seekg(0, std::ios::end);
 		*r_size = fs.tellg();
-		
-		fs.close();
 		return S_OK;
 	}
 }

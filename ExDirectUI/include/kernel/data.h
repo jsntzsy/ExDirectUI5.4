@@ -78,7 +78,7 @@ namespace ExDirectUI
 	 * @param size 数据块尺寸 @可空(0则写出空文件)
 	 * @return 返回执行状态
 	 */
-	HRESULT EXAPI EXCALL ExDataWriteFile(LPCWSTR file, const byte_t data, size_t size);
+	HRESULT EXAPI EXCALL ExDataWriteFile(LPCWSTR file, const byte_t* data, size_t size);
 
 	/**
 	 * @brief 数据块_取文件尺寸

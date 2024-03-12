@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="kernel\memory_test.cpp">
+      <Filter>kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\log_test.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\status_handle_test.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\try_catch_test.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="core_test.cpp" />
+    <ClCompile Include="kernel\data_test.cpp">
+      <Filter>kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="kernel\atom_test.cpp">
+      <Filter>kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="kernel\handle_test.cpp">
+      <Filter>kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="res_support\parse_string_test.cpp">
+      <Filter>res_support</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="kernel">
+      <UniqueIdentifier>{9292951f-c014-4137-930e-a84ef5d24a99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debug">
+      <UniqueIdentifier>{06e63690-25d9-4de3-a183-836e78db8e92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res_support">
+      <UniqueIdentifier>{3a115cc5-0a7a-4945-8523-6980735b1c6e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>
