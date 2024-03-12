@@ -67,16 +67,16 @@ namespace ExDirectUI
 	class IExModule;
 
 	/// 模块入口函数类型
-	typedef HRESULT(APIENTRY* ExModuleEntryProc)(HMODULE module_handle,
-		const IExModuleUtils* module_utils, IExModule** r_module);
+	typedef HRESULT(APIENTRY* ExModuleEntryProc)(HMODULE module_handle, IExModuleUtils* utils,
+		ExModuleInfo* r_info, IExModule** r_module);
 
 	/////////////////////////////
 
-	EXINTERFACE("D3888235-E4C6-4E0F-B26D-B85CA5202B11") IExModule : public IUnknown
+	EXINTERFACE("D3888235-E4C6-4E0F-B26D-B85CA5202B11") IExModule : public IExObject
 	{
-		EXMETHOD EXATOM EXOBJCALL GetId() PURE;
-		EXMETHOD uint16_t EXOBJCALL GetType() PURE;
-		EXMETHOD void EXOBJCALL GetInfo(ExModuleInfo* r_info) PURE;
+		EXMETHOD EXATOM EXOBJCALL GetId() const PURE;
+		EXMETHOD uint16_t EXOBJCALL GetType() const PURE;
+		EXMETHOD HRESULT EXOBJCALL GetInfo(ExModuleInfo* r_info) const PURE;
 		EXMETHOD HRESULT EXOBJCALL Invoke(uint32_t code, WPARAM wparam, LPARAM lparam, LRESULT* r_result) PURE;
 	};
 

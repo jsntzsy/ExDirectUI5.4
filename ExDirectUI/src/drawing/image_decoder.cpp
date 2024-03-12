@@ -64,7 +64,33 @@ namespace ExDirectUI
 		handle_ex(E_NOTIMPL, L"不支持的图像格式");
 	}
 
+	HRESULT EXAPI EXCALL ExImageCopyData(uint32_t width, uint32_t height, EXBITSDATA r_dest, const EXBITSDATA src,
+		uint32_t stride_dst, uint32_t stride_src, uint32_t left, uint32_t top)
+	{
+		CHECK_PARAM(width > 0);
+		CHECK_PARAM(height > 0);
+		CHECK_PARAM(r_dest != nullptr);
+		CHECK_PARAM(src != nullptr);
+
+		//默认值处理
+		if (stride_dst == 0) { stride_dst = width * sizeof(EXARGB); }
+		if (stride_src == 0) { stride_src = width * sizeof(EXARGB); }
+
+		//计算拷贝区域
+		ExRect copy_rect(left, top, width, height, true);
+		size_t line_size = copy_rect.Width() * sizeof(EXARGB);
+		uint32_t offset_size = copy_rect.left * sizeof(EXARGB);
+
+		//循环拷贝
+		for (uint32_t y = copy_rect.top; y < (uint32_t)copy_rect.bottom; y++)
+		{
+			memcpy(
+				r_dest + stride_dst * y,
+				src + stride_src * y + offset_size,
+				line_size
+			);
+		}
+		return S_OK;
+	}
 
 }
-
-

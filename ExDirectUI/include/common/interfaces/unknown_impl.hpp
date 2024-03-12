@@ -66,7 +66,11 @@ namespace ExDirectUI
 			this->AddRef();								\
 			return S_OK; }							
 
-#define EX_DECLEAR_INTERFACE_END()  return E_NOINTERFACE; }
+#define EX_DECLEAR_INTERFACE_END()  return E_NOINTERFACE; }								\
+		template<class T> inline 														\
+		HRESULT EXOBJCALL QueryInterface(T** ppvObject) {								\
+			return this->QueryInterface(__uuidof(T),(void**)ppvObject);					\
+		}																				
 
 }
 

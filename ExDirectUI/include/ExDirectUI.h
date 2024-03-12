@@ -35,6 +35,7 @@
 #include "kernel/atom.h"
 #include "kernel/data.h"
 #include "kernel/new.h"
+#include "kernel/module.h"
 
 #include "drawing/image_decoder.h"
 

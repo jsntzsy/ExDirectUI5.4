@@ -17,7 +17,7 @@
 
 namespace ExDirectUI
 {
-	class CExResPool : public ExObjectBaseImpl<IExResPool>
+	class ExResPool : public ExObjectBaseImpl<IExResPool>
 	{
 	public:
 		EX_BEGIN_INTERFACE_MAP();
@@ -26,13 +26,13 @@ namespace ExDirectUI
 		EX_END_INTERFACE_MAP();
 
 	public:
-		CExResPool(size_t item_size, ExResPoolInitItemProc init_item_proc, ExResPoolFreeItemProc free_item_proc)
+		ExResPool(size_t item_size, ExResPoolInitItemProc init_item_proc, ExResPoolFreeItemProc free_item_proc)
 			: m_pool(sizeof(ExResPoolItemHeader) + item_size),
 			m_init_item_proc(init_item_proc), m_free_item_proc(free_item_proc)
 		{
 		}
 
-		virtual ~CExResPool()
+		virtual ~ExResPool()
 		{
 			if (m_free_item_proc) {
 				for (auto& item : m_res) {
@@ -280,7 +280,7 @@ namespace ExDirectUI
 
 		try
 		{
-			ExAutoPtr<CExResPool> pool = NEW CExResPool(item_size, init_item_proc, free_item_proc);
+			ExAutoPtr<ExResPool> pool = NEW ExResPool(item_size, init_item_proc, free_item_proc);
 			return pool->QueryInterface(r_pool);
 		}
 		catch_default({});

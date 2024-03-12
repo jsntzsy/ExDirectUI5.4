@@ -15,23 +15,23 @@
 
 namespace ExDirectUI
 {
-	HRESULT EXOBJCALL ExModuleUtils::Group(uint16_t type, IExModule* instance)
+	HRESULT EXOBJCALL ExModuleUtils::Group(uint16_t type, IExModule* instance) MAYTHROW
 	{
 		switch (type)
 		{
 		case ExDirectUI::EX_MODULE_IMAGE_DECODER: {
 			ExAutoPtr<IExImageDecoder> decoder;
-			handle_if_failed(instance->QueryInterface(&decoder), L"未实现对应接口");
+			throw_if_failed(instance->QueryInterface(&decoder), L"未实现对应接口");
 			return _ExImageDecoder_Group(decoder);
 		}
 		case ExDirectUI::EX_MODULE_RENDER: {
 			
-			return E_NOTIMPL;
+			throw_ex(E_NOTIMPL, L"尚未实现");
 		}
-		default: handle_ex(E_NOTIMPL, L"不支持的模块类型");
+		default: throw_ex(E_NOTIMPL, L"不支持的模块类型");
 		}
 	}
-	HRESULT EXOBJCALL ExModuleUtils::UnGroup(IExModule* instance)
+	HRESULT EXOBJCALL ExModuleUtils::UnGroup(IExModule* instance) MAYTHROW
 	{
 		switch (instance->GetType())
 		{
@@ -39,10 +39,10 @@ namespace ExDirectUI
 			return _ExImageDecoder_UnGroup((IExImageDecoder*)instance);
 		}
 		case ExDirectUI::EX_MODULE_RENDER: {
-
-			return E_NOTIMPL;
+			
+			throw_ex(E_NOTIMPL, L"尚未实现");
 		}
-		default: handle_ex(E_NOTIMPL, L"不支持的模块类型");
+		default: throw_ex(E_NOTIMPL, L"不支持的模块类型");
 		}
 	}
 	

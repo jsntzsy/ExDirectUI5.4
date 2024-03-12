@@ -20,10 +20,29 @@ namespace ExDirectUI
 		EXSTDMETHOD CopyFrame(uint32_t index, EXBITSDATA r_bits,uint32_t stride = 0) PURE;
 	};
 
-	EXINTERFACE("ADBE9236-4ECF-46C8-9B9E-98E4A1A67885") IExImageDecoder : public IExObject
+	EXINTERFACE("ADBE9236-4ECF-46C8-9B9E-98E4A1A67885") IExImageDecoder : public IExModule
 	{
 		EXSTDMETHOD LoadImageFromFile(LPCWSTR file, IExDecodeImage * *r_image) PURE;
 		EXSTDMETHOD LoadImageFromMemory(const byte_t* data, size_t size, IExDecodeImage** r_image) PURE;
 	};
 
+	////////////////////////////////////
+
+	/**
+	 * @brief 图像_拷贝数据
+	 * 拷贝图像像素数据
+	 * @param width 图像宽度
+	 * @param height 图像高度
+	 * @param r_dest 接收图像数据的缓冲区
+	 * @param src 源图像数据
+	 * @param stride_dst 目标图像数据的行跨步 @可空(0则为宽度*4)
+	 * @param stride_src 源图像数据的行跨步 @可空(0则为宽度*4)
+	 * @param left 图像左边
+	 * @param top 图像高度
+	 * @return 返回执行状态
+	 */
+	HRESULT EXAPI EXCALL ExImageCopyData(uint32_t width, uint32_t height, EXBITSDATA r_dest, const EXBITSDATA src,
+		uint32_t stride_dst, uint32_t stride_src, uint32_t left, uint32_t top);
+
+	
 }

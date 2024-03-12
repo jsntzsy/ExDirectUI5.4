@@ -55,14 +55,11 @@ namespace ExDirectUI
 	{
 		//调用模块入口,获取模块实例
 		ExAutoPtr<IExModule> module_instance;
+		ExModuleInfo info{};
 		throw_if_failed(
-			entry(module_handle, nullptr, &module_instance),
+			entry(module_handle, ExModuleUtils::Instance(), &info, &module_instance),
 			L"模块入口函数执行失败"
 		);
-
-		// 获取模块信息
-		ExModuleInfo info{};
-		module_instance->GetInfo(&info);
 
 		// 检查模块ID是否已存在
 		auto it = g_modules.find(info.id);

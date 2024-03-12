@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="apng_process">
+      <UniqueIdentifier>{2ada1323-dd2b-47c6-91df-563f1a1a0cbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="decode_image">
+      <UniqueIdentifier>{a8dab468-f086-467f-9445-6750cca9bb47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="image_decoder">
+      <UniqueIdentifier>{3b63d8fd-d2d0-4292-ae39-9f0d935f41a6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\apng_process.cpp">
+      <Filter>apng_process</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\decode_image.cpp">
+      <Filter>decode_image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\image_decoder.cpp">
+      <Filter>image_decoder</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\apng_process.h">
+      <Filter>apng_process</Filter>
+    </ClInclude>
+    <ClInclude Include="include\decode_image.h">
+      <Filter>decode_image</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image_decoder.h">
+      <Filter>image_decoder</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
