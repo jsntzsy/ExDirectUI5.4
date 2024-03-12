@@ -14,7 +14,8 @@ namespace ExDirectUI
 {
 	EXINTERFACE("23867CF7-9092-4821-A156-F768331D63DA") IExObject : public IUnknown
 	{
-		
+		EXMETHOD std::wstring EXOBJCALL ToString() const PURE;
+		EXMETHOD void* EXOBJCALL GetContext(int index) const PURE;
 	};
 }
 

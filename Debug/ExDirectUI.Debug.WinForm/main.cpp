@@ -20,12 +20,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	try {
 		ExEngineInitInfo eii{};
 		eii.instance = hInstance;
+		eii.flags = EX_ENGINE_FLAG_DEBUG;
 		HRESULT status = ExEngineInit(&eii);
 		throw_if_failed(status, L"引擎初始化失败");
 		status = ExDbgEntry(hInstance);
 		ExEngineUnInit();
 		return status;
 	}
-	catch_default({});
+	catch_default({ ExEngineUnInit(); });
 }
 

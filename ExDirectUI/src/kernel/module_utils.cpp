@@ -10,7 +10,6 @@
 #include "stdafx.h"
 #include "src/kernel/module_utils.h"
 #include "kernel/module.h"
-#include "interface/module.i.h"
 
 namespace ExDirectUI
 {

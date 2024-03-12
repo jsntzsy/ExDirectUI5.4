@@ -15,7 +15,7 @@
 namespace ExDirectUI
 {
 	HINSTANCE g_engine_instance = NULL;
-
+	DWORD g_engine_flags = 0;
 
 	HRESULT EXAPI EXCALL ExEngineInit(const ExEngineInitInfo* init_info)
 	{
@@ -25,6 +25,7 @@ namespace ExDirectUI
 
 		_ExWinAPI_Init(init_info);
 
+		g_engine_flags = init_info->flags;
 		g_engine_instance = init_info->instance;
 		return S_OK;
 	}
@@ -35,8 +36,14 @@ namespace ExDirectUI
 
 		_ExWinAPI_UnInit();
 
+		g_engine_flags = 0;
 		g_engine_instance = NULL;
 		return S_OK;
+	}
+
+	bool EXAPI EXCALL ExEngineQueryFlag(DWORD flag)
+	{
+		return (g_engine_flags & flag) == flag;
 	}
 
 }

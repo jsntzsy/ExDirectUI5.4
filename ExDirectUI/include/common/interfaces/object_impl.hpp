@@ -8,11 +8,12 @@
  */
 #pragma once
 #include "object.i.h"
+#include <sstream>
 
-#define EX_INTERFACE_MAP_BEGIN()											\
+#define EX_BEGIN_INTERFACE_MAP()											\
 	EXSTDMETHOD QueryInterface(REFIID riid, void** ppvObject) override {	
 
-#define EX_INTERFACE_MAP_END()										\
+#define EX_END_INTERFACE_MAP()										\
 		ppvObject = nullptr;										\
 		return E_NOINTERFACE;										\
 	}																\
@@ -21,7 +22,7 @@
 		return this->QueryInterface(__uuidof(QI), (void**)ppv);		\
 	}
 
-#define EX_INTERFACE_TO(Interface)						\
+#define EX_INTERFACE_ENTRY(Interface)						\
 	if (IsEqualIID(riid, __uuidof(Interface))) {		\
 		*ppvObject = static_cast<Interface*>(this);		\
 		static_cast<Interface*>(this)->AddRef();		\
@@ -46,11 +47,11 @@
 
 namespace ExDirectUI
 {
-	class ExObjectBase : public IExObject
+	template<class Interface>
+	class ExObjectBaseImpl : public Interface
 	{
 	public:
-		virtual ~ExObjectBase() {}
-
+		virtual ~ExObjectBaseImpl() {}
 
 	public:
 
@@ -69,9 +70,28 @@ namespace ExDirectUI
 			return ref_count;
 		}
 
+		// IExObject
+
+		EXMETHOD std::wstring EXOBJCALL ToString() const override 
+		{
+			wchar_t buffer[128]{};
+			swprintf_s(buffer, L"ExObject: 0x%p", this);
+			return std::wstring(buffer);
+		}
+		EXMETHOD void* EXOBJCALL GetContext(int index) const override
+		{
+			//FIXME: 这里应当触发一个异常
+
+			return nullptr;
+		}
+
+
+
 	protected:
 		EXMETHOD void EXOBJCALL FinalRelease() { delete this; }
 	private:
 		ULONG m_object_ref_count{ 1 };
 	};
+
+	using ExObjectBase = ExObjectBaseImpl<IExObject>;
 }

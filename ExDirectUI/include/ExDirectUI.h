@@ -28,13 +28,16 @@
 #include "status.h"
 
 #include "common/types.h"
-#include "interface/object.i.h"
+#include "common/interfaces/object.i.h"
 
 #include "kernel/memory.h"
 #include "kernel/atom.h"
 #include "kernel/data.h"
 #include "kernel/new.h"
 
+
+
+#include "resource/res_pool.h"
 
 #include "debug/status_handle.h"
 #include "debug/exception.h"

@@ -39,8 +39,8 @@
 // 配置项：记录内存泄露
 #define EX_CFG_DEBUG_MEMORY_LEAK
 
-// 配置项：允许输出日志
-#define EX_CFG_DEBUG_LOG
+// 配置项：允许输出调试内容
+#define EX_CFG_DEBUG_OUTPUT
 
 // 配置项：生成调用信息
 #define EX_CFG_DEBUG_CALL_INFO

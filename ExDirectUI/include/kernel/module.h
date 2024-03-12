@@ -62,7 +62,7 @@ namespace ExDirectUI
 		/// 模块描述
 		wchar_t description[256];
 	};
-	
+
 	class IExModuleUtils;
 	class IExModule;
 
@@ -70,6 +70,21 @@ namespace ExDirectUI
 	typedef HRESULT(APIENTRY* ExModuleEntryProc)(HMODULE module_handle, 
 		const IExModuleUtils* module_utils, IExModule** r_module);
 	
+	/////////////////////////////
+
+	EXINTERFACE("D3888235-E4C6-4E0F-B26D-B85CA5202B11") IExModule : public IUnknown
+	{
+		EXMETHOD EXATOM EXOBJCALL GetId() PURE;
+		EXMETHOD uint16_t EXOBJCALL GetType() PURE;
+		EXMETHOD void EXOBJCALL GetInfo(ExModuleInfo* r_info) PURE;
+		EXMETHOD HRESULT EXOBJCALL Invoke(uint32_t code, WPARAM wparam, LPARAM lparam, LRESULT* r_result) PURE;
+	};
+
+	EXINTERFACE("4BB3ED43-DD75-4679-882B-3E137D592496") IExModuleUtils : public IUnknown
+	{
+
+	};
+
 	////////////////////////////
 
 	HRESULT EXAPI EXCALL ExModuleLoadFromFile(const LPVOID file, WPARAM waram, LPARAM lparam, EXATOM* r_module_id);

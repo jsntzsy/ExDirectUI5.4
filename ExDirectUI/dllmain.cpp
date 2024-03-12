@@ -8,6 +8,7 @@
  */
 
 #include "stdafx.h"
+#include <common/utils/auto_ptr.hpp>
 
 BOOL APIENTRY DllMain(HMODULE module_handle, DWORD reason, LPVOID reserved)
 {
@@ -27,7 +28,15 @@ namespace ExDirectUI
 {
 	EXTERN_C HRESULT EXAPI APIENTRY ExDbgEntry(HINSTANCE instance)
 	{
-		
-		return S_OK;
+		try
+		{
+			ExAutoPtr<IExResPool> res_pool;
+			throw_if_failed(ExResPoolCreate(10, NULL, NULL, &res_pool), L"创建资源池失败");
+			auto str = res_pool->ToString();
+
+
+			return S_OK;
+		}
+		catch_default({});
 	}
 }

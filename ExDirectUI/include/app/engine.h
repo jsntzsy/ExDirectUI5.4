@@ -10,6 +10,13 @@
 
 namespace ExDirectUI
 {
+	/// 引擎标识
+	enum ExEngineFlags
+	{
+		EX_ENGINE_FLAG_NONE = 0x00000000,				///< 引擎标识：无
+		EX_ENGINE_FLAG_DEBUG = 0x01000000,				///< 引擎标识：调试模式
+	};
+
 	/// 引擎初始化信息
 	struct ExEngineInitInfo
 	{
@@ -39,4 +46,11 @@ namespace ExDirectUI
 	 */
 	HRESULT EXAPI EXCALL ExEngineUnInit();
 
+	/**
+	 * @brief 引擎_查询标识
+	 * 查询引擎当前是否包含指定标识
+	 * @param flag 引擎标识
+	 * @return 返回是否包含指定标识
+	 */
+	bool EXAPI EXCALL ExEngineQueryFlag(DWORD flag);
 }

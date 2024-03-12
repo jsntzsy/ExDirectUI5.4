@@ -59,10 +59,10 @@ namespace ExDirectUI
 		int m_line;
 	};
 
-#define throw_ex(status,message)	throw ExException(status, message, __CALLINFO__)					// 抛出异常
-#define throw_if_false(exp,status,message) if(!(exp)) { throw_ex(status,message); }						// 错误则抛出异常
-#define throw_if_failed(hr,message) { HRESULT _HR_ = hr; if(FAILED(_HR_)){ throw_ex(_HR_, message); }}	// 失败则抛出异常
-#define throw_if_notok(hr,message) { HRESULT _HR_ = hr; if(_HR_ != S_OK){ throw_ex(_HR_, message); }}	// 不成功则抛出异常
+#define throw_ex(status,message)	throw ExException(status, message, __CALLINFO__)						// 抛出异常
+#define throw_if_false(exp,status,message) if(!(exp)) { throw_ex(status,message); }							// 错误则抛出异常
+#define throw_if_failed(exp,message) { HRESULT _HR_ = exp; if(FAILED(_HR_)){ throw_ex(_HR_, message); }}	// 失败则抛出异常
+#define throw_if_notok(exp,message) { HRESULT _HR_ = exp; if(_HR_ != S_OK){ throw_ex(_HR_, message); }}		// 不成功则抛出异常
 
 #define catch_return(todo)		catch(ExException& e) { todo; return e.handle(); }		// 捕获异常并返回
 #define catch_continue(todo)	catch(ExException& e) { todo; e.handle(); }				// 捕获异常并继续执行
@@ -77,11 +77,11 @@ namespace ExDirectUI
 	if(!(exp)) { todo; return ExStatusHandle(status,__CALLINFO__,message); }
 
 	// 失败则处理异常
-#define handle_if_failed(hr,message,todo) \
-	{ HRESULT _HR_ = hr; if(FAILED(_HR_)){ todo; return ExStatusHandle(_HR_,__CALLINFO__, message); }}
+#define handle_if_failed(exp,message,todo) \
+	{ HRESULT _HR_ = exp; if(FAILED(_HR_)){ todo; return ExStatusHandle(_HR_,__CALLINFO__, message); }}
 
 	// 不成功则处理异常
-#define handle_if_notok(hr,message,todo) \
-	{ HRESULT _HR_ = hr; if(_HR_ != S_OK){ todo; return ExStatusHandle(_HR_,__CALLINFO__, message); }}
+#define handle_if_notok(exp,message,todo) \
+	{ HRESULT _HR_ = exp; if(_HR_ != S_OK){ todo; return ExStatusHandle(_HR_,__CALLINFO__, message); }}
 
 }

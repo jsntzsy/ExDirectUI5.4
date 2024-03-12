@@ -9,7 +9,6 @@
 
 #include "stdafx.h"
 #include "kernel/module.h"
-#include "interface/module.i.h"
 #include "src/kernel/module.h"
 #include "src/kernel/module_utils.h"
 #include "common/utils/auto_ptr.hpp"
@@ -21,15 +20,15 @@ namespace ExDirectUI
 	{
 		static HMODULE WINAPI LoadModule(const LPVOID file, WPARAM waram, LPARAM lparam)
 		{
-			return LoadLibraryW((LPCWSTR)file);
+			return ::LoadLibraryW((LPCWSTR)file);
 		}
 		static bool WINAPI FreeModule(HMODULE module_handle)
 		{
-			return FreeLibrary(module_handle);
+			return ::FreeLibrary(module_handle);
 		}
 		static FARPROC WINAPI GetProcAddress(HMODULE module_handle, LPCSTR proc_name)
 		{
-			return GetProcAddress(module_handle, proc_name);
+			return ::GetProcAddress(module_handle, proc_name);
 		}
 
 		ExModuleFileLoaderDefault()

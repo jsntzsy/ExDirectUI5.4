@@ -47,7 +47,7 @@ namespace ExDirectUI
 			nullptr, status, 0, (LPWSTR)&text, 0, nullptr
 		);
 
-		if (text) { 
+		if (text) {
 
 			//去掉末尾的回车换行符
 			size_t len = wcslen(text);
@@ -56,7 +56,7 @@ namespace ExDirectUI
 				else if (text[len - 1] == L'\n') { text[len - 1] = L'\0'; }
 			}
 
-			*free = true; 
+			*free = true;
 		}
 		return text;
 	}
@@ -71,7 +71,7 @@ namespace ExDirectUI
 		if (free) { LocalFree((HLOCAL)status_text); }
 
 		//连接附加文本
-		if(text){ wcscat_s(buffer, text); }
+		if (text) { wcscat_s(buffer, text); }
 
 		//调用用户处理函数
 		if (s_debug_status_handler && s_debug_status_handler(status, file, line, buffer)) {
@@ -79,16 +79,18 @@ namespace ExDirectUI
 		}
 
 		//系统默认处理
+		if (ExEngineQueryFlag(EX_ENGINE_FLAG_DEBUG)) {
 #ifdef EX_CFG_DEBUG_INTERRUPT
-		ExAssertFmtCallInfo(SUCCEEDED(status), file,line, buffer);
-#else
-		if (file) {
-			wchar_t file_info[EX_CFG_SIZEOF_FORMAT_BUF]{};
-			swprintf_s(file_info, L"%s(%d): ", file, line);
-			OutputDebugStringW(file_info);
+			ExAssertFmtCallInfo(SUCCEEDED(status), file, line, buffer);
+#elif defined(EX_CFG_DEBUG_OUTPUT)
+			if (file) {
+				wchar_t file_info[EX_CFG_SIZEOF_FORMAT_BUF]{};
+				swprintf_s(file_info, L"%s(%d): ", file, line);
+				OutputDebugStringW(file_info);
+			}
+			OutputDebugStringW(buffer);
+#endif 
 		}
-		OutputDebugStringW(buffer);
-#endif // !EX_CFG_DEBUG_INTERRUPT
 
 		return status;
 	}

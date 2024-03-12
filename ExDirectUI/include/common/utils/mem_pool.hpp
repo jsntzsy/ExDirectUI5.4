@@ -90,6 +90,8 @@ namespace ExDirectUI
 
 		}
 
+		inline size_t GetBlockSize() const { return sizeof(T); }
+
 	private:
 
 		// 内存块信息
@@ -203,6 +205,8 @@ namespace ExDirectUI
 			m_chunk_head = nullptr;
 
 		}
+
+		inline size_t GetBlockSize() const { return m_block_size; }
 
 		template<typename T>
 		inline T* Alloc() { return (T*)Alloc(); }

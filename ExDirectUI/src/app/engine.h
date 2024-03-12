@@ -10,6 +10,6 @@
 
 namespace ExDirectUI
 {
-
-
+	extern HINSTANCE g_engine_instance;
+	extern DWORD g_engine_flags;
 }
