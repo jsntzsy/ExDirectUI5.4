@@ -8,6 +8,7 @@ public:
 	{
 		ExEngineInitInfo eii{};
 		eii.instance = GetModuleHandleW(nullptr);
+		eii.flags = EX_ENGINE_FLAG_NONE;
 
 		//ExModuleFileInfo modules[] = {
 		//	{L"ExDirectUI.ImageDecoder.WIC.dll",0,0},

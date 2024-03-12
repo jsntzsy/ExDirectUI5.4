@@ -25,20 +25,24 @@ namespace ExDirectUI
 
 	/// 资源池释放项目回调函数类型
 	typedef HRESULT(CALLBACK* ExResPoolFreeItemProc)(IExResPool* pool, EXATOM key,
-		DWORD flags, void* r_res);
+		DWORD flags, void* res);
 
 	/// 资源池枚举项目回调函数类型
 	typedef HRESULT(CALLBACK* ExResPoolEnumItemProc)(IExResPool* pool, EXATOM key,
-		DWORD flags, void* r_res, LPARAM lparam);
+		DWORD flags, void* res, LPARAM lparam);
 
 	////////////////////////
 
 	EXINTERFACE("DCF4F67A-2D44-4D4C-9338-F0822DEB32CB") IExResPool : public IExObject
 	{
+		EXMETHOD HRESULT EXOBJCALL GetItemCount(size_t* r_count) const PURE;
+		EXMETHOD HRESULT EXOBJCALL ItemExists(EXATOM key) const PURE;
+		EXMETHOD HRESULT EXOBJCALL FindKeyByPtr(void* res, EXATOM* r_key) const PURE;
 		EXMETHOD HRESULT EXOBJCALL UseOrCreateItem(EXATOM key,  const void* data, WPARAM wparam, LPARAM lparam,
 		DWORD flags, void** r_res) PURE;
 		EXMETHOD HRESULT EXOBJCALL UseItem(EXATOM key, void** r_res) PURE;
 		EXMETHOD HRESULT EXOBJCALL UnUseItem(EXATOM key) PURE;
+		EXMETHOD HRESULT EXOBJCALL UnUseItemByPtr(void* res) PURE;
 		EXMETHOD HRESULT EXOBJCALL EnumItems(ExResPoolEnumItemProc enum_proc, LPARAM lparam) PURE;
 	};
 

@@ -35,7 +35,7 @@ namespace ExDirectUI
 		ExLockRegion(ExLockRegion& r) = delete;
 		
 	public:
-		ExLockRegion(ExLock& locker) :m_locker(locker) { locker.Lock(); }
+		ExLockRegion(const ExLock& locker) :m_locker(const_cast<ExLock&>(locker)) { m_locker.Lock(); }
 		~ExLockRegion() { m_locker.UnLock(); }
 
 	private:

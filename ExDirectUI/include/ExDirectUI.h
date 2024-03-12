@@ -29,6 +29,7 @@
 
 #include "common/types.h"
 #include "common/interfaces/object.i.h"
+#include "common/utils/auto_ptr.hpp"
 
 #include "kernel/memory.h"
 #include "kernel/atom.h"

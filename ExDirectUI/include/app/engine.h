@@ -15,6 +15,8 @@ namespace ExDirectUI
 	{
 		EX_ENGINE_FLAG_NONE = 0x00000000,				///< 引擎标识：无
 		EX_ENGINE_FLAG_DEBUG = 0x01000000,				///< 引擎标识：调试模式
+
+		EX_ENGINE_FLAG_DEFULT = -1,						///< 引擎标识：默认
 	};
 
 	/// 引擎初始化信息

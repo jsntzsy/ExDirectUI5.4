@@ -42,6 +42,52 @@ namespace ExDirectUI
 			m_res.clear();
 			m_pool.Clear();
 		}
+		EXMETHOD HRESULT EXOBJCALL GetItemCount(size_t* r_count) const override
+		{
+			CHECK_PARAM(r_count);
+			_Locked(m_lock);
+
+			*r_count = m_res.size();
+			return S_OK;
+		}
+
+		EXMETHOD HRESULT EXOBJCALL ItemExists(EXATOM key) const override
+		{
+			_Locked(m_lock);
+			return m_res.find(key) != m_res.end() ? S_OK : S_FALSE;
+		}
+
+		EXMETHOD HRESULT EXOBJCALL FindKeyByPtr(void* res, EXATOM* r_key) const override
+		{
+			CHECK_PARAM(res);
+			CHECK_PARAM(r_key);
+
+			//获得头部
+			ExResPoolItemHeader* header = (ExResPoolItemHeader*)res;
+			header--;
+
+			//如果是可读区域,则尝试通过key找下
+			if (!::IsBadReadPtr(header, sizeof(ExResPoolItemHeader))) {
+				auto it = m_res.find(header->key);
+
+				//找到了
+				if (it != m_res.end()) {
+					*r_key = it->first;
+					return S_OK;
+				}
+			}
+
+			//其他情况就只能遍历表了
+			for (auto it = m_res.begin(); it != m_res.end(); ++it)
+			{
+				if (it->second == header) {
+					*r_key = it->first;
+					return S_OK;
+				}
+			}
+
+			return handle_ex(EE_NOEXISTS, L"该项目不存在");
+		}
 
 		EXMETHOD HRESULT EXOBJCALL UseOrCreateItem(EXATOM key, const void* data,
 			WPARAM wparam, LPARAM lparam, DWORD flags, void** r_res) noexcept override
@@ -68,7 +114,7 @@ namespace ExDirectUI
 				//设置参数
 				header->flags = flags;
 				header->ref_count = 1;
-				header->atom = key;
+				header->key = key;
 
 				// 如果有初始化回调，则调用
 				if (m_init_item_proc) {
@@ -110,33 +156,34 @@ namespace ExDirectUI
 			auto it = m_res.find(key);
 			handle_if_false(it != m_res.end(), EE_NOEXISTS, L"该项目不存在");
 
-			auto header = it->second;
-			try
-			{
-				// 减少引用计数,如果引用计数为0
-				if (--header->ref_count == 0) {
+			return _UnUseItemByIter(it);
+		}
 
-					// 如果不是永久项目，则释放
-					if ((header->flags & EX_RESPOOL_ITEM_ETERNAL) == 0) {
+		EXMETHOD HRESULT EXOBJCALL UnUseItemByPtr(void* res) override
+		{
+			CHECK_PARAM(res);
 
-						// 如果有释放回调，则调用
-						if (m_free_item_proc) {
-							throw_if_failed(
-								m_free_item_proc(this, key, header->flags, header + 1),
-								L"释放项目失败"
-							);
-						}
+			//获得头部
+			ExResPoolItemHeader* header = (ExResPoolItemHeader*)res;
+			header--;
 
-						// 从资源表和内存池中移除
-						m_res.erase(it);
-						m_pool.Free(header);
-					}
+			//如果是可读区域,则尝试通过key找下
+			if (!::IsBadReadPtr(header, sizeof(ExResPoolItemHeader))) {
+				auto it = m_res.find(header->key);
+
+				//找到了
+				if (it != m_res.end()) {
+					if (SUCCEEDED(_UnUseItemByIter(it))) { return S_OK; }
 				}
-
-				return S_OK;
 			}
-			//如果发生异常，就恢复引用计数
-			catch_default({ header->ref_count++; });
+
+			//其他情况就只能遍历表了
+			for (auto it = m_res.begin(); it != m_res.end(); ++it)
+			{
+				if (it->second == header) { return _UnUseItemByIter(it); }
+			}
+
+			return handle_ex(EE_NOEXISTS, L"该项目不存在");
 		}
 
 		EXMETHOD HRESULT EXOBJCALL EnumItems(ExResPoolEnumItemProc enum_proc, LPARAM lparam) override
@@ -174,11 +221,45 @@ namespace ExDirectUI
 		}
 
 	private:
+
+		struct ExResPoolItemHeader;
+
+		HRESULT _UnUseItemByIter(std::unordered_map<EXATOM, ExResPoolItemHeader*>::iterator& it)
+		{
+			auto header = it->second;
+			try
+			{
+				// 减少引用计数,如果引用计数为0
+				if (--header->ref_count == 0) {
+
+					// 如果不是永久项目，则释放
+					if ((header->flags & EX_RESPOOL_ITEM_ETERNAL) == 0) {
+
+						// 如果有释放回调，则调用
+						if (m_free_item_proc) {
+							throw_if_failed(
+								m_free_item_proc(this, header->key, header->flags, header + 1),
+								L"释放项目失败"
+							);
+						}
+
+						// 从资源表和内存池中移除
+						m_res.erase(it);
+						m_pool.Free(header);
+					}
+				}
+
+				return S_OK;
+			}
+			//如果发生异常，就恢复引用计数
+			catch_default({ header->ref_count++; });
+		}
+
 		struct ExResPoolItemHeader
 		{
 			DWORD flags;
 			int32_t ref_count;
-			EXATOM atom;
+			EXATOM key;
 		};
 
 		ExDynamicMemPool m_pool;
@@ -194,11 +275,12 @@ namespace ExDirectUI
 	HRESULT EXAPI EXCALL ExResPoolCreate(size_t item_size, ExResPoolInitItemProc init_item_proc,
 		ExResPoolFreeItemProc free_item_proc, IExResPool** r_pool)
 	{
+		CHECK_PARAM(item_size > 0);
 		CHECK_PARAM(r_pool);
 
 		try
 		{
-			ExAutoPtr<CExResPool> pool(NEW CExResPool(item_size, init_item_proc, free_item_proc));
+			ExAutoPtr<CExResPool> pool = NEW CExResPool(item_size, init_item_proc, free_item_proc);
 			return pool->QueryInterface(r_pool);
 		}
 		catch_default({});

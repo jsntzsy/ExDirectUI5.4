@@ -6,15 +6,6 @@
     <ClCompile Include="kernel\memory_test.cpp">
       <Filter>kernel</Filter>
     </ClCompile>
-    <ClCompile Include="debug\log_test.cpp">
-      <Filter>debug</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\status_handle_test.cpp">
-      <Filter>debug</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\try_catch_test.cpp">
-      <Filter>debug</Filter>
-    </ClCompile>
     <ClCompile Include="core_test.cpp" />
     <ClCompile Include="kernel\data_test.cpp">
       <Filter>kernel</Filter>
@@ -22,11 +13,8 @@
     <ClCompile Include="kernel\atom_test.cpp">
       <Filter>kernel</Filter>
     </ClCompile>
-    <ClCompile Include="kernel\handle_test.cpp">
-      <Filter>kernel</Filter>
-    </ClCompile>
-    <ClCompile Include="res_support\parse_string_test.cpp">
-      <Filter>res_support</Filter>
+    <ClCompile Include="resource\res_pool_test.cpp">
+      <Filter>resource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -39,7 +27,7 @@
     <Filter Include="debug">
       <UniqueIdentifier>{06e63690-25d9-4de3-a183-836e78db8e92}</UniqueIdentifier>
     </Filter>
-    <Filter Include="res_support">
+    <Filter Include="resource">
       <UniqueIdentifier>{3a115cc5-0a7a-4945-8523-6980735b1c6e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

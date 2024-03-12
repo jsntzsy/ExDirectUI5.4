@@ -72,6 +72,8 @@ namespace ExDirectUI
 	
 #define try_default(try_block,tood)	try{ try_block;} catch_default(todo);				// 简单异常捕获
 
+#define handle_ex(status,message) ExStatusHandle(status,__CALLINFO__,message)			// 处理异常
+
 	// 错误则处理异常
 #define handle_if_false(exp,status,message,todo) \
 	if(!(exp)) { todo; return ExStatusHandle(status,__CALLINFO__,message); }

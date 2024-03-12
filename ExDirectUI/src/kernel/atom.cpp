@@ -25,7 +25,7 @@ namespace ExDirectUI
 	{
 		ExAssert(_RtlComputeCrc32);
 		CHECK_PARAM_RET(data, EXATOM_UNKNOWN);
-		CHECK_PARAM_RET(size > 0, EXATOM_UNKNOWN);
+ 		CHECK_PARAM_RET(size > 0, EXATOM_UNKNOWN);
 
 		return _ExAtom(data, size);
 	}
