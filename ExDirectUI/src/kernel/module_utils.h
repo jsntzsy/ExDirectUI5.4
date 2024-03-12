@@ -8,23 +8,28 @@
  */
 #pragma once
 #include "common/utils/singleton.hpp"
+#include "kernel/module.h"
+#include "common/interfaces/object_impl.hpp"
 
 namespace ExDirectUI
 {
 	struct ExModuleInfo;
 	class IExModule;
 
-	class ExModuleUtils : public ExSingleton<ExModuleUtils>
+	class ExModuleUtils : public IExModuleUtils, public ExSingleton<ExModuleUtils>
 	{
 	public:
+		EX_BEGIN_INTERFACE_MAP();
+		EX_INTERFACE_ENTRY(IExModuleUtils);
+		EX_INTERFACE_ENTRY(IUnknown);
+		EX_END_INTERFACE_MAP();
+		
 
-
-
+		EXSTDMETHOD DecodeImageFile(LPCWSTR file, IExDecodeImage** r_image) override;
+		EXSTDMETHOD DecodeImageMemory(const byte_t* data, size_t size, IExDecodeImage** r_image) override;
 
 	public:
-		static void EXOBJCALL Group(const ExModuleInfo* info, IExModule* instance) MAYTHROW;
-		static void EXOBJCALL UnGroup(IExModule* instance) MAYTHROW;
-	private:
-
+		static HRESULT EXOBJCALL Group(uint16_t type, IExModule* instance);
+		static HRESULT EXOBJCALL UnGroup(IExModule* instance);
 	};
 }

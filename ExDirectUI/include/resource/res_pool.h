@@ -35,19 +35,19 @@ namespace ExDirectUI
 
 	EXINTERFACE("DCF4F67A-2D44-4D4C-9338-F0822DEB32CB") IExResPool : public IExObject
 	{
-		EXMETHOD HRESULT EXOBJCALL GetItemCount(size_t* r_count) const PURE;
-		EXMETHOD HRESULT EXOBJCALL ItemExists(EXATOM key) const PURE;
-		EXMETHOD HRESULT EXOBJCALL FindKeyByPtr(void* res, EXATOM* r_key) const PURE;
-		EXMETHOD HRESULT EXOBJCALL UseOrCreateItem(EXATOM key,  const void* data, WPARAM wparam, LPARAM lparam,
-		DWORD flags, void** r_res) PURE;
-		EXMETHOD HRESULT EXOBJCALL UseItem(EXATOM key, void** r_res) PURE;
-		EXMETHOD HRESULT EXOBJCALL UnUseItem(EXATOM key) PURE;
-		EXMETHOD HRESULT EXOBJCALL UnUseItemByPtr(void* res) PURE;
-		EXMETHOD HRESULT EXOBJCALL EnumItems(ExResPoolEnumItemProc enum_proc, LPARAM lparam) PURE;
+		EXSTDMETHOD GetItemCount(size_t * r_count) const PURE;
+		EXSTDMETHOD ItemExists(EXATOM key) const PURE;
+		EXSTDMETHOD FindKeyByPtr(void* res, EXATOM* r_key) const PURE;
+		EXSTDMETHOD UseOrCreateItem(EXATOM key,  const void* data, WPARAM wparam, LPARAM lparam,
+			DWORD flags, void** r_res) PURE;
+		EXSTDMETHOD UseItem(EXATOM key, void** r_res) PURE;
+		EXSTDMETHOD UnUseItem(EXATOM key) PURE;
+		EXSTDMETHOD UnUseItemByPtr(void* res) PURE;
+		EXSTDMETHOD EnumItems(ExResPoolEnumItemProc enum_proc, LPARAM lparam) PURE;
 	};
 
 	///////////////////////
-	
+
 	HRESULT EXAPI EXCALL ExResPoolCreate(size_t item_size, ExResPoolInitItemProc init_item_proc,
 		ExResPoolFreeItemProc free_item_proc, IExResPool** r_pool);
 

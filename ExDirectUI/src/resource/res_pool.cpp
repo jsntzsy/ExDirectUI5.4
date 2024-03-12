@@ -42,7 +42,7 @@ namespace ExDirectUI
 			m_res.clear();
 			m_pool.Clear();
 		}
-		EXMETHOD HRESULT EXOBJCALL GetItemCount(size_t* r_count) const override
+		EXSTDMETHOD GetItemCount(size_t* r_count) const override
 		{
 			CHECK_PARAM(r_count);
 			_Locked(m_lock);
@@ -51,13 +51,13 @@ namespace ExDirectUI
 			return S_OK;
 		}
 
-		EXMETHOD HRESULT EXOBJCALL ItemExists(EXATOM key) const override
+		EXSTDMETHOD ItemExists(EXATOM key) const override
 		{
 			_Locked(m_lock);
 			return m_res.find(key) != m_res.end() ? S_OK : S_FALSE;
 		}
 
-		EXMETHOD HRESULT EXOBJCALL FindKeyByPtr(void* res, EXATOM* r_key) const override
+		EXSTDMETHOD FindKeyByPtr(void* res, EXATOM* r_key) const override
 		{
 			CHECK_PARAM(res);
 			CHECK_PARAM(r_key);
@@ -86,10 +86,10 @@ namespace ExDirectUI
 				}
 			}
 
-			return handle_ex(EE_NOEXISTS, L"该项目不存在");
+			handle_ex(EE_NOEXISTS, L"该项目不存在");
 		}
 
-		EXMETHOD HRESULT EXOBJCALL UseOrCreateItem(EXATOM key, const void* data,
+		EXSTDMETHOD UseOrCreateItem(EXATOM key, const void* data,
 			WPARAM wparam, LPARAM lparam, DWORD flags, void** r_res) noexcept override
 		{
 			_Locked(m_lock);
@@ -135,7 +135,7 @@ namespace ExDirectUI
 			catch_default({ if (header) { m_pool.Free(header); } });
 		}
 
-		EXMETHOD HRESULT EXOBJCALL UseItem(EXATOM key, void** r_res) override
+		EXSTDMETHOD UseItem(EXATOM key, void** r_res) override
 		{
 			_Locked(m_lock);
 
@@ -149,7 +149,7 @@ namespace ExDirectUI
 			return S_OK;
 		}
 
-		EXMETHOD HRESULT EXOBJCALL UnUseItem(EXATOM key) override
+		EXSTDMETHOD UnUseItem(EXATOM key) override
 		{
 			_Locked(m_lock);
 
@@ -159,7 +159,7 @@ namespace ExDirectUI
 			return _UnUseItemByIter(it);
 		}
 
-		EXMETHOD HRESULT EXOBJCALL UnUseItemByPtr(void* res) override
+		EXSTDMETHOD UnUseItemByPtr(void* res) override
 		{
 			CHECK_PARAM(res);
 
@@ -183,10 +183,10 @@ namespace ExDirectUI
 				if (it->second == header) { return _UnUseItemByIter(it); }
 			}
 
-			return handle_ex(EE_NOEXISTS, L"该项目不存在");
+			handle_ex(EE_NOEXISTS, L"该项目不存在");
 		}
 
-		EXMETHOD HRESULT EXOBJCALL EnumItems(ExResPoolEnumItemProc enum_proc, LPARAM lparam) override
+		EXSTDMETHOD EnumItems(ExResPoolEnumItemProc enum_proc, LPARAM lparam) override
 		{
 			CHECK_PARAM(enum_proc);
 			_Locked(m_lock);

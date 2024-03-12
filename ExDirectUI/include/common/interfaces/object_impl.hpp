@@ -29,11 +29,11 @@
 		return S_OK;									\
 	}
 
-#define EX_INTERFACE_UNK(Interface)						\
-	if (IsEqualIID(riid, __uuidof(IUnknown))) {			\
-		*ppvObject = static_cast<Interface*>(this);		\
-		static_cast<Interface*>(this)->AddRef();		\
-		return S_OK;									\
+#define EX_INTERFACE_ENTRY2(Interface,InterfaceType)		\
+	if (IsEqualIID(riid, __uuidof(Interface))) {			\
+		*ppvObject = static_cast<InterfaceType*>(this);		\
+		static_cast<InterfaceType*>(this)->AddRef();		\
+		return S_OK;										\
 	}
 
 #define EX_INTERFACE_MULTI_IMPLIMENT()										\

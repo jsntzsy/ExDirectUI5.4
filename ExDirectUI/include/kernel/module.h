@@ -22,7 +22,7 @@ namespace ExDirectUI
 		/// 获取模块函数
 		FARPROC(WINAPI* GetProcAddress)(HMODULE module_handle, LPCSTR proc_name);
 	};
-	
+
 	/// 模块类型
 	enum ExModuleType
 	{
@@ -43,7 +43,7 @@ namespace ExDirectUI
 	{
 		/// 模块ID
 		EXATOM id;
-		
+
 		/// 模块类型
 		uint16_t type;
 
@@ -52,10 +52,10 @@ namespace ExDirectUI
 
 		/// 模块名称
 		wchar_t name[64];
-		
+
 		/// 模块版本
 		wchar_t version[32];
-		
+
 		/// 模块作者
 		wchar_t author[32];
 
@@ -67,9 +67,9 @@ namespace ExDirectUI
 	class IExModule;
 
 	/// 模块入口函数类型
-	typedef HRESULT(APIENTRY* ExModuleEntryProc)(HMODULE module_handle, 
+	typedef HRESULT(APIENTRY* ExModuleEntryProc)(HMODULE module_handle,
 		const IExModuleUtils* module_utils, IExModule** r_module);
-	
+
 	/////////////////////////////
 
 	EXINTERFACE("D3888235-E4C6-4E0F-B26D-B85CA5202B11") IExModule : public IUnknown
@@ -80,9 +80,12 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL Invoke(uint32_t code, WPARAM wparam, LPARAM lparam, LRESULT* r_result) PURE;
 	};
 
+	interface IExDecodeImage;
+
 	EXINTERFACE("4BB3ED43-DD75-4679-882B-3E137D592496") IExModuleUtils : public IUnknown
 	{
-
+		EXSTDMETHOD DecodeImageFile(LPCWSTR file, IExDecodeImage * *r_image) PURE;
+		EXSTDMETHOD DecodeImageMemory(const byte_t* data, size_t size, IExDecodeImage** r_image) PURE;
 	};
 
 	////////////////////////////
@@ -96,5 +99,5 @@ namespace ExDirectUI
 	HRESULT EXAPI EXCALL ExModuleGetInfo(EXATOM module_id, ExModuleInfo* r_info);
 	HRESULT EXAPI EXCALL ExModuleInvoke(EXATOM module_id, uint32_t msg, WPARAM wparam, LPARAM lparam, LRESULT* r_result);
 
-	
+
 }

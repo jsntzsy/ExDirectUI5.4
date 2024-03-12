@@ -31,14 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pugi_xml", "pugi_xml", "{CC
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExDirectUI.Debug.WinForm", "Debug\ExDirectUI.Debug.WinForm\ExDirectUI.Debug.WinForm.vcxproj", "{552E5DDD-1104-4AF4-97AA-54C7117FF53B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F89598C7-E6DB-4BD6-A33D-09FB1117E795} = {F89598C7-E6DB-4BD6-A33D-09FB1117E795}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExDirectUI.Debug.UnitTest", "Debug\ExDirectUI.Debug.UnitTest\ExDirectUI.Debug.UnitTest.vcxproj", "{955FF31A-A460-4450-AF61-D7C9C516E3A8}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F89598C7-E6DB-4BD6-A33D-09FB1117E795} = {F89598C7-E6DB-4BD6-A33D-09FB1117E795}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

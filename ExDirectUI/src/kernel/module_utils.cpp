@@ -11,18 +11,55 @@
 #include "src/kernel/module_utils.h"
 #include "kernel/module.h"
 
+#include "src/drawing/image_decoder.h"
+
 namespace ExDirectUI
 {
-	void EXOBJCALL ExModuleUtils::Group(const ExModuleInfo* info, IExModule* instance) MAYTHROW
+	HRESULT EXOBJCALL ExModuleUtils::Group(uint16_t type, IExModule* instance)
 	{
-
-
-
+		switch (type)
+		{
+		case ExDirectUI::EX_MODULE_IMAGE_DECODER: {
+			ExAutoPtr<IExImageDecoder> decoder;
+			handle_if_failed(instance->QueryInterface(&decoder), L"未实现对应接口");
+			return _ExImageDecoder_Group(decoder);
+		}
+		case ExDirectUI::EX_MODULE_RENDER: {
+			
+			return E_NOTIMPL;
+		}
+		default: handle_ex(E_NOTIMPL, L"不支持的模块类型");
+		}
 	}
-	void EXOBJCALL ExModuleUtils::UnGroup(IExModule* instance) MAYTHROW
+	HRESULT EXOBJCALL ExModuleUtils::UnGroup(IExModule* instance)
 	{
+		switch (instance->GetType())
+		{
+		case ExDirectUI::EX_MODULE_IMAGE_DECODER: {
+			return _ExImageDecoder_UnGroup((IExImageDecoder*)instance);
+		}
+		case ExDirectUI::EX_MODULE_RENDER: {
 
-
+			return E_NOTIMPL;
+		}
+		default: handle_ex(E_NOTIMPL, L"不支持的模块类型");
+		}
+	}
+	
+	HRESULT EXOBJCALL ExModuleUtils::DecodeImageFile(LPCWSTR file, IExDecodeImage** r_image)
+	{
+		CHECK_PARAM(file);
+		CHECK_PARAM(r_image);
+		
+		return _ExImageDecoder_LoadFromFile(file, r_image);
+	}
+	HRESULT EXOBJCALL ExModuleUtils::DecodeImageMemory(const byte_t* data, size_t size, IExDecodeImage** r_image)
+	{
+		CHECK_PARAM(data);
+		CHECK_PARAM(size > 0);
+		CHECK_PARAM(r_image);
+		
+		return _ExImageDecoder_LoadFromMemory(data, size, r_image);
 	}
 }
 

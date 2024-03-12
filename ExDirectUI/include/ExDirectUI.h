@@ -36,7 +36,7 @@
 #include "kernel/data.h"
 #include "kernel/new.h"
 
-
+#include "drawing/image_decoder.h"
 
 #include "resource/res_pool.h"
 

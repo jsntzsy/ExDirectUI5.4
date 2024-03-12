@@ -69,7 +69,7 @@ namespace ExDirectUI
 		throw_if_false(it == g_modules.end(), EE_EXISTS, L"模块ID冲突");
 
 		// 模块分组
-		ExModuleUtils::Group(&info, module_instance);
+		ExModuleUtils::Group(module_instance->GetType(), module_instance);
 
 		// 加入模块表
 		g_modules[info.id] = { module_handle, module_instance.Detach() };
