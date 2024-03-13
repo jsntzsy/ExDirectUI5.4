@@ -22,7 +22,6 @@ namespace ExDirectUI
 	}
 	ExImageDecoderLibPng::~ExImageDecoderLibPng()
 	{
-		this->ClearInstance(false);
 	}
 
 	HRESULT EXOBJCALL ExImageDecoderLibPng::Invoke(uint32_t code, WPARAM wparam, LPARAM lparam, LRESULT* r_result)

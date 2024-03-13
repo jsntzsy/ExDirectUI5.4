@@ -21,9 +21,22 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 		ExEngineInitInfo eii{};
 		eii.instance = hInstance;
 		eii.flags = EX_ENGINE_FLAG_DEBUG;
+
+		ExModuleFileInfo modules[] = {
+			{L"ExDirectUI.ImageDecoder.WIC.dll",0,0},
+			//{L"ExDirectUI.Render.Direct2D.dll",0,0},
+		};
+
+		eii.module_load_mode = EX_ENGINE_MODULE_LOAD_FROM_FILE;
+		eii.modules.files = modules;
+		eii.module_count = _countof(modules);
+
 		HRESULT status = ExEngineInit(&eii);
 		throw_if_failed(status, L"引擎初始化失败");
+		
+		
 		status = ExDbgEntry(hInstance);
+		
 		ExEngineUnInit();
 		return status;
 	}

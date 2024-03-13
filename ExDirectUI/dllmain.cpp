@@ -9,6 +9,7 @@
 
 #include "stdafx.h"
 #include "src/kernel/module_utils.h"
+#include "common/utils/string.hpp"
 
 BOOL APIENTRY DllMain(HMODULE module_handle, DWORD reason, LPVOID reserved)
 {
@@ -35,11 +36,24 @@ namespace ExDirectUI
 
 			ExAutoPtr<IExDecodeImage> image1;
 			ExModuleUtils::Instance()->DecodeImageFile(L"../../../../_res/apng/ball.a.png", &image1);
-			ExDebugOutputRaw(to_wstring(image1->GetFrameCount()).c_str());
+			if (image1) {
+				ExDebugOutputRaw(
+					ExString::format(L"ImageInfo: size: %ux%u, frame: %u\n",
+						image1->GetWidth(), image1->GetHeight(), image1->GetFrameCount()
+					).c_str()
+				);
+			}
 
 			ExAutoPtr<IExDecodeImage> image2;
-			ExModuleUtils::Instance()->DecodeImageFile(L"../../../../_res/1.jpg", &image2);
-			
+			ExModuleUtils::Instance()->DecodeImageFile(L"../../../../_res/1.gif", &image2);
+			if (image2) {
+				ExDebugOutputRaw(
+					ExString::format(L"ImageInfo: size: %ux%u, frame: %u\n",
+						image2->GetWidth(), image2->GetHeight(), image2->GetFrameCount()
+					).c_str()
+				);
+			}
+
 
 			return S_OK;
 		}

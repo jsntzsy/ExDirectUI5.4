@@ -82,18 +82,23 @@ namespace ExDirectUI
 		auto it = g_modules.find(id);
 		handle_if_false(it != g_modules.end(), EE_NOEXISTS, L"模块未找到");
 
+		IExModule* instance = it->second.module_instance;
+
 		//判断模块是否可以卸载
 		if (!is_uninit) {
 			ExModuleInfo info{};
-			it->second.module_instance->GetInfo(&info);
+			instance->GetInfo(&info);
 			handle_if_false(info.flags & EX_MODULE_FLAG_CAN_UNLOAD, E_NOTIMPL, L"模块不允许提前卸载");
 		}
 
 		// 模块取消分组
 		handle_if_failed(
-			ExModuleUtils::UnGroup(it->second.module_instance),
+			ExModuleUtils::UnGroup(instance),
 			L"模块取消分组失败"
 		);
+		
+		//调用OnModuleUnLoad
+		handle_if_failed(instance->OnModuleUnLoad(), L"模块卸载失败");
 
 		// 释放模块实例
 		SAFE_RELEASE(it->second.module_instance);
@@ -120,20 +125,38 @@ namespace ExDirectUI
 
 		//加载初始化时传入的模块
 		if (init_info->modules.unknown && init_info->module_count != 0) {
+			
+			EXATOM module_id = 0;
+			HRESULT status = S_OK;
+			
 			for (uint32_t i = 0; i < init_info->module_count; ++i) {
-				EXATOM module_id = 0;
 				switch (init_info->module_load_mode) {
 				case EX_ENGINE_MODULE_LOAD_FROM_HANDLE:
-					ExModuleLoadFromHandle(init_info->modules.handles[i], &module_id);
+					status = ExModuleLoadFromHandle(
+						init_info->modules.handles[i], &module_id
+					);
 					break;
 				case EX_ENGINE_MODULE_LOAD_FROM_FILE:
-					ExModuleLoadFromFile(&init_info->modules.files[i], 0, 0, &module_id);
+					status = ExModuleLoadFromFile(
+						init_info->modules.files[i].file,
+						init_info->modules.files[i].wparam,
+						init_info->modules.files[i].lparam,
+						&module_id
+					);
 					break;
 				case EX_ENGINE_MODULE_LOAD_FROM_FILE_PTR:
-					ExModuleLoadFromFile(init_info->modules.files_ptr[i], 0, 0, &module_id);
+					status = ExModuleLoadFromFile(
+						init_info->modules.files_ptr[i]->file,
+						init_info->modules.files_ptr[i]->wparam,
+						init_info->modules.files_ptr[i]->lparam,
+						&module_id
+					);
 					break;
 				case EX_ENGINE_MODULE_LOAD_FROM_ENTRY:
-					ExModuleLoadFromEntry(init_info->modules.entries[i], &module_id);
+					status = ExModuleLoadFromEntry(
+						init_info->modules.entries[i],
+						&module_id
+					);
 					break;
 				}
 			}
@@ -158,7 +181,7 @@ namespace ExDirectUI
 
 	/////////////////////////
 
-	HRESULT EXAPI EXCALL ExModuleLoadFromFile(const LPVOID file, WPARAM waram, LPARAM lparam, EXATOM* r_module_id)
+	HRESULT EXAPI EXCALL ExModuleLoadFromFile(const void* file, WPARAM waram, LPARAM lparam, EXATOM* r_module_id)
 	{
 		CHECK_PARAM(file);
 		CHECK_PARAM(r_module_id);
@@ -171,7 +194,7 @@ namespace ExDirectUI
 		{
 			// 获取模块入口
 			ExModuleEntryProc entry = (ExModuleEntryProc)g_module_loader.GetProcAddress(
-				module_handle, "ExModuleEntry");
+				module_handle, "_ExDirectUI_Module_Entry_");
 			throw_if_false(entry, EE_NOEXISTS, L"模块入口函数未找到");
 
 			// 加载模块

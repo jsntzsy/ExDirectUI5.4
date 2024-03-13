@@ -86,6 +86,7 @@ namespace ExDirectUI
 		EXMETHOD uint16_t EXOBJCALL GetType() const PURE;
 		EXMETHOD HRESULT EXOBJCALL GetInfo(ExModuleInfo* r_info) const PURE;
 		EXMETHOD HRESULT EXOBJCALL Invoke(uint32_t code, WPARAM wparam, LPARAM lparam, LRESULT* r_result) PURE;
+		EXMETHOD HRESULT EXOBJCALL OnModuleUnLoad() PURE;
 	};
 
 	interface IExDecodeImage;
@@ -98,7 +99,7 @@ namespace ExDirectUI
 
 	////////////////////////////
 
-	HRESULT EXAPI EXCALL ExModuleLoadFromFile(const LPVOID file, WPARAM waram, LPARAM lparam, EXATOM* r_module_id);
+	HRESULT EXAPI EXCALL ExModuleLoadFromFile(const void* file, WPARAM waram, LPARAM lparam, EXATOM* r_module_id);
 	HRESULT EXAPI EXCALL ExModuleLoadFromHandle(HMODULE module_handle, EXATOM* r_module_id);
 	HRESULT EXAPI EXCALL ExModuleLoadFromEntry(ExModuleEntryProc entry_proc, EXATOM* r_module_id);
 

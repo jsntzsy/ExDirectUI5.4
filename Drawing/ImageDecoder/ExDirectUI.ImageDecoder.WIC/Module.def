@@ -1,0 +1,6 @@
+﻿LIBRARY ExDirectUI.ImageDecoder.WIC.dll
+
+EXPORTS
+
+_ExDirectUI_Module_Entry_ = _ExDirectUI_ImageDecoder_WIC_
+

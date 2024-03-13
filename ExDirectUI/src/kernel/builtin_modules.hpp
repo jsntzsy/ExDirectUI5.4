@@ -11,7 +11,7 @@
 #include "include/kernel/module.h"
 
 #define EX_DECLEAR_BUILTIN_MODULE_ENTRY(EntryName, File) \
-	HRESULT APIENTRY EntryName(HMODULE module_handle, IExModuleUtils* utils, \
+	EXTERN_C HRESULT APIENTRY EntryName(HMODULE module_handle, IExModuleUtils* utils, \
 	ExModuleInfo* r_info, IExModule** r_module);\
 	__pragma(comment(lib, File))
 

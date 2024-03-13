@@ -10,14 +10,14 @@ public:
 		eii.instance = GetModuleHandleW(nullptr);
 		eii.flags = EX_ENGINE_FLAG_NONE;
 
-		//ExModuleFileInfo modules[] = {
-		//	{L"ExDirectUI.ImageDecoder.WIC.dll",0,0},
-		//	{L"ExDirectUI.Render.Direct2D.dll",0,0},
-		//};
+		ExModuleFileInfo modules[] = {
+			{L"ExDirectUI.ImageDecoder.WIC.dll",0,0},
+			//{L"ExDirectUI.Render.Direct2D.dll",0,0},
+		};
 
-		//ii.module_load_mode = EX_MODULE_LOAD_FROM_FILES;
-		//ii.modules.files = modules;
-		//ii.module_count = _countof(modules);
+		eii.module_load_mode = EX_ENGINE_MODULE_LOAD_FROM_FILE;
+		eii.modules.files = modules;
+		eii.module_count = _countof(modules);
 
 		ASSERT_NO_THROW({ throw_if_failed(ExEngineInit(&eii),L"ÒýÇæ³õÊ¼»¯Ê§°Ü");} );
 		
