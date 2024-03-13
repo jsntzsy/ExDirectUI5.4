@@ -118,7 +118,7 @@ namespace ExDirectUI
 
 				// 如果有初始化回调，则调用
 				if (m_init_item_proc) {
-					throw_if_failed(
+					throw_if_notok(
 						m_init_item_proc(this, key, data, wparam, lparam, flags, header + 1),
 						L"初始化项目失败"
 					);
@@ -132,7 +132,7 @@ namespace ExDirectUI
 				return S_OK;
 			}
 			//如果创建失败，就释放内存
-			catch_default({ if (header) { m_pool.Free(header); } });
+			catch_ignore({ if (header) { m_pool.Free(header); } return e.handle(true); });
 		}
 
 		EXSTDMETHOD UseItem(EXATOM key, void** r_res) override

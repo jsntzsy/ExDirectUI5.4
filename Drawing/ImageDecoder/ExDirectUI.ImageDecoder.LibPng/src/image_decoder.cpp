@@ -42,7 +42,7 @@ namespace ExDirectUI
 
 		//加载图像上下文
 		ExDecodeImageContextLibPng* context = nullptr;
-		handle_if_failed(
+		handle_if_notok(
 			m_pool->UseOrCreateItem(atom, file, 0, 0, 0, (void**)&context),
 			L"加载图像失败"
 		);
@@ -65,7 +65,7 @@ namespace ExDirectUI
 
 		//加载图像上下文
 		ExDecodeImageContextLibPng* context = nullptr;
-		handle_if_failed(
+		handle_if_notok(
 			m_pool->UseOrCreateItem(atom, data, size, 0, 0, (void**)&context),
 			L"加载图像失败"
 		);
@@ -94,7 +94,9 @@ namespace ExDirectUI
 		else {
 			context->image = ExAPngLoadFromMemory((byte_t*)data, wparam);
 		}
-		return context->image ? S_OK : E_FAIL;
+
+		//因为不一定由本解码器解码,所以如果不成功返回S_FALSE(不处理异常)
+		return context->image ? S_OK : S_FALSE;
 	}
 
 	HRESULT ExImageDecoderLibPng::_OnFreeImage(IExResPool* pool, EXATOM key, DWORD flags, void* res)

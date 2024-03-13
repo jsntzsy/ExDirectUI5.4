@@ -14,6 +14,7 @@
 namespace ExDirectUI
 {
 	using std::wstring;
+	using std::to_wstring;
 
 	typedef uint8_t byte_t;
 }
