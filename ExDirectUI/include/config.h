@@ -18,10 +18,10 @@
 #pragma region 模块管理配置项
 
 // 配置项：加载DLL模块
-#define EX_CFG_MODULE_LOAD_DLL
+#define EX_CFG_MODULE_ENABLE_DLL
 
-// 配置项：加载LIB模块
-#define EX_CFG_MODULE_LOAD_LIB
+// 配置项：加载内置模块
+#define EX_CFG_MODULE_ENABLE_BUILTIN
 
 #pragma endregion
 

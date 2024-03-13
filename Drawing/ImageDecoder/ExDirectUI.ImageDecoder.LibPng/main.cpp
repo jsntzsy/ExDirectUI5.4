@@ -19,6 +19,7 @@ namespace ExDirectUI
 			auto instance = ExImageDecoderLibPng::GetInstance();
 			instance->GetInfo(r_info);
 			throw_if_failed(instance->QueryInterface(r_module), L"不支持的接口");
+			instance->Release();
 			return S_OK;
 		}
 		catch_default({ ExImageDecoderLibPng::ClearInstance(true); });

@@ -43,7 +43,6 @@ namespace ExDirectUI
 		return S_OK;
 	}
 
-
 	HRESULT EXCALL _ExImageDecoder_LoadFromFile(LPCWSTR file, IExDecodeImage** r_image)
 	{
 		for (auto& decoder : g_drawing_image_decoders) {

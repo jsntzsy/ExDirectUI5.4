@@ -148,7 +148,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)\__build\bin\$(Configuration)\$(PlatformTarget)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(TargetDir)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>API.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
@@ -227,6 +227,8 @@
     <ClInclude Include="src\app\engine.h" />
     <ClInclude Include="src\debug\mem_leak.h" />
     <ClInclude Include="src\drawing\image_decoder.h" />
+    <ClInclude Include="src\kernel\builtin_modules.hpp" />
+    <ClInclude Include="src\kernel\builtin_modules_define.h" />
     <ClInclude Include="src\kernel\module.h" />
     <ClInclude Include="src\kernel\module_utils.h" />
     <ClInclude Include="src\kernel\winapi.h" />

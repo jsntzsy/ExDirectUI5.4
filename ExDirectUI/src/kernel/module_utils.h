@@ -31,5 +31,6 @@ namespace ExDirectUI
 	public:
 		static HRESULT EXOBJCALL Group(uint16_t type, IExModule* instance) MAYTHROW;
 		static HRESULT EXOBJCALL UnGroup(IExModule* instance) MAYTHROW;
+		static HRESULT EXOBJCALL NessaryCheck() MAYTHROW;
 	};
 }

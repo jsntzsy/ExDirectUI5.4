@@ -19,6 +19,26 @@ namespace ExDirectUI
 		EX_ENGINE_FLAG_DEFULT = -1,						///< 引擎标识：默认
 	};
 
+	/// 模块加载模式
+	enum ExModuleLoadFileMode
+	{
+		EX_ENGINE_MODULE_LOAD_FROM_HANDLE,				///< 模块加载：自句柄
+		EX_ENGINE_MODULE_LOAD_FROM_FILE,				///< 模块加载：自文件信息
+		EX_ENGINE_MODULE_LOAD_FROM_FILE_PTR,			///< 模块加载：自文件信息指针
+		EX_ENGINE_MODULE_LOAD_FROM_ENTRY,				///< 模块加载：自入口函数
+	};
+
+	/// 模块加载文件集
+	union ExModuleLoadFileSet
+	{
+		void* unknown;									///< 未知
+		HMODULE* handles;								///< 模块句柄数组
+		ExModuleFileInfo* files;						///< 模块文件信息数组
+		ExModuleFileInfo** files_ptr;					///< 模块文件信息指针数组
+		ExModuleEntryProc* entries;						///< 模块入口函数数组
+	};
+
+
 	/// 引擎初始化信息
 	struct ExEngineInitInfo
 	{
@@ -27,6 +47,20 @@ namespace ExDirectUI
 
 		/// 初始化标识
 		DWORD flags;
+
+		/// 模块加载模式
+		ExModuleLoadFileMode module_load_mode;
+
+		/// 模块数量
+		uint32_t module_count;
+
+		/// 模块加载文件集
+		ExModuleLoadFileSet modules;
+
+		/// 模块加载器 @可空(空则使用默认加载器)
+		ExModuleFileLoader* module_loader;
+
+
 
 	};
 

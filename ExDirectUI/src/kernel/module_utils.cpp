@@ -12,40 +12,10 @@
 #include "kernel/module.h"
 
 #include "src/drawing/image_decoder.h"
+#include <sstream>
 
 namespace ExDirectUI
 {
-	HRESULT EXOBJCALL ExModuleUtils::Group(uint16_t type, IExModule* instance) MAYTHROW
-	{
-		switch (type)
-		{
-		case ExDirectUI::EX_MODULE_IMAGE_DECODER: {
-			ExAutoPtr<IExImageDecoder> decoder;
-			throw_if_failed(instance->QueryInterface(&decoder), L"未实现对应接口");
-			return _ExImageDecoder_Group(decoder);
-		}
-		case ExDirectUI::EX_MODULE_RENDER: {
-			
-			throw_ex(E_NOTIMPL, L"尚未实现");
-		}
-		default: throw_ex(E_NOTIMPL, L"不支持的模块类型");
-		}
-	}
-	HRESULT EXOBJCALL ExModuleUtils::UnGroup(IExModule* instance) MAYTHROW
-	{
-		switch (instance->GetType())
-		{
-		case ExDirectUI::EX_MODULE_IMAGE_DECODER: {
-			return _ExImageDecoder_UnGroup((IExImageDecoder*)instance);
-		}
-		case ExDirectUI::EX_MODULE_RENDER: {
-			
-			throw_ex(E_NOTIMPL, L"尚未实现");
-		}
-		default: throw_ex(E_NOTIMPL, L"不支持的模块类型");
-		}
-	}
-	
 	HRESULT EXOBJCALL ExModuleUtils::DecodeImageFile(LPCWSTR file, IExDecodeImage** r_image)
 	{
 		CHECK_PARAM(file);
@@ -61,6 +31,55 @@ namespace ExDirectUI
 		
 		return _ExImageDecoder_LoadFromMemory(data, size, r_image);
 	}
+
+
+	HRESULT EXOBJCALL ExModuleUtils::Group(uint16_t type, IExModule* instance) MAYTHROW
+	{
+		switch (type)
+		{
+		case ExDirectUI::EX_MODULE_IMAGE_DECODER: {
+			ExAutoPtr<IExImageDecoder> decoder;
+			throw_if_failed(instance->QueryInterface(&decoder), L"未实现对应接口");
+			return _ExImageDecoder_Group(decoder);
+		}
+		case ExDirectUI::EX_MODULE_RENDER: {
+
+			throw_ex(E_NOTIMPL, L"尚未实现");
+		}
+		default: throw_ex(E_NOTIMPL, L"不支持的模块类型");
+		}
+	}
+	HRESULT EXOBJCALL ExModuleUtils::UnGroup(IExModule* instance) MAYTHROW
+	{
+		switch (instance->GetType())
+		{
+		case ExDirectUI::EX_MODULE_IMAGE_DECODER: {
+			return _ExImageDecoder_UnGroup((IExImageDecoder*)instance);
+		}
+		case ExDirectUI::EX_MODULE_RENDER: {
+
+			throw_ex(E_NOTIMPL, L"尚未实现");
+		}
+		default: throw_ex(E_NOTIMPL, L"不支持的模块类型");
+		}
+	}
+
+	HRESULT EXOBJCALL ExModuleUtils::NessaryCheck() MAYTHROW
+	{
+#ifdef EX_CFG_DEBUG_OUTPUT
+
+		std::wstringstream ss;
+		ss << L"ExDirectUI Nessary Check: \n" <<
+			L"\t - ExImageDecoder: " << g_drawing_image_decoders.size() << L"\n" <<
+			L"\t - ExRender: " << nullptr << L"\n";
+		ss << L"ExDirectUI Nessary Check Complete.\n";
+		OutputDebugStringW(ss.str().c_str());
+
+#endif // EX_CFG_DEBUG_OUTPUT
+
+		return S_OK;
+	}
+
 }
 
 

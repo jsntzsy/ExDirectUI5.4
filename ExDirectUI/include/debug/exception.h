@@ -44,12 +44,16 @@ namespace ExDirectUI
 		inline bool is_failed() const { return FAILED(m_status); }
 		inline operator bool() const { return is_failed(); }
 
-		inline HRESULT handle() const
+		inline HRESULT handle(bool only_failed = false) const
 		{
-			return ExStatusHandle(m_status,
-				m_file.size() != 0 ? m_file.c_str() : nullptr, m_line,
-				m_message.c_str()
-			);
+			if (!only_failed || is_failed())
+			{
+				return ExStatusHandle(m_status,
+					m_file.size() != 0 ? m_file.c_str() : nullptr, m_line,
+					m_message.c_str()
+				);
+			}
+			return m_status;
 		}
 
 	private:

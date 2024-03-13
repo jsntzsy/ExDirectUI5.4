@@ -11,6 +11,7 @@
 #include "app/engine.h"
 #include "src/app/engine.h"
 #include "src/kernel/winapi.h"
+#include "src/kernel/module.h"
 
 namespace ExDirectUI
 {
@@ -23,22 +24,35 @@ namespace ExDirectUI
 		CHECK_PARAM(init_info->instance);
 		handle_if_false(g_engine_instance == NULL, EE_NOREADY, L"引擎已被初始化");
 
-		_ExWinAPI_Init(init_info);
+		try
+		{
+			g_engine_flags = init_info->flags;
 
-		g_engine_flags = init_info->flags;
-		g_engine_instance = init_info->instance;
-		return S_OK;
+			_ExWinAPI_Init(init_info);
+
+			_ExModule_Init(init_info);
+
+			g_engine_instance = init_info->instance;
+			return S_OK;
+		}
+		catch_default({});
 	}
 
 	HRESULT EXAPI EXCALL ExEngineUnInit()
 	{
 		handle_if_false(g_engine_instance != NULL, EE_NOREADY, L"引擎尚未初始化");
 
-		_ExWinAPI_UnInit();
+		try
+		{
+			_ExModule_UnInit();
 
-		g_engine_flags = 0;
-		g_engine_instance = NULL;
-		return S_OK;
+			_ExWinAPI_UnInit();
+
+			g_engine_flags = 0;
+			g_engine_instance = NULL;
+			return S_OK;
+		}
+		catch_default({});
 	}
 
 	bool EXAPI EXCALL ExEngineQueryFlag(DWORD flag)

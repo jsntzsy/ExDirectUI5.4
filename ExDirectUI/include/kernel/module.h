@@ -10,11 +10,19 @@
 
 namespace ExDirectUI
 {
+	/// 模块文件信息
+	struct ExModuleFileInfo
+	{
+		const void* file;		///< 文件数据
+		WPARAM wparam;			///< 参数1
+		LPARAM lparam;			///< 参数2
+	};
+
 	/// 模块文件加载器
 	struct ExModuleFileLoader
 	{
 		/// 加载模块
-		HMODULE(WINAPI* LoadModule)(const LPVOID file, WPARAM waram, LPARAM lparam);
+		HMODULE(WINAPI* LoadModule)(const void* file, WPARAM waram, LPARAM lparam);
 
 		/// 释放模块
 		bool(WINAPI* FreeModule)(HMODULE module_handle);

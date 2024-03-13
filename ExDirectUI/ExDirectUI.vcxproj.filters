@@ -281,6 +281,12 @@
     <ClInclude Include="include\common\utils\auto_releaser.hpp">
       <Filter>common\utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\kernel\builtin_modules_define.h">
+      <Filter>kernel\module</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kernel\builtin_modules.hpp">
+      <Filter>kernel\module</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="API.def">

@@ -29,11 +29,7 @@ namespace ExDirectUI
 
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
-			//std::wstringstream ss;
-			//ss << L"ExImageDecoderLibPng";
-			//return ss.str();
-			
-			return L"ExImageDecoderLibPng";
+			return L"ExImageDecoderLibPng: core: libpng, support_format: png/apng";
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{
@@ -73,7 +69,16 @@ namespace ExDirectUI
 
 	private:
 		ExAutoPtr<IExResPool> m_pool;
-		inline static const ExModuleInfo MODULE_INFO = {};
+		inline static const ExModuleInfo MODULE_INFO = 
+		{
+			ATOM_EXDIRECTUI_IMAGEDECODER_LIBPNG,
+			EX_MODULE_IMAGE_DECODER,
+			EX_MODULE_FLAG_NONE,
+			L"ExDirectUI.ImageDecoder.LibPng",
+			L"1.0.0.0",
+			L"EternalZSY@ExDirectUI",
+			L"ExDirectUI图像解码器(内核：LibPng，支持格式：Png/APng)"
+		};
 		
 	};
 

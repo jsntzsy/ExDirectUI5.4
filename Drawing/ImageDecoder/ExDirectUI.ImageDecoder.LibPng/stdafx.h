@@ -16,9 +16,10 @@
 using namespace ExDirectUI;
 #pragma comment(lib,"ExDirectUI.lib")
 
+#define ATOM_EXDIRECTUI_IMAGEDECODER_LIBPNG				0x3AB97817		// 原子号: exdirectui.imagedecoder.libpng
+
 #include "apng_process.h"
 #include "decode_image.h"
 #include "image_decoder.h"
 
-#define ATOM_EXDIRECTUI_IMAGEDECODER_LIBPNG				0x3AB97817		// 原子号: exdirectui.imagedecoder.libpng
 

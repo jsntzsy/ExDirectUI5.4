@@ -10,6 +10,8 @@
 
 namespace ExDirectUI
 {
+	extern std::vector<IExImageDecoder*> g_drawing_image_decoders;
+
 	HRESULT EXCALL _ExImageDecoder_Group(IExImageDecoder* decoder);
 	HRESULT EXCALL _ExImageDecoder_UnGroup(IExImageDecoder* decoder);
 	

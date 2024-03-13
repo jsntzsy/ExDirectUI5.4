@@ -10,6 +10,6 @@
 
 namespace ExDirectUI
 {
-
-
+	HRESULT EXCALL _ExModule_Init(const ExEngineInitInfo* init_info);
+	void EXCALL _ExModule_UnInit();
 }
