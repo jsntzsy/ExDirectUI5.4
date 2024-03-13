@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="core_test.cpp" />
+    <ClCompile Include="drawing\image_decoder_test.cpp" />
     <ClCompile Include="kernel\atom_test.cpp" />
     <ClCompile Include="kernel\data_test.cpp" />
     <ClCompile Include="kernel\memory_test.cpp" />

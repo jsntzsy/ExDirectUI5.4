@@ -10,6 +10,8 @@
 #pragma comment(lib,"ExDirectUI.lib")
 using namespace ExDirectUI;
 
+#define _ROOT_(path)	(L"../../../../" path)
+
 struct TestResult
 {
 	HRESULT result;

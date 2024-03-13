@@ -16,6 +16,9 @@
     <ClCompile Include="resource\res_pool_test.cpp">
       <Filter>resource</Filter>
     </ClCompile>
+    <ClCompile Include="drawing\image_decoder_test.cpp">
+      <Filter>drawing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -29,6 +32,9 @@
     </Filter>
     <Filter Include="resource">
       <UniqueIdentifier>{3a115cc5-0a7a-4945-8523-6980735b1c6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing">
+      <UniqueIdentifier>{f8caeb4b-f9ba-4e4d-b7b0-083a7dda996d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

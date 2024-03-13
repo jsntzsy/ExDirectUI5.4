@@ -78,7 +78,7 @@ TEST_F(TEST_MODULE_NAME, AllocAndFree)
 TEST_F(TEST_MODULE_NAME, ReadWriteFile)
 {
 	ExData data{};
-	const LPCWSTR file = L"../../../../_res/1.png";
+	const LPCWSTR file = _ROOT_("_res/1.png");
 
 	ASSERT_EQ(ExDataReadFile(nullptr, &data), E_INVALIDARG);
 	ASSERT_EQ(ExDataReadFile(file, nullptr), E_INVALIDARG);
@@ -91,11 +91,10 @@ TEST_F(TEST_MODULE_NAME, ReadWriteFile)
 
 	ASSERT_EQ(ExDataWriteFile(nullptr, data.data, data.size), E_INVALIDARG);
 
-	ASSERT_EQ(ExDataWriteFile(L"../../../../__NO_EXISTS_DIR__/1.png", data.data, data.size), EE_IO);
-	ASSERT_EQ(ExDataWriteFile(L"../../../../__build/output/1.png", data.data, data.size), S_OK);
-
-	ASSERT_EQ(ExDataWriteFile(L"../../../../__build/output/2.txt", nullptr, data.size), S_OK);
-	ASSERT_EQ(ExDataWriteFile(L"../../../../__build/output/3.txt", data.data, 0), S_OK);
+	ASSERT_EQ(ExDataWriteFile(_ROOT_("__NO_EXISTS_DIR__/1.png"), data.data, data.size), EE_IO);
+	ASSERT_EQ(ExDataWriteFile(_ROOT_("__build/output/1.png"), data.data, data.size), S_OK);
+	ASSERT_EQ(ExDataWriteFile(_ROOT_("__build/output/2.txt"), nullptr, data.size), S_OK);
+	ASSERT_EQ(ExDataWriteFile(_ROOT_("__build/output/3.txt"), data.data, 0), S_OK);
 
 	ASSERT_EQ(ExDataFree(&data), S_OK);
 }

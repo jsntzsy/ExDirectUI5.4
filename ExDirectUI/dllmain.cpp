@@ -11,6 +11,8 @@
 #include "src/kernel/module_utils.h"
 #include "common/utils/string.hpp"
 
+#define _ROOT_(path)	(L"../../../../" path)
+
 BOOL APIENTRY DllMain(HMODULE module_handle, DWORD reason, LPVOID reserved)
 {
 	switch (reason)
@@ -35,7 +37,7 @@ namespace ExDirectUI
 			throw_if_failed(ExResPoolCreate(10, NULL, NULL, &res_pool), L"创建资源池失败");
 
 			ExAutoPtr<IExDecodeImage> image1;
-			ExModuleUtils::Instance()->DecodeImageFile(L"../../../../_res/apng/ball.a.png", &image1);
+			ExModuleUtils::Instance()->DecodeImageFile(_ROOT_(L"_res/apng/ball.a.png"), &image1);
 			if (image1) {
 				ExDebugOutputRaw(
 					ExString::format(L"ImageInfo: size: %ux%u, frame: %u\n",
@@ -45,7 +47,7 @@ namespace ExDirectUI
 			}
 
 			ExAutoPtr<IExDecodeImage> image2;
-			ExModuleUtils::Instance()->DecodeImageFile(L"../../../../_res/1.gif", &image2);
+			ExModuleUtils::Instance()->DecodeImageFile(_ROOT_(L"_res/1.gif"), &image2);
 			if (image2) {
 				ExDebugOutputRaw(
 					ExString::format(L"ImageInfo: size: %ux%u, frame: %u\n",
@@ -59,4 +61,12 @@ namespace ExDirectUI
 		}
 		catch_default({});
 	}
+
+	EXTERN_C EXAPI IExModuleUtils* EXCALL ExDbgGetModuleUtils()
+	{
+		auto utils = ExModuleUtils::Instance();
+		utils->AddRef();
+		return utils;
+	}
+	
 }

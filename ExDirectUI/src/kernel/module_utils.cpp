@@ -69,14 +69,17 @@ namespace ExDirectUI
 #ifdef EX_CFG_DEBUG_OUTPUT
 
 		std::wstringstream ss;
-		ss << L"ExDirectUI Nessary Check: \n" <<
+		ss << L"\nExDirectUI Nessary Check: \n" <<
 			L"\t - ExImageDecoder: " << g_drawing_image_decoders.size() << L"\n" <<
 			L"\t - ExRender: " << nullptr << L"\n";
-		ss << L"ExDirectUI Nessary Check Complete.\n";
-		OutputDebugStringW(ss.str().c_str());
+		ss << L"ExDirectUI Nessary Check Complete.";
+		
+		ExDebugOutput(ss.str().c_str());
 
 #endif // EX_CFG_DEBUG_OUTPUT
 
+		throw_if_false(g_drawing_image_decoders.size() > 0, EE_LOST_NECESSARY, L"未成功加载任何图像解码器");
+		
 		return S_OK;
 	}
 

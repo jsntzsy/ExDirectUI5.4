@@ -17,12 +17,31 @@ EXPORTS
 		ExDataFree
 		ExDataResize
 		ExDataCopy
+		ExDataReadFile
+		ExDataWriteFile
+		ExDataGetFileSize
 	;原子号计算
 		ExAtomData
 		ExAtomStrCase
 		ExAtomStrNoCase
 		ExAtomFile
+	;模块管理
+		ExModuleLoadFromFile
+		ExModuleLoadFromHandle
+		ExModuleLoadFromEntry
+		ExModuleUnLoad
+		ExModuleGetInfo
+		ExModuleInvoke
+		
 
+;渲染层
+	;图像解码器
+		ExImageCopyData
+
+		
+;资源层
+	;资源池管理器
+		ExResPoolCreate
 
 ;调试层
 	;状态处理
@@ -37,4 +56,5 @@ EXPORTS
 	;引擎管理
 		ExEngineInit
 		ExEngineUnInit
+		ExEngineQueryFlag
 

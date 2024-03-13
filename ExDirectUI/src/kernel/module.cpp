@@ -237,7 +237,7 @@ namespace ExDirectUI
 		}
 		catch_default({ return e.handle(true); });
 	}
-	HRESULT EXAPI EXCALL ExModuleUnload(EXATOM module_id)
+	HRESULT EXAPI EXCALL ExModuleUnLoad(EXATOM module_id)
 	{
 		return _ExModule_UnLoad(module_id, false);
 	}

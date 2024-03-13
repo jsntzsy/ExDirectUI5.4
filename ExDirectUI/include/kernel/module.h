@@ -103,7 +103,7 @@ namespace ExDirectUI
 	HRESULT EXAPI EXCALL ExModuleLoadFromHandle(HMODULE module_handle, EXATOM* r_module_id);
 	HRESULT EXAPI EXCALL ExModuleLoadFromEntry(ExModuleEntryProc entry_proc, EXATOM* r_module_id);
 
-	HRESULT EXAPI EXCALL ExModuleUnload(EXATOM module_id);
+	HRESULT EXAPI EXCALL ExModuleUnLoad(EXATOM module_id);
 
 	HRESULT EXAPI EXCALL ExModuleGetInfo(EXATOM module_id, ExModuleInfo* r_info);
 	HRESULT EXAPI EXCALL ExModuleInvoke(EXATOM module_id, uint32_t msg, WPARAM wparam, LPARAM lparam, LRESULT* r_result);
