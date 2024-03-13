@@ -205,6 +205,7 @@
     <ClInclude Include="include\common\types\color.h" />
     <ClInclude Include="include\common\types\coordinate.h" />
     <ClInclude Include="include\common\utils\auto_ptr.hpp" />
+    <ClInclude Include="include\common\utils\auto_releaser.hpp" />
     <ClInclude Include="include\common\utils\base64.hpp" />
     <ClInclude Include="include\common\utils\lock.hpp" />
     <ClInclude Include="include\common\utils\mem_pool.hpp" />

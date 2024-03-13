@@ -75,10 +75,19 @@ namespace ExDirectUI
 		return image->QueryInterface(r_image);
 	}
 
+	HRESULT EXOBJCALL ExImageDecoderLibPng::FreeImage(const ExDecodeImageContextLibPng* image_context)
+	{
+		CHECK_PARAM(image_context);
+		ExAssert(m_pool);
+		return m_pool->UnUseItemByPtr((void*)image_context);
+	}
+
 	HRESULT ExImageDecoderLibPng::_OnInitImage(IExResPool* pool, EXATOM key,
 		const void* data, WPARAM wparam, LPARAM lparam, DWORD flags, void* r_res)
 	{
 		ExDecodeImageContextLibPng* context = (ExDecodeImageContextLibPng*)r_res;
+
+		//根据wparam判断是从文件加载还是从内存加载
 		if (wparam == 0) {
 			context->image = ExAPngLoadFromFile((LPCWSTR)data);
 		}

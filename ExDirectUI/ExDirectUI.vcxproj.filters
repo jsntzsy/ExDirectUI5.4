@@ -278,6 +278,9 @@
     <ClInclude Include="include\drawing\image_decoder.h">
       <Filter>drawing\image_decoder</Filter>
     </ClInclude>
+    <ClInclude Include="include\common\utils\auto_releaser.hpp">
+      <Filter>common\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="API.def">
