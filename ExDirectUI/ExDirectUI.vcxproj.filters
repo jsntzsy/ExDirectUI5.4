@@ -130,6 +130,48 @@
     <Filter Include="common\interfaces">
       <UniqueIdentifier>{8b1cfc7d-f996-460b-be36-671c263c6988}</UniqueIdentifier>
     </Filter>
+    <Filter Include="drawing\render\image">
+      <UniqueIdentifier>{e858227c-588e-4a02-8ee5-9280c21fc337}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing\render\canvas">
+      <UniqueIdentifier>{598397e4-b8cd-4b14-aab6-24493ad0be78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing\render\font">
+      <UniqueIdentifier>{01eac14c-962f-468a-b9a5-d30ea6119df1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing\render\brush">
+      <UniqueIdentifier>{362c4470-d9e7-4142-8a86-e538f9bd85fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing\render\matrix">
+      <UniqueIdentifier>{087dd41d-fc12-493f-9163-d3ee0cdee26e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing\render\path">
+      <UniqueIdentifier>{cafa24e1-bac9-4560-baf8-26c906a3a1bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing\render\region">
+      <UniqueIdentifier>{e4ff6e9d-f84d-4dbc-a83d-be9fe02b6ff1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing\render\pen">
+      <UniqueIdentifier>{74a42131-1478-4ae7-ab04-d08865a5da57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing\render\effect">
+      <UniqueIdentifier>{e683cbbc-deb5-4e2c-aabb-393b4cb897e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing\render\brush\solid_brush">
+      <UniqueIdentifier>{d5839eac-5562-418a-978a-3cfb19f80c69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing\render\brush\linear_brush">
+      <UniqueIdentifier>{43395154-8f0d-465a-ae2e-9d1602cee5eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing\render\brush\radial_brush">
+      <UniqueIdentifier>{dcb95fda-684d-42b7-a0d3-e775c2dab015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing\render\brush\image_brush">
+      <UniqueIdentifier>{3d4ca271-c5ac-4739-bc71-343a43d438dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing\render\brush\canvas_brush">
+      <UniqueIdentifier>{684085c7-3ac8-48cc-b547-b03a9b243570}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -286,6 +328,57 @@
     </ClInclude>
     <ClInclude Include="src\kernel\builtin_modules_define.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render.h">
+      <Filter>drawing\render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render\brush.h">
+      <Filter>drawing\render\brush</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render\canvas.h">
+      <Filter>drawing\render\canvas</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render\canvas_brush.h">
+      <Filter>drawing\render\brush\canvas_brush</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render\device.h">
+      <Filter>drawing\render\canvas</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render\effect.h">
+      <Filter>drawing\render\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render\font.h">
+      <Filter>drawing\render\font</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render\image.h">
+      <Filter>drawing\render\image</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render\image_brush.h">
+      <Filter>drawing\render\brush\image_brush</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render\linear_brush.h">
+      <Filter>drawing\render\brush\linear_brush</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render\matrix.h">
+      <Filter>drawing\render\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render\path.h">
+      <Filter>drawing\render\path</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render\pen.h">
+      <Filter>drawing\render\pen</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render\radial_brush.h">
+      <Filter>drawing\render\brush\radial_brush</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render\region.h">
+      <Filter>drawing\render\region</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render\solid_brush.h">
+      <Filter>drawing\render\brush\solid_brush</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render\mem_dc.h">
+      <Filter>drawing\render\canvas</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

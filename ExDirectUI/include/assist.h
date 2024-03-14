@@ -17,6 +17,7 @@
 
 #pragma region 计算判断
 
+
  // 浮点数相等
 inline bool float_eq(float a, float b) { return fabs(a - b) < 1e-6F; }
 
@@ -25,6 +26,9 @@ inline float roundf(float r) { return (r > 0.0F) ? floor(r + 0.5F) : ceil(r - 0.
 
 // 四舍五入
 inline double roundd(double r) { return (r > 0.0) ? floor(r + 0.5) : ceil(r - 0.5); }
+
+// 圆周率
+constexpr float PI = 3.14159265358979323846F;
 
 // 系统默认DPI
 constexpr int _SYS_DEFAULT_DPI = 96;

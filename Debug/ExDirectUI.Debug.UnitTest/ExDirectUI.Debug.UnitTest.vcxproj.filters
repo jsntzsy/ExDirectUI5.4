@@ -19,6 +19,9 @@
     <ClCompile Include="drawing\image_decoder_test.cpp">
       <Filter>drawing</Filter>
     </ClCompile>
+    <ClCompile Include="drawing\matrix_test.cpp">
+      <Filter>drawing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

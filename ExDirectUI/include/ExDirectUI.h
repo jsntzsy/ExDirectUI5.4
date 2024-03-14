@@ -38,6 +38,7 @@
 #include "kernel/module.h"
 
 #include "drawing/image_decoder.h"
+#include "drawing/render.h"
 
 #include "resource/res_pool.h"
 

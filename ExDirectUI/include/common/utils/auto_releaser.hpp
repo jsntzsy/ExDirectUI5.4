@@ -29,10 +29,22 @@ namespace ExDirectUI
 			other.m_releaser = nullptr;
 		}
 
-		~ExAutoReleaser() { Clear(); }
+		~ExAutoReleaser() { Release(); }
 
 		ExAutoReleaser(const ExAutoReleaser&) = delete;
 		ExAutoReleaser& operator=(const ExAutoReleaser&) = delete;
+		ExAutoReleaser& operator=(ExAutoReleaser&&)
+		{
+			if (this != &other)
+			{
+				Release();
+				m_object = other.m_object;
+				m_releaser = other.m_releaser;
+				other.m_object = InvalidValue;
+				other.m_releaser = nullptr;
+			}
+			return *this;
+		}
 
 		inline bool IsValid() const { return m_object != InvalidValue; }
 		inline T Get() const { return m_object; }
@@ -58,10 +70,10 @@ namespace ExDirectUI
 		}
 
 		inline operator T() const { return Get(); }
-		inline T* operator&() { return GetAddress(); }
 		inline T* operator->() { return GetAddress(); }
+		inline T* operator&() { return GetAddress(); }
 		inline T* operator-() { return ReleaseGetAddress(); }
-		inline bool operator bool() const { return IsValid(); }
+		inline operator bool() const { return IsValid(); }
 
 	private:
 		ReleaserFunc m_releaser;
@@ -72,9 +84,10 @@ namespace ExDirectUI
 	class ExAutoHandle : public ExAutoReleaser<HANDLE, InvalidValue>
 	{
 	public:
+		using ReleaserFunc = std::function<void(HANDLE object)>;
 		inline static const auto _CloseHandleFunc = [](HANDLE handle) { CloseHandle(handle); };
 
-		ExAutoHandleReleaser(HANDLE object, ReleaserFunc releaser = _CloseHandleFunc)
+		ExAutoHandle(HANDLE object, ReleaserFunc releaser = _CloseHandleFunc)
 			: ExAutoReleaser(object, releaser)
 		{}
 	};
@@ -83,6 +96,7 @@ namespace ExDirectUI
 	class ExAutoGdiObject : public ExAutoReleaser<HGDIOBJ, InvalidValue>
 	{
 	public:
+		using ReleaserFunc = std::function<void(HGDIOBJ object)>;
 		inline static const auto _DeleteObjectFunc = [](HGDIOBJ object) { DeleteObject(object); };
 
 		ExAutoGdiObject(HGDIOBJ object, ReleaserFunc releaser = _DeleteObjectFunc)
@@ -91,14 +105,17 @@ namespace ExDirectUI
 	};
 
 	template<typename T, T* InvalidValue = nullptr>
-	class ExAutoMemory : public ExAutoReleaser<T*, InvalidValue>
+	class ExAutoDeletor : public ExAutoReleaser<T*, InvalidValue>
 	{
 	public:
-		inline static const auto _DeleteMemoryFunc = [](T* memory) { delete memory; };
+		using ReleaserFunc = std::function<void(T object)>;
+		inline static const auto _DeleteFunc = [](T* memory) { delete memory; };
 
-		ExAutoMemory(T* memory, ReleaserFunc releaser = _DeleteMemoryFunc)
+		ExAutoDeletor(T* memory, ReleaserFunc releaser = _DeleteFunc)
 			: ExAutoReleaser(memory, releaser)
 		{}
+
+		inline T* operator->() { return Get(); }
 	};
 
 }

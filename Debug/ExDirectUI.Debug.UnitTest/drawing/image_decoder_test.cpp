@@ -33,8 +33,7 @@ protected:
 		module_utils = nullptr;
 	}
 
-public:
-	inline static IExModuleUtils* module_utils = nullptr;
+	IExModuleUtils* module_utils = nullptr;
 };
 
 TEST_F(TEST_MODULE_NAME, DecodeImage)
