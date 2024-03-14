@@ -15,7 +15,7 @@
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "gdiplus.lib")
 
-#define TEST_MODULE_NAME    Ex_Render_Matrix_Test
+#define TEST_MODULE_NAME    Ex_Drawing_RenderMatrix_Test
 
 class TEST_MODULE_NAME : public ::testing::Test
 {

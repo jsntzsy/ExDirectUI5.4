@@ -159,9 +159,9 @@ namespace ExDirectUI
 		inline ExMatrix3x2& operator>>(ExRectF& rect) { return Transform(&rect); }
 		inline operator float* () { return *this; }
 		inline operator ExMatrixElements3x2& () { return *this; }
-		inline float operator[] (int index) const 
-		{ 
-			ExAssert(index >= 0 && index < 6); 
+		inline float operator[] (int index) const MAYTHROW
+		{
+			ExAssert(index >= 0 && index < 6);
 			return ((float*)this)[index];
 		}
 
