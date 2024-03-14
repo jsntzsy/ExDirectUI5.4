@@ -8,6 +8,15 @@
  */
 #pragma once
 
+
+namespace ExDirectUI
+{
+	EXINTERFACE("8B95839B-26A1-4D09-AB2B-3127CEB4266C") IExRenderObject : public IExObject
+	{
+
+	};
+}
+
 #include "render/matrix.h"
 #include "render/image.h"
 #include "render/font.h"
@@ -25,8 +34,4 @@
 #include "render/device.h"
 #include "render/canvas.h"
 
-namespace ExDirectUI
-{
 
-
-}
