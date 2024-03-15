@@ -16,14 +16,14 @@ namespace ExDirectUI
 		EXMETHOD uint32_t EXOBJCALL GetHeight() PURE;
 		EXMETHOD uint32_t EXOBJCALL GetFrameCount() PURE;
 
-		EXSTDMETHOD GetFrameDelay(uint32_t index, uint32_t* r_delay) PURE;
-		EXSTDMETHOD CopyFrame(uint32_t index, EXBITSDATA r_bits,uint32_t stride = 0) PURE;
+		EXMETHOD HRESULT EXOBJCALL GetFrameDelay(uint32_t index, uint32_t* r_delay) PURE;
+		EXMETHOD HRESULT EXOBJCALL CopyFrame(uint32_t index, EXBITSDATA r_bits,uint32_t stride = 0) PURE;
 	};
 
 	EXINTERFACE("ADBE9236-4ECF-46C8-9B9E-98E4A1A67885") IExImageDecoder : public IExModule
 	{
-		EXSTDMETHOD LoadImageFromFile(LPCWSTR file, IExDecodeImage * *r_image) PURE;
-		EXSTDMETHOD LoadImageFromMemory(const byte_t* data, size_t size, IExDecodeImage** r_image) PURE;
+		EXMETHOD HRESULT EXOBJCALL LoadImageFromFile(LPCWSTR file, IExDecodeImage * *r_image) PURE;
+		EXMETHOD HRESULT EXOBJCALL LoadImageFromMemory(const byte_t* data, size_t size, IExDecodeImage** r_image) PURE;
 	};
 
 	////////////////////////////////////

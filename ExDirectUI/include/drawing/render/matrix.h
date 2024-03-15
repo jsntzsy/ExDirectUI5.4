@@ -130,15 +130,15 @@ namespace ExDirectUI
 			return Multiply(MakeSkew(angle_x, angle_y, org_x, org_y), prepend);
 		}
 
-		inline ExMatrix3x2& Transform(ExPointF* point, bool is_vector = false)
+		inline ExMatrix3x2& Transform(ExPointF* point, bool is_vector = false) const
 		{
 			return Transform(point, 1, is_vector);
 		}
-		inline ExMatrix3x2& Transform(ExRectF* rect)
+		inline ExMatrix3x2& Transform(ExRectF* rect) const
 		{
 			return Transform((ExPointF*)rect, 2, false);
 		}
-		inline ExMatrix3x2& Transform(ExPointF* points, uint32_t count, bool is_vector = false)
+		inline ExMatrix3x2& Transform(ExPointF* points, uint32_t count, bool is_vector = false) const
 		{
 			for (uint32_t i = 0; i < count; i++) {
 				ExPointF pt = points[i];
@@ -150,13 +150,13 @@ namespace ExDirectUI
 					points[i].y += _32;
 				}
 			}
-			return *this;
+			return const_cast<ExMatrix3x2&>(*this);
 		}
 
 		inline operator bool() const { return !IsIdentity(); }
 		inline ExMatrix3x2& operator* (const ExMatrixElements3x2& src) { return Multiply(src); }
-		inline ExMatrix3x2& operator>>(ExPointF& point) { return Transform(&point); }
-		inline ExMatrix3x2& operator>>(ExRectF& rect) { return Transform(&rect); }
+		inline ExMatrix3x2& operator>>(ExPointF& point) const { return Transform(&point); }
+		inline ExMatrix3x2& operator>>(ExRectF& rect) const { return Transform(&rect); }
 		inline operator float* () { return *this; }
 		inline operator ExMatrixElements3x2& () { return *this; }
 		inline float operator[] (int index) const MAYTHROW
@@ -223,5 +223,8 @@ namespace ExDirectUI
 			return mx;
 		}
 	};
+
+	typedef ExMatrixElements3x2 ExMatrixElements;
+	typedef ExMatrix3x2 ExMatrix;
 
 }

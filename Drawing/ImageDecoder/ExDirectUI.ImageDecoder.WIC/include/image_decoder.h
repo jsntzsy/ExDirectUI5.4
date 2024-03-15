@@ -61,8 +61,8 @@ namespace ExDirectUI
 		
 	public:
 
-		EXSTDMETHOD LoadImageFromFile(LPCWSTR file, IExDecodeImage** r_image) override;
-		EXSTDMETHOD LoadImageFromMemory(const byte_t* data, size_t size, IExDecodeImage** r_image) override;
+		EXMETHOD HRESULT EXOBJCALL LoadImageFromFile(LPCWSTR file, IExDecodeImage** r_image) override;
+		EXMETHOD HRESULT EXOBJCALL LoadImageFromMemory(const byte_t* data, size_t size, IExDecodeImage** r_image) override;
 
 		HRESULT EXOBJCALL FreeImage(const ExDecodeImageContextWIC* image_context);
 

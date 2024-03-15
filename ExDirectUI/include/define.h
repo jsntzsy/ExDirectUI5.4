@@ -32,7 +32,7 @@
 #define EXOBJCALL STDMETHODCALLTYPE
 #define EXINTERFACE(iid)	interface __declspec(uuid(iid)) __declspec(novtable)
 #define EXMETHOD virtual __declspec(nothrow)
-#define EXSTDMETHOD EXMETHOD HRESULT EXOBJCALL
+//#define EXSTDMETHOD  EXMETHOD HRESULT EXOBJCALL
 
 #pragma endregion
 

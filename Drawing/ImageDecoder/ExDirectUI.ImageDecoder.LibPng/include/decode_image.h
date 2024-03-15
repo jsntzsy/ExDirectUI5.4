@@ -33,8 +33,8 @@ namespace ExDirectUI
 		EXMETHOD uint32_t EXOBJCALL GetHeight() override;
 		EXMETHOD uint32_t EXOBJCALL GetFrameCount() override;
 
-		EXSTDMETHOD GetFrameDelay(uint32_t index, uint32_t* r_delay) override;
-		EXSTDMETHOD CopyFrame(uint32_t index, EXBITSDATA r_bits, uint32_t stride = 0) override;
+		EXMETHOD HRESULT EXOBJCALL GetFrameDelay(uint32_t index, uint32_t* r_delay) override;
+		EXMETHOD HRESULT EXOBJCALL CopyFrame(uint32_t index, EXBITSDATA r_bits, uint32_t stride = 0) override;
 
 	private:
 		ExDecodeImageContextLibPng* m_context{};

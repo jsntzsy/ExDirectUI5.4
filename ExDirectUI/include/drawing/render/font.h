@@ -39,7 +39,7 @@ namespace ExDirectUI
 
 		///////////////
 
-		ExFontInfo() :size(), style(), file_atom(EXATOM_UNKNOWN), name({}) {}
+		ExFontInfo() :size(), style(), file_atom(EXATOM_UNKNOWN), name() {}
 		ExFontInfo(const wchar_t name[LF_FACESIZE], uint32_t size, DWORD style,
 			EXATOM file_atom = EXATOM_UNKNOWN) :size(size), style(style)
 		{
@@ -89,23 +89,24 @@ namespace ExDirectUI
 		}
 		inline void SetName(const wchar_t name[LF_FACESIZE], EXATOM atom = EXATOM_UNKNOWN)
 		{
-			wcsncpy(this->name, name, LF_FACESIZE - 1);
-			if (atom != EXATOM_UNKNOWN) { this->atom = atom; }
+			wcsncpy_s(this->name, name, LF_FACESIZE - 1);
+			if (atom != EXATOM_UNKNOWN) { file_atom = atom; }
 		}
 
 	};
 
+	/// 渲染器字体接口
 	EXINTERFACE("879F7C79-F491-480D-AA92-EDD0F5E32F5C") IExFont : public IExRenderObject
 	{
-		EXMETHOD LPCWSTR EXCALL GetName(EXATOM * r_atom = nullptr) PURE;
-		EXMETHOD uint32_t EXCALL GetSize() PURE;
-		EXMETHOD DWORD EXCALL GetStyle() PURE;
-		EXSTDMETHOD GetInfo(ExFontInfo* r_info) PURE;
+		EXMETHOD LPCWSTR EXCALL GetName(EXATOM * r_atom = nullptr) const PURE;
+		EXMETHOD uint32_t EXCALL GetSize() const PURE;
+		EXMETHOD DWORD EXCALL GetStyle() const PURE;
+		EXMETHOD HRESULT EXOBJCALL GetInfo(ExFontInfo* r_info) const PURE;
 
-		EXSTDMETHOD SetName(const wchar_t name[LF_FACESIZE], EXATOM atom = EXATOM_UNKNOWN) PURE;
-		EXSTDMETHOD SetSize(uint32_t size) PURE;
-		EXSTDMETHOD SetStyle(DWORD style) PURE;
-		EXSTDMETHOD SetInfo(const ExFontInfo* info) PURE;
+		EXMETHOD HRESULT EXOBJCALL SetName(const wchar_t name[LF_FACESIZE], EXATOM atom = EXATOM_UNKNOWN) PURE;
+		EXMETHOD HRESULT EXOBJCALL SetSize(uint32_t size) PURE;
+		EXMETHOD HRESULT EXOBJCALL SetStyle(DWORD style) PURE;
+		EXMETHOD HRESULT EXOBJCALL SetInfo(const ExFontInfo* info) PURE;
 	};
 
 	/////////////////////////////////

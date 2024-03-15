@@ -93,8 +93,8 @@ namespace ExDirectUI
 
 	EXINTERFACE("4BB3ED43-DD75-4679-882B-3E137D592496") IExModuleUtils : public IUnknown
 	{
-		EXSTDMETHOD DecodeImageFile(LPCWSTR file, IExDecodeImage * *r_image) PURE;
-		EXSTDMETHOD DecodeImageMemory(const byte_t* data, size_t size, IExDecodeImage** r_image) PURE;
+		EXMETHOD HRESULT EXOBJCALL DecodeImageFile(LPCWSTR file, IExDecodeImage * *r_image) PURE;
+		EXMETHOD HRESULT EXOBJCALL DecodeImageMemory(const byte_t* data, size_t size, IExDecodeImage** r_image) PURE;
 	};
 
 	////////////////////////////

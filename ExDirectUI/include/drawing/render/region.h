@@ -10,6 +10,37 @@
 
 namespace ExDirectUI
 {
+	interface IExPath;
 
+	/// 区域合并模式
+	enum ExRegionCombineMode
+	{
+		EX_REGION_COMBINE_COPY = 0,				///< 区域合并模式：复制
+		EX_REGION_COMBINE_UNION = 1,			///< 区域合并模式：合并
+		EX_REGION_COMBINE_INTERSECT = 2,		///< 区域合并模式：相交
+		EX_REGION_COMBINE_EXCLUDE = 3,			///< 区域合并模式：排除
+		EX_REGION_COMBINE_XOR = 4,				///< 区域合并模式：异或
+	};
+
+	/// 渲染器区域接口
+	EXINTERFACE("FDB71403-DFC2-4338-85D8-E0BA99294F1C") IExRegion : public IExRenderObject
+	{
+		EXMETHOD HRESULT EXOBJCALL CombineWithRect(float left, float top, float right, float bottom,
+			ExRegionCombineMode mode, const ExMatrixElements * tranform = nullptr) PURE;
+		EXMETHOD HRESULT EXOBJCALL CombineWithPath(const IExPath* path, ExRegionCombineMode mode,
+			const ExMatrixElements* tranform = nullptr) PURE;
+		EXMETHOD HRESULT EXOBJCALL CombineWithRegion(const IExRegion* region, ExRegionCombineMode mode,
+			const ExMatrixElements* tranform = nullptr) PURE;
+
+		EXMETHOD HRESULT EXOBJCALL HitTest(float x, float y) const PURE;
+		EXMETHOD HRESULT EXOBJCALL GetBounds(ExRectF* r_bounds_rect) const PURE;
+	};
+
+	////////////////
+
+	//HRESULT EXAPI EXCALL ExRegionCreate(IExRegion** r_region, bool infinite = false);
+	//HRESULT EXAPI EXCALL ExRegionCreateFromRect(float left, float top, float right, float bottom, IExRegion** r_region);
+	//HRESULT EXAPI EXCALL ExRegionCreateFromPath(const IExPath* path, const ExMatrixElements* tranform, IExRegion** r_region);
+	//HRESULT EXAPI EXCALL ExRegionCopy(const IExRegion* region, const ExMatrixElements* tranform, IExRegion** r_region);
 
 }

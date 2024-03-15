@@ -11,7 +11,7 @@
 #include <sstream>
 
 #define EX_BEGIN_INTERFACE_MAP()											\
-	EXSTDMETHOD QueryInterface(REFIID riid, void** ppvObject) override {	
+	EXMETHOD HRESULT EXOBJCALL QueryInterface(REFIID riid, void** ppvObject) override {	
 
 #define EX_END_INTERFACE_MAP()										\
 		ppvObject = nullptr;										\
