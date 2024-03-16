@@ -18,6 +18,16 @@ namespace ExDirectUI
 		EX_BRUSH_EXTEND_MIRROR = 2,				///< 画刷扩展模式：镜像平铺
 	};
 
+	/// 渲染渐变点信息
+	struct ExGradientPoint
+	{
+		/// 渐变点位置 <0-1>
+		float pos;
+		
+		/// 渐变点颜色
+		EXARGB color;
+	};
+
 	/// 渲染器画刷接口
 	EXINTERFACE("6AECD323-B229-4B26-A741-6E57EB82BF3C") IExBrush : public IExRenderObject
 	{

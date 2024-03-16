@@ -31,8 +31,8 @@ namespace ExDirectUI
 
 	/////////////////////////////////
 
-	//HRESULT EXAPI EXCALL ExMemDCCreate(uint32_t width, uint32_t height, ExMemDC* r_dc);
-	//HRESULT EXAPI EXCALL ExMemDCDestroy(ExMemDC* dc);
-	//HRESULT EXAPI EXCALL ExMemDCResize(ExMemDC* dc, uint32_t new_width, uint32_t new_height);
+	HRESULT EXAPI EXCALL ExMemDCCreate(uint32_t width, uint32_t height, ExMemDC* r_dc);
+	HRESULT EXAPI EXCALL ExMemDCDestroy(ExMemDC* dc);
+	HRESULT EXAPI EXCALL ExMemDCResize(ExMemDC* dc, uint32_t new_width, uint32_t new_height);
 
 }

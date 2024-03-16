@@ -213,6 +213,9 @@
     <ClCompile Include="src\drawing\image_decoder.cpp">
       <Filter>drawing\image_decoder</Filter>
     </ClCompile>
+    <ClCompile Include="src\drawing\render\mem_dc.cpp">
+      <Filter>drawing\render\canvas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
