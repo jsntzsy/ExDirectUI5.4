@@ -28,22 +28,24 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL LineTo(float x, float y) PURE;
 		EXMETHOD HRESULT EXOBJCALL ArcTo(float left, float top, float right, float bottom,
 			float start_angle, float sweep_angle) PURE;
-		EXMETHOD HRESULT EXOBJCALL ArcTo2(float x_end,float y_end, float radius_horz, float radius_vert,
+		EXMETHOD HRESULT EXOBJCALL ArcTo2(float end_x, float end_y, float radius_horz, float radius_vert,
 			float rotate, bool clockwise, bool large_arc) PURE;
-		EXMETHOD HRESULT EXOBJCALL RoundTo(float x_ctrl, float y_ctrl,float x_end, float y_end, float radius) PURE;
-		EXMETHOD HRESULT EXOBJCALL CurveTo(float x_ctrl, float y_ctrl, float x_end, float y_end) PURE;
-		EXMETHOD HRESULT EXOBJCALL BezierTo(float x_ctrl1, float y_ctrl1, float x_ctrl2, float y_ctrl2,
-			float x_end, float y_end) PURE;
+		EXMETHOD HRESULT EXOBJCALL RoundTo(float x_ctrl, float y_ctrl,float end_x, float end_y, float radius) PURE;
+		EXMETHOD HRESULT EXOBJCALL CurveTo(float x_ctrl, float y_ctrl, float end_x, float end_y) PURE;
+		EXMETHOD HRESULT EXOBJCALL BezierTo(float ctrl1_x, float ctrl1_y, float ctrl2_x, float ctrl2_y,
+			float end_x, float end_y) PURE;
 
 		EXMETHOD HRESULT EXOBJCALL AddRect(float left, float top, float right, float bottom) PURE;
 		EXMETHOD HRESULT EXOBJCALL AddEllipse(float left, float top, float right, float bottom) PURE;
+		EXMETHOD HRESULT EXOBJCALL AddSuperEllipse(float org_x, float org_y, float radius_x, float radius_y,
+			float order, float step = 1.0F) PURE;
 		EXMETHOD HRESULT EXOBJCALL AddRoundRect(float left, float top, float right, float bottom,
 			float radius_x, float radius_y) PURE;
 		EXMETHOD HRESULT EXOBJCALL AddCustomRoundRect(float left, float top, float right, float bottom,
 			float radius_left_top, float radius_right_top, float radius_right_bottom, float radius_left_bottom
 		) PURE;
 		EXMETHOD HRESULT EXOBJCALL AddPolygon(const ExPointF* points, uint32_t count) PURE;
-		EXMETHOD HRESULT EXOBJCALL AddText(LPCWSTR text, int len, const IExFont* font, DWORD text_format,
+		EXMETHOD HRESULT EXOBJCALL AddText(const IExFont* font, LPCWSTR text, int len, DWORD text_format,
 			float left, float top, float right, float bottom) PURE;
 
 		EXMETHOD HRESULT EXOBJCALL HitTest(float x, float y, const ExMatrixElements* tranform) const PURE;

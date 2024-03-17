@@ -133,6 +133,7 @@
 
 #undef LoadModule
 #undef FreeModule
+#undef GetObject
 
 #pragma endregion
 

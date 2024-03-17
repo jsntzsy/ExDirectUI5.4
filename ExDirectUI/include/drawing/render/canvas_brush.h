@@ -10,6 +10,9 @@
 
 namespace ExDirectUI
 {
+	EXINTERFACE("59383874-96F6-46DF-9C03-43A1F41EE289") IExCanvasBrush : public IExRenderObject
+	{
 
+	};
 
 }
