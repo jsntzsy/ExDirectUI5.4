@@ -17,28 +17,5 @@ namespace ExDirectUI
 		
 	};
 
-	struct _EnumTest_ {
-		_EnumTest_() = delete;
-		_EnumTest_(const _EnumTest_&) = delete;
-		_EnumTest_(_EnumTest_&&) = delete;
-		_EnumTest_& operator=(const _EnumTest_&) = delete;
-
-		enum Values;
-	};
-	using EnumTest = _EnumTest_::Values;
-	enum _EnumTest_::Values {
-		One,
-		Two,
-		Three
-	};
-
-	DWORD a = EnumTest::One | EnumTest::Two;
-
-	int T(EnumTest t)
-	{
-		return T(EnumTest::One);
-	}
-
-
 
 }
