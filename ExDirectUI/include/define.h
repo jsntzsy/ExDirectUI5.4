@@ -36,6 +36,20 @@
 
 #pragma endregion
 
+#pragma region 枚举类型声明
+
+#define EXENUM(name) struct _##name##_Enum_ {								\
+	_##name##_Enum_() = delete;												\
+	_##name##_Enum_(const _##name##_Enum_&) = delete;						\
+	_##name##_Enum_(_##name##_Enum_&&) = delete;							\
+	_##name##_Enum_& operator=(const _##name##_Enum_&) = delete;			\
+	enum Values; };															\
+using name = _##name##_Enum_::Values;										\
+enum _##name##_Enum_::Values 												
+
+#pragma endregion
+
+
 #pragma region 调试处理
 
 #ifdef EX_CFG_DEBUG
@@ -134,6 +148,8 @@
 #undef LoadModule
 #undef FreeModule
 #undef GetObject
+#undef DrawText
+#undef DrawTextEx
 
 #pragma endregion
 

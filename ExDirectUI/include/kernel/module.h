@@ -58,6 +58,9 @@ namespace ExDirectUI
 		/// 模块标志
 		uint16_t flags;
 
+		/// 模块自定义参数
+		LPARAM param;
+
 		/// 模块名称
 		wchar_t name[64];
 

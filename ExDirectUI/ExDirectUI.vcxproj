@@ -223,6 +223,7 @@
     <ClInclude Include="include\drawing\render\canvas_brush.h" />
     <ClInclude Include="include\drawing\render\device.h" />
     <ClInclude Include="include\drawing\render\effect.h" />
+    <ClInclude Include="include\drawing\render\factory.h" />
     <ClInclude Include="include\drawing\render\font.h" />
     <ClInclude Include="include\drawing\render\image.h" />
     <ClInclude Include="include\drawing\render\image_brush.h" />

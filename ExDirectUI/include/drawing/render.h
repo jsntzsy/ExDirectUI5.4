@@ -34,5 +34,5 @@ namespace ExDirectUI
 #include "render/mem_dc.h"
 #include "render/device.h"
 #include "render/canvas.h"
-
+#include "render/factory.h"
 

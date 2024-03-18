@@ -193,6 +193,7 @@ namespace ExDirectUI
 			const IExImage* icon_image, float icon_width, float icon_height, DWORD icon_pos, float split_size,
 			ExRectF* r_text_rect, ExRectF* r_icon_rect, ExRectF* r_content_rect) PURE;
 
+		//TODO:文本绘制函数可能需要调整，以支持ClearType等效果
 		EXMETHOD HRESULT EXOBJCALL StrokeText(const IExPen* pen, const IExFont* font, LPCWSTR text, uint32_t text_length,
 			DWORD text_format, float left, float top, float right, float bottom) PURE;
 		EXMETHOD HRESULT EXOBJCALL FillText(const IExBrush* brush, const IExFont* font, LPCWSTR text, uint32_t text_length,

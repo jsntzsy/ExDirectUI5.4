@@ -383,6 +383,9 @@
     <ClInclude Include="include\drawing\render\mem_dc.h">
       <Filter>drawing\render\canvas</Filter>
     </ClInclude>
+    <ClInclude Include="include\drawing\render\factory.h">
+      <Filter>drawing\render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="API.def">
