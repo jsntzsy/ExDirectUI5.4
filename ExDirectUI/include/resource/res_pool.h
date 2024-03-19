@@ -13,10 +13,10 @@ namespace ExDirectUI
 
 	interface IExResPool;
 
-	enum ExResPoolItemFlags
+	EXENUM(ExResPoolItemFlags)
 	{
-		EX_RESPOOL_ITEM_NONE = 0x0000,
-		EX_RESPOOL_ITEM_ETERNAL = 0x0001,
+		None = 0x0000,
+		Eternal = 0x0001,
 	};
 
 	/// 资源池初始化项目回调函数类型

@@ -79,7 +79,7 @@ namespace ExDirectUI
 		}
 
 		//系统默认处理
-		if (ExEngineQueryFlag(EX_ENGINE_FLAG_DEBUG)) {
+		if (ExEngineQueryFlag(ExEngineFlags::Debug)) {
 #ifdef EX_CFG_DEBUG_INTERRUPT
 			ExAssertFmtCallInfo(SUCCEEDED(status), file, line, buffer);
 #elif defined(EX_CFG_DEBUG_OUTPUT)

@@ -13,13 +13,13 @@ namespace ExDirectUI
 	interface IExPath;
 
 	/// 区域合并模式
-	enum ExRegionCombineMode
+	EXENUM(ExRegionCombineMode)
 	{
-		EX_REGION_COMBINE_COPY = 0,				///< 区域合并模式：复制
-		EX_REGION_COMBINE_UNION = 1,			///< 区域合并模式：合并
-		EX_REGION_COMBINE_INTERSECT = 2,		///< 区域合并模式：相交
-		EX_REGION_COMBINE_EXCLUDE = 3,			///< 区域合并模式：排除
-		EX_REGION_COMBINE_XOR = 4,				///< 区域合并模式：异或
+		Copy = 0,				///< 区域合并模式：复制
+		Union = 1,				///< 区域合并模式：合并
+		Intersect = 2,			///< 区域合并模式：相交
+		Exclude = 3,			///< 区域合并模式：排除
+		Xor = 4,				///< 区域合并模式：异或
 	};
 
 	/// 渲染器区域接口

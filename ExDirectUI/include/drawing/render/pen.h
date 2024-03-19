@@ -11,30 +11,30 @@
 namespace ExDirectUI
 {
 	/// 虚线样式
-	enum ExDashStyle
+	EXENUM(ExDashStyle)
 	{
-		EX_DASH_STYLE_SOLID = 0,		///< 虚线样式：实线
-		EX_DASH_STYLE_DASH = 1,			///< 虚线样式：划线
-		EX_DASH_STYLE_DOT = 2,			///< 虚线样式：点线
-		EX_DASH_STYLE_DASHDOT = 3,		///< 虚线样式：划点线
-		EX_DASH_STYLE_DASHDOTDOT = 4,	///< 虚线样式：划点点线
+		Solid = 0,			///< 虚线样式：实线
+		Dash = 1,			///< 虚线样式：划线
+		Dot = 2,			///< 虚线样式：点线
+		DashDot = 3,		///< 虚线样式：划点线
+		DashDotDot = 4,		///< 虚线样式：划点点线
 	};
 
 	/// 笔帽样式
-	enum ExCapStyle
+	EXENUM(ExCapStyle)
 	{
-		EX_CAP_STYLE_FLAT = 0,			///< 笔帽样式：平头
-		EX_CAP_STYLE_ROUND = 1,			///< 笔帽样式：圆头
-		EX_CAP_STYLE_SQUARE = 2,		///< 笔帽样式：方头
-		EX_CAP_STYLE_TRIANGLE = 3,		///< 笔帽样式：三角头
+		Flat = 0,			///< 笔帽样式：平头
+		Round = 1,			///< 笔帽样式：圆头
+		Square = 2,			///< 笔帽样式：方头
+		Triangle = 3,		///< 笔帽样式：三角头
 	};
 
 	/// 笔段连接样式
-	enum ExLineJoinStyle
+	EXENUM(ExLineJoinStyle)
 	{
-		EX_JOIN_STYLE_MITER = 0,		///< 笔段连接样式：斜接
-		EX_JOIN_STYLE_ROUND = 1,		///< 笔段连接样式：圆接
-		EX_JOIN_STYLE_BEVEL = 2,		///< 笔段连接样式：斜角
+		Miter = 0,			///< 笔段连接样式：斜接
+		Round = 1,			///< 笔段连接样式：圆接
+		Bevel = 2,			///< 笔段连接样式：斜角
 	};
 
 	interface IExBrush;

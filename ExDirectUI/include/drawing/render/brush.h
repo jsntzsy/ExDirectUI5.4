@@ -11,11 +11,11 @@
 namespace ExDirectUI
 {
 	/// 画刷扩展模式
-	enum ExBrushExtendMode
+	EXENUM(ExBrushExtendMode)
 	{
-		EX_BRUSH_EXTEND_CLAMP = 0,				///< 画刷扩展模式：固定
-		EX_BRUSH_EXTEND_WRAP = 1,				///< 画刷扩展模式：平铺
-		EX_BRUSH_EXTEND_MIRROR = 2,				///< 画刷扩展模式：镜像平铺
+		None = 0,				///< 画刷扩展模式：不扩展
+		Tile = 1,				///< 画刷扩展模式：平铺
+		Mirror = 2,				///< 画刷扩展模式：镜像平铺
 	};
 
 	/// 渲染渐变点信息

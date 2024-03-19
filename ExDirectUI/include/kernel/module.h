@@ -32,18 +32,18 @@ namespace ExDirectUI
 	};
 
 	/// 模块类型
-	enum ExModuleType
+	EXENUM(ExModuleType)
 	{
-		EX_MODULE_UNKNOWN,				///< 模块类型：未知
-		EX_MODULE_IMAGE_DECODER,		///< 模块类型：图像解码器
-		EX_MODULE_RENDER,				///< 模块类型：渲染器
+		Uknown,				///< 模块类型：未知
+		ImageDecoder,		///< 模块类型：图像解码器
+		Render,				///< 模块类型：渲染器
 	};
 
 	/// 模块标志
-	enum ExModuleFlags
+	EXENUM(ExModuleFlags)
 	{
-		EX_MODULE_FLAG_NONE = 0x0000,			///< 模块标志：无
-		EX_MODULE_FLAG_CAN_UNLOAD = 0x0001,		///< 模块标志：可卸载
+		None = 0x0000,			///< 模块标志：无
+		CanUnload = 0x0001,		///< 模块标志：可卸载
 	};
 
 	/// 模块信息

@@ -43,12 +43,12 @@ namespace ExDirectUI
 	{
 		switch (type)
 		{
-		case ExDirectUI::EX_MODULE_IMAGE_DECODER: {
+		case ExModuleType::ImageDecoder : {
 			ExAutoPtr<IExImageDecoder> decoder;
 			throw_if_failed(instance->QueryInterface(&decoder), L"未实现对应接口");
 			return _ExImageDecoder_Group(decoder);
 		}
-		case ExDirectUI::EX_MODULE_RENDER: {
+		case ExModuleType::Render: {
 			ExAutoPtr<IExRender> render;
 			throw_if_failed(instance->QueryInterface(&render), L"未实现对应接口");
 			return _ExRender_Group(render);
@@ -60,10 +60,10 @@ namespace ExDirectUI
 	{
 		switch (instance->GetType())
 		{
-		case ExDirectUI::EX_MODULE_IMAGE_DECODER: {
+		case ExModuleType::ImageDecoder: {
 			return _ExImageDecoder_UnGroup((IExImageDecoder*)instance);
 		}
-		case ExDirectUI::EX_MODULE_RENDER: {
+		case ExModuleType::Render: {
 			return _ExRender_UnGroup((IExRender*)instance);
 		}
 		default: throw_ex(E_NOTIMPL, L"不支持的模块类型");

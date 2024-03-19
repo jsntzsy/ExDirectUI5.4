@@ -10,11 +10,11 @@
 
 namespace ExDirectUI
 {
-	enum ExDeviceType
+	EXENUM(ExDeviceType)
 	{
-		EX_DEVICE_WINDOW,
-		EX_DEVICE_COMPOSITION_WINDOW,
-		EX_DEVICE_BITMAP,
+		Window,
+		CompositionWindow,
+		Bitmap,
 	};
 
 	EXINTERFACE("827442C1-D85C-4A8B-9EF9-99AC9AFC9AA9") IExDevice : public IExRenderObject

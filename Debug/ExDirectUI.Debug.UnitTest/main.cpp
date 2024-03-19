@@ -8,14 +8,14 @@ public:
 	{
 		ExEngineInitInfo eii{};
 		eii.instance = GetModuleHandleW(nullptr);
-		eii.flags = EX_ENGINE_FLAG_NONE;
+		eii.flags = ExEngineFlags::None;
 
 		ExModuleFileInfo modules[] = {
 			{L"ExDirectUI.ImageDecoder.WIC.dll",0,0},
 			//{L"ExDirectUI.Render.Direct2D.dll",0,0},
 		};
 
-		eii.module_load_mode = EX_ENGINE_MODULE_LOAD_FROM_FILE;
+		eii.module_load_mode = ExModuleLoadFileMode::FromFile;
 		eii.modules.files = modules;
 		eii.module_count = _countof(modules);
 

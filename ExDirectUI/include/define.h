@@ -64,18 +64,18 @@ enum _##name##_Enum_::Values
 #define ExAssert(exp_is_true)		assert(exp_is_true)
 #define ExAssertMsg(exp_is_true,message)																	\
 		(void)(																								\
-            (!!(exp_is_true)) || !ExEngineQueryFlag(EX_ENGINE_FLAG_DEBUG) ||								\
+            (!!(exp_is_true)) || !ExEngineQueryFlag(ExEngineFlags::Debug) ||								\
             (_wassert(message, __CALLINFO__), 0)															\
         )																									\
 
 
 #define ExAssertFmt(exp_is_true, format, ...)																\
-						(void) ((!!(exp_is_true)) || !ExEngineQueryFlag(EX_ENGINE_FLAG_DEBUG) ||			\
+						(void) ((!!(exp_is_true)) || !ExEngineQueryFlag(ExEngineFlags::Debug) ||			\
 						(1 != _CrtDbgReportW(_CRT_ASSERT, __CALLINFO__, nullptr, format, __VA_ARGS__)) ||	\
 						(ExDbgBreak(), 0))
 
 #define ExAssertFmtCallInfo(exp_is_true, file, line, format, ...)											\
-						(void) ((!!(exp_is_true)) || !ExEngineQueryFlag(EX_ENGINE_FLAG_DEBUG) ||			\
+						(void) ((!!(exp_is_true)) || !ExEngineQueryFlag(ExEngineFlags::Debug) ||			\
 						(1 != _CrtDbgReportW(_CRT_ASSERT, file, line, nullptr, format, __VA_ARGS__)) ||		\
 						(ExDbgBreak(), 0))
 

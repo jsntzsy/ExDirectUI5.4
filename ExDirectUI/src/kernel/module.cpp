@@ -88,8 +88,9 @@ namespace ExDirectUI
 		if (!is_uninit) {
 			ExModuleInfo info{};
 			instance->GetInfo(&info);
-			handle_if_false(info.flags & EX_MODULE_FLAG_CAN_UNLOAD, E_NOTIMPL, L"模块不允许提前卸载");
+			handle_if_false(info.flags & ExModuleFlags::CanUnload, E_NOTIMPL, L"模块不允许提前卸载");
 		}
+
 
 		// 模块取消分组
 		handle_if_failed(
@@ -131,12 +132,12 @@ namespace ExDirectUI
 			
 			for (uint32_t i = 0; i < init_info->module_count; ++i) {
 				switch (init_info->module_load_mode) {
-				case EX_ENGINE_MODULE_LOAD_FROM_HANDLE:
+				case ExModuleLoadFileMode::FromHandle:
 					status = ExModuleLoadFromHandle(
 						init_info->modules.handles[i], &module_id
 					);
 					break;
-				case EX_ENGINE_MODULE_LOAD_FROM_FILE:
+				case ExModuleLoadFileMode::FromFile:
 					status = ExModuleLoadFromFile(
 						init_info->modules.files[i].file,
 						init_info->modules.files[i].wparam,
@@ -144,7 +145,7 @@ namespace ExDirectUI
 						&module_id
 					);
 					break;
-				case EX_ENGINE_MODULE_LOAD_FROM_FILE_PTR:
+				case ExModuleLoadFileMode::FromFilePtr:
 					status = ExModuleLoadFromFile(
 						init_info->modules.files_ptr[i]->file,
 						init_info->modules.files_ptr[i]->wparam,
@@ -152,7 +153,7 @@ namespace ExDirectUI
 						&module_id
 					);
 					break;
-				case EX_ENGINE_MODULE_LOAD_FROM_ENTRY:
+				case ExModuleLoadFileMode::FromEntry:
 					status = ExModuleLoadFromEntry(
 						init_info->modules.entries[i],
 						&module_id

@@ -81,8 +81,8 @@ namespace ExDirectUI
 		inline static const ExModuleInfo MODULE_INFO = 
 		{
 			ATOM_EXDIRECTUI_IMAGEDECODER_WIC,
-			EX_MODULE_IMAGE_DECODER,
-			EX_MODULE_FLAG_NONE,
+			ExModuleType::ImageDecoder,
+			ExModuleFlags::None,
 			0,
 			L"ExDirectUI.ImageDecoder.WIC",
 			L"1.0.0.0",

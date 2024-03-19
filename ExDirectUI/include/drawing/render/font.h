@@ -11,15 +11,15 @@
 namespace ExDirectUI
 {
 	/// 字体风格
-	enum ExFontStyle
+	EXENUM(ExFontStyle)
 	{
-		EX_FONT_STYLE_NORMAL = 0x0000,				///< 字体风格：正常
-		EX_FONT_STYLE_BOLD = 0x0001,				///< 字体风格：粗体
-		EX_FONT_STYLE_ITALIC = 0x0002,				///< 字体风格：斜体
-		EX_FONT_STYLE_UNDERLINE = 0x0004,			///< 字体风格：下划线
-		EX_FONT_STYLE_STRIKEOUT = 0x0008,			///< 字体风格：删除线
+		Normal = 0x0000,			///< 字体风格：正常
+		Bold = 0x0001,				///< 字体风格：粗体
+		Italic = 0x0002,			///< 字体风格：斜体
+		UnderLine= 0x0004,			///< 字体风格：下划线
+		StrikeOut = 0x0008,			///< 字体风格：删除线
 
-		EX_FONT_STYLE_CUSTOM_WEIGHT = 0x0100,		///< 字体风格：自定义粗细 <此时style高16位表示粗细,取值一般在0-1000,可参考FW_开头的常量>
+		CustomWeight = 0x0100,		///< 字体风格：自定义粗细 <此时style高16位表示粗细,取值一般在0-1000,可参考FW_开头的常量>
 	};
 
 	/// 字体信息
@@ -49,13 +49,13 @@ namespace ExDirectUI
 		{
 			size = abs(log_font->lfHeight);
 
-			style = (log_font->lfItalic ? EX_FONT_STYLE_ITALIC : 0) |
-				(log_font->lfUnderline ? EX_FONT_STYLE_UNDERLINE : 0) |
-				(log_font->lfStrikeOut ? EX_FONT_STYLE_STRIKEOUT : 0);
+			style = (log_font->lfItalic ? ExFontStyle::Italic : 0) |
+				(log_font->lfUnderline ? ExFontStyle::UnderLine : 0) |
+				(log_font->lfStrikeOut ? ExFontStyle::StrikeOut : 0);
 			
-			if (log_font->lfWeight == FW_BOLD) { style |= EX_FONT_STYLE_BOLD; }
+			if (log_font->lfWeight == FW_BOLD) { style |= ExFontStyle::Bold; }
 			else if (log_font->lfWeight != FW_NORMAL) { 
-				style |= EX_FONT_STYLE_CUSTOM_WEIGHT; 
+				style |= ExFontStyle::CustomWeight; 
 				style = MAKEDWORD(style, log_font->lfWeight);
 			}
 
@@ -64,25 +64,25 @@ namespace ExDirectUI
 
 		inline bool IsBold()
 		{
-			if (style & EX_FONT_STYLE_CUSTOM_WEIGHT) { return HIWORD(style) >= FW_BOLD; }
-			else { return !!(style & EX_FONT_STYLE_BOLD); };
+			if (style & ExFontStyle::CustomWeight) { return HIWORD(style) >= FW_BOLD; }
+			else { return !!(style & ExFontStyle::Bold); };
 		}
-		inline bool IsItalic() { return !!(style & EX_FONT_STYLE_ITALIC); }
-		inline bool IsUnderline() { return !!(style & EX_FONT_STYLE_UNDERLINE); }
-		inline bool IsStrikeout() { return !!(style & EX_FONT_STYLE_STRIKEOUT); }
+		inline bool IsItalic() { return !!(style & ExFontStyle::Italic); }
+		inline bool IsUnderline() { return !!(style & ExFontStyle::UnderLine); }
+		inline bool IsStrikeout() { return !!(style & ExFontStyle::StrikeOut); }
 		inline uint16_t GetWeight()
 		{
-			if (style & EX_FONT_STYLE_CUSTOM_WEIGHT) { return HIWORD(style); }
-			else { return (style & EX_FONT_STYLE_BOLD) ? FW_BOLD : FW_NORMAL; }
+			if (style & ExFontStyle::CustomWeight) { return HIWORD(style); }
+			else { return (style & ExFontStyle::Bold) ? FW_BOLD : FW_NORMAL; }
 		}
 		inline void SetWeight(int16_t weight)
 		{
 			if (weight < 0) {
-				style = LOWORD(style) & ~EX_FONT_STYLE_CUSTOM_WEIGHT;
+				style = LOWORD(style) & ~ExFontStyle::CustomWeight;
 			}
 			else {
 				style = MAKEDWORD(
-					(style | EX_FONT_STYLE_CUSTOM_WEIGHT),
+					(style | ExFontStyle::CustomWeight),
 					weight
 				);
 			}

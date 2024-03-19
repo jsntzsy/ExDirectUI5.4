@@ -20,14 +20,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	try {
 		ExEngineInitInfo eii{};
 		eii.instance = hInstance;
-		eii.flags = EX_ENGINE_FLAG_DEBUG;
+		eii.flags = ExEngineFlags::Debug;
 
 		ExModuleFileInfo modules[] = {
 			{L"ExDirectUI.ImageDecoder.WIC.dll",0,0},
 			//{L"ExDirectUI.Render.Direct2D.dll",0,0},
 		};
 
-		eii.module_load_mode = EX_ENGINE_MODULE_LOAD_FROM_FILE;
+		eii.module_load_mode = ExModuleLoadFileMode::FromFile;
 		eii.modules.files = modules;
 		eii.module_count = _countof(modules);
 

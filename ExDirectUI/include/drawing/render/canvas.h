@@ -11,76 +11,75 @@
 namespace ExDirectUI
 {
 	/// 文本格式
-	enum ExTextFormat
+	EXENUM(ExTextFormat)
 	{
-		EX_TEXT_FORMAT_LEFT = 0x00000000,							///< 文本格式：左对齐
-		EX_TEXT_FORMAT_TOP = 0x00000000,							///< 文本格式：顶对齐
-		EX_TEXT_FORMAT_CENTER = 0x00000001,							///< 文本格式：水平居中
-		EX_TEXT_FORMAT_RIGHT = 0x00000002,							///< 文本格式：右对齐
-		EX_TEXT_FORMAT_MIDDLE = 0x00000004,							///< 文本格式：垂直居中
-		EX_TEXT_FORMAT_BOTTOM = 0x00000008,							///< 文本格式：底对齐
-		EX_TEXT_FORMAT_WORDBREAK = 0x00000010,						///< 文本格式：按字断开
-		EX_TEXT_FORMAT_SINGLELINE = 0x00000020,						///< 文本格式：单行
-		EX_TEXT_FORMAT_EXPANDTABS = 0x00000040,						///< 文本格式：展开制表符 
-		EX_TEXT_FORMAT_TABSTOP = 0x00000080,						///< 文本格式：自定制表符宽度 (高字节表示制表符宽度)
-		EX_TEXT_FORMAT_NOCLIP = 0x00000100,							///< 文本格式：忽略裁剪
-		//EX_TEXT_FORMAT_EXTERNALLEADING = 0x00000200,				///< 文本格式：
+		Left = 0x00000000,							///< 文本格式：左对齐
+		Top = 0x00000000,							///< 文本格式：顶对齐
+		Center = 0x00000001,						///< 文本格式：水平居中
+		Right = 0x00000002,							///< 文本格式：右对齐
+		Middle = 0x00000004,						///< 文本格式：垂直居中
+		Bottom = 0x00000008,						///< 文本格式：底对齐
+		WordBreak = 0x00000010,						///< 文本格式：按字断开
+		SingleLine = 0x00000020,					///< 文本格式：单行
+		ExpandTabs = 0x00000040,					///< 文本格式：展开制表符 
+		TabStop = 0x00000080,						///< 文本格式：自定制表符宽度 (高字节表示制表符宽度)
+		NoClip = 0x00000100,						///< 文本格式：忽略裁剪
+		ExternalLeading = 0x00000200,				///< 文本格式：
 
-		EX_TEXT_FORMAT_PREFIX = 0x00000800,							///< 文本格式：转义前缀符 (&转义为下划线)
-		EX_TEXT_FORMAT_PATH_ELLIPSIS = 0x00004000,					///< 文本格式：路径省略 (路径中间省略)
-		EX_TEXT_FORMAT_END_ELLIPSIS = 0x00008000,					///< 文本格式：末尾省略 (末尾变为省略号)
-		EX_TEXT_FORMAT_RTLREADING = 0x00020000,						///< 文本格式：从右往左
-		EX_TEXT_FORMAT_WORD_ELLIPSIS = 0x00040000,					///< 文本格式：单词忽略 (按单词省略)
-		//EX_TEXT_FORMAT_NOFULLWIDTHCHARBREAK = 0x00080000,			///< 文本格式：
-		EX_TEXT_FORMAT_HIDEPREFIX = 0x00100000,						///< 文本格式：隐藏前缀符 (被转义的&不显示下划线)
+		Prefix = 0x00000800,						///< 文本格式：转义前缀符 (&转义为下划线)
+		PathEllipsis = 0x00004000,					///< 文本格式：路径省略 (路径中间省略)
+		EndEllipsis = 0x00008000,					///< 文本格式：末尾省略 (末尾变为省略号)
+		RtlReading = 0x00020000,					///< 文本格式：从右往左
+		WordEllipsis = 0x00040000,					///< 文本格式：单词忽略 (按单词省略)
+		NoFullWidthCharBreak = 0x00080000,			///< 文本格式：
+		HidePrefix = 0x00100000,					///< 文本格式：隐藏前缀符 (被转义的&不显示下划线)
 
-		EX_TEXT_FORMAT_VERTICAL = 0x00200000						///< 文本格式：垂直显示
+		Vertical = 0x00200000						///< 文本格式：垂直显示
 	};
 
-	enum ExImageMode
+	EXENUM(ExImageMode)
 	{
-		EX_IMAGE_MODE_LEFT = 0x00000001,
-		EX_IMAGE_MODE_CENTER = 0x00000002,
-		EX_IMAGE_MODE_RIGHT = 0x00000004,
-		EX_IMAGE_MODE_TOP = 0x00000010,
-		EX_IMAGE_MODE_MIDDLE = 0x00000020,
-		EX_IMAGE_MODE_BOTTOM = 0x00000040,
+		Left = 0x00000001,
+		HCenter = 0x00000002,
+		Right = 0x00000004,
+		Top = 0x00000010,
+		VCenter = 0x00000020,
+		Bottom = 0x00000040,
 
-		EX_IMAGE_MODE_SCALE = 0x00000000,
-		EX_IMAGE_MODE_SCALE_FILL = 0x00000100,
-		EX_IMAGE_MODE_SCALE_CENTER = 0x00000200,
-		EX_IMAGE_MODE_TILE = 0x00000400,
-		EX_IMAGE_MODE_MIRROR = 0x00000800,
+		Scale = 0x00000000,
+		ScaleFill = 0x00000100,
+		ScaleCenter = 0x00000200,
+		Tile = 0x00000400,
+		Mirror = 0x00000800,
 
+		Default = ExImageMode::Scale,
+		Center = ExImageMode::HCenter | ExImageMode::VCenter,
+		LeftTop = ExImageMode::Left | ExImageMode::Top,
 
-		EX_IMAGE_MODE_DEFAULT = EX_IMAGE_MODE_SCALE,
-		EX_IMAGE_MODE_CENTER_MIDDLE = EX_IMAGE_MODE_CENTER | EX_IMAGE_MODE_MIDDLE,
-		EX_IMAGE_MODE_LEFT_TOP = EX_IMAGE_MODE_LEFT | EX_IMAGE_MODE_TOP,
-
-		EX_IMAGE_MODE_GRIDS = 0x01000000,
+		Grids = 0x01000000,
 	};
 
-	enum ExGridsImageMode
+	EXENUM(ExGridsImageMode)
 	{
-		EX_GRIDS_IMAGE_SCALE = 0x00000000,
+		Scale = 0x00000000,
 
-		EX_GRIDS_IMAGE_LEFT_NONE = 0x00000001,
-		EX_GRIDS_IMAGE_LEFT_TILE = 0x00000002,
-		EX_GRIDS_IMAGE_LEFT_MIRROR = 0x00000004,
+		LeftNone = 0x00000001,
+		LeftTile = 0x00000002,
+		LeftMirror = 0x00000004,
 
-		EX_GRIDS_IMAGE_TOP_NONE = 0x00000100,
-		EX_GRIDS_IMAGE_TOP_TILE = 0x00000200,
-		EX_GRIDS_IMAGE_TOP_MIRROR = 0x00000400,
+		TopNone = 0x00000100,
+		TopTile = 0x00000200,
+		TopMirror = 0x00000400,
 
-		EX_GRIDS_IMAGE_RIGHT_NONE = 0x00010000,
-		EX_GRIDS_IMAGE_RIGHT_TILE = 0x00020000,
-		EX_GRIDS_IMAGE_RIGHT_MIRROR = 0x00040000,
+		RightNone = 0x00010000,
+		RightTile = 0x00020000,
+		RightMirror = 0x00040000,
 
-		EX_GRIDS_IMAGE_BOTTOM_NONE = 0x01000000,
-		EX_GRIDS_IMAGE_BOTTOM_TILE = 0x02000000,
-		EX_GRIDS_IMAGE_BOTTOM_MIRROR = 0x04000000,
+		BottomNone = 0x01000000,
+		BottomTile = 0x02000000,
+		BottomMirror = 0x04000000,
 
-		EX_GRIDS_IMAGE_DEFAULT = EX_GRIDS_IMAGE_SCALE,
+		Default = ExGridsImageMode::Scale,
 	};
 
 	struct ExGridsImageInfo
@@ -94,10 +93,10 @@ namespace ExDirectUI
 		ExGridsImageInfo()
 		{
 			left = top = right = bottom = 0.0F;
-			flags = EX_GRIDS_IMAGE_DEFAULT;
+			flags = ExGridsImageMode::Default;
 		}
 
-		ExGridsImageInfo(float left, float top, float right, float bottom, uint32_t flags = EX_GRIDS_IMAGE_DEFAULT)
+		ExGridsImageInfo(float left, float top, float right, float bottom, uint32_t flags = ExGridsImageMode::Default)
 		{
 			this->left = left;
 			this->top = top;
@@ -105,29 +104,29 @@ namespace ExDirectUI
 			this->bottom = bottom;
 			this->flags = flags;
 		}
-		ExGridsImageInfo(float size, uint32_t flags = EX_GRIDS_IMAGE_DEFAULT) 
+		ExGridsImageInfo(float size, uint32_t flags = ExGridsImageMode::Default) 
 			: ExGridsImageInfo(size, size, size, size, flags)
 		{ }
-		ExGridsImageInfo(float horz,float vert, uint32_t flags = EX_GRIDS_IMAGE_DEFAULT)
+		ExGridsImageInfo(float horz,float vert, uint32_t flags = ExGridsImageMode::Default)
 			: ExGridsImageInfo(horz, vert, horz, vert, flags)
 		{ }
 
 		inline bool IsEmpty() const { return left == 0.0F && top == 0.0F && right == 0.0F && bottom == 0.0F; }
 	};
 
-	enum ExIconPos
+	EXENUM(ExIconPos)
 	{
-		EX_ICON_POS_LEFT,
-		EX_ICON_POS_TOP,
-		EX_ICON_POS_RIGHT,
-		EX_ICON_POS_BOTTOM,
+		Left,
+		Top,
+		Right,
+		Bottom,
 	};
 
-	enum ExCanvasDrawMode
+	EXENUM(ExCanvasDrawMode)
 	{
-		EX_CANVAS_DRAW_MODE_BLEND = 0x00000000,
-		EX_CANVAS_DRAW_MODE_OVER = 0x00000001,
-		EX_CANVAS_DRAW_MODE_OVER_BLEND = 0x00000002,
+		Blend = 0x00000000,
+		Over = 0x00000001,
+		OverBlend = 0x00000002,
 	};
 
 	/////////////////
@@ -212,12 +211,12 @@ namespace ExDirectUI
 
 		EXMETHOD HRESULT EXOBJCALL DrawImage(const IExImage* image, float left, float top, EXCHANNEL alpha = ALPHA_OPAQUE) PURE;
 		EXMETHOD HRESULT EXOBJCALL DrawImageRect(const IExImage* image, float left, float top, float right, float bottom,
-			ExImageMode mode = EX_IMAGE_MODE_DEFAULT, EXCHANNEL alpha = ALPHA_OPAQUE) PURE;
+			ExImageMode mode = ExImageMode::Default, EXCHANNEL alpha = ALPHA_OPAQUE) PURE;
 		EXMETHOD HRESULT EXOBJCALL DrawImagePart(const IExImage* image, float left, float top,
 			float src_left, float src_top, float src_right, float src_bottom, EXCHANNEL alpha = ALPHA_OPAQUE) PURE;
 		EXMETHOD HRESULT EXOBJCALL DrawImagePartRect(const IExImage* image, float left, float top, float right, float bottom,
 			float src_left, float src_top, float src_right, float src_bottom,
-			ExImageMode mode = EX_IMAGE_MODE_DEFAULT, EXCHANNEL alpha = ALPHA_OPAQUE) PURE;
+			ExImageMode mode = ExImageMode::Default, EXCHANNEL alpha = ALPHA_OPAQUE) PURE;
 
 		EXMETHOD HRESULT EXOBJCALL DrawGridsImage(const IExImage* image, float left, float top, float right, float bottom,
 			ExGridsImageInfo* grids, EXCHANNEL alpha = ALPHA_OPAQUE) PURE;

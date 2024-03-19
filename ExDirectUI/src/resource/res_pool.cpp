@@ -233,7 +233,7 @@ namespace ExDirectUI
 				if (--header->ref_count == 0) {
 
 					// 如果不是永久项目，则释放
-					if ((header->flags & EX_RESPOOL_ITEM_ETERNAL) == 0) {
+					if ((header->flags & ExResPoolItemFlags::Eternal) == 0) {
 
 						// 如果有释放回调，则调用
 						if (m_free_item_proc) {

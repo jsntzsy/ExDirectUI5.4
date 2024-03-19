@@ -11,21 +11,21 @@
 namespace ExDirectUI
 {
 	/// 引擎标识
-	enum ExEngineFlags
+	EXENUM(ExEngineFlags)
 	{
-		EX_ENGINE_FLAG_NONE = 0x00000000,				///< 引擎标识：无
-		EX_ENGINE_FLAG_DEBUG = 0x01000000,				///< 引擎标识：调试模式
+		None = 0x00000000,				///< 引擎标识：无
+		Debug = 0x01000000,				///< 引擎标识：调试模式
 
-		EX_ENGINE_FLAG_DEFULT = -1,						///< 引擎标识：默认
+		Default = -1,					///< 引擎标识：默认
 	};
 
 	/// 模块加载模式
-	enum ExModuleLoadFileMode
+	EXENUM(ExModuleLoadFileMode)
 	{
-		EX_ENGINE_MODULE_LOAD_FROM_HANDLE,				///< 模块加载：自句柄
-		EX_ENGINE_MODULE_LOAD_FROM_FILE,				///< 模块加载：自文件信息
-		EX_ENGINE_MODULE_LOAD_FROM_FILE_PTR,			///< 模块加载：自文件信息指针
-		EX_ENGINE_MODULE_LOAD_FROM_ENTRY,				///< 模块加载：自入口函数
+		FromHandle,						///< 模块加载：自句柄
+		FromFile,						///< 模块加载：自文件信息
+		FromFilePtr,					///< 模块加载：自文件信息指针
+		FromEntry,						///< 模块加载：自入口函数
 	};
 
 	/// 模块加载文件集
@@ -37,7 +37,6 @@ namespace ExDirectUI
 		ExModuleFileInfo** files_ptr;					///< 模块文件信息指针数组
 		ExModuleEntryProc* entries;						///< 模块入口函数数组
 	};
-
 
 	/// 引擎初始化信息
 	struct ExEngineInitInfo
@@ -59,9 +58,6 @@ namespace ExDirectUI
 
 		/// 模块加载器 @可空(空则使用默认加载器)
 		ExModuleFileLoader* module_loader;
-
-
-
 	};
 
 
