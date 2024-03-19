@@ -9,11 +9,11 @@
 
 #include "stdafx.h"
 #include "resource/res_pool.h"
-#include "common/interfaces/object_impl.hpp"
+#include "common/object_impl.hpp"
 
-#include "common/utils/mem_pool.hpp"
-#include "common/utils/lock.hpp"
-#include "common/utils/auto_ptr.hpp"
+#include "common/mem_pool.hpp"
+#include "common/lock.hpp"
+#include "common/auto_ptr.hpp"
 
 namespace ExDirectUI
 {

@@ -7,8 +7,8 @@
  * @copyright
  */
 #pragma once
-#include "common/interfaces/object_impl.hpp"
-#include "common/utils/singleton.hpp"
+#include "common/object_impl.hpp"
+#include "common/singleton.hpp"
 
 namespace ExDirectUI
 {

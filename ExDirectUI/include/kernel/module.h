@@ -94,13 +94,15 @@ namespace ExDirectUI
 
 	interface IExDecodeImage;
 	interface IExRender;
+	struct ExFontInfo;
 
 	EXINTERFACE("4BB3ED43-DD75-4679-882B-3E137D592496") IExModuleUtils : public IUnknown
 	{
-		EXMETHOD HRESULT EXOBJCALL DecodeImageFile(LPCWSTR file, IExDecodeImage * *r_image) PURE;
-		EXMETHOD HRESULT EXOBJCALL DecodeImageMemory(const byte_t* data, size_t size, IExDecodeImage** r_image) PURE;
+		EXMETHOD HRESULT EXOBJCALL DecodeImageFile(LPCWSTR file, IExDecodeImage * *r_image) const PURE;
+		EXMETHOD HRESULT EXOBJCALL DecodeImageMemory(const byte_t* data, size_t size, IExDecodeImage** r_image) const PURE;
 
 		EXMETHOD IExRender* EXOBJCALL GetRender() const PURE;
+		EXMETHOD HRESULT EXOBJCALL GetDefaultFont(ExFontInfo* r_info) const PURE;
 	};
 
 	////////////////////////////

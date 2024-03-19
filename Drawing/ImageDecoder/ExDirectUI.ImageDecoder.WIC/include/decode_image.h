@@ -7,8 +7,8 @@
  * @copyright
  */
 #pragma once
-#include "common/interfaces/unknown_impl.hpp"
 #include "drawing/image_decoder.h"
+#include "common/unknown_impl.hpp"
 
 namespace ExDirectUI
 {

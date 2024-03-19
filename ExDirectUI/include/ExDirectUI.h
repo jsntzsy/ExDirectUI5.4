@@ -28,8 +28,8 @@
 #include "status.h"
 
 #include "common/types.h"
-#include "common/interfaces/object.i.h"
-#include "common/utils/auto_ptr.hpp"
+#include "common/object.i.h"
+#include "common/auto_ptr.hpp"
 
 #include "kernel/memory.h"
 #include "kernel/atom.h"

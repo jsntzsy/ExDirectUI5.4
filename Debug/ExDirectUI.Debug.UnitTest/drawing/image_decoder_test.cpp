@@ -8,7 +8,7 @@
  */
 
 #include "pch.h"
-#include "common/utils/string.hpp"
+#include "common/string.hpp"
 
 #define TEST_MODULE_NAME    Ex_Drawing_ImageDecoder_Test
 

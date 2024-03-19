@@ -109,12 +109,6 @@
     <Filter Include="resouce\theme">
       <UniqueIdentifier>{788debc7-0c72-4047-94d3-4cb294e72009}</UniqueIdentifier>
     </Filter>
-    <Filter Include="common\types">
-      <UniqueIdentifier>{6e914ccb-0106-4f3a-9b79-09432c8262e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="common\utils">
-      <UniqueIdentifier>{4278f05d-9633-4df9-ab02-7229f5d88fbd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="debug\mem_leak">
       <UniqueIdentifier>{9ecf558d-4ae5-4436-8bdb-3f2c47081c19}</UniqueIdentifier>
     </Filter>
@@ -126,9 +120,6 @@
     </Filter>
     <Filter Include="resouce\res_pool">
       <UniqueIdentifier>{40b59794-2c0d-4425-b49d-f2df06691e25}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="common\interfaces">
-      <UniqueIdentifier>{8b1cfc7d-f996-460b-be36-671c263c6988}</UniqueIdentifier>
     </Filter>
     <Filter Include="drawing\render\image">
       <UniqueIdentifier>{e858227c-588e-4a02-8ee5-9280c21fc337}</UniqueIdentifier>
@@ -245,30 +236,6 @@
     <ClInclude Include="include\status.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="include\common\utils\auto_ptr.hpp">
-      <Filter>common\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="include\common\utils\base64.hpp">
-      <Filter>common\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="include\common\utils\lock.hpp">
-      <Filter>common\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="include\common\utils\mem_pool.hpp">
-      <Filter>common\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="include\common\utils\singleton.hpp">
-      <Filter>common\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="include\common\utils\string.hpp">
-      <Filter>common\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="include\common\types\color.h">
-      <Filter>common\types</Filter>
-    </ClInclude>
-    <ClInclude Include="include\common\types\coordinate.h">
-      <Filter>common\types</Filter>
-    </ClInclude>
     <ClInclude Include="include\common\types.h">
       <Filter>common</Filter>
     </ClInclude>
@@ -314,23 +281,11 @@
     <ClInclude Include="include\resource\res_pool.h">
       <Filter>resouce\res_pool</Filter>
     </ClInclude>
-    <ClInclude Include="include\common\interfaces\unknown_impl.hpp">
-      <Filter>common\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="include\common\interfaces\object.i.h">
-      <Filter>common\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="include\common\interfaces\object_impl.hpp">
-      <Filter>common\interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="src\drawing\image_decoder.h">
       <Filter>drawing\image_decoder</Filter>
     </ClInclude>
     <ClInclude Include="include\drawing\image_decoder.h">
       <Filter>drawing\image_decoder</Filter>
-    </ClInclude>
-    <ClInclude Include="include\common\utils\auto_releaser.hpp">
-      <Filter>common\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\kernel\builtin_modules.hpp">
       <Filter>kernel\module</Filter>
@@ -394,6 +349,42 @@
     </ClInclude>
     <ClInclude Include="src\drawing\render\factory.h">
       <Filter>drawing\render\factory</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common\singleton.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common\string.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common\unknown_impl.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common\auto_ptr.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common\auto_releaser.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common\base64.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common\color.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common\coordinate.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common\lock.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common\mem_pool.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common\object.i.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common\object_impl.hpp">
+      <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

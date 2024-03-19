@@ -9,7 +9,7 @@
 
 #include "stdafx.h"
 #include "src/kernel/module_utils.h"
-#include "common/utils/string.hpp"
+#include "common/string.hpp"
 
 #define _ROOT_(path)	(L"../../../../" path)
 

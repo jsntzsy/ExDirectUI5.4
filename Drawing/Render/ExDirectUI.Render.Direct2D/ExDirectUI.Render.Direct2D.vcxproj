@@ -21,34 +21,34 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{f89598c7-e6db-4bd6-a33d-09fb1117e795}</ProjectGuid>
-    <RootNamespace>ExDirectUI</RootNamespace>
-    <WindowsTargetPlatformVersion>7.0</WindowsTargetPlatformVersion>
+    <ProjectGuid>{ba217339-92e6-4687-a894-855e6f205e4b}</ProjectGuid>
+    <RootNamespace>ExDirectUIRenderDirect2D</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141_xp</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141_xp</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141_xp</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141_xp</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -98,18 +98,18 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;EXDIRECTUI_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;EXDIRECTUIRENDERDIRECT2D_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>.\;$(ProjectDir);$(SolutionDir)ExDirectUI\include\;$(ProjectDir)include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)\__build\bin\$(Configuration)\$(PlatformTarget)\</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>API.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>$(TargetDir)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -118,10 +118,11 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;EXDIRECTUI_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;EXDIRECTUIRENDERDIRECT2D_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>.\;$(ProjectDir);$(SolutionDir)ExDirectUI\include\;$(ProjectDir)include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
@@ -130,18 +131,18 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)\__build\bin\$(Configuration)\$(PlatformTarget)\</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>API.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>$(TargetDir)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;EXDIRECTUI_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;EXDIRECTUIRENDERDIRECT2D_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>.\;$(ProjectDir);$(SolutionDir)ExDirectUI\include\;$(ProjectDir)include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
@@ -149,7 +150,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(TargetDir)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>API.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -158,10 +158,11 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;EXDIRECTUI_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;EXDIRECTUIRENDERDIRECT2D_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>.\;$(ProjectDir);$(SolutionDir)ExDirectUI\include\;$(ProjectDir)include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
@@ -170,25 +171,13 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)\__build\bin\$(Configuration)\$(PlatformTarget)\</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>API.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>$(TargetDir)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="src\app\engine.cpp" />
-    <ClCompile Include="src\debug\mem_leak.cpp" />
-    <ClCompile Include="src\debug\status_handle.cpp" />
-    <ClCompile Include="src\drawing\image_decoder.cpp" />
-    <ClCompile Include="src\drawing\render\factory.cpp" />
-    <ClCompile Include="src\drawing\render\mem_dc.cpp" />
-    <ClCompile Include="src\kernel\atom.cpp" />
-    <ClCompile Include="src\kernel\data.cpp" />
-    <ClCompile Include="src\kernel\memory.cpp" />
-    <ClCompile Include="src\kernel\module.cpp" />
-    <ClCompile Include="src\kernel\module_utils.cpp" />
-    <ClCompile Include="src\kernel\winapi.cpp" />
-    <ClCompile Include="src\resource\res_pool.cpp" />
+    <ClCompile Include="factory.cpp" />
+    <ClCompile Include="render_api.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -197,66 +186,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\app\engine.h" />
-    <ClInclude Include="include\assist.h" />
-    <ClInclude Include="include\atom.h" />
-    <ClInclude Include="include\common\auto_ptr.hpp" />
-    <ClInclude Include="include\common\auto_releaser.hpp" />
-    <ClInclude Include="include\common\base64.hpp" />
-    <ClInclude Include="include\common\color.h" />
-    <ClInclude Include="include\common\coordinate.h" />
-    <ClInclude Include="include\common\lock.hpp" />
-    <ClInclude Include="include\common\mem_pool.hpp" />
-    <ClInclude Include="include\common\object.i.h" />
-    <ClInclude Include="include\common\object_impl.hpp" />
-    <ClInclude Include="include\common\singleton.hpp" />
-    <ClInclude Include="include\common\string.hpp" />
-    <ClInclude Include="include\common\types.h" />
-    <ClInclude Include="include\common\unknown_impl.hpp" />
-    <ClInclude Include="include\config.h" />
-    <ClInclude Include="include\debug\exception.h" />
-    <ClInclude Include="include\debug\status_handle.h" />
-    <ClInclude Include="include\define.h" />
-    <ClInclude Include="include\drawing\image_decoder.h" />
-    <ClInclude Include="include\drawing\render.h" />
-    <ClInclude Include="include\drawing\render\brush.h" />
-    <ClInclude Include="include\drawing\render\canvas.h" />
-    <ClInclude Include="include\drawing\render\canvas_brush.h" />
-    <ClInclude Include="include\drawing\render\device.h" />
-    <ClInclude Include="include\drawing\render\effect.h" />
-    <ClInclude Include="include\drawing\render\factory.h" />
-    <ClInclude Include="include\drawing\render\font.h" />
-    <ClInclude Include="include\drawing\render\image.h" />
-    <ClInclude Include="include\drawing\render\image_brush.h" />
-    <ClInclude Include="include\drawing\render\linear_brush.h" />
-    <ClInclude Include="include\drawing\render\matrix.h" />
-    <ClInclude Include="include\drawing\render\mem_dc.h" />
-    <ClInclude Include="include\drawing\render\path.h" />
-    <ClInclude Include="include\drawing\render\pen.h" />
-    <ClInclude Include="include\drawing\render\radial_brush.h" />
-    <ClInclude Include="include\drawing\render\region.h" />
-    <ClInclude Include="include\drawing\render\solid_brush.h" />
-    <ClInclude Include="include\ExDirectUI.h" />
-    <ClInclude Include="include\kernel\atom.h" />
-    <ClInclude Include="include\kernel\data.h" />
-    <ClInclude Include="include\kernel\memory.h" />
-    <ClInclude Include="include\kernel\module.h" />
-    <ClInclude Include="include\kernel\new.h" />
-    <ClInclude Include="include\resource\res_pool.h" />
-    <ClInclude Include="include\status.h" />
-    <ClInclude Include="src\app\engine.h" />
-    <ClInclude Include="src\debug\mem_leak.h" />
-    <ClInclude Include="src\drawing\image_decoder.h" />
-    <ClInclude Include="src\drawing\render\factory.h" />
-    <ClInclude Include="src\kernel\builtin_modules.hpp" />
-    <ClInclude Include="src\kernel\builtin_modules_define.h" />
-    <ClInclude Include="src\kernel\module.h" />
-    <ClInclude Include="src\kernel\module_utils.h" />
-    <ClInclude Include="src\kernel\winapi.h" />
+    <ClInclude Include="factory.h" />
+    <ClInclude Include="render_api.h" />
     <ClInclude Include="stdafx.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="API.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -18,14 +18,14 @@
 
 namespace ExDirectUI
 {
-	HRESULT EXOBJCALL ExModuleUtils::DecodeImageFile(LPCWSTR file, IExDecodeImage** r_image)
+	HRESULT EXOBJCALL ExModuleUtils::DecodeImageFile(LPCWSTR file, IExDecodeImage** r_image) const
 	{
 		CHECK_PARAM(file);
 		CHECK_PARAM(r_image);
 
 		return _ExImageDecoder_LoadFromFile(file, r_image);
 	}
-	HRESULT EXOBJCALL ExModuleUtils::DecodeImageMemory(const byte_t* data, size_t size, IExDecodeImage** r_image)
+	HRESULT EXOBJCALL ExModuleUtils::DecodeImageMemory(const byte_t* data, size_t size, IExDecodeImage** r_image) const
 	{
 		CHECK_PARAM(data);
 		CHECK_PARAM(size > 0);
@@ -37,6 +37,13 @@ namespace ExDirectUI
 	IExRender* EXOBJCALL ExModuleUtils::GetRender() const
 	{
 		return g_drawing_render;
+	}
+
+	HRESULT EXOBJCALL ExModuleUtils::GetDefaultFont(ExFontInfo* r_info) const
+	{
+		CHECK_PARAM(r_info);
+		throw_ex(E_NOTIMPL, L"未实现");
+		//return _ExRender_GetDefaultFont(r_info);
 	}
 
 	HRESULT EXOBJCALL ExModuleUtils::Group(uint16_t type, IExModule* instance) MAYTHROW

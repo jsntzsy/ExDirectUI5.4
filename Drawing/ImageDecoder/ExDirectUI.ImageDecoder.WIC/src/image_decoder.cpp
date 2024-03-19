@@ -9,7 +9,7 @@
 
 #include "stdafx.h"
 #include "image_decoder.h"
-#include "common/utils/string.hpp"
+#include "common/string.hpp"
 
 namespace ExDirectUI
 {

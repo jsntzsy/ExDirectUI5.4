@@ -8,8 +8,8 @@
  */
 #pragma once
 
-#include "types/color.h"
-#include "types/coordinate.h"
+#include "color.h"
+#include "coordinate.h"
 
 namespace ExDirectUI
 {

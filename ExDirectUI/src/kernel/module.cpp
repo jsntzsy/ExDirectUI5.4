@@ -12,7 +12,7 @@
 #include "src/kernel/module.h"
 #include "src/kernel/module_utils.h"
 #include "src/kernel/builtin_modules.hpp"
-#include "common/utils/auto_ptr.hpp"
+#include "common/auto_ptr.hpp"
 
 
 namespace ExDirectUI

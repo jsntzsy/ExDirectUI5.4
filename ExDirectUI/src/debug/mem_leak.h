@@ -7,9 +7,9 @@
  * @copyright
  */
 #pragma once
-#include "common/utils/singleton.hpp"
-#include "common/utils/mem_pool.hpp"
-#include "common/utils/lock.hpp"
+#include "common/singleton.hpp"
+#include "common/mem_pool.hpp"
+#include "common/lock.hpp"
 
 namespace ExDirectUI
 {

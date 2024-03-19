@@ -9,11 +9,12 @@
 
 #include "pch.h"
 
-#include "common/utils/auto_releaser.hpp"
 #include <d2d1.h>
 #include <gdiplus.h>
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "gdiplus.lib")
+
+#include "common/auto_releaser.hpp"
 
 #define TEST_MODULE_NAME    Ex_Drawing_RenderMatrix_Test
 
