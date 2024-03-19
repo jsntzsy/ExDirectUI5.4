@@ -78,6 +78,7 @@ namespace ExDirectUI
 			ATOM_EXDIRECTUI_IMAGEDECODER_LIBPNG,
 			EX_MODULE_IMAGE_DECODER,
 			EX_MODULE_FLAG_NONE,
+			0,
 			L"ExDirectUI.ImageDecoder.LibPng",
 			L"1.0.0.0",
 			L"EternalZSY@ExDirectUI",

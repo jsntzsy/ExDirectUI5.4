@@ -148,6 +148,7 @@ enum _##name##_Enum_::Values
 #undef LoadModule
 #undef FreeModule
 #undef GetObject
+#undef CreateFont
 #undef DrawText
 #undef DrawTextEx
 

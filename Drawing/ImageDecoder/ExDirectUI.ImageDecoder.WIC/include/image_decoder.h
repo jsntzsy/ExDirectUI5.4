@@ -83,6 +83,7 @@ namespace ExDirectUI
 			ATOM_EXDIRECTUI_IMAGEDECODER_WIC,
 			EX_MODULE_IMAGE_DECODER,
 			EX_MODULE_FLAG_NONE,
+			0,
 			L"ExDirectUI.ImageDecoder.WIC",
 			L"1.0.0.0",
 			L"EternalZSY@ExDirectUI",

@@ -14,7 +14,6 @@ namespace ExDirectUI
 	/// 渲染器对象接口
 	EXINTERFACE("8B95839B-26A1-4D09-AB2B-3127CEB4266C") IExRenderObject : public IExObject
 	{
-
 	};
 }
 

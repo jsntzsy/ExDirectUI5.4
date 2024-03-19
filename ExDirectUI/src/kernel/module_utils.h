@@ -28,6 +28,8 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL DecodeImageFile(LPCWSTR file, IExDecodeImage** r_image) override;
 		EXMETHOD HRESULT EXOBJCALL DecodeImageMemory(const byte_t* data, size_t size, IExDecodeImage** r_image) override;
 
+		EXMETHOD IExRender* EXOBJCALL GetRender() const override;
+
 	public:
 		static HRESULT EXOBJCALL Group(uint16_t type, IExModule* instance) MAYTHROW;
 		static HRESULT EXOBJCALL UnGroup(IExModule* instance) MAYTHROW;

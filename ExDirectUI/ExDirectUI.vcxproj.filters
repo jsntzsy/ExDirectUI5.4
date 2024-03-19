@@ -172,6 +172,9 @@
     <Filter Include="drawing\render\brush\canvas_brush">
       <UniqueIdentifier>{684085c7-3ac8-48cc-b547-b03a9b243570}</UniqueIdentifier>
     </Filter>
+    <Filter Include="drawing\render\factory">
+      <UniqueIdentifier>{ea8d7e2b-8a80-44e7-a23a-6c5156a9b3fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -215,6 +218,9 @@
     </ClCompile>
     <ClCompile Include="src\drawing\render\mem_dc.cpp">
       <Filter>drawing\render\canvas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawing\render\factory.cpp">
+      <Filter>drawing\render\factory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -384,7 +390,10 @@
       <Filter>drawing\render\canvas</Filter>
     </ClInclude>
     <ClInclude Include="include\drawing\render\factory.h">
-      <Filter>drawing\render</Filter>
+      <Filter>drawing\render\factory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\drawing\render\factory.h">
+      <Filter>drawing\render\factory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
