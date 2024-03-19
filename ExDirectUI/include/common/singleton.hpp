@@ -41,6 +41,13 @@ namespace ExDirectUI
 			return s_instance;
 		}
 
+		template<class... Args>
+		static T* GetInstance(Args... args)
+		{
+			if (s_instance == nullptr) { s_instance = new T(args...); }
+			return s_instance;
+		}
+
 		static T* Instance() { ExAssert(s_instance); return s_instance; }
 
 		static T* DetachInstance() { T* temp = s_instance; s_instance = nullptr; return temp; }

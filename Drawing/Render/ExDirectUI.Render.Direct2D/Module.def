@@ -1,0 +1,7 @@
+LIBRARY ExDirectUI.Render.Direct2D.dll
+
+EXPORTS
+
+_ExDirectUI_Module_Entry_ = _ExDirectUI_Render_Direct2D_
+
+

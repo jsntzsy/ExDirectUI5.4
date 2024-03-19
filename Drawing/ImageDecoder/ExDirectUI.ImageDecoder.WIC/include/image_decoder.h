@@ -18,9 +18,10 @@ namespace ExDirectUI
 	{
 	public:
 		EX_BEGIN_INTERFACE_MAP();
-		EX_INTERFACE_ENTRY(IExImageDecoder);
-		EX_INTERFACE_ENTRY(IExModule);
 		EX_INTERFACE_ENTRY(IUnknown);
+		EX_INTERFACE_ENTRY(IExObject);
+		EX_INTERFACE_ENTRY(IExModule);
+		EX_INTERFACE_ENTRY(IExImageDecoder);
 		EX_END_INTERFACE_MAP();
 
 	public:

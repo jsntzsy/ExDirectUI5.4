@@ -16,8 +16,50 @@
     <Filter Include="factory">
       <UniqueIdentifier>{c00a4a8a-0914-4838-b4ff-bb126508ad82}</UniqueIdentifier>
     </Filter>
-    <Filter Include="API">
+    <Filter Include="brush">
+      <UniqueIdentifier>{cbe4ed05-e365-4f3d-b7b9-8f1d6f9cce98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="api">
       <UniqueIdentifier>{219e0da1-9d58-4c6d-88a4-ebd7570af17d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pen">
+      <UniqueIdentifier>{1322e951-b3dd-4600-a58c-8cfff30fd1f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="path">
+      <UniqueIdentifier>{c3218aea-f9de-493b-9d6a-ab978016b17b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="region">
+      <UniqueIdentifier>{d48d2b65-042f-4049-a35c-cd7641c0c367}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="device">
+      <UniqueIdentifier>{633fcb20-7344-450d-8af9-804da6d36d9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="canvas">
+      <UniqueIdentifier>{bad2a78c-e0ec-4b24-b20c-89df34b65f3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="image">
+      <UniqueIdentifier>{8f02435f-b96f-4f54-943c-3d5773d355f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="font">
+      <UniqueIdentifier>{e0cc167a-64dd-4efb-bcc4-8d30ee5e4c88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="effect">
+      <UniqueIdentifier>{81e8e2c6-0691-4549-9186-7ab864b5688f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="brush\solid_brush">
+      <UniqueIdentifier>{cb47048a-512a-4eb8-aeac-187660ec397e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="brush\linear_brush">
+      <UniqueIdentifier>{240cb50d-a51d-4e0a-81b7-66c3f0594e22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="brush\radial_brush">
+      <UniqueIdentifier>{d974bd08-07b2-464c-85ef-d44dc443ad6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="brush\image_brush">
+      <UniqueIdentifier>{9f0d19c6-eca2-4f93-b519-5a6bed53c273}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="brush\canvas_brush">
+      <UniqueIdentifier>{1b526320-395d-4415-9373-283f02ef029b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -31,7 +73,10 @@
       <Filter>factory</Filter>
     </ClCompile>
     <ClCompile Include="render_api.cpp">
-      <Filter>API</Filter>
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\image.cpp">
+      <Filter>image</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -42,7 +87,15 @@
       <Filter>factory</Filter>
     </ClInclude>
     <ClInclude Include="render_api.h">
-      <Filter>API</Filter>
+      <Filter>api</Filter>
     </ClInclude>
+    <ClInclude Include="objects\image.h">
+      <Filter>image</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Module.def">
+      <Filter>源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -18,14 +18,13 @@ namespace ExDirectUI
 	{
 	public:
 		EX_BEGIN_INTERFACE_MAP();
-		EX_INTERFACE_ENTRY(IExImageDecoder);
-		EX_INTERFACE_ENTRY(IExModule);
 		EX_INTERFACE_ENTRY(IUnknown);
+		EX_INTERFACE_ENTRY(IExObject);
+		EX_INTERFACE_ENTRY(IExModule);
+		EX_INTERFACE_ENTRY(IExImageDecoder);
 		EX_END_INTERFACE_MAP();
 
 	public:
-		ExImageDecoderLibPng();
-		virtual ~ExImageDecoderLibPng();
 
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
@@ -41,6 +40,8 @@ namespace ExDirectUI
 		}
 
 	public:
+		ExImageDecoderLibPng();
+		virtual ~ExImageDecoderLibPng();
 		
 		EXMETHOD EXATOM EXOBJCALL GetId() const override { return MODULE_INFO.id;}
 		EXMETHOD uint16_t EXOBJCALL GetType() const override { return MODULE_INFO.type; }

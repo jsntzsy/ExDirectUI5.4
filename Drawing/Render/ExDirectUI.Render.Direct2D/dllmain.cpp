@@ -27,9 +27,19 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 
 namespace ExDirectUI
 {
-
-
-
+	EXTERN_C HRESULT APIENTRY _ExDirectUI_Render_Direct2D_(HMODULE module_handle, IExModuleUtils* utils,
+		ExModuleInfo* r_info, IExModule** r_module)
+	{
+		try
+		{
+			auto instance = ExRenderD2D::GetInstance(utils);
+			instance->GetInfo(r_info);
+			throw_if_failed(instance->QueryInterface(r_module), L"不支持的接口");
+			instance->Release();
+			return S_OK;
+		}
+		catch_default({ ExRenderD2D::ClearInstance(true); });
+	}
 }
 
 

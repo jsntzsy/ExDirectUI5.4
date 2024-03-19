@@ -23,7 +23,7 @@ namespace ExDirectUI
 		const uint32_t stride;
 
 		/// 图像像素数据
-		const EXBITSDATA data;
+		EXBITSDATA data;
 
 		/// 保留
 		const uintptr_t reserved;
