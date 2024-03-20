@@ -18,7 +18,7 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL CreateImageFromFile(LPCWSTR file, IExImage** r_image) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateImageFromMemory(const byte_t* data, size_t size, IExImage** r_image) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateImageFromBitsData(uint32_t width, uint32_t height,
-			const EXBITSDATA* bits,uint32_t stride, IExImage** r_image) PURE;
+			const EXBITSDATA bits,uint32_t stride, IExImage** r_image) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateImageFromImageData(const byte_t* data, IExImage** r_image) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateImageFromHBITMAP(HBITMAP bitmap, HPALETTE palette,
 			bool pre_alpha, IExImage** r_image) PURE;

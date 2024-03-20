@@ -11,6 +11,8 @@
 #include "factory.h"
 #include "render_api.h"
 
+#include "objects/image.h"
+
 namespace ExDirectUI
 {
 	ExRenderD2D::ExRenderD2D(IExModuleUtils* utils) : m_utils(utils)
@@ -89,31 +91,66 @@ namespace ExDirectUI
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateImage(uint32_t width, uint32_t height, IExImage** r_image)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExImageD2D> image = NEW ExImageD2D(width, height);
+			return image->QueryInterface(r_image);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateImageFromFile(LPCWSTR file, IExImage** r_image)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExImageD2D> image = NEW ExImageD2D(file);
+			return image->QueryInterface(r_image);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateImageFromMemory(const byte_t* data, size_t size, IExImage** r_image)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExImageD2D> image = NEW ExImageD2D(data, size);
+			return image->QueryInterface(r_image);
+		}
+		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreateImageFromBitsData(uint32_t width, uint32_t height, const EXBITSDATA* bits, uint32_t stride, IExImage** r_image)
+	HRESULT EXOBJCALL ExRenderD2D::CreateImageFromBitsData(uint32_t width, uint32_t height, const EXBITSDATA bits, uint32_t stride, IExImage** r_image)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExImageD2D> image = NEW ExImageD2D(width, height, bits, stride);
+			return image->QueryInterface(r_image);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateImageFromImageData(const byte_t* data, IExImage** r_image)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExImageD2D> image = NEW ExImageD2D(data);
+			return image->QueryInterface(r_image);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateImageFromHBITMAP(HBITMAP bitmap, HPALETTE palette, bool pre_alpha, IExImage** r_image)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExImageD2D> image = NEW ExImageD2D(bitmap, palette, pre_alpha);
+			return image->QueryInterface(r_image);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateImageFromHICON(HICON icon, IExImage** r_image)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExImageD2D> image = NEW ExImageD2D(icon);
+			return image->QueryInterface(r_image);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::LoadFontFile(const byte_t* data, size_t size, EXATOM* r_atom)
 	{

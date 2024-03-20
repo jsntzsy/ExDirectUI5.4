@@ -27,6 +27,8 @@ namespace ExDirectUI
 
 		/// 保留
 		const uintptr_t reserved;
+
+		ExImageLock() : width(), height(), stride(), data(), reserved() {}
 	};
 
 	/// 渲染器图像接口
@@ -41,15 +43,15 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL NextFrame(uint32_t* r_next_index = nullptr, uint32_t* r_next_delay = nullptr) PURE;
 
 		EXMETHOD uint32_t EXOBJCALL GetFrameDelay() const PURE;
-		EXMETHOD HRESULT EXOBJCALL Lock(ExImageLock* r_lock) PURE;
-		EXMETHOD HRESULT EXOBJCALL Unlock(const ExImageLock* lock) PURE;
+		EXMETHOD HRESULT EXOBJCALL Lock(ExImageLock* r_lock, const ExRect* lock_rect) PURE;
+		EXMETHOD HRESULT EXOBJCALL Unlock(ExImageLock* lock) PURE;
 
 		EXMETHOD HRESULT EXOBJCALL GetPixel(uint32_t x, uint32_t y, uint32_t* r_color) PURE;
 		EXMETHOD HRESULT EXOBJCALL SetPixel(uint32_t x, uint32_t y, uint32_t color) PURE;
 
-		EXMETHOD HRESULT EXOBJCALL Copy(IExImage* r_dest, const ExRect* copy_rect = nullptr) PURE;
+		EXMETHOD HRESULT EXOBJCALL Copy(IExImage** r_dest, const ExRect* copy_rect = nullptr) PURE;
 		EXMETHOD HRESULT EXOBJCALL Scale(uint32_t new_width, uint32_t new_height,
-			IExImage* r_dest, const ExRect* copy_rect = nullptr) PURE;
+			IExImage** r_dest, const ExRect* copy_rect = nullptr) PURE;
 		EXMETHOD HRESULT EXOBJCALL Save(ExData* r_data) PURE;
 	};
 

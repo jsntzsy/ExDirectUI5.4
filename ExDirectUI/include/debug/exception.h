@@ -73,8 +73,10 @@ namespace ExDirectUI
 #define catch_ignore(todo)		catch(ExException& e) { todo; }							// 捕获异常但忽略
 #define catch_throw(todo)		catch(ExException& e) { todo; throw; }					// 捕获异常并继续抛出
 #define catch_default			catch_return											// 默认捕获异常
-	
-#define try_default(try_block,tood)	try{ try_block;} catch_default(todo);				// 简单异常捕获
+
+#define try_default(try_block,todo)		try{ try_block; } catch_default(todo);			// 简单异常捕获
+#define try_continue(try_block,todo)	try{ try_block; } catch_continue(todo);			// 捕获异常并继续执行
+#define try_ignore(try_block,todo)		try{ try_block; } catch_ignore(todo);			// 捕获异常但忽略
 
 #define handle_ex(status,message) return ExStatusHandle(status,__CALLINFO__,message)	// 处理异常
 
@@ -89,5 +91,14 @@ namespace ExDirectUI
 	// 不成功则处理异常
 #define handle_if_notok(exp,message,todo) \
 	{ HRESULT _HR_ = exp; if(_HR_ != S_OK){ todo; return ExStatusHandle(_HR_,__CALLINFO__, message); }}
+
+	//错误则返回
+#define return_if_false(exp, todo, ret)	if(!(exp)){todo; return ret;}
+
+	//失败则返回
+#define return_if_failed(exp, todo) { HRESULT _HR_ = exp; if(FAILED(_HR_)){ todo; return _HR_; }}
+
+	//不成功则返回
+#define handle_if_notok(exp, todo) { HRESULT _HR_ = exp;  if(_HR_ != S_OK){ todo; return _HR_; }}
 
 }

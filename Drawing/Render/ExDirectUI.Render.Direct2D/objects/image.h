@@ -63,15 +63,15 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL NextFrame(uint32_t* r_next_index = nullptr, uint32_t* r_next_delay = nullptr) override;
 
 		EXMETHOD uint32_t EXOBJCALL GetFrameDelay() const override;
-		EXMETHOD HRESULT EXOBJCALL Lock(ExImageLock* r_lock) override;
-		EXMETHOD HRESULT EXOBJCALL Unlock(const ExImageLock* lock) override;
+		EXMETHOD HRESULT EXOBJCALL Lock(ExImageLock* r_lock, const ExRect* lock_rect) override;
+		EXMETHOD HRESULT EXOBJCALL Unlock(ExImageLock* lock) override;
 
 		EXMETHOD HRESULT EXOBJCALL GetPixel(uint32_t x, uint32_t y, uint32_t* r_color) override;
 		EXMETHOD HRESULT EXOBJCALL SetPixel(uint32_t x, uint32_t y, uint32_t color) override;
 
-		EXMETHOD HRESULT EXOBJCALL Copy(IExImage* r_dest, const ExRect* copy_rect = nullptr) override;
+		EXMETHOD HRESULT EXOBJCALL Copy(IExImage** r_dest, const ExRect* copy_rect = nullptr) override;
 		EXMETHOD HRESULT EXOBJCALL Scale(uint32_t new_width, uint32_t new_height,
-			IExImage* r_dest, const ExRect* copy_rect = nullptr) override;
+			IExImage** r_dest, const ExRect* copy_rect = nullptr) override;
 		EXMETHOD HRESULT EXOBJCALL Save(ExData* r_data) override;
 
 	private:
@@ -81,9 +81,9 @@ namespace ExDirectUI
 		uint32_t m_width{};
 		uint32_t m_height{};
 		uint32_t m_cur_frame{};
-		ExAutoPtr<IExDecodeImage> m_decode_image;
-		ExAutoPtr<ID2D1Bitmap> m_d2d_bitmap;
-		ExAutoPtr<IWICBitmap> m_wic_bitmap;
-		ExAutoPtr<IWICBitmapLock> m_bitmap_lock;
+		ExAutoPtr<IExDecodeImage> m_decode_image{};
+		ExAutoPtr<ID2D1Bitmap> m_d2d_bitmap{};
+		ExAutoPtr<IWICBitmap> m_wic_bitmap{};
+		ExAutoPtr<IWICBitmapLock> m_bitmap_lock{};
 	};
 }

@@ -18,6 +18,13 @@ namespace ExDirectUI
 			static T s_instance;
 			return &s_instance;
 		}
+
+		template<class... Args>
+		static T* Instance(Args... args)
+		{
+			static T s_instance(args...);
+			return &s_instance;
+		}
 	};
 
 	///////////////////////
