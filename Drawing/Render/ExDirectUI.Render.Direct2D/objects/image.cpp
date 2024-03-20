@@ -204,9 +204,10 @@ namespace ExDirectUI
 	{
 		//单帧图像且不是第一帧直接返回
 		if (!m_decode_image && index != 0) { return E_NOTIMPL; }
+		else if (!m_decode_image) { return S_FALSE; }
 
-		//检查是否需要切换帧
-		if (index == m_cur_frame) { return S_FALSE; }
+		//检查是否需要切换帧 (允许强制刷新)
+		//if (index == m_cur_frame) { return S_FALSE; }
 
 		//检查帧索引是否合法和图像是否被锁定
 		handle_if_false(index < m_decode_image->GetFrameCount(), EE_OUTOFBOUNDS, L"帧索引越界");
@@ -350,9 +351,15 @@ namespace ExDirectUI
 		handle_if_failed(lock->GetDataPointer(&frame_size, &frame_data), L"获取图像数据失败");
 
 		//去除透明度预乘，设置到返回值中
-		frame_data[0] = (EXCHANNEL)MulDiv(frame_data[0], ALPHA_OPAQUE, frame_data[3]);
-		frame_data[1] = (EXCHANNEL)MulDiv(frame_data[1], ALPHA_OPAQUE, frame_data[3]);
-		frame_data[2] = (EXCHANNEL)MulDiv(frame_data[2], ALPHA_OPAQUE, frame_data[3]);
+		if (frame_data[3] != ALPHA_TRANSPARENT) {
+			pixel[0] = (EXCHANNEL)MulDiv(frame_data[0], ALPHA_OPAQUE, frame_data[3]);
+			pixel[1] = (EXCHANNEL)MulDiv(frame_data[1], ALPHA_OPAQUE, frame_data[3]);
+			pixel[2] = (EXCHANNEL)MulDiv(frame_data[2], ALPHA_OPAQUE, frame_data[3]);
+			pixel[3] = frame_data[3];
+		}
+		else { 
+			pixel[0] = pixel[1] = pixel[2] = pixel[3] = 0;
+		}
 
 		//解锁
 		lock.Release();
@@ -376,15 +383,17 @@ namespace ExDirectUI
 
 		//预乘alpha
 		EXCHANNEL* pixel = (EXCHANNEL*)&color;
-		pixel[0] = (EXCHANNEL)MulDiv(pixel[0], pixel[3], ALPHA_OPAQUE);
-		pixel[1] = (EXCHANNEL)MulDiv(pixel[1], pixel[3], ALPHA_OPAQUE);
-		pixel[2] = (EXCHANNEL)MulDiv(pixel[2], pixel[3], ALPHA_OPAQUE);
+		if (pixel[3] != ALPHA_TRANSPARENT) {
+			pixel[0] = (EXCHANNEL)MulDiv(pixel[0], pixel[3], ALPHA_OPAQUE);
+			pixel[1] = (EXCHANNEL)MulDiv(pixel[1], pixel[3], ALPHA_OPAQUE);
+			pixel[2] = (EXCHANNEL)MulDiv(pixel[2], pixel[3], ALPHA_OPAQUE);
+		}
 
 		//设置图像数据
 		UINT frame_size = 0;
 		EXBITSDATA frame_data = nullptr;
 		handle_if_failed(lock->GetDataPointer(&frame_size, &frame_data), L"获取图像数据失败");
-		memcpy(frame_data, &color, sizeof(color));
+		memcpy(frame_data, pixel, sizeof(color));
 
 		//解锁并刷新
 		lock.Release();
@@ -530,7 +539,7 @@ namespace ExDirectUI
 
 			//分配数据并拷贝
 			ExData src_data = { (byte_t*)data_src,size };
-			throw_if_failed(ExDataCopy(r_data, &src_data), L"数据复制失败");
+			throw_if_failed(ExDataCopy(&src_data, r_data), L"数据复制失败");
 			::GlobalUnlock(data);
 
 			//释放内存

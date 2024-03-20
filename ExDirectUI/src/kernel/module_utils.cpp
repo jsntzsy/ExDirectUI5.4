@@ -42,7 +42,7 @@ namespace ExDirectUI
 	HRESULT EXOBJCALL ExModuleUtils::GetDefaultFont(ExFontInfo* r_info) const
 	{
 		CHECK_PARAM(r_info);
-		throw_ex(E_NOTIMPL, L"未实现");
+		handle_ex(E_NOTIMPL, L"未实现");
 		//return _ExRender_GetDefaultFont(r_info);
 	}
 

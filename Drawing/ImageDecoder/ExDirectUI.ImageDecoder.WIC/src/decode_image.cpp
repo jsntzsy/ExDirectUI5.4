@@ -41,7 +41,8 @@ namespace ExDirectUI
 	HRESULT EXOBJCALL ExDecodeImageWIC::GetFrameDelay(uint32_t index, uint32_t* r_delay)
 	{
 		handle_if_false(index < m_context->frame_count, EE_OUTOFBOUNDS, L"帧索引超界");
-		*r_delay = m_context->delays[index];
+		if (m_context->delays == nullptr) { *r_delay = 0; }
+		else { *r_delay = m_context->delays[index]; }
 		return S_OK;
 	}
 	HRESULT EXOBJCALL ExDecodeImageWIC::CopyFrame(uint32_t index, EXBITSDATA r_bits, uint32_t stride)
