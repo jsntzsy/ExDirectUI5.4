@@ -57,13 +57,14 @@ namespace ExDirectUI
 
 	///////////////////////////
 
-	//HRESULT EXAPI EXCALL ExImageCreateFromFile(LPCWSTR file, IExImage** r_image);
-	//HRESULT EXAPI EXCALL ExImageCreateFromMemory(const byte_t* data, size_t size, IExImage** r_image);
-	//HRESULT EXAPI EXCALL ExImageCreateFromBitsData(uint32_t width , uint32_t height ,
-	//	const EXBITSDATA bits_data, uint32_t stride, IExImage** r_image);
-	//HRESULT EXAPI EXCALL ExImageCreateFromImageData(const byte_t* data, IExImage** r_image);
-	//HRESULT EXAPI EXCALL ExImageCreateFromHBITMAP(HBITMAP bitmap, HPALETTE palette, 
-	//	bool pre_alpha, IExImage** r_image);
-	//HRESULT EXAPI EXCALL ExImageCreateFromHICON(HICON icon, IExImage** r_image);
+	HRESULT EXAPI EXCALL ExImageCreate(uint32_t width, uint32_t height, IExImage** r_image);
+	HRESULT EXAPI EXCALL ExImageCreateFromFile(LPCWSTR file, IExImage** r_image);
+	HRESULT EXAPI EXCALL ExImageCreateFromMemory(const byte_t* data, size_t size, IExImage** r_image);
+	HRESULT EXAPI EXCALL ExImageCreateFromBitsData(uint32_t width , uint32_t height ,
+		const EXBITSDATA bits_data, uint32_t stride, IExImage** r_image);
+	HRESULT EXAPI EXCALL ExImageCreateFromImageData(const byte_t* data, IExImage** r_image);
+	HRESULT EXAPI EXCALL ExImageCreateFromHBITMAP(HBITMAP bitmap, HPALETTE palette, 
+		bool pre_alpha, IExImage** r_image);
+	HRESULT EXAPI EXCALL ExImageCreateFromHICON(HICON icon, IExImage** r_image);
 
 }

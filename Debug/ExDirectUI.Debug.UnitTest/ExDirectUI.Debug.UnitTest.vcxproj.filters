@@ -19,7 +19,10 @@
     <ClCompile Include="drawing\image_decoder_test.cpp">
       <Filter>drawing</Filter>
     </ClCompile>
-    <ClCompile Include="drawing\matrix_test.cpp">
+    <ClCompile Include="drawing\render_matrix_test.cpp">
+      <Filter>drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="drawing\render_image_test.cpp">
       <Filter>drawing</Filter>
     </ClCompile>
   </ItemGroup>

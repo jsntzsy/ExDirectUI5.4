@@ -213,6 +213,9 @@
     <ClCompile Include="src\drawing\render\factory.cpp">
       <Filter>drawing\render\factory</Filter>
     </ClCompile>
+    <ClCompile Include="src\drawing\render\image.cpp">
+      <Filter>drawing\render\image</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

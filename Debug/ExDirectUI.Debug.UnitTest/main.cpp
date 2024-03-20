@@ -9,10 +9,11 @@ public:
 		ExEngineInitInfo eii{};
 		eii.instance = GetModuleHandleW(nullptr);
 		eii.flags = ExEngineFlags::None;
+		//eii.flags |= ExEngineFlags::Debug;
 
 		ExModuleFileInfo modules[] = {
 			{L"ExDirectUI.ImageDecoder.WIC.dll",0,0},
-			//{L"ExDirectUI.Render.Direct2D.dll",0,0},
+			{L"ExDirectUI.Render.Direct2D.dll",0,0},
 		};
 
 		eii.module_load_mode = ExModuleLoadFileMode::FromFile;

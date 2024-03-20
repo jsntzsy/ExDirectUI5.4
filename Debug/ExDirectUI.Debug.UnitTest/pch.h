@@ -12,13 +12,18 @@ using namespace ExDirectUI;
 
 #define _ROOT_(path)	(L"../../../../" path)
 
-struct TestResult
+namespace ExDirectUI
 {
-	HRESULT result;
-	std::wstring message;
-};
+	EXTERN_C EXAPI IExModuleUtils* EXCALL ExDbgGetModuleUtils();
 
-EXINTERFACE("00000000-0010-0020-0030-123456789ABC") ITestUnUsed : public IUnknown
-{
-};
+	struct TestResult
+	{
+		HRESULT result;
+		std::wstring message;
+	};
+
+	EXINTERFACE("00000000-0010-0020-0030-123456789ABC") ITestUnUsed : public IUnknown
+	{
+	};
+}
 

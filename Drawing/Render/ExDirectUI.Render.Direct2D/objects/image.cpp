@@ -210,11 +210,11 @@ namespace ExDirectUI
 
 		//检查帧索引是否合法和图像是否被锁定
 		handle_if_false(index < m_decode_image->GetFrameCount(), EE_OUTOFBOUNDS, L"帧索引越界");
-		handle_if_false(m_bitmap_lock, EE_NOREADY, L"图像当前被锁定");
+		handle_if_false(m_bitmap_lock == nullptr, EE_NOREADY, L"图像当前被锁定");
 
 		//锁定位图
 		ExAutoPtr<IWICBitmapLock> lock;
-		WICRect rc = { 0, 0, m_width, m_height };
+		WICRect rc = { 0, 0, (INT)m_width, (INT)m_height };
 		handle_if_failed(m_wic_bitmap->Lock(&rc, WICBitmapLockRead | WICBitmapLockWrite,
 			&lock), L"图像锁定失败"
 		);
@@ -332,7 +332,7 @@ namespace ExDirectUI
 		CHECK_PARAM(x < m_width && y < m_height);
 
 		//判断图像是否被锁定
-		handle_if_false(m_bitmap_lock, EE_NOREADY, L"图像已被锁定");
+		handle_if_false(m_bitmap_lock == nullptr, EE_NOREADY, L"图像当前被锁定");
 
 		WICRect rc = { (INT)x, (INT)y, 1, 1 };
 		EXCHANNEL* pixel = (EXCHANNEL*)r_color;
@@ -363,7 +363,7 @@ namespace ExDirectUI
 		CHECK_PARAM(x < m_width && y < m_height);
 
 		//判断图像是否被锁定
-		handle_if_false(m_bitmap_lock, EE_NOREADY, L"图像已被锁定");
+		handle_if_false(m_bitmap_lock == nullptr, EE_NOREADY, L"图像当前被锁定");
 
 		WICRect rc = { (INT)x, (INT)y, 1, 1 };
 		ExAutoPtr<IWICBitmapLock> lock;
@@ -396,7 +396,7 @@ namespace ExDirectUI
 		CHECK_PARAM(r_dest);
 
 		//检查图像是否被锁定
-		handle_if_false(m_bitmap_lock, EE_NOREADY, L"图像已被锁定");
+		handle_if_false(m_bitmap_lock == nullptr, EE_NOREADY, L"图像当前被锁定");
 
 		//计算复制区域
 		WICRect rc = { 0, 0, (INT)m_width, (INT)m_height };
@@ -430,7 +430,7 @@ namespace ExDirectUI
 		CHECK_PARAM(new_width > 0 && new_height > 0);
 
 		//检查图像是否被锁定
-		handle_if_false(m_bitmap_lock, EE_NOREADY, L"图像已被锁定");
+		handle_if_false(m_bitmap_lock == nullptr, EE_NOREADY, L"图像当前被锁定");
 
 		//计算复制区域
 		WICRect rc = { 0, 0, (INT)m_width, (INT)m_height };
@@ -536,6 +536,7 @@ namespace ExDirectUI
 			//释放内存
 			stream.Release();
 			::GlobalFree(data);
+			return S_OK;
 		}
 		catch_default({
 			SAFE_FREE(data_src,::GlobalUnlock);
@@ -554,6 +555,7 @@ namespace ExDirectUI
 		);
 
 		m_d2d_bitmap = bitmap;
+		return S_OK;
 	}
 }
 

@@ -99,6 +99,6 @@ namespace ExDirectUI
 #define return_if_failed(exp, todo) { HRESULT _HR_ = exp; if(FAILED(_HR_)){ todo; return _HR_; }}
 
 	//不成功则返回
-#define handle_if_notok(exp, todo) { HRESULT _HR_ = exp;  if(_HR_ != S_OK){ todo; return _HR_; }}
+#define return_if_notok(exp, todo) { HRESULT _HR_ = exp;  if(_HR_ != S_OK){ todo; return _HR_; }}
 
 }

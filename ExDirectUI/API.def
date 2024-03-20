@@ -37,7 +37,20 @@ EXPORTS
 ;渲染层
 	;图像解码器
 		ExImageCopyData
-
+	;渲染器
+		ExRenderGetFacotry
+		;图像
+			ExImageCreate
+			ExImageCreateFromBitsData
+			ExImageCreateFromFile
+			ExImageCreateFromHBITMAP
+			ExImageCreateFromHICON
+			ExImageCreateFromImageData
+			ExImageCreateFromMemory
+		;内存DC
+			ExMemDCCreate
+			ExMemDCDestroy
+			ExMemDCResize
 		
 ;资源层
 	;资源池管理器

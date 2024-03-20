@@ -10,6 +10,7 @@
 #include "config.h"
 
 //去掉注释则停用内置模块
+// 如出现找不到ExDirectUI.lib或无法覆盖的错误，请取消注释编译一次后再注释编译一至两次即可
 //#undef EX_CFG_MODULE_ENABLE_BUILTIN
 
 

@@ -181,6 +181,7 @@
     <ClCompile Include="src\debug\status_handle.cpp" />
     <ClCompile Include="src\drawing\image_decoder.cpp" />
     <ClCompile Include="src\drawing\render\factory.cpp" />
+    <ClCompile Include="src\drawing\render\image.cpp" />
     <ClCompile Include="src\drawing\render\mem_dc.cpp" />
     <ClCompile Include="src\kernel\atom.cpp" />
     <ClCompile Include="src\kernel\data.cpp" />

@@ -13,6 +13,7 @@
 namespace ExDirectUI
 {
 	EXTERN_C HRESULT EXAPI APIENTRY ExDbgEntry(HINSTANCE instance);
+	EXTERN_C EXAPI IExModuleUtils* EXCALL ExDbgGetModuleUtils();
 }
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
@@ -24,7 +25,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
 		ExModuleFileInfo modules[] = {
 			{L"ExDirectUI.ImageDecoder.WIC.dll",0,0},
-			//{L"ExDirectUI.Render.Direct2D.dll",0,0},
+			{L"ExDirectUI.Render.Direct2D.dll",0,0},
 		};
 
 		eii.module_load_mode = ExModuleLoadFileMode::FromFile;

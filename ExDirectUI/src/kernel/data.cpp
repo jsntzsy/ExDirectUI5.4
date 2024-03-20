@@ -50,7 +50,10 @@ namespace ExDirectUI
 		CHECK_PARAM(data);
 		if (new_size == data->size) { return S_OK; }
 		if (new_size == 0) {
-			SAFE_FREE(data->data, exfree);
+			if (data->data) {
+				exfree(data->data);
+				data->data = nullptr;
+			}
 			data->size = 0;
 			return S_OK;
 		}
