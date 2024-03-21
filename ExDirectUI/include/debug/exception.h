@@ -68,17 +68,17 @@ namespace ExDirectUI
 #define throw_if_failed(exp,message) { HRESULT _HR_ = exp; if(FAILED(_HR_)){ throw_ex(_HR_, message); }}	// 失败则抛出异常
 #define throw_if_notok(exp,message) { HRESULT _HR_ = exp; if(_HR_ != S_OK){ throw_ex(_HR_, message); }}		// 不成功则抛出异常
 
-#define catch_return(todo)		catch(ExException& e) { todo; return e.handle(); }		// 捕获异常并返回
-#define catch_continue(todo)	catch(ExException& e) { todo; e.handle(); }				// 捕获异常并继续执行
-#define catch_ignore(todo)		catch(ExException& e) { todo; }							// 捕获异常但忽略
-#define catch_throw(todo)		catch(ExException& e) { todo; throw; }					// 捕获异常并继续抛出
-#define catch_default			catch_return											// 默认捕获异常
+#define catch_return(todo)		catch(ExException& e) { todo; return e.handle(); }							// 捕获异常并返回
+#define catch_continue(todo)	catch(ExException& e) { todo; e.handle(); }									// 捕获异常并继续执行
+#define catch_ignore(todo)		catch(ExException& e) { UNREFERENCED_PARAMETER(e); todo; }					// 捕获异常但忽略
+#define catch_throw(todo)		catch(ExException& e) { UNREFERENCED_PARAMETER(e); todo; throw; }			// 捕获异常并继续抛出
+#define catch_default			catch_return																// 默认捕获异常
 
-#define try_default(try_block,todo)		try{ try_block; } catch_default(todo);			// 简单异常捕获
-#define try_continue(try_block,todo)	try{ try_block; } catch_continue(todo);			// 捕获异常并继续执行
-#define try_ignore(try_block,todo)		try{ try_block; } catch_ignore(todo);			// 捕获异常但忽略
+#define try_default(try_block,todo)		try{ try_block; } catch_default(todo);								// 简单异常捕获
+#define try_continue(try_block,todo)	try{ try_block; } catch_continue(todo);								// 捕获异常并继续执行
+#define try_ignore(try_block,todo)		try{ try_block; } catch_ignore(todo);								// 捕获异常但忽略
 
-#define handle_ex(status,message) return ExStatusHandle(status,__CALLINFO__,message)	// 处理异常
+#define handle_ex(status,message) return ExStatusHandle(status,__CALLINFO__,message)						// 处理异常
 
 	// 错误则处理异常
 #define handle_if_false(exp,status,message,todo) \

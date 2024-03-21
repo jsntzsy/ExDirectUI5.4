@@ -181,6 +181,7 @@
     <ClCompile Include="src\debug\status_handle.cpp" />
     <ClCompile Include="src\drawing\image_decoder.cpp" />
     <ClCompile Include="src\drawing\render\factory.cpp" />
+    <ClCompile Include="src\drawing\render\font.cpp" />
     <ClCompile Include="src\drawing\render\image.cpp" />
     <ClCompile Include="src\drawing\render\mem_dc.cpp" />
     <ClCompile Include="src\kernel\atom.cpp" />
@@ -249,6 +250,7 @@
     <ClInclude Include="src\debug\mem_leak.h" />
     <ClInclude Include="src\drawing\image_decoder.h" />
     <ClInclude Include="src\drawing\render\factory.h" />
+    <ClInclude Include="src\drawing\render\font.h" />
     <ClInclude Include="src\kernel\builtin_modules.hpp" />
     <ClInclude Include="src\kernel\builtin_modules_define.h" />
     <ClInclude Include="src\kernel\module.h" />

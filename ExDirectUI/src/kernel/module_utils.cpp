@@ -13,6 +13,7 @@
 
 #include "src/drawing/image_decoder.h"
 #include "src/drawing/render/factory.h"
+#include "src/drawing/render/font.h"
 
 #include <sstream>
 
@@ -42,8 +43,8 @@ namespace ExDirectUI
 	HRESULT EXOBJCALL ExModuleUtils::GetDefaultFont(ExFontInfo* r_info) const
 	{
 		CHECK_PARAM(r_info);
-		handle_ex(E_NOTIMPL, L"未实现");
-		//return _ExRender_GetDefaultFont(r_info);
+		*r_info = g_drawing_default_font;
+		return S_OK;
 	}
 
 	HRESULT EXOBJCALL ExModuleUtils::Group(uint16_t type, IExModule* instance) MAYTHROW

@@ -15,6 +15,39 @@
 namespace ExDirectUI
 {
 	IExRender* g_drawing_render = nullptr;
+	ExFontInfo g_drawing_default_font{};
+	DWORD g_drawing_antialias_mode = 0;
+
+	void EXCALL _ExRender_Init(const ExEngineInitInfo* info)
+	{
+		//如果提供了默认字体信息就使用
+		if (info->default_font) { g_drawing_default_font = *info->default_font; }
+		else {
+
+			//否则就获取系统默认字体
+			LOGFONTW sys_font{};
+			if (SystemParametersInfoW(SPI_GETICONTITLELOGFONT, sizeof(sys_font),
+				&sys_font, false)) {
+				g_drawing_default_font = ExFontInfo(&sys_font);
+			}
+			else {
+				//如果还是不行就直接设置
+				//TODO: 这里如果是XP可能要设置成宋体
+				g_drawing_default_font = ExFontInfo(L"微软雅黑", 12, ExFontStyle::Normal);
+			}
+		}
+
+		//设置抗锯齿模式
+		if(info->antialias_mode != -1){ g_drawing_antialias_mode = info->antialias_mode;}
+		else { g_drawing_antialias_mode = ExAntiAliasMode::Default; }
+
+	}
+
+	void EXCALL _ExRender_UnInit()
+	{
+		g_drawing_default_font = {};
+		g_drawing_antialias_mode = 0;
+	}
 
 	HRESULT EXCALL _ExRender_Group(IExRender* render)
 	{
@@ -36,15 +69,5 @@ namespace ExDirectUI
 		return S_OK;
 	}
 
-	///////////////////////
-
-	HRESULT EXAPI EXCALL ExRenderGetFacotry(IExRender** r_factory)
-	{
-		CHECK_PARAM(r_factory);
-		handle_if_false(!!g_drawing_render, EE_NOREADY, L"渲染引擎尚未就绪");
-		*r_factory = g_drawing_render;
-		g_drawing_render->AddRef();
-		return S_OK;
-	}
 
 }

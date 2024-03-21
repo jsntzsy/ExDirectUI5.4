@@ -39,11 +39,11 @@ namespace ExDirectUI
 	inline D2D1_MATRIX_3X2_F Matrix(const ExMatrixElements3x2* matrix)
 	{
 		if (matrix == nullptr) { return D2D1::Matrix3x2F::Identity(); }
-		return D2D1::Matrix3x2F(
+		return D2D1::Matrix3x2F{
 			matrix->_11, matrix->_12,
 			matrix->_21, matrix->_22,
 			matrix->_31, matrix->_32
-		);
+		};
 	}
 	inline ExMatrixElements3x2 Matrix(const D2D1_MATRIX_3X2_F& matrix)
 	{

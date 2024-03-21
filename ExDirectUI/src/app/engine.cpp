@@ -12,6 +12,7 @@
 #include "src/app/engine.h"
 #include "src/kernel/winapi.h"
 #include "src/kernel/module.h"
+#include "src/drawing/render/factory.h"
 
 namespace ExDirectUI
 {
@@ -32,6 +33,8 @@ namespace ExDirectUI
 
 			_ExModule_Init(init_info);
 
+			_ExRender_Init(init_info);
+
 			g_engine_instance = init_info->instance;
 			return S_OK;
 		}
@@ -44,6 +47,8 @@ namespace ExDirectUI
 
 		try
 		{
+			_ExRender_UnInit();
+
 			_ExModule_UnInit();
 
 			_ExWinAPI_UnInit();

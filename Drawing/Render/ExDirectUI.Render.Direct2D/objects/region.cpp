@@ -81,14 +81,14 @@ namespace ExDirectUI
 
 		throw_if_failed(geometry->QueryInterface(&m_geometry), L"查询接口失败");
 	}
-	ExRegionD2D::ExRegionD2D(IExPath* path, const ExMatrixElements* tranform)
+	ExRegionD2D::ExRegionD2D(const IExPath* path, const ExMatrixElements* tranform)
 	{
 		D2D1_MATRIX_3X2_F matrix = Matrix(tranform);
 
 		ExAutoPtr<ID2D1TransformedGeometry> geometry;
 		throw_if_failed(
 			GetRender()->m_d2d_factory->CreateTransformedGeometry(
-				static_cast<ExPathD2D*>(path)->m_geometry,
+				((ExPathD2D*)path)->m_geometry,
 				&matrix, &geometry
 			), L"区域几何形创建失败"
 		);

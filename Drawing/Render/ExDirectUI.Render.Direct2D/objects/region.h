@@ -43,7 +43,7 @@ namespace ExDirectUI
 		ExRegionD2D(float left, float top, float right, float bottom, 
 			float radius_left_top,  float radius_right_top, 
 			float radius_right_bottom, float radius_left_bottom);
-		ExRegionD2D(IExPath* path, const ExMatrixElements* tranform);
+		ExRegionD2D(const IExPath* path, const ExMatrixElements* tranform);
 
 		virtual ~ExRegionD2D();
 

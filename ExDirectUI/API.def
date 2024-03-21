@@ -38,7 +38,6 @@ EXPORTS
 	;图像解码器
 		ExImageCopyData
 	;渲染器
-		ExRenderGetFacotry
 		;图像
 			ExImageCreate
 			ExImageCreateFromBitsData

@@ -58,6 +58,13 @@ namespace ExDirectUI
 
 		/// 模块加载器 @可空(空则使用默认加载器)
 		ExModuleFileLoader* module_loader;
+
+		/// 默认字体信息 @可空(空则使用系统默认字体)
+		ExFontInfo* default_font;
+
+		/// 抗锯齿模式
+		DWORD antialias_mode;
+
 	};
 
 

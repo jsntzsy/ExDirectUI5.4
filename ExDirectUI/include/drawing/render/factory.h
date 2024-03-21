@@ -72,6 +72,4 @@ namespace ExDirectUI
 
 	};
 
-	HRESULT EXAPI EXCALL ExRenderGetFacotry(IExRender** r_factory);
-
 }

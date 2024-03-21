@@ -10,6 +10,23 @@
 
 namespace ExDirectUI
 {
+	/// 抗锯齿模式
+	EXENUM(ExAntiAliasMode)
+	{
+		None = 0x00000000,																				///< 抗锯齿模式：无
+		Figure = 0x00000001,																			///< 抗锯齿模式：图形
+		FigureHighQuality = 0x00000003,																	///< 抗锯齿模式：图形高质量
+		Image = 0x00000010,																				///< 抗锯齿模式：图像
+		ImageHighQuality = 0x00000030,																	///< 抗锯齿模式：图像高质量
+		Text = 0x00000100,																				///< 抗锯齿模式：文本
+		TextHighQuality = 0x00000300,																	///< 抗锯齿模式：文本高质量
+		All = ExAntiAliasMode::Figure | ExAntiAliasMode::Image | ExAntiAliasMode::Text,					///< 抗锯齿模式：全部
+		AllHighQuality = ExAntiAliasMode::FigureHighQuality | ExAntiAliasMode::ImageHighQuality |		///< 抗锯齿模式：全部高质量
+			ExAntiAliasMode::TextHighQuality,
+
+		Default = ExAntiAliasMode::All,																	///< 抗锯齿模式：默认
+	};
+
 	/// 文本格式
 	EXENUM(ExTextFormat)
 	{

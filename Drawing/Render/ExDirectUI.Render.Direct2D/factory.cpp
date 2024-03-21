@@ -12,6 +12,9 @@
 #include "render_api.h"
 
 #include "objects/image.h"
+#include "objects/font.h"
+#include "objects/path.h"
+#include "objects/region.h"
 
 namespace ExDirectUI
 {
@@ -68,7 +71,8 @@ namespace ExDirectUI
 		//初始化配置
 		m_d2d_dc->SetUnitMode(D2D1_UNIT_MODE_PIXELS);
 
-		//ExFontPoolD2D::Init(this);
+		//创建字体池
+		ExFontPoolD2D::GetInstance();
 
 		//ExEffectD2D::RegisterEffects(this);
 
@@ -82,6 +86,7 @@ namespace ExDirectUI
 	}
 	HRESULT EXOBJCALL ExRenderD2D::OnModuleUnLoad()
 	{
+		ExFontPoolD2D::ClearInstance(true);
 
 		return S_OK;
 	}
@@ -154,55 +159,120 @@ namespace ExDirectUI
 	}
 	HRESULT EXOBJCALL ExRenderD2D::LoadFontFile(const byte_t* data, size_t size, EXATOM* r_atom)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			auto context = ExFontPoolD2D::Instance()->LoadFontFile(data, size);
+			*r_atom = context->atom;
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::UnLoadFontFile(EXATOM font_atom)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExFontPoolD2D::Instance()->UnLoadFontFile(font_atom);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateFont(IExFont** r_font)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExFontD2D> font = NEW ExFontD2D();
+			return font->QueryInterface(r_font);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateFontFromName(LPCWSTR name, uint32_t size, DWORD style, EXATOM file_atom, IExFont** r_font)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExFontD2D> font = NEW ExFontD2D(name, size, style, file_atom);
+			return font->QueryInterface(r_font);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateFontFromInfo(const ExFontInfo* font_info, IExFont** r_font)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExFontD2D> font = NEW ExFontD2D(font_info);
+			return font->QueryInterface(r_font);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreatePath(IExPath** r_path)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExPathD2D> path = NEW ExPathD2D();
+			return path->QueryInterface(r_path);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateInfinityRegion(IExRegion** r_region)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExRegionD2D> region = NEW ExRegionD2D(true);
+			return region->QueryInterface(r_region);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateEmptyRegion(IExRegion** r_region)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExRegionD2D> region = NEW ExRegionD2D(false);
+			return region->QueryInterface(r_region);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateRectRegion(float left, float top, float right, float bottom, IExRegion** r_region)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExRegionD2D> region = NEW ExRegionD2D(left, top, right, bottom,false);
+			return region->QueryInterface(r_region);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateRoundRectRegion(float left, float top, float right, float bottom, float radius, IExRegion** r_region)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExRegionD2D> region = NEW ExRegionD2D(left, top, right, bottom, radius, radius, radius, radius);
+			return region->QueryInterface(r_region);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateCustomRoundRectRegion(float left, float top, float right, float bottom, float radius_left_top, float radius_right_top, float radius_right_bottom, float radius_left_bottom, IExRegion** r_region)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExRegionD2D> region = NEW ExRegionD2D(left, top, right, bottom, 
+				radius_left_top, radius_right_top, radius_right_bottom, radius_left_bottom);
+			return region->QueryInterface(r_region);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateEllipseRegion(float left, float top, float right, float bottom, IExRegion** r_region)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExRegionD2D> region = NEW ExRegionD2D(left, top, right, bottom);
+			return region->QueryInterface(r_region);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreatePathRegion(const IExPath* path, const ExMatrixElements* tranform, IExRegion** r_region)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExRegionD2D> region = NEW ExRegionD2D(path, tranform);
+			return region->QueryInterface(r_region);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreatePenFromColor(EXARGB color, float width, IExPen** r_pen)
 	{

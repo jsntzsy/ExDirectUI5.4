@@ -62,15 +62,15 @@ namespace ExDirectUI
 			SetName(log_font->lfFaceName, file_atom);
 		}
 
-		inline bool IsBold()
+		inline bool IsBold() const
 		{
 			if (style & ExFontStyle::CustomWeight) { return HIWORD(style) >= FW_BOLD; }
 			else { return !!(style & ExFontStyle::Bold); };
 		}
-		inline bool IsItalic() { return !!(style & ExFontStyle::Italic); }
-		inline bool IsUnderline() { return !!(style & ExFontStyle::UnderLine); }
-		inline bool IsStrikeout() { return !!(style & ExFontStyle::StrikeOut); }
-		inline uint16_t GetWeight()
+		inline bool IsItalic() const { return !!(style & ExFontStyle::Italic); }
+		inline bool IsUnderline() const { return !!(style & ExFontStyle::UnderLine); }
+		inline bool IsStrikeout() const { return !!(style & ExFontStyle::StrikeOut); }
+		inline uint16_t GetWeight() const
 		{
 			if (style & ExFontStyle::CustomWeight) { return HIWORD(style); }
 			else { return (style & ExFontStyle::Bold) ? FW_BOLD : FW_NORMAL; }

@@ -216,6 +216,9 @@
     <ClCompile Include="src\drawing\render\image.cpp">
       <Filter>drawing\render\image</Filter>
     </ClCompile>
+    <ClCompile Include="src\drawing\render\font.cpp">
+      <Filter>drawing\render\font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -388,6 +391,9 @@
     </ClInclude>
     <ClInclude Include="include\common\object_impl.hpp">
       <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\drawing\render\font.h">
+      <Filter>drawing\render\font</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
