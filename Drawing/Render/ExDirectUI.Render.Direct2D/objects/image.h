@@ -11,8 +11,7 @@
 namespace ExDirectUI
 {
 
-	class ExImageD2D : public ExObjectBaseImpl<IExImage>,
-		public ExLazySingleton<ExRenderD2D>
+	class ExImageD2D : public ExObjectBaseImpl<IExImage>
 	{
 	public:
 		EX_BEGIN_INTERFACE_MAP();

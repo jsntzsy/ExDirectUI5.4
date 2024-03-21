@@ -36,6 +36,15 @@ namespace ExDirectUI
 			matrix._31, matrix._32
 		);
 	}
+	inline D2D1_MATRIX_3X2_F Matrix(const ExMatrixElements3x2* matrix)
+	{
+		if (matrix == nullptr) { return D2D1::Matrix3x2F::Identity(); }
+		return D2D1::Matrix3x2F(
+			matrix->_11, matrix->_12,
+			matrix->_21, matrix->_22,
+			matrix->_31, matrix->_32
+		);
+	}
 	inline ExMatrixElements3x2 Matrix(const D2D1_MATRIX_3X2_F& matrix)
 	{
 		return ExMatrixElements3x2{
@@ -59,6 +68,80 @@ namespace ExDirectUI
 			min(left, right), min(top, bottom),
 			max(left, right), max(top, bottom)
 		);
+	}
+
+	inline D2D1_COLOR_F Color(EXARGB argb)
+	{
+		EXCHANNEL* ch = (EXCHANNEL*)&argb;
+		return D2D1::ColorF(ch[2] / 255.0F, ch[1] / 255.0F, ch[0] / 255.0F, ch[3] / 255.0F);
+	}
+	inline EXARGB Color(const D2D1_COLOR_F& color)
+	{
+		return MAKEARGB(color.r * 255, color.g * 255, color.b * 255, color.a * 255);
+	}
+//
+//	inline void OffsetPixels(float* pixels, uint32_t count, bool reverse = false)
+//	{
+//#if FALSE
+//#ifndef _M_IX86
+//		for (uint32_t i = 0; i < count; i++)
+//		{
+//			if (reverse) { pixels[i << 1] -= 0.5F; }
+//			else { pixels[i << 1] += 0.5F; }
+//		}
+//#else
+//		for (uint32_t i = 0; i < count; i++)
+//		{
+//			if (reverse) { pixels[i] -= 0.5F; }
+//			else { pixels[i] += 0.5F; }
+//		}
+//#endif // _x86
+//#endif // 
+//	}
+//	template<typename T>
+//	inline void OffsetPixels(T* pixels, uint32_t count, bool reverse = false)
+//	{
+//		OffsetPixels(pixels, count, reverse);
+//	}
+
+	inline void _offset_(bool reverse, float& last)
+	{
+#if FALSE
+		if (reverse) { last -= 0.5F; }
+		else { last += 0.5F; }
+#endif // false
+
+	}
+	inline void _offset_(bool reverse, ExPointF& last)
+	{
+		_offset_(reverse, last.x);
+		_offset_(reverse, last.y);
+	}
+	inline void _offset_(bool reverse, ExRectF& last)
+	{
+		_offset_(reverse, last.left);
+		_offset_(reverse, last.top);
+		_offset_(reverse, last.right);
+		_offset_(reverse, last.bottom);
+	}
+	inline void _offset_(bool reverse, D2D1_POINT_2F& last)
+	{
+		_offset_(reverse, last.x);
+		_offset_(reverse, last.y);
+	}
+	inline void _offset_(bool reverse, D2D1_RECT_F& last)
+	{
+		_offset_(reverse, last.left);
+		_offset_(reverse, last.top);
+		_offset_(reverse, last.right);
+		_offset_(reverse, last.bottom);
+	}
+
+	template<typename T, class ...Args>
+	inline void _offset_(bool reverse, T& first, Args&... args)
+	{
+		_offset_(reverse, first);
+		_offset_(reverse, args...);
 	}
 
 }

@@ -30,8 +30,8 @@ namespace ExDirectUI
 			float start_angle, float sweep_angle) PURE;
 		EXMETHOD HRESULT EXOBJCALL ArcTo2(float end_x, float end_y, float radius_horz, float radius_vert,
 			float rotate, bool clockwise, bool large_arc) PURE;
-		EXMETHOD HRESULT EXOBJCALL RoundTo(float x_ctrl, float y_ctrl,float end_x, float end_y, float radius) PURE;
-		EXMETHOD HRESULT EXOBJCALL CurveTo(float x_ctrl, float y_ctrl, float end_x, float end_y) PURE;
+		EXMETHOD HRESULT EXOBJCALL RoundTo(float ctrl_x, float ctrl_y,float end_x, float end_y, float radius) PURE;
+		EXMETHOD HRESULT EXOBJCALL CurveTo(float ctrl_x, float ctrl_y, float end_x, float end_y) PURE;
 		EXMETHOD HRESULT EXOBJCALL BezierTo(float ctrl1_x, float ctrl1_y, float ctrl2_x, float ctrl2_y,
 			float end_x, float end_y) PURE;
 
@@ -39,12 +39,11 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL AddEllipse(float left, float top, float right, float bottom) PURE;
 		EXMETHOD HRESULT EXOBJCALL AddSuperEllipse(float org_x, float org_y, float radius_x, float radius_y,
 			float order, float step = 1.0F) PURE;
-		EXMETHOD HRESULT EXOBJCALL AddRoundRect(float left, float top, float right, float bottom,
-			float radius_x, float radius_y) PURE;
+		EXMETHOD HRESULT EXOBJCALL AddRoundRect(float left, float top, float right, float bottom, float radius) PURE;
 		EXMETHOD HRESULT EXOBJCALL AddCustomRoundRect(float left, float top, float right, float bottom,
 			float radius_left_top, float radius_right_top, float radius_right_bottom, float radius_left_bottom
 		) PURE;
-		EXMETHOD HRESULT EXOBJCALL AddPolygon(const ExPointF* points, uint32_t count) PURE;
+		EXMETHOD HRESULT EXOBJCALL AddPolygon(const ExPointF* points, uint32_t count, bool close_figure = true) PURE;
 		EXMETHOD HRESULT EXOBJCALL AddText(const IExFont* font, LPCWSTR text, int len, DWORD text_format,
 			float left, float top, float right, float bottom) PURE;
 
