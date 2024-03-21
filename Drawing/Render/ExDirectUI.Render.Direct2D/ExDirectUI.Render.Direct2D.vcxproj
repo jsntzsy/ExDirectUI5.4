@@ -183,6 +183,7 @@
     <ClCompile Include="factory.cpp" />
     <ClCompile Include="objects\image.cpp" />
     <ClCompile Include="objects\path.cpp" />
+    <ClCompile Include="objects\region.cpp" />
     <ClCompile Include="render_api.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -195,6 +196,7 @@
     <ClInclude Include="factory.h" />
     <ClInclude Include="objects\image.h" />
     <ClInclude Include="objects\path.h" />
+    <ClInclude Include="objects\region.h" />
     <ClInclude Include="render_api.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>

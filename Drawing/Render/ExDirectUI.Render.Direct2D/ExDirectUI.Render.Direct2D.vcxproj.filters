@@ -81,6 +81,9 @@
     <ClCompile Include="objects\path.cpp">
       <Filter>path</Filter>
     </ClCompile>
+    <ClCompile Include="objects\region.cpp">
+      <Filter>region</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -97,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="objects\path.h">
       <Filter>path</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\region.h">
+      <Filter>region</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -188,7 +188,7 @@ namespace ExDirectUI
 	{
 		handle_ex(E_NOTIMPL, L"尚未实现");
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreateRoundRectRegion(float left, float top, float right, float bottom, float radius_horz, float radius_vert, IExRegion** r_region)
+	HRESULT EXOBJCALL ExRenderD2D::CreateRoundRectRegion(float left, float top, float right, float bottom, float radius, IExRegion** r_region)
 	{
 		handle_ex(E_NOTIMPL, L"尚未实现");
 	}

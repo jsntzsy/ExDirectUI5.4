@@ -36,7 +36,7 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL CreateEmptyRegion(IExRegion** r_region) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateRectRegion(float left, float top, float right, float bottom, IExRegion** r_region) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateRoundRectRegion(float left, float top, float right, float bottom,
-			float radius_horz, float radius_vert, IExRegion** r_region) PURE;
+			float radius, IExRegion** r_region) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateCustomRoundRectRegion(float left, float top, float right, float bottom,
 			float radius_left_top, float radius_right_top, float radius_right_bottom, float radius_left_bottom,
 			IExRegion** r_region) PURE;
