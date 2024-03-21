@@ -44,7 +44,7 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL GetColor(EXARGB * r_color) PURE;
 		EXMETHOD HRESULT EXOBJCALL SetColor(EXARGB color) PURE;
 
-		EXMETHOD HRESULT EXOBJCALL GetBrush(IExBrush* r_brush) PURE;
+		EXMETHOD HRESULT EXOBJCALL GetBrush(IExBrush** r_brush) PURE;
 		EXMETHOD HRESULT EXOBJCALL SetBrush(IExBrush* brush) PURE;
 
 		EXMETHOD float EXOBJCALL GetStrokeWidth() const PURE;
@@ -71,6 +71,9 @@ namespace ExDirectUI
 		EXMETHOD uint32_t EXOBJCALL GetDashCount() const PURE;
 		EXMETHOD HRESULT EXOBJCALL GetDashArray(float* dash_array, uint32_t count) const PURE;
 		EXMETHOD HRESULT EXOBJCALL SetDashArray(const float* dash_array, uint32_t count) PURE;
+
+		EXMETHOD float EXOBJCALL GetDashOffset() const PURE;
+		EXMETHOD HRESULT EXOBJCALL SetDashOffset(float offset) PURE;
 
 	};
 

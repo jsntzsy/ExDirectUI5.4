@@ -35,6 +35,8 @@ namespace ExDirectUI
 		{
 			auto render = ExModuleUtils::Instance()->GetRender();
 
+
+				
 			return S_OK;
 		}
 		catch_default({});

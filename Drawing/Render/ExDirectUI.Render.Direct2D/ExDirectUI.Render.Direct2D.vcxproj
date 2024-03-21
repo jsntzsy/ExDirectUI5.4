@@ -184,6 +184,7 @@
     <ClCompile Include="objects\font.cpp" />
     <ClCompile Include="objects\image.cpp" />
     <ClCompile Include="objects\path.cpp" />
+    <ClCompile Include="objects\pen.cpp" />
     <ClCompile Include="objects\region.cpp" />
     <ClCompile Include="render_api.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -198,6 +199,7 @@
     <ClInclude Include="objects\font.h" />
     <ClInclude Include="objects\image.h" />
     <ClInclude Include="objects\path.h" />
+    <ClInclude Include="objects\pen.h" />
     <ClInclude Include="objects\region.h" />
     <ClInclude Include="render_api.h" />
     <ClInclude Include="stdafx.h" />

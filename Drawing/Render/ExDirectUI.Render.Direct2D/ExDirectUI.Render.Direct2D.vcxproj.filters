@@ -87,6 +87,9 @@
     <ClCompile Include="objects\font.cpp">
       <Filter>font</Filter>
     </ClCompile>
+    <ClCompile Include="objects\pen.cpp">
+      <Filter>pen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -109,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="objects\font.h">
       <Filter>font</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\pen.h">
+      <Filter>pen</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

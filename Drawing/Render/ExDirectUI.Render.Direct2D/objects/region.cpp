@@ -143,7 +143,7 @@ namespace ExDirectUI
 		_offset_(false, x, y);
 
 		BOOL hit = FALSE;
-		throw_if_failed(
+		handle_if_failed(
 			m_geometry->FillContainsPoint(D2D1::Point2F(x, y), nullptr, &hit),
 			L"检测点是否在区域内失败"
 		);

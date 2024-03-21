@@ -134,6 +134,7 @@ namespace ExDirectUI
 		friend class ExRadialBrushD2D;
 		friend class ExImageBrushD2D;
 		friend class ExCanvasBrushD2D;
+		friend class ExPenD2D;
 		friend class ExPathD2D;
 		friend class ExRegionD2D;
 		friend class ExCompositionWindowDeviceD2D;

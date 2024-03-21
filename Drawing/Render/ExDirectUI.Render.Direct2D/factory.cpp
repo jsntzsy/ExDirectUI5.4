@@ -15,6 +15,7 @@
 #include "objects/font.h"
 #include "objects/path.h"
 #include "objects/region.h"
+#include "objects/pen.h"
 
 namespace ExDirectUI
 {
@@ -163,6 +164,7 @@ namespace ExDirectUI
 		{
 			auto context = ExFontPoolD2D::Instance()->LoadFontFile(data, size);
 			*r_atom = context->atom;
+			return S_OK;
 		}
 		catch_default({});
 	}
@@ -171,6 +173,7 @@ namespace ExDirectUI
 		try
 		{
 			ExFontPoolD2D::Instance()->UnLoadFontFile(font_atom);
+			return S_OK;
 		}
 		catch_default({});
 	}
@@ -276,11 +279,22 @@ namespace ExDirectUI
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreatePenFromColor(EXARGB color, float width, IExPen** r_pen)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			if (color == COLOR_UNDEFINE) { color = COLOR_TRANSPARENT; }
+			ExAutoPtr<ExPenD2D> pen = NEW ExPenD2D(color, width);
+			return pen->QueryInterface(r_pen);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreatePenFromBrush(const IExBrush* brush, float width, IExPen** r_pen)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExPenD2D> pen = NEW ExPenD2D(brush, width);
+			return pen->QueryInterface(r_pen);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateSolidBrush(EXARGB color, IExBrush** r_brush)
 	{
