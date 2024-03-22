@@ -31,7 +31,7 @@ namespace ExDirectUI
 		m_cur_frame = 0;
 
 		//刷新D2D位图
-		throw_if_failed(Flush(), L"刷新D2D位图失败");
+		throw_if_failed(Flush(), L"创建D2D位图失败");
 	}
 	ExImageD2D::ExImageD2D(LPCWSTR file)
 	{
@@ -103,7 +103,7 @@ namespace ExDirectUI
 		m_cur_frame = 0;
 
 		//刷新D2D位图
-		throw_if_failed(Flush(), L"刷新D2D位图失败");
+		throw_if_failed(Flush(), L"创建D2D位图失败");
 	}
 	ExImageD2D::ExImageD2D(const byte_t* image_data)
 	{
@@ -131,7 +131,7 @@ namespace ExDirectUI
 		m_cur_frame = 0;
 
 		//刷新D2D位图
-		throw_if_failed(Flush(), L"刷新D2D位图失败");
+		throw_if_failed(Flush(), L"创建D2D位图失败");
 	}
 	ExImageD2D::ExImageD2D(HBITMAP bitmap, HPALETTE palette, bool pre_alpha)
 	{
@@ -150,7 +150,7 @@ namespace ExDirectUI
 		m_cur_frame = 0;
 
 		//刷新D2D位图
-		throw_if_failed(Flush(), L"刷新D2D位图失败");
+		throw_if_failed(Flush(), L"创建D2D位图失败");
 	}
 	ExImageD2D::ExImageD2D(HICON icon)
 	{
@@ -167,7 +167,7 @@ namespace ExDirectUI
 		m_cur_frame = 0;
 
 		//刷新D2D位图
-		throw_if_failed(Flush(), L"刷新D2D位图失败");
+		throw_if_failed(Flush(), L"创建D2D位图失败");
 	}
 	ExImageD2D::ExImageD2D(IWICBitmap* src_bitmap)
 	{
@@ -177,7 +177,7 @@ namespace ExDirectUI
 		m_cur_frame = 0;
 
 		//刷新D2D位图
-		throw_if_failed(Flush(), L"刷新D2D位图失败");
+		throw_if_failed(Flush(), L"创建D2D位图失败");
 	}
 	ExImageD2D::~ExImageD2D()
 	{

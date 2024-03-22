@@ -16,6 +16,8 @@
 #include "objects/path.h"
 #include "objects/region.h"
 #include "objects/pen.h"
+#include "objects/solid_brush.h"
+#include "objects/linear_brush.h"
 
 namespace ExDirectUI
 {
@@ -298,15 +300,32 @@ namespace ExDirectUI
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateSolidBrush(EXARGB color, IExBrush** r_brush)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExSolidBrushD2D> brush = NEW ExSolidBrushD2D(color);
+			return brush->QueryInterface(r_brush);
+		}
+		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreateLinearBrush(float x_begin, float y_begin, float x_end, float y_end, EXARGB color_begin, EXARGB color_end, IExBrush** r_brush)
+	HRESULT EXOBJCALL ExRenderD2D::CreateLinearBrush(float begin_x, float begin_y, float end_x, float end_y, EXARGB color_begin, EXARGB color_end, IExBrush** r_brush)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExLinearBrushD2D> brush = NEW ExLinearBrushD2D(begin_x, begin_y, end_x, end_y, color_begin, color_end);
+			return brush->QueryInterface(r_brush);
+		}
+		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreateLinearBrushEx(float x_begin, float y_begin, float x_end, float y_end, ExGradientPoint* gradient_points, uint32_t count, IExBrush** r_brush)
+	HRESULT EXOBJCALL ExRenderD2D::CreateLinearBrushEx(float begin_x, float begin_y, float end_x, float end_y, ExGradientPoint* gradient_points, uint32_t count, IExBrush** r_brush)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		CHECK_PARAM(gradient_points && count >= 2);
+
+		try
+		{
+			ExAutoPtr<ExLinearBrushD2D> brush = NEW ExLinearBrushD2D(begin_x, begin_y, end_x, end_y, gradient_points, count);
+			return brush->QueryInterface(r_brush);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateRadialBrush(float left, float top, float right, float bottom, EXARGB color_inside, EXARGB color_outside, IExBrush** r_brush)
 	{

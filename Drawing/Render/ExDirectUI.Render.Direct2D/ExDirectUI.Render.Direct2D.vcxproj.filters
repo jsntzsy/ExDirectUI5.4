@@ -90,6 +90,12 @@
     <ClCompile Include="objects\pen.cpp">
       <Filter>pen</Filter>
     </ClCompile>
+    <ClCompile Include="objects\solid_brush.cpp">
+      <Filter>brush\solid_brush</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\linear_brush.cpp">
+      <Filter>brush\linear_brush</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -115,6 +121,12 @@
     </ClInclude>
     <ClInclude Include="objects\pen.h">
       <Filter>pen</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\solid_brush.h">
+      <Filter>brush\solid_brush</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\linear_brush.h">
+      <Filter>brush\linear_brush</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

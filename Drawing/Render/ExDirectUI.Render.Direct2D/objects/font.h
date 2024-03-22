@@ -82,6 +82,7 @@ namespace ExDirectUI
 			default: return __super::GetContext(index);
 			}
 		}
+
 	public:
 		ExFontD2D();
 		ExFontD2D(const wchar_t name[LF_FACESIZE], uint32_t size, DWORD style, EXATOM file_atom);

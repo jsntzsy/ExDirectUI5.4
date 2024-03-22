@@ -94,9 +94,9 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL CreatePenFromBrush(const IExBrush* brush, float width, IExPen** r_pen) override;
 
 		EXMETHOD HRESULT EXOBJCALL CreateSolidBrush(EXARGB color, IExBrush** r_brush) override;
-		EXMETHOD HRESULT EXOBJCALL CreateLinearBrush(float x_begin, float y_begin, float x_end, float y_end,
+		EXMETHOD HRESULT EXOBJCALL CreateLinearBrush(float begin_x, float begin_y, float end_x, float end_y,
 			EXARGB color_begin, EXARGB color_end, IExBrush** r_brush) override;
-		EXMETHOD HRESULT EXOBJCALL CreateLinearBrushEx(float x_begin, float y_begin, float x_end, float y_end,
+		EXMETHOD HRESULT EXOBJCALL CreateLinearBrushEx(float begin_x, float begin_y, float end_x, float end_y,
 			ExGradientPoint* gradient_points, uint32_t count, IExBrush** r_brush) override;
 		EXMETHOD HRESULT EXOBJCALL CreateRadialBrush(float left, float top, float right, float bottom,
 			EXARGB color_inside, EXARGB color_outside, IExBrush** r_brush) override;

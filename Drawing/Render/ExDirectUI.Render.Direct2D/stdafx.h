@@ -28,6 +28,13 @@ using namespace ExDirectUI;
 
 namespace ExDirectUI
 {
+	inline bool IsIdentityMatrix(const D2D1_MATRIX_3X2_F& matrix)
+	{
+		return matrix._11 == 1.0F && matrix._12 == 0.0F &&
+			matrix._21 == 0.0F && matrix._22 == 1.0F &&
+			matrix._31 == 0.0F && matrix._32 == 0.0F;
+	}
+
 	inline D2D1_MATRIX_3X2_F Matrix(const ExMatrixElements3x2& matrix)
 	{
 		return D2D1::Matrix3x2F(
@@ -79,30 +86,6 @@ namespace ExDirectUI
 	{
 		return MAKEARGB(color.r * 255, color.g * 255, color.b * 255, color.a * 255);
 	}
-//
-//	inline void OffsetPixels(float* pixels, uint32_t count, bool reverse = false)
-//	{
-//#if FALSE
-//#ifndef _M_IX86
-//		for (uint32_t i = 0; i < count; i++)
-//		{
-//			if (reverse) { pixels[i << 1] -= 0.5F; }
-//			else { pixels[i << 1] += 0.5F; }
-//		}
-//#else
-//		for (uint32_t i = 0; i < count; i++)
-//		{
-//			if (reverse) { pixels[i] -= 0.5F; }
-//			else { pixels[i] += 0.5F; }
-//		}
-//#endif // _x86
-//#endif // 
-//	}
-//	template<typename T>
-//	inline void OffsetPixels(T* pixels, uint32_t count, bool reverse = false)
-//	{
-//		OffsetPixels(pixels, count, reverse);
-//	}
 
 	inline void _offset_(bool reverse, float& last)
 	{
