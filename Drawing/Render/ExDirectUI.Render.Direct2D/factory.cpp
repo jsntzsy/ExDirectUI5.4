@@ -18,6 +18,8 @@
 #include "objects/pen.h"
 #include "objects/solid_brush.h"
 #include "objects/linear_brush.h"
+#include "objects/radial_brush.h"
+#include "objects/image_brush.h"
 
 namespace ExDirectUI
 {
@@ -75,7 +77,8 @@ namespace ExDirectUI
 		m_d2d_dc->SetUnitMode(D2D1_UNIT_MODE_PIXELS);
 
 		//创建字体池
-		ExFontPoolD2D::GetInstance();
+		//因为此时构造函数还未结束，LazySingleton::Instance返回nullptr,所以需要手动传this，以下同理
+		ExFontPoolD2D::GetInstance(this);
 
 		//ExEffectD2D::RegisterEffects(this);
 
@@ -90,6 +93,12 @@ namespace ExDirectUI
 	HRESULT EXOBJCALL ExRenderD2D::OnModuleUnLoad()
 	{
 		ExFontPoolD2D::ClearInstance(true);
+
+		m_d2d_dc.Release();
+		m_d2d_device.Release();
+		m_d2d_factory.Release();
+		m_wic_factory.Release();
+		m_dwrite_factory.Release();
 
 		return S_OK;
 	}
@@ -329,17 +338,38 @@ namespace ExDirectUI
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateRadialBrush(float left, float top, float right, float bottom, EXARGB color_inside, EXARGB color_outside, IExBrush** r_brush)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExRadialBrushD2D> brush = NEW ExRadialBrushD2D(left, top, right, bottom, color_inside, color_outside);
+			return brush->QueryInterface(r_brush);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateRadialBrushEx(float left, float top, float right, float bottom, ExGradientPoint* gradient_points, uint32_t count, IExBrush** r_brush)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		CHECK_PARAM(gradient_points && count >= 2);
+
+		try
+		{
+			ExAutoPtr<ExRadialBrushD2D> brush = NEW ExRadialBrushD2D(left, top, right, bottom, gradient_points, count);
+			return brush->QueryInterface(r_brush);
+		}
+		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreateImageBrush(const IExImage* image, float left, float top, float right, float bottom, const ExRectF* src, IExBrush** r_brush)
+	HRESULT EXOBJCALL ExRenderD2D::CreateImageBrush(const IExImage* image, const ExRectF* src,
+		ExBrushExtendMode extend_mode, EXCHANNEL opacity, IExBrush** r_brush)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		CHECK_PARAM(image);
+
+		try
+		{
+			ExAutoPtr<ExImageBrushD2D> brush = NEW ExImageBrushD2D(image, src, extend_mode, opacity);
+			return brush->QueryInterface(r_brush);
+		}
+		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreateCanvasBrush(const IExCanvas* canvas, const ExRectF* dst, DWORD extend_mode, EXCHANNEL alpha, IExBrush** r_brush)
+	HRESULT EXOBJCALL ExRenderD2D::CreateCanvasBrush(const IExCanvas* canvas, const ExRectF* dst, DWORD extend_mode, 
+		EXCHANNEL alpha, IExBrush** r_brush)
 	{
 		handle_ex(E_NOTIMPL, L"尚未实现");
 	}

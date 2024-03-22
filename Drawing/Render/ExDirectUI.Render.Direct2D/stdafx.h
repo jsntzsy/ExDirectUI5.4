@@ -87,6 +87,17 @@ namespace ExDirectUI
 		return MAKEARGB(color.r * 255, color.g * 255, color.b * 255, color.a * 255);
 	}
 
+	inline D2D1_EXTEND_MODE GetD2DExtendMode(ExBrushExtendMode mode)
+	{
+		switch (mode)
+		{
+		case ExBrushExtendMode::None: return D2D1_EXTEND_MODE_CLAMP;
+		case ExBrushExtendMode::Tile: return D2D1_EXTEND_MODE_WRAP;
+		case ExBrushExtendMode::Mirror: return D2D1_EXTEND_MODE_MIRROR;
+		default: return D2D1_EXTEND_MODE_CLAMP;
+}
+	}
+
 	inline void _offset_(bool reverse, float& last)
 	{
 #if FALSE

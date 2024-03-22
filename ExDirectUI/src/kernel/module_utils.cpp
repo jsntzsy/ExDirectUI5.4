@@ -47,6 +47,11 @@ namespace ExDirectUI
 		return S_OK;
 	}
 
+	DWORD EXOBJCALL ExModuleUtils::GetAntialiasMode() const
+	{
+		return g_drawing_antialias_mode;
+	}
+
 	HRESULT EXOBJCALL ExModuleUtils::Group(uint16_t type, IExModule* instance) MAYTHROW
 	{
 		switch (type)

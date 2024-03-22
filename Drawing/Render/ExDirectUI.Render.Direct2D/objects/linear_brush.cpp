@@ -1,6 +1,6 @@
 ﻿/**
- * @file l_brush.cpp
- * @brief 渲染器纯色画刷实现文件
+ * @file linear_brush.cpp
+ * @brief 渲染器线性渐变画刷实现文件
  * @author EternalZSY
  * @version 5.4.0.0
  * @date 2024-03-22
@@ -15,19 +15,19 @@ namespace ExDirectUI
 	ExLinearBrushD2D::ExLinearBrushD2D(float begin_x, float begin_y, float end_x, float end_y,
 		EXARGB begin_color, EXARGB end_color)
 	{
-		m_begin_color = Color(begin_color);
-		m_end_color = Color(end_color);
-		m_begin_point = D2D1::Point2F(begin_x, begin_y);
-		m_end_point = D2D1::Point2F(end_x, end_y);
+		m_begin_color = begin_color;
+		m_end_color = end_color;
+		m_begin_point = { begin_x, begin_y };
+		m_end_point = { end_x, end_y };
 
-		throw_if_failed(Flush(), L"创建线性画刷失败");
+		throw_if_failed(Flush(), L"创建线性渐变画刷失败");
 	}
 	ExLinearBrushD2D::ExLinearBrushD2D(float begin_x, float begin_y, float end_x, float end_y,
 		const ExGradientPoint* points, uint32_t count)
 	{
-		m_begin_point = D2D1::Point2F(begin_x, begin_y);
-		m_end_point = D2D1::Point2F(end_x, end_y);
-		throw_if_failed(SetGradientPoints(points, count), L"创建线性画刷失败");
+		m_begin_point = { begin_x, begin_y };
+		m_end_point = { end_x, end_y };
+		throw_if_failed(SetGradientPoints(points, count), L"创建线性渐变画刷失败");
 	}
 	ExLinearBrushD2D::~ExLinearBrushD2D()
 	{
@@ -41,16 +41,7 @@ namespace ExDirectUI
 	HRESULT EXOBJCALL ExLinearBrushD2D::SetTransform(const ExMatrixElements* tranform)
 	{
 		CHECK_PARAM(tranform);
-
-		if (tranform) {
-			m_transform = D2D1::Matrix3x2F(
-				tranform->_11, tranform->_12,
-				tranform->_21, tranform->_22,
-				tranform->_31, tranform->_32
-			);
-		}
-		else { m_transform = D2D1::Matrix3x2F::Identity(); }
-
+		m_transform = Matrix(tranform);
 		m_brush->SetTransform(m_transform);
 		return S_OK;
 	}
@@ -69,38 +60,49 @@ namespace ExDirectUI
 
 	EXARGB EXOBJCALL ExLinearBrushD2D::GetBeginColor() const
 	{
-		return Color(m_begin_color);
+		return m_begin_color;
 	}
 
 	EXARGB EXOBJCALL ExLinearBrushD2D::GetEndColor() const
 	{
-		return Color(m_end_color);
+		return m_end_color;
 	}
 
 	HRESULT EXOBJCALL ExLinearBrushD2D::SetBeginColor(EXARGB color)
 	{
-		m_begin_color = Color(color);
+		if(m_begin_color == color) { return S_FALSE; }
+
+		m_begin_color = color;
 		return Flush();
 	}
 
 	HRESULT EXOBJCALL ExLinearBrushD2D::SetEndColor(EXARGB color)
 	{
-		m_end_color = Color(color);
+		if (m_end_color == color) { return S_FALSE; }
+
+		m_end_color = color;
 		return Flush();
 	}
 
 	HRESULT EXOBJCALL ExLinearBrushD2D::GetColors(EXARGB* r_begin_color, EXARGB* r_end_color) const
 	{
-		if (r_begin_color) { *r_begin_color = Color(m_begin_color); }
-		if (r_end_color) { *r_end_color = Color(m_end_color); }
+		if (r_begin_color) { *r_begin_color = m_begin_color; }
+		if (r_end_color) { *r_end_color = m_end_color; }
 		return S_OK;
 	}
 
 	HRESULT EXOBJCALL ExLinearBrushD2D::SetColors(EXARGB begin_color, EXARGB end_color)
 	{
-		if (begin_color != COLOR_UNDEFINE) { m_begin_color = Color(begin_color); }
-		if (end_color != COLOR_UNDEFINE) { m_end_color = Color(end_color); }
-		return Flush();
+		bool changed = false;
+		if (begin_color != COLOR_UNDEFINE && m_begin_color != begin_color) { 
+			m_begin_color = begin_color; 
+			changed = true;
+		}
+		if (end_color != COLOR_UNDEFINE && m_end_color != end_color) { 
+			m_end_color = end_color; 
+			changed = true;
+		}
+		return changed ? Flush() : S_FALSE;
 	}
 
 	HRESULT EXOBJCALL ExLinearBrushD2D::GetBeginPoint(ExPointF* r_point) const
@@ -121,24 +123,27 @@ namespace ExDirectUI
 
 	HRESULT EXOBJCALL ExLinearBrushD2D::GetPoints(ExPointF* r_begin_point, ExPointF* r_end_point) const
 	{
-		CHECK_PARAM(r_begin_point && r_end_point);
-		if (r_begin_point) { *r_begin_point = ExPointF(m_begin_point.x, m_begin_point.y); }
-		if (r_end_point) { *r_end_point = ExPointF(m_end_point.x, m_end_point.y); }
+		if (r_begin_point){
+			r_begin_point->x = m_begin_point.x;
+			r_begin_point->y = m_begin_point.y;
+		}
+		if (r_end_point) {
+			r_end_point->x = m_end_point.x;
+			r_end_point->y = m_end_point.y;
+		}
 		return S_OK;
 	}
 
-	HRESULT EXOBJCALL ExLinearBrushD2D::SetBeginPoint(const ExPointF* point)
+	HRESULT EXOBJCALL ExLinearBrushD2D::SetBeginPoint(float x, float y)
 	{
-		CHECK_PARAM(point);
-		m_begin_point = D2D1::Point2F(point->x, point->y);
+		m_begin_point = { x,y };
 		m_brush->SetStartPoint(m_begin_point);
 		return S_OK;
 	}
 
-	HRESULT EXOBJCALL ExLinearBrushD2D::SetEndPoint(const ExPointF* point)
+	HRESULT EXOBJCALL ExLinearBrushD2D::SetEndPoint(float x, float y)
 	{
-		CHECK_PARAM(point);
-		m_end_point = D2D1::Point2F(point->x, point->y);
+		m_end_point = { x,y };
 		m_brush->SetEndPoint(m_end_point);
 		return S_OK;
 	}
@@ -146,11 +151,11 @@ namespace ExDirectUI
 	HRESULT EXOBJCALL ExLinearBrushD2D::SetPoints(const ExPointF* begin_point, const ExPointF* end_point)
 	{
 		if (begin_point) {
-			m_begin_point = D2D1::Point2F(begin_point->x, begin_point->y);
+			m_begin_point = { begin_point->x, begin_point->y };
 			m_brush->SetStartPoint(m_begin_point);
 		}
 		if (end_point) {
-			m_end_point = D2D1::Point2F(end_point->x, end_point->y);
+			m_end_point = { end_point->x, end_point->y };
 			m_brush->SetEndPoint(m_end_point);
 		}
 		return S_OK;
@@ -158,14 +163,15 @@ namespace ExDirectUI
 
 	uint32_t EXOBJCALL ExLinearBrushD2D::GetGradientPointCount() const
 	{
-		return m_gradient_points.size();
+		return (uint32_t)m_gradient_points.size();
 	}
 
 	HRESULT EXOBJCALL ExLinearBrushD2D::GetGradientPoints(ExGradientPoint* r_points, uint32_t count) const
 	{
 		CHECK_PARAM(r_points);
 
-		uint32_t c = min(m_gradient_points.size(), count);
+		uint32_t c = (uint32_t)m_gradient_points.size();
+		c = min(c, count);
 		if (c == 0) { return S_FALSE; }
 
 		memcpy(r_points, m_gradient_points.data(), c * sizeof(ExGradientPoint));
@@ -201,13 +207,7 @@ namespace ExDirectUI
 			auto render = GetRender();
 
 			//获取扩展模式
-			D2D1_EXTEND_MODE extend_mode = D2D1_EXTEND_MODE_CLAMP;
-			switch (m_extend_mode)
-			{
-			case ExBrushExtendMode::None: extend_mode = D2D1_EXTEND_MODE_CLAMP; break;
-			case ExBrushExtendMode::Tile: extend_mode = D2D1_EXTEND_MODE_WRAP; break;
-			case ExBrushExtendMode::Mirror: extend_mode = D2D1_EXTEND_MODE_MIRROR; break;
-			}
+			D2D1_EXTEND_MODE extend_mode = GetD2DExtendMode(m_extend_mode);
 
 			//生成渐变点数组
 			std::vector<D2D1_GRADIENT_STOP> gradient_stops;
@@ -220,9 +220,9 @@ namespace ExDirectUI
 			}
 			else {
 				gradient_stops.resize(2);
-				gradient_stops[0].color = m_begin_color;
+				gradient_stops[0].color = Color(m_begin_color);
 				gradient_stops[0].position = 0.0f;
-				gradient_stops[1].color = m_end_color;
+				gradient_stops[1].color = Color(m_end_color);
 				gradient_stops[1].position = 1.0f;
 			}
 
@@ -230,7 +230,7 @@ namespace ExDirectUI
 			ExAutoPtr<ID2D1GradientStopCollection> stops;
 			throw_if_failed(
 				render->m_d2d_dc->CreateGradientStopCollection(
-					gradient_stops.data(), gradient_stops.size(),
+					gradient_stops.data(), (uint32_t)gradient_stops.size(),
 					m_gamma ? D2D1_GAMMA_2_2 : D2D1_GAMMA_1_0, extend_mode,
 					&stops
 				), L"创建渐变点集失败"
@@ -242,7 +242,7 @@ namespace ExDirectUI
 				render->m_d2d_dc->CreateLinearGradientBrush(
 					D2D1::LinearGradientBrushProperties(m_begin_point, m_end_point),
 					stops, &brush
-				), L"创建线性画刷失败"
+				), L"创建线性渐变画刷失败"
 			);
 
 			//应用矩阵变换

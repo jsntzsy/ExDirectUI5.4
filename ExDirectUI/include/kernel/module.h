@@ -103,6 +103,7 @@ namespace ExDirectUI
 
 		EXMETHOD IExRender* EXOBJCALL GetRender() const PURE;
 		EXMETHOD HRESULT EXOBJCALL GetDefaultFont(ExFontInfo* r_info) const PURE;
+		EXMETHOD DWORD EXOBJCALL GetAntialiasMode() const PURE;
 	};
 
 	////////////////////////////

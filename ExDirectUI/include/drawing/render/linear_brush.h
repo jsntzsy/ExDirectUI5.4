@@ -23,8 +23,8 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL GetBeginPoint(ExPointF* r_point) const PURE;
 		EXMETHOD HRESULT EXOBJCALL GetEndPoint(ExPointF* r_point) const PURE;
 		EXMETHOD HRESULT EXOBJCALL GetPoints(ExPointF* r_begin_point, ExPointF* r_end_point) const PURE;
-		EXMETHOD HRESULT EXOBJCALL SetBeginPoint(const ExPointF* point) PURE;
-		EXMETHOD HRESULT EXOBJCALL SetEndPoint(const ExPointF* point) PURE;
+		EXMETHOD HRESULT EXOBJCALL SetBeginPoint(float x, float y) PURE;
+		EXMETHOD HRESULT EXOBJCALL SetEndPoint(float x, float y) PURE;
 		EXMETHOD HRESULT EXOBJCALL SetPoints(const ExPointF* begin_point, const ExPointF* end_point) PURE;
 
 		EXMETHOD uint32_t EXOBJCALL GetGradientPointCount() const PURE;

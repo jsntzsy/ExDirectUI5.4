@@ -183,9 +183,11 @@
     <ClCompile Include="factory.cpp" />
     <ClCompile Include="objects\font.cpp" />
     <ClCompile Include="objects\image.cpp" />
+    <ClCompile Include="objects\image_brush.cpp" />
     <ClCompile Include="objects\linear_brush.cpp" />
     <ClCompile Include="objects\path.cpp" />
     <ClCompile Include="objects\pen.cpp" />
+    <ClCompile Include="objects\radial_brush.cpp" />
     <ClCompile Include="objects\region.cpp" />
     <ClCompile Include="objects\solid_brush.cpp" />
     <ClCompile Include="render_api.cpp" />
@@ -200,9 +202,11 @@
     <ClInclude Include="factory.h" />
     <ClInclude Include="objects\font.h" />
     <ClInclude Include="objects\image.h" />
+    <ClInclude Include="objects\image_brush.h" />
     <ClInclude Include="objects\linear_brush.h" />
     <ClInclude Include="objects\path.h" />
     <ClInclude Include="objects\pen.h" />
+    <ClInclude Include="objects\radial_brush.h" />
     <ClInclude Include="objects\region.h" />
     <ClInclude Include="objects\solid_brush.h" />
     <ClInclude Include="render_api.h" />

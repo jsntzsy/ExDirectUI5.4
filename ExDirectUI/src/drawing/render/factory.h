@@ -12,6 +12,7 @@ namespace ExDirectUI
 {
 	extern IExRender* g_drawing_render;
 	extern ExFontInfo g_drawing_default_font;
+	extern DWORD g_drawing_antialias_mode;
 
 	void EXCALL _ExRender_Init(const ExEngineInitInfo* info);
 	void EXCALL _ExRender_UnInit();

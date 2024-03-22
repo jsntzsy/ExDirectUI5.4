@@ -26,8 +26,8 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL SetCenterOffset(float horz, float vert) PURE;
 
 		EXMETHOD uint32_t EXOBJCALL GetGradientPointCount() const PURE;
-		EXMETHOD HRESULT EXOBJCALL GetGradientPoints(ExPointF* r_points, uint32_t count) const PURE;
-		EXMETHOD HRESULT EXOBJCALL SetGradientPoints(const ExPointF* points, uint32_t count) PURE;
+		EXMETHOD HRESULT EXOBJCALL GetGradientPoints(ExGradientPoint* r_points, uint32_t count) const PURE;
+		EXMETHOD HRESULT EXOBJCALL SetGradientPoints(const ExGradientPoint* points, uint32_t count) PURE;
 
 		EXMETHOD bool EXOBJCALL GetGammaMode() const PURE;
 		EXMETHOD HRESULT EXOBJCALL SetGammaMode(bool gamma) PURE;

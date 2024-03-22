@@ -175,7 +175,7 @@ namespace ExDirectUI
 
 	/////////////////////////////
 
-	ExFontPoolD2D::ExFontPoolD2D()
+	ExFontPoolD2D::ExFontPoolD2D(ExRenderD2D* render)
 	{
 		//创建资源池
 		throw_if_failed(
@@ -193,7 +193,7 @@ namespace ExDirectUI
 
 		//注册字体集加载器
 		throw_if_failed(
-			GetRender()->m_dwrite_factory->RegisterFontCollectionLoader(
+			render->m_dwrite_factory->RegisterFontCollectionLoader(
 				ExLazySingleton<ExFontCollectionLoader>::GetInstance()
 			), L"注册字体集加载器失败"
 		);

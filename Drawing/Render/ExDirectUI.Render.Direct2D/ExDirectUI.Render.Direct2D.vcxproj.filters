@@ -96,6 +96,12 @@
     <ClCompile Include="objects\linear_brush.cpp">
       <Filter>brush\linear_brush</Filter>
     </ClCompile>
+    <ClCompile Include="objects\radial_brush.cpp">
+      <Filter>brush\radial_brush</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\image_brush.cpp">
+      <Filter>brush\image_brush</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -127,6 +133,12 @@
     </ClInclude>
     <ClInclude Include="objects\linear_brush.h">
       <Filter>brush\linear_brush</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\radial_brush.h">
+      <Filter>brush\radial_brush</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\image_brush.h">
+      <Filter>brush\image_brush</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

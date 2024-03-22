@@ -27,7 +27,7 @@ namespace ExDirectUI
 	class ExFontPoolD2D : public ExLazySingleton<ExFontPoolD2D>
 	{
 	public:
-		ExFontPoolD2D();
+		ExFontPoolD2D(ExRenderD2D* render);
 		~ExFontPoolD2D();
 
 		const ExFontFileContextD2D* EXOBJCALL LoadFontFile(const byte_t* data, size_t size) MAYTHROW;

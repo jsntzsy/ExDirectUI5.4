@@ -55,8 +55,8 @@ namespace ExDirectUI
 			EXARGB color_inside, EXARGB color_outside, IExBrush** r_brush) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateRadialBrushEx(float left, float top, float right, float bottom,
 			ExGradientPoint* gradient_points, uint32_t count, IExBrush** r_brush) PURE;
-		EXMETHOD HRESULT EXOBJCALL CreateImageBrush(const IExImage* image, float left, float top,
-			float right, float bottom, const ExRectF* src, IExBrush** r_brush) PURE;
+		EXMETHOD HRESULT EXOBJCALL CreateImageBrush(const IExImage* image, const ExRectF* src,
+			ExBrushExtendMode extend_mode, EXCHANNEL opacity, IExBrush** r_brush) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateCanvasBrush(const IExCanvas* canvas, const ExRectF* dst,
 			DWORD extend_mode, EXCHANNEL alpha, IExBrush** r_brush) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateCanvasBrushFromTarget(const IExCanvasTarget* target, const ExRectF* dst,

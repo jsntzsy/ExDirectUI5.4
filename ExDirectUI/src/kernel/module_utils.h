@@ -30,6 +30,8 @@ namespace ExDirectUI
 
 		EXMETHOD IExRender* EXOBJCALL GetRender() const override;
 		EXMETHOD HRESULT EXOBJCALL GetDefaultFont(ExFontInfo* r_info) const override;
+		EXMETHOD DWORD EXOBJCALL GetAntialiasMode() const override;
+
 
 	public:
 		static HRESULT EXOBJCALL Group(uint16_t type, IExModule* instance) MAYTHROW;

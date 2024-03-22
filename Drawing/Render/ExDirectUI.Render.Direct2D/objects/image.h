@@ -75,7 +75,6 @@ namespace ExDirectUI
 
 	private:
 		HRESULT EXOBJCALL Flush();
-
 	private:
 		uint32_t m_width{};
 		uint32_t m_height{};
@@ -84,5 +83,7 @@ namespace ExDirectUI
 		ExAutoPtr<ID2D1Bitmap> m_d2d_bitmap{};
 		ExAutoPtr<IWICBitmap> m_wic_bitmap{};
 		ExAutoPtr<IWICBitmapLock> m_bitmap_lock{};
+
+		friend class ExImageBrushD2D;
 	};
 }
