@@ -20,5 +20,6 @@ namespace ExDirectUI
 	HRESULT EXCALL _ExRender_Group(IExRender* render);
 	HRESULT EXCALL _ExRender_UnGroup(IExRender* render);
 
+	
 }
 

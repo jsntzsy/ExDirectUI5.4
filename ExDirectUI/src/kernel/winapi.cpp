@@ -26,7 +26,7 @@ namespace ExDirectUI
 
 		g_winapi_user32 = LoadLibraryW(L"user32.dll");
 		handle_if_false(g_winapi_user32, EE_LOST_NECESSARY, L"user32.dll加载失败");
-
+		
 		return S_OK;
 	}
 	void _ExWinAPI_UnInit()

@@ -181,6 +181,7 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="factory.cpp" />
+    <ClCompile Include="objects\device.cpp" />
     <ClCompile Include="objects\font.cpp" />
     <ClCompile Include="objects\image.cpp" />
     <ClCompile Include="objects\image_brush.cpp" />
@@ -200,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="factory.h" />
+    <ClInclude Include="objects\device.h" />
     <ClInclude Include="objects\font.h" />
     <ClInclude Include="objects\image.h" />
     <ClInclude Include="objects\image_brush.h" />

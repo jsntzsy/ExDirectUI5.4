@@ -35,4 +35,6 @@ namespace ExDirectUI
 	HRESULT EXAPI EXCALL ExMemDCDestroy(ExMemDC* dc);
 	HRESULT EXAPI EXCALL ExMemDCResize(ExMemDC* dc, uint32_t new_width, uint32_t new_height);
 
+	BOOL EXAPI EXCALL ExUpdateLayeredWindow(HWND window, const UPDATELAYEREDWINDOWINFO* ulwi);
+
 }

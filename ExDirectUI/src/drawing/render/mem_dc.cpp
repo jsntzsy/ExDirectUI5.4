@@ -17,8 +17,8 @@ namespace ExDirectUI
 		CHECK_PARAM(r_dc);
 
 		//默认参数
-		if (width == -1) { width = 1; }
-		if (height == -1) { height = 1; }
+		if (width == -1 || width == 0) { width = 1; }
+		if (height == -1 || height == 0) { height = 1; }
 
 		ExMemDC mdc{};
 		try
@@ -78,6 +78,7 @@ namespace ExDirectUI
 		*dc = new_dc;
 		return S_OK;
 	}
+
 }
 
 

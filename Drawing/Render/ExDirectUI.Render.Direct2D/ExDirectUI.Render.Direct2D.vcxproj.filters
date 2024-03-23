@@ -102,6 +102,9 @@
     <ClCompile Include="objects\image_brush.cpp">
       <Filter>brush\image_brush</Filter>
     </ClCompile>
+    <ClCompile Include="objects\device.cpp">
+      <Filter>device</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -139,6 +142,9 @@
     </ClInclude>
     <ClInclude Include="objects\image_brush.h">
       <Filter>brush\image_brush</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\device.h">
+      <Filter>device</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
