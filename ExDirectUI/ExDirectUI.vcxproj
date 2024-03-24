@@ -180,6 +180,7 @@
     <ClCompile Include="src\debug\mem_leak.cpp" />
     <ClCompile Include="src\debug\status_handle.cpp" />
     <ClCompile Include="src\drawing\image_decoder.cpp" />
+    <ClCompile Include="src\drawing\render\device.cpp" />
     <ClCompile Include="src\drawing\render\factory.cpp" />
     <ClCompile Include="src\drawing\render\font.cpp" />
     <ClCompile Include="src\drawing\render\image.cpp" />

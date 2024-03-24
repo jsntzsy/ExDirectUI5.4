@@ -11,12 +11,16 @@
 #include "drawing/render/factory.h"
 #include "src/kernel/module_utils.h"
 #include "src/drawing/render/factory.h"
+#include "src/kernel/winapi.h"
 
 namespace ExDirectUI
 {
 	IExRender* g_drawing_render = nullptr;
 	ExFontInfo g_drawing_default_font{};
 	DWORD g_drawing_antialias_mode = 0;
+	uint32_t g_drawing_default_dpi = EX_DEFAULT_DPI;
+	_UpdateLayeredWindowIndirectProc _UpdateLayeredWindowIndirect = nullptr;
+
 
 	void EXCALL _ExRender_Init(const ExEngineInitInfo* info)
 	{
@@ -41,12 +45,27 @@ namespace ExDirectUI
 		if(info->antialias_mode != -1){ g_drawing_antialias_mode = info->antialias_mode;}
 		else { g_drawing_antialias_mode = ExAntiAliasMode::Default; }
 
+		//尝试获取UpdateLayeredWindowIndirect函数
+		_UpdateLayeredWindowIndirect = (_UpdateLayeredWindowIndirectProc)
+			GetProcAddress(g_winapi_user32, "UpdateLayeredWindowIndirect");
+		
+		//获取系统默认DPI
+		HDC hdc = GetDC(NULL);
+		if (hdc) {
+			g_drawing_default_dpi = GetDeviceCaps(hdc, LOGPIXELSX);
+			ReleaseDC(NULL, hdc);
+		}
+		else { g_drawing_default_dpi = EX_DEFAULT_DPI; }
+		
 	}
 
 	void EXCALL _ExRender_UnInit()
 	{
 		g_drawing_default_font = {};
 		g_drawing_antialias_mode = 0;
+		g_drawing_default_dpi = EX_DEFAULT_DPI;
+		_UpdateLayeredWindowIndirect = nullptr;
+		g_drawing_render = nullptr;
 	}
 
 	HRESULT EXCALL _ExRender_Group(IExRender* render)

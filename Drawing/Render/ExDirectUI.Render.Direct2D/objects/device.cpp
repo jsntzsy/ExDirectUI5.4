@@ -9,6 +9,7 @@
 
 #include "stdafx.h"
 #include "objects/device.h"
+#include "render_api.h"
 
 namespace ExDirectUI
 {
@@ -193,7 +194,10 @@ namespace ExDirectUI
 				else { m_bf.SourceConstantAlpha = (BYTE)alpha; }
 
 				//更新
-				//ExUpdateLayeredWindow()
+				throw_if_false(
+					ExUpdateLayeredWindow(m_window, &m_ulwi),
+					E_FAIL, L"窗口设备更新失败"
+				);
 			}
 
 			//释放
@@ -212,6 +216,168 @@ namespace ExDirectUI
 	}
 
 	/////////////////////////////
+
+	ExCompositionWindowDeviceD2D::ExCompositionWindowDeviceD2D(HWND window)
+	{
+		//获取窗口尺寸
+		ExRect window_rect{};
+		throw_if_false(GetWindowRect(window, &window_rect), E_FAIL, L"获取窗口尺寸失败");
+		m_size = { window_rect.Width(), window_rect.Height() };
+		if (m_size.cx <= 0) { m_size.cx = 1; }
+		if (m_size.cy <= 0) { m_size.cy = 1; }
+
+		//创建混合设备对象
+		throw_if_failed(
+			ExRenderAPI::DCompositionCreateDevice2(
+				GetRender()->m_d2d_device,
+				__uuidof(m_device),
+				(void**)&m_device
+			), L"创建混合设备对象失败"
+		);
+
+		//通过窗口句柄创建目标对象
+		throw_if_failed(m_device->CreateTargetForHwnd(window, true, &m_target), L"创建窗口目标对象失败");
+
+		//创建视觉对象
+		throw_if_failed(m_device->CreateVisual(&m_visual), L"创建视觉对象失败");
+
+		//创建表面对象
+		throw_if_failed(m_device->CreateSurface(m_size.cx, m_size.cy,
+			DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_ALPHA_MODE_PREMULTIPLIED,
+			&m_surface
+		), L"创建表面对象失败");
+
+		//将表面设置到视觉对象内容里
+		throw_if_failed(m_visual->SetContent(m_surface), L"设置视觉内容失败");
+
+		//将视觉对象添加到目标对象
+		throw_if_failed(m_target->SetRoot(m_visual), L"设置窗口目标根对象失败");
+
+		m_window = window;
+	}
+
+	ExCompositionWindowDeviceD2D::~ExCompositionWindowDeviceD2D()
+	{
+	}
+
+	ExDeviceType EXOBJCALL ExCompositionWindowDeviceD2D::GetDeviceType() const
+	{
+		return ExDeviceType::CompositionWindow;
+	}
+
+	HANDLE EXOBJCALL ExCompositionWindowDeviceD2D::GetObject() const
+	{
+		return m_window;
+	}
+
+	HRESULT EXOBJCALL ExCompositionWindowDeviceD2D::GetSize(uint32_t* r_width, uint32_t* r_height) const
+	{
+		if (r_width) { *r_width = m_size.cx; }
+		if (r_height) { *r_height = m_size.cy; }
+		return S_OK;
+	}
+
+	HRESULT EXOBJCALL ExCompositionWindowDeviceD2D::Resize(uint32_t width, uint32_t height)
+	{
+		//参数规格化
+		if (width <= 0) { width = 1; }
+		if (height <= 0) { height = 1; }
+
+		//创建新表面对象
+		ExAutoPtr<IDCompositionSurface> surface;
+		handle_if_failed(
+			m_device->CreateSurface(width, height,
+				DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_ALPHA_MODE_PREMULTIPLIED,
+				&surface
+			), L"创建新表面对象失败"
+		);
+
+		//将表面设置到视觉对象中
+		handle_if_failed(m_visual->SetContent(surface), L"设置视觉内容失败");
+
+		//更新成员变量
+		m_size = { (LONG)width, (LONG)height };
+		m_surface = surface;
+		return S_OK;
+	}
+
+	HRESULT EXOBJCALL ExCompositionWindowDeviceD2D::Update(IExCanvas* canvas_src, ExRect* update_rect, int alpha, HDC dest_dc)
+	{
+		//确定透明度
+		float a;
+		if (alpha == -1 || alpha > ALPHA_OPAQUE) { a = 1.0F; }
+		else if (alpha < ALPHA_TRANSPARENT) { a = 0.0F; }
+		else (a = ((float)alpha) / 255.0F);
+
+		ExAutoPtr<ID2D1DeviceContext> dst_dc;
+		ExPoint offset = {};
+
+		try
+		{
+			////ExCanvasTargetD2D* pTarget = ((ExCanvasD2D*)pCanvasSrc)->m_pTarget;
+
+			////FIXME:CompositionDevice要绘制得全部绘制，否则会有闪烁和撕裂，暂不清楚原因
+			////计算真实剪辑更新区域
+			//ExRect rcClip;
+			////if (rcUpdate) rcClip = rcUpdate->Normalize();
+			///*else */rcClip = ExRect(0, 0, pTarget->m_nWidth, pTarget->m_nHeight);
+
+			////开始绘制
+			//if (!_ST(m_surface->BeginDraw(&rcClip, __uuidof(dcDst), (LPVOID*)&dcDst, &ptOffset)))
+			//	_ES_THROW(ES_OLE);
+
+			////设置剪辑区
+			//rcClip.Offset(ptOffset.x, ptOffset.y);
+			//dcDst->PushAxisAlignedClip(
+			//	D2D1::RectF(rcClip.left, rcClip.top, rcClip.right, rcClip.bottom),
+			//	D2D1_ANTIALIAS_MODE_PER_PRIMITIVE
+			//);
+
+			////清除原由内容
+			//dcDst->Clear();
+
+			////设置变换到偏移点
+			//dcDst->SetTransform(D2D1::Matrix3x2F::Translation(ptOffset.x, ptOffset.y));
+
+			////绘制画布目标
+			//dcDst->DrawBitmap(pTarget->m_pBitmap, NULL, alpha);
+
+			////还原剪辑区
+			//dcDst->PopAxisAlignedClip();
+
+			////结束绘制
+			//if (!_ST(m_surface->EndDraw())) _ES_THROW(ES_OLE);
+
+			//SAFE_RELEASE(dcDst);
+
+			////把变更提交
+			//if (!_ST(m_device->Commit()))_ES_THROW(ES_OLE);
+
+		}
+		catch_default({
+
+			}
+		);
+	}
+
+
+	IExDevice* EXCALL _ExDevice_CreateWindowDevice(HWND window, bool composition)
+	{
+		//如果考虑使用混合模式,那么先检查系统是否支持,并且窗口是否带有WS_EX_NOREDIRECTIONBITMAP风格
+		if (composition) { composition = ExRenderAPI::DCompositionIsSupport(); }
+		if (composition) {
+			composition = (GetWindowLong(window, GWL_EXSTYLE) & WS_EX_NOREDIRECTIONBITMAP) != 0;
+		}
+
+		if (composition) {
+			//如果创建并初始化成功了,则直接使用
+			try_ignore({ return NEW ExCompositionWindowDeviceD2D(window); });
+		}
+
+		//否则使用普通的窗口设备
+		return NEW ExWindowDeviceD2D(window);
+	}
+
 
 }
 

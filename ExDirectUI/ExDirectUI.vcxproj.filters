@@ -166,6 +166,9 @@
     <Filter Include="drawing\render\factory">
       <UniqueIdentifier>{ea8d7e2b-8a80-44e7-a23a-6c5156a9b3fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="drawing\render\device">
+      <UniqueIdentifier>{79a3d660-356c-4739-8a2b-a2613af87455}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -218,6 +221,9 @@
     </ClCompile>
     <ClCompile Include="src\drawing\render\font.cpp">
       <Filter>drawing\render\font</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawing\render\device.cpp">
+      <Filter>drawing\render\device</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -311,9 +317,6 @@
     <ClInclude Include="include\drawing\render\canvas_brush.h">
       <Filter>drawing\render\brush\canvas_brush</Filter>
     </ClInclude>
-    <ClInclude Include="include\drawing\render\device.h">
-      <Filter>drawing\render\canvas</Filter>
-    </ClInclude>
     <ClInclude Include="include\drawing\render\effect.h">
       <Filter>drawing\render\effect</Filter>
     </ClInclude>
@@ -394,6 +397,9 @@
     </ClInclude>
     <ClInclude Include="src\drawing\render\font.h">
       <Filter>drawing\render\font</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drawing\render\device.h">
+      <Filter>drawing\render\device</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

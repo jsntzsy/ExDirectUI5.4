@@ -10,9 +10,14 @@
 
 namespace ExDirectUI
 {
+	constexpr uint32_t EX_DEFAULT_DPI = 96;
+
 	extern IExRender* g_drawing_render;
 	extern ExFontInfo g_drawing_default_font;
 	extern DWORD g_drawing_antialias_mode;
+
+	typedef BOOL(WINAPI* _UpdateLayeredWindowIndirectProc)(HWND window, const UPDATELAYEREDWINDOWINFO* ulwi);
+	extern _UpdateLayeredWindowIndirectProc _UpdateLayeredWindowIndirect;
 
 	void EXCALL _ExRender_Init(const ExEngineInitInfo* info);
 	void EXCALL _ExRender_UnInit();

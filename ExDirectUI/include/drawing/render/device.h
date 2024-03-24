@@ -28,4 +28,9 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL Update(IExCanvas* canvas_src, ExRect* update_rect, int alpha, HDC dest_dc) PURE;
 	};
 
+	////////////////////
+
+	BOOL EXAPI EXCALL ExUpdateLayeredWindow(HWND window, const UPDATELAYEREDWINDOWINFO* ulwi);
+	
+
 }

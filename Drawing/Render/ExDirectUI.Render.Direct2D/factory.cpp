@@ -20,6 +20,7 @@
 #include "objects/linear_brush.h"
 #include "objects/radial_brush.h"
 #include "objects/image_brush.h"
+#include "objects/device.h"
 
 namespace ExDirectUI
 {
@@ -85,6 +86,8 @@ namespace ExDirectUI
 	}
 	ExRenderD2D::~ExRenderD2D()
 	{
+		ExRenderAPI::OnUnInit();
+		CoUninitialize();
 	}
 	HRESULT EXOBJCALL ExRenderD2D::Invoke(uint32_t code, WPARAM wparam, LPARAM lparam, LRESULT* r_result)
 	{
@@ -391,11 +394,23 @@ namespace ExDirectUI
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateWindowDevice(HWND window, ExDeviceType type, IExDevice** r_device)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		CHECK_PARAM(window);
+
+		try
+		{
+			*r_device = _ExDevice_CreateWindowDevice(window, type == ExDeviceType::CompositionWindow);
+			return S_OK;
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateBitmapDevice(uint32_t width, uint32_t height, IExDevice** r_device)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExBitmapDeviceD2D> device = NEW ExBitmapDeviceD2D(width, height);
+			return device->QueryInterface(r_device);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateCanvas(uint32_t width, uint32_t height, IExCanvas** r_canvas)
 	{

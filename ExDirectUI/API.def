@@ -50,6 +50,8 @@ EXPORTS
 			ExMemDCCreate
 			ExMemDCDestroy
 			ExMemDCResize
+		;设备
+			ExUpdateLayeredWindow
 		
 ;资源层
 	;资源池管理器
