@@ -63,6 +63,11 @@ inline float randomf(float min, float max)
 	return min + (max - min) * (rand() / (RAND_MAX + 1.0F));
 }
 
+inline bool query_flags(unsigned int value, unsigned int flags)
+{
+	return (value & flags) == flags;
+}
+
 #pragma endregion
 
 #pragma region 安全操作

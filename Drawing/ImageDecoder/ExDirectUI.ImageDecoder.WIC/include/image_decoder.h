@@ -13,7 +13,7 @@
 namespace ExDirectUI
 {
 	class ExImageDecoderWIC
-		: public ExObjectBaseImpl<IExImageDecoder>,
+		: public ExObjectImpl<IExImageDecoder>,
 		public ExLazySingleton<ExImageDecoderWIC>
 	{
 	public:
@@ -30,7 +30,7 @@ namespace ExDirectUI
 
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
-			return L"ExImageDecoderWIC: core: WIC, support_format: PNG/JPG/GIF/BMP";
+			return L"ExImageDecoderWIC(core: WindowsImageCodec, support_format: PNG/JPG/GIF/BMP)";
 		}
 		
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override

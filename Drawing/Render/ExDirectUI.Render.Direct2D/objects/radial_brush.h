@@ -10,7 +10,7 @@
 
 namespace ExDirectUI
 {
-	class ExRadialBrushD2D : public ExObjectBaseImpl<IExRadialBrush>
+	class ExRadialBrushD2D : public ExObjectImpl<IExRadialBrush>
 	{
 	public:
 		EX_BEGIN_INTERFACE_MAP();
@@ -25,7 +25,12 @@ namespace ExDirectUI
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
 
-			return ExString::format(L"ExRadialBrush: ");
+			return ExString::format(
+				L"ExRadialBrushD2D(bounds: %f,%f,%f,%f, offset: %fx%f, "
+				"inside_color: #%08X, outside_color:#%08X)",
+				_expand_rect_(m_bounds), _expand_point_(m_center_offset),
+				m_inside_color, m_outside_color
+			);
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

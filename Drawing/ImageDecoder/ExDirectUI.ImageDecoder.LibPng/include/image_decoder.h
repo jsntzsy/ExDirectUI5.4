@@ -13,7 +13,7 @@
 namespace ExDirectUI
 {
 	class ExImageDecoderLibPng 
-		: public ExObjectBaseImpl<IExImageDecoder>,
+		: public ExObjectImpl<IExImageDecoder>,
 		public ExLazySingleton<ExImageDecoderLibPng>
 	{
 	public:
@@ -28,7 +28,7 @@ namespace ExDirectUI
 
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
-			return L"ExImageDecoderLibPng: core: libpng, support_format: PNG/APNG";
+			return L"ExImageDecoderLibPng(core: libpng, support_format: PNG/APNG)";
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

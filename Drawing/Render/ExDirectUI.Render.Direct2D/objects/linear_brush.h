@@ -10,7 +10,7 @@
 
 namespace ExDirectUI
 {
-	class ExLinearBrushD2D : public ExObjectBaseImpl<IExLinearBrush>
+	class ExLinearBrushD2D : public ExObjectImpl<IExLinearBrush>
 	{
 	public:
 		EX_BEGIN_INTERFACE_MAP();
@@ -25,7 +25,10 @@ namespace ExDirectUI
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
 
-			return ExString::format(L"ExLinearBrush: ");
+			return ExString::format(L"ExLinearBrushD2D(begin: %f,%f/#08X end: %f,%f/#08X)",
+				m_begin_point.x, m_begin_point.y, m_begin_color,
+				m_end_point.x, m_end_point.y, m_end_color
+			);
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

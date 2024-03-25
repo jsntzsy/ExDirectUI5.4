@@ -113,10 +113,10 @@ namespace ExDirectUI
 		//获取算法模式
 		DWORD antialias_mode = GetUtils()->GetAntialiasMode();
 		auto interpolation_mode =
-			(antialias_mode & ExAntiAliasMode::ImageHighQuality) ? D2D1_INTERPOLATION_MODE_HIGH_QUALITY_CUBIC :
-			(antialias_mode & ExAntiAliasMode::Image) ? D2D1_INTERPOLATION_MODE_LINEAR :
+			query_flags(antialias_mode, ExAntiAliasMode::ImageHighQuality) ? D2D1_INTERPOLATION_MODE_HIGH_QUALITY_CUBIC :
+			query_flags(antialias_mode, ExAntiAliasMode::Image) ? D2D1_INTERPOLATION_MODE_LINEAR :
 			D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR;
-	
+
 		//创建图像画刷
 		ExAutoPtr<ID2D1ImageBrush> brush;
 		handle_if_failed(

@@ -10,7 +10,7 @@
 
 namespace ExDirectUI
 {
-	class ExPathD2D : public ExObjectBaseImpl<IExPath>
+	class ExPathD2D : public ExObjectImpl<IExPath>
 	{
 	public:
 		EX_BEGIN_INTERFACE_MAP();
@@ -23,7 +23,9 @@ namespace ExDirectUI
 	public:
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
-			return ExString::format(L"ExPath: 0x%p", this);
+			return ExString::format(L"ExPathD2D(geometry: 0x%p, sink: 0x%p)",
+				m_geometry.Get(), m_sink.Get()
+			);
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

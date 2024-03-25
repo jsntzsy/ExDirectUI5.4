@@ -12,7 +12,7 @@
 
 namespace ExDirectUI
 {
-	class ExRenderD2D : public ExObjectBaseImpl<IExRender>,
+	class ExRenderD2D : public ExObjectImpl<IExRender>,
 		public ExLazySingleton<ExRenderD2D>
 	{
 	public:
@@ -27,7 +27,7 @@ namespace ExDirectUI
 
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
-			return L"ExRenderD2D: core: Direct2D/DWrite/ImageCodec";
+			return L"ExRenderD2D(core: Direct2D/DWrite/WindowsImageCodec)";
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

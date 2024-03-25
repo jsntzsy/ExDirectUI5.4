@@ -10,7 +10,7 @@
 
 namespace ExDirectUI
 {
-	class ExPenD2D : public ExObjectBaseImpl<IExPen>
+	class ExPenD2D : public ExObjectImpl<IExPen>
 	{
 	public:
 		EX_BEGIN_INTERFACE_MAP();
@@ -23,7 +23,9 @@ namespace ExDirectUI
 	public:
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
-			return ExString::format(L"ExPen: width: %f, dash_style: 0x%04X", m_width, m_dash_style);
+			return ExString::format(L"ExPenD2D(width: %f, dash_style: 0x%04X)",
+				m_width, m_dash_style
+			);
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

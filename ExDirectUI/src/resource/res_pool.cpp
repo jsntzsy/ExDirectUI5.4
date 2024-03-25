@@ -14,10 +14,11 @@
 #include "common/mem_pool.hpp"
 #include "common/lock.hpp"
 #include "common/auto_ptr.hpp"
+#include "common/string.hpp"
 
 namespace ExDirectUI
 {
-	class ExResPool : public ExObjectBaseImpl<IExResPool>
+	class ExResPool : public ExObjectImpl<IExResPool>
 	{
 	public:
 		EX_BEGIN_INTERFACE_MAP();
@@ -203,10 +204,9 @@ namespace ExDirectUI
 	public:
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
-			std::wstringstream ss;
-			ss << L"ExResPool: " "item_size: " << m_pool.GetBlockSize() - sizeof(ExResPoolItemHeader)
-				<< L", item_count: " << m_res.size();
-			return ss.str();
+			return ExString::format(L"ExResPool(item_size: %u, count: %u)",
+				m_pool.GetBlockSize() - sizeof(ExResPoolItemHeader), m_res.size()
+			);
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

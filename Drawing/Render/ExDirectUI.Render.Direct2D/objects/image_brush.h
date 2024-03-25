@@ -10,7 +10,7 @@
 
 namespace ExDirectUI
 {
-	class ExImageBrushD2D : public ExObjectBaseImpl<IExImageBrush>
+	class ExImageBrushD2D : public ExObjectImpl<IExImageBrush>
 	{
 	public:
 		EX_BEGIN_INTERFACE_MAP();
@@ -24,7 +24,7 @@ namespace ExDirectUI
 	public:
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
-			return ExString::format(L"ExImageBrush");
+			return ExString::format(L"ExImageBrushD2D(image: 0x%p)", m_image.Get());
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

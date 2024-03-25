@@ -11,7 +11,7 @@
 namespace ExDirectUI
 {
 
-	class ExImageD2D : public ExObjectBaseImpl<IExImage>
+	class ExImageD2D : public ExObjectImpl<IExImage>
 	{
 	public:
 		EX_BEGIN_INTERFACE_MAP();
@@ -24,7 +24,7 @@ namespace ExDirectUI
 	public:
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
-			return ExString::format(L"ExImageD2D: size: %ux%u frame: %u/%u",
+			return ExString::format(L"ExImageD2D(size: %ux%u, frame: %u/%u)",
 				m_width, m_height, m_cur_frame, GetFrameCount()
 			);
 		}

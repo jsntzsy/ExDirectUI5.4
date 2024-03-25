@@ -11,7 +11,7 @@
 namespace ExDirectUI
 {
 
-	class ExRegionD2D : public ExObjectBaseImpl<IExRegion>
+	class ExRegionD2D : public ExObjectImpl<IExRegion>
 	{
 	public:
 		EX_BEGIN_INTERFACE_MAP();
@@ -24,7 +24,7 @@ namespace ExDirectUI
 	public:
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
-			return ExString::format(L"ExRegion: 0x%p", this);
+			return ExString::format(L"ExRegionD2D(geometry: 0x%p)", m_geometry.Get());
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

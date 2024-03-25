@@ -48,10 +48,10 @@
 namespace ExDirectUI
 {
 	template<class Interface>
-	class ExObjectBaseImpl : public Interface
+	class ExObjectImpl : public Interface
 	{
 	public:
-		virtual ~ExObjectBaseImpl() {}
+		virtual ~ExObjectImpl() {}
 
 	public:
 
@@ -74,9 +74,7 @@ namespace ExDirectUI
 
 		EXMETHOD std::wstring EXOBJCALL ToString() const override 
 		{
-			wchar_t buffer[128]{};
-			swprintf_s(buffer, L"ExObject: 0x%p", this);
-			return std::wstring(buffer);
+			return L"ExObject()";
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{
@@ -93,5 +91,5 @@ namespace ExDirectUI
 		ULONG m_object_ref_count{ 1 };
 	};
 
-	using ExObjectBase = ExObjectBaseImpl<IExObject>;
+	using ExObjectBase = ExObjectImpl<IExObject>;
 }

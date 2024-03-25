@@ -105,6 +105,9 @@
     <ClCompile Include="objects\device.cpp">
       <Filter>device</Filter>
     </ClCompile>
+    <ClCompile Include="objects\canvas.cpp">
+      <Filter>canvas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -145,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="objects\device.h">
       <Filter>device</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\canvas.h">
+      <Filter>canvas</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -54,7 +54,7 @@ namespace ExDirectUI
 
 	///////////////////////
 
-	class ExFontD2D : public ExObjectBaseImpl<IExFont>
+	class ExFontD2D : public ExObjectImpl<IExFont>
 	{
 	public:
 		EX_BEGIN_INTERFACE_MAP();
@@ -68,7 +68,7 @@ namespace ExDirectUI
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
 			const auto info = m_context->info;
-			return ExString::format(L"ExFont: name: %s, size: %u, style: 0x%04X, file: 0x%08X", 
+			return ExString::format(L"ExFontD2D(name: %s, size: %u, style: 0x%04X, file: 0x%08X)", 
 				info.name, info.size, info.style, info.file_atom
 			);
 		}

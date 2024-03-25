@@ -154,7 +154,7 @@ namespace ExDirectUI
 
 	EXINTERFACE("7BBF8CF9-3257-4A3A-8409-26A9EC418221") IExCanvas : public IExRenderObject
 	{
-		EXMETHOD HRESULT EXOBJCALL CreateTarget(IExCanvasTarget * *r_target) PURE;
+		EXMETHOD HRESULT EXOBJCALL CreateTarget(uint32_t width, uint32_t height, bool copy, IExCanvasTarget * *r_target) PURE;
 		EXMETHOD HRESULT EXOBJCALL DestroyTarget(IExCanvasTarget* target) PURE;
 		EXMETHOD HRESULT EXOBJCALL SelectTarget(IExCanvasTarget* target, IExCanvasTarget** r_old_target = nullptr) PURE;
 

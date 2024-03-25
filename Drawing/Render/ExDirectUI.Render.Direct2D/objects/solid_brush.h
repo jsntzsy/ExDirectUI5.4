@@ -10,7 +10,7 @@
 
 namespace ExDirectUI
 {
-	class ExSolidBrushD2D : public ExObjectBaseImpl<IExSolidBrush>
+	class ExSolidBrushD2D : public ExObjectImpl<IExSolidBrush>
 	{
 	public:
 		EX_BEGIN_INTERFACE_MAP();
@@ -25,7 +25,7 @@ namespace ExDirectUI
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
 			EXARGB argb = Color(m_brush->GetColor());
-			return ExString::format(L"ExSolidBrush: color: 0x%08X", argb);
+			return ExString::format(L"ExSolidBrushD2D(color: #%08X)", argb);
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

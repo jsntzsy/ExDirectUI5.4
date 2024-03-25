@@ -10,7 +10,7 @@
 
 namespace ExDirectUI
 {
-	class ExBitmapDeviceD2D : public ExObjectBaseImpl<IExDevice>
+	class ExBitmapDeviceD2D : public ExObjectImpl<IExDevice>
 	{
 	public:
 		EX_BEGIN_INTERFACE_MAP();
@@ -23,7 +23,7 @@ namespace ExDirectUI
 	public:
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
-			return ExString::format(L"ExBitmapDeviceD2D");
+			return ExString::format(L"ExBitmapDeviceD2D(size: %ux%u)", m_mdc.width, m_mdc.height);
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{
@@ -52,7 +52,7 @@ namespace ExDirectUI
 
 	/////////////////////
 
-	class ExWindowDeviceD2D : public ExObjectBaseImpl<IExDevice>
+	class ExWindowDeviceD2D : public ExObjectImpl<IExDevice>
 	{
 	public:
 		EX_BEGIN_INTERFACE_MAP();
@@ -65,7 +65,8 @@ namespace ExDirectUI
 	public:
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
-			return ExString::format(L"ExWindowDeviceD2D");
+			return ExString::format(L"ExWindowDeviceD2D(window: 0x%p, size: %ux%u)",
+				m_window, m_size.cx, m_size.cy);
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{
@@ -102,7 +103,7 @@ namespace ExDirectUI
 
 	//////////////////////
 
-	class ExCompositionWindowDeviceD2D : public ExObjectBaseImpl<IExDevice>
+	class ExCompositionWindowDeviceD2D : public ExObjectImpl<IExDevice>
 	{
 	public:
 		EX_BEGIN_INTERFACE_MAP();
@@ -115,7 +116,8 @@ namespace ExDirectUI
 	public:
 		EXMETHOD std::wstring EXOBJCALL ToString() const override
 		{
-			return ExString::format(L"ExCompositionWindowDeviceD2D");
+			return ExString::format(L"ExCompositionWindowDeviceD2D(window: 0x%p, size: %ux%u)",
+				m_window, m_size.cx, m_size.cy);
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{
