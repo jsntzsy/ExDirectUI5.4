@@ -82,6 +82,8 @@ namespace ExDirectUI
 		inline long GetBottom() const { return max(top, bottom); }
 		inline long GetWidth() const { return abs(right - left); }
 		inline long GetHeight() const { return abs(bottom - top); }
+		inline long GetHorzCenter() const { return (left + right) / 2; }
+		inline long GetVertCenter() const { return (top + bottom) / 2; }
 
 		inline void Offset(long x, long y) { left += x; top += y; right += x; bottom += y; }
 		inline bool IsEmpty() const { return ::IsRectEmpty(this); }
@@ -128,6 +130,8 @@ namespace ExDirectUI
 		inline float GetBottom() const { return max(top, bottom); }
 		inline float GetWidth() const { return fabs(right - left); }
 		inline float GetHeight() const { return fabs(bottom - top); }
+		inline float GetHorzCenter() const { return (left + right) / 2; }
+		inline float GetVertCenter() const { return (top + bottom) / 2; }
 
 		inline void Offset(float x, float y) { left += x; top += y; right += x; bottom += y; }
 		inline bool IsEmpty() const { return float_eq(left, right) || float_eq(top, bottom); }

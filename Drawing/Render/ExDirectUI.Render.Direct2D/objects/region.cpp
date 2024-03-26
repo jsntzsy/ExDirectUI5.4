@@ -50,7 +50,7 @@ namespace ExDirectUI
 		throw_if_failed(
 			GetRender()->m_d2d_factory->CreateEllipseGeometry(
 				D2D1::Ellipse(
-					D2D1::Point2F((rc.left + rc.right) / 2, (rc.top + rc.bottom) / 2),
+					D2D1::Point2F(rc.GetHorzCenter(), rc.GetVertCenter()),
 					rc.Width() / 2, rc.Height() / 2
 				), &geometry
 			), L"区域几何形创建失败"
@@ -89,6 +89,20 @@ namespace ExDirectUI
 		throw_if_failed(
 			GetRender()->m_d2d_factory->CreateTransformedGeometry(
 				((ExPathD2D*)path)->m_geometry,
+				&matrix, &geometry
+			), L"区域几何形创建失败"
+		);
+
+		throw_if_failed(geometry->QueryInterface(&m_geometry), L"查询接口失败");
+	}
+	ExRegionD2D::ExRegionD2D(const IExRegion* region, const ExMatrixElements* tranform)
+	{
+		D2D1_MATRIX_3X2_F matrix = Matrix(tranform);
+
+		ExAutoPtr<ID2D1TransformedGeometry> geometry;
+		throw_if_failed(
+			GetRender()->m_d2d_factory->CreateTransformedGeometry(
+				((ExRegionD2D*)region)->m_geometry,
 				&matrix, &geometry
 			), L"区域几何形创建失败"
 		);

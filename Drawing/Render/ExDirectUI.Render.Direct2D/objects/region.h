@@ -44,6 +44,7 @@ namespace ExDirectUI
 			float radius_left_top,  float radius_right_top, 
 			float radius_right_bottom, float radius_left_bottom);
 		ExRegionD2D(const IExPath* path, const ExMatrixElements* tranform);
+		ExRegionD2D(const IExRegion* region, const ExMatrixElements* tranform);
 
 		virtual ~ExRegionD2D();
 
@@ -64,6 +65,8 @@ namespace ExDirectUI
 
 		ExAutoPtr<ID2D1Geometry> m_geometry{};
 		bool m_is_clip{ false };
+
+		friend class ExCanvasD2D;
 	};
 
 }

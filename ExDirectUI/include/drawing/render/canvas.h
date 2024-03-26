@@ -42,7 +42,7 @@ namespace ExDirectUI
 		TabStop = 0x00000080,						///< 文本格式：自定制表符宽度 (高字节表示制表符宽度)
 		NoClip = 0x00000100,						///< 文本格式：忽略裁剪
 		ExternalLeading = 0x00000200,				///< 文本格式：
-
+		//占用一个 0x00000400 的位
 		Prefix = 0x00000800,						///< 文本格式：转义前缀符 (&转义为下划线)
 		PathEllipsis = 0x00004000,					///< 文本格式：路径省略 (路径中间省略)
 		EndEllipsis = 0x00008000,					///< 文本格式：末尾省略 (末尾变为省略号)
@@ -188,7 +188,7 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL DrawRect(const IExPen* pen, float left, float top, float right, float bottom) PURE;
 		EXMETHOD HRESULT EXOBJCALL DrawEllipse(const IExPen* pen, float left, float top, float right, float bottom) PURE;
 		EXMETHOD HRESULT EXOBJCALL DrawRoundRect(const IExPen* pen, float left, float top, float right, float bottom,
-			float radius_x, float radius_y) PURE;
+			float radius) PURE;
 		EXMETHOD HRESULT EXOBJCALL DrawCustomRoundRect(const IExPen* pen, float left, float top, float right, float bottom,
 			float radius_left_top, float radius_right_top, float radius_right_bottom, float radius_left_bottom) PURE;
 		EXMETHOD HRESULT EXOBJCALL DrawPath(const IExPen* pen, const IExPath* path) PURE;
@@ -196,7 +196,7 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL FillRect(const IExBrush* brush, float left, float top, float right, float bottom) PURE;
 		EXMETHOD HRESULT EXOBJCALL FillEllipse(const IExBrush* brush, float left, float top, float right, float bottom) PURE;
 		EXMETHOD HRESULT EXOBJCALL FillRoundRect(const IExBrush* brush, float left, float top, float right, float bottom,
-			float radius_x, float radius_y) PURE;
+			float radius) PURE;
 		EXMETHOD HRESULT EXOBJCALL FillCustomRoundRect(const IExBrush* brush, float left, float top, float right, float bottom,
 			float radius_left_top, float radius_right_top, float radius_right_bottom, float radius_left_bottom) PURE;
 		EXMETHOD HRESULT EXOBJCALL FillPath(const IExBrush* brush, const IExPath* path) PURE;

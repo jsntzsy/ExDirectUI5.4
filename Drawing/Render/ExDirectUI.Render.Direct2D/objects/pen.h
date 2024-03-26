@@ -91,6 +91,8 @@ namespace ExDirectUI
 		std::vector<float> m_dashes{};
 		ExAutoPtr<IExBrush> m_brush{};
 		ExAutoPtr<ID2D1StrokeStyle> m_style{};
+
+		friend class ExCanvasD2D;
 	};
 
 }

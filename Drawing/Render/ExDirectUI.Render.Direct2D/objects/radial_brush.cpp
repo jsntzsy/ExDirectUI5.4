@@ -129,10 +129,7 @@ namespace ExDirectUI
 		m_bounds = ExRectF(left, top, right, bottom).Normalize();
 		m_brush->SetRadiusX(m_bounds.Width() / 2);
 		m_brush->SetRadiusY(m_bounds.Height() / 2);
-		m_brush->SetCenter(D2D1::Point2F(
-			(m_bounds.left + m_bounds.right),
-			(m_bounds.top + m_bounds.bottom)
-		));
+		m_brush->SetCenter(D2D1::Point2F(m_bounds.GetHorzCenter(), m_bounds.GetVertCenter()));
 		return S_OK;
 	}
 

@@ -101,6 +101,7 @@ namespace ExDirectUI
 
 	private:
 		const ExFontContextD2D* m_context;
+		friend class ExCanvasD2D;
 	};
 
 }

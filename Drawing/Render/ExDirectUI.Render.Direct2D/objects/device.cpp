@@ -9,6 +9,7 @@
 
 #include "stdafx.h"
 #include "objects/device.h"
+#include "objects/canvas.h"
 #include "render_api.h"
 
 namespace ExDirectUI
@@ -314,50 +315,49 @@ namespace ExDirectUI
 
 		try
 		{
-			////ExCanvasTargetD2D* pTarget = ((ExCanvasD2D*)pCanvasSrc)->m_pTarget;
+			ExCanvasTargetD2D* target = ((ExCanvasD2D*)canvas_src)->m_target;
 
-			////FIXME:CompositionDevice要绘制得全部绘制，否则会有闪烁和撕裂，暂不清楚原因
-			////计算真实剪辑更新区域
-			//ExRect rcClip;
-			////if (rcUpdate) rcClip = rcUpdate->Normalize();
-			///*else */rcClip = ExRect(0, 0, pTarget->m_nWidth, pTarget->m_nHeight);
+			//FIXME:CompositionDevice要绘制得全部绘制，否则会有闪烁和撕裂，暂不清楚原因
+			//计算真实剪辑更新区域
+			ExRect clip_rect;
+			/*if (update_rect) { clip_rect = update_rect->Normalize(); }
+			else*/ { clip_rect = ExRect(0, 0, target->width, target->height); }
 
-			////开始绘制
-			//if (!_ST(m_surface->BeginDraw(&rcClip, __uuidof(dcDst), (LPVOID*)&dcDst, &ptOffset)))
-			//	_ES_THROW(ES_OLE);
+			//开始绘制
+			throw_if_failed(
+				m_surface->BeginDraw(&clip_rect, __uuidof(dst_dc), (LPVOID*)&dst_dc, &offset),
+				L"开始绘制表面失败"
+			);
 
-			////设置剪辑区
-			//rcClip.Offset(ptOffset.x, ptOffset.y);
-			//dcDst->PushAxisAlignedClip(
-			//	D2D1::RectF(rcClip.left, rcClip.top, rcClip.right, rcClip.bottom),
-			//	D2D1_ANTIALIAS_MODE_PER_PRIMITIVE
-			//);
+			//设置剪辑区
+			clip_rect.Offset(offset.x, offset.y);
+			dst_dc->PushAxisAlignedClip(
+				D2D1::RectF(clip_rect.left, clip_rect.top, clip_rect.right, clip_rect.bottom),
+				D2D1_ANTIALIAS_MODE_PER_PRIMITIVE
+			);
 
-			////清除原由内容
-			//dcDst->Clear();
+			//清除原由内容
+			dst_dc->Clear();
 
-			////设置变换到偏移点
-			//dcDst->SetTransform(D2D1::Matrix3x2F::Translation(ptOffset.x, ptOffset.y));
+			//设置变换到偏移点
+			dst_dc->SetTransform(D2D1::Matrix3x2F::Translation(offset.x, offset.y));
 
-			////绘制画布目标
-			//dcDst->DrawBitmap(pTarget->m_pBitmap, NULL, alpha);
+			//绘制画布目标
+			dst_dc->DrawBitmap(target->bitmap, nullptr, alpha);
 
-			////还原剪辑区
-			//dcDst->PopAxisAlignedClip();
+			//还原剪辑区
+			dst_dc->PopAxisAlignedClip();
 
-			////结束绘制
-			//if (!_ST(m_surface->EndDraw())) _ES_THROW(ES_OLE);
+			//结束绘制
+			throw_if_failed(m_surface->EndDraw(), L"表面绘制中错误");
+			dst_dc.Release();
 
-			//SAFE_RELEASE(dcDst);
+			//把变更提交
+			throw_if_failed(m_device->Commit(), L"提交表面变更失败");
 
-			////把变更提交
-			//if (!_ST(m_device->Commit()))_ES_THROW(ES_OLE);
-
+			return S_OK;
 		}
-		catch_default({
-
-			}
-		);
+		catch_default({});
 	}
 
 

@@ -50,6 +50,10 @@ namespace ExDirectUI
 		{
 			switch (index)
 			{
+			case 0: return m_dc;
+			case 1: return m_target;
+			case 2: return m_clip_region;
+			case 3: return m_layer;
 			default: return __super::GetContext(index);
 			}
 		}
@@ -92,7 +96,7 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL DrawRect(const IExPen* pen, float left, float top, float right, float bottom) override;
 		EXMETHOD HRESULT EXOBJCALL DrawEllipse(const IExPen* pen, float left, float top, float right, float bottom) override;
 		EXMETHOD HRESULT EXOBJCALL DrawRoundRect(const IExPen* pen, float left, float top, float right, float bottom,
-			float radius_x, float radius_y) override;
+			float radius) override;
 		EXMETHOD HRESULT EXOBJCALL DrawCustomRoundRect(const IExPen* pen, float left, float top, float right, float bottom,
 			float radius_left_top, float radius_right_top, float radius_right_bottom, float radius_left_bottom) override;
 		EXMETHOD HRESULT EXOBJCALL DrawPath(const IExPen* pen, const IExPath* path) override;
@@ -100,7 +104,7 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL FillRect(const IExBrush* brush, float left, float top, float right, float bottom) override;
 		EXMETHOD HRESULT EXOBJCALL FillEllipse(const IExBrush* brush, float left, float top, float right, float bottom) override;
 		EXMETHOD HRESULT EXOBJCALL FillRoundRect(const IExBrush* brush, float left, float top, float right, float bottom,
-			float radius_x, float radius_y) override;
+			float radius) override;
 		EXMETHOD HRESULT EXOBJCALL FillCustomRoundRect(const IExBrush* brush, float left, float top, float right, float bottom,
 			float radius_left_top, float radius_right_top, float radius_right_bottom, float radius_left_bottom) override;
 		EXMETHOD HRESULT EXOBJCALL FillPath(const IExBrush* brush, const IExPath* path) override;

@@ -172,7 +172,7 @@ namespace ExDirectUI
 		float end_angle = FormatAngle(start_angle + sweep_angle_format);	//0-360
 
 		//求椭圆圆心、AB轴
-		ExPointF pt_org = ExPointF((bounds.left + bounds.right) / 2, (bounds.top + bounds.bottom) / 2);
+		ExPointF pt_org = ExPointF(bounds.GetHorzCenter(), bounds.GetVertCenter());
 		float A = bounds.Width() / 2, B = bounds.Height() / 2;
 		A *= A; B *= B;
 		float T;
