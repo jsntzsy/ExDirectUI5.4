@@ -93,6 +93,7 @@ namespace ExDirectUI
 		ExAutoPtr<ID2D1StrokeStyle> m_style{};
 
 		friend class ExCanvasD2D;
+		friend class ExTextRenderD2D;
 	};
 
 }

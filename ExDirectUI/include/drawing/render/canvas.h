@@ -84,17 +84,21 @@ namespace ExDirectUI
 		LeftTile = 0x00000002,
 		LeftMirror = 0x00000004,
 
-		TopNone = 0x00000100,
-		TopTile = 0x00000200,
-		TopMirror = 0x00000400,
+		TopNone = 0x00000010,
+		TopTile = 0x00000020,
+		TopMirror = 0x00000040,
 
-		RightNone = 0x00010000,
-		RightTile = 0x00020000,
-		RightMirror = 0x00040000,
+		RightNone = 0x00000100,
+		RightTile = 0x00000200,
+		RightMirror = 0x00000400,
 
-		BottomNone = 0x01000000,
-		BottomTile = 0x02000000,
-		BottomMirror = 0x04000000,
+		BottomNone = 0x00001000,
+		BottomTile = 0x00002000,
+		BottomMirror = 0x00004000,
+
+		CenterNone = 0x00010000,
+		CenterTile = 0x00020000,
+		CenterMirror = 0x00040000,
 
 		Default = ExGridsImageMode::Scale,
 	};

@@ -152,6 +152,9 @@
     <ClInclude Include="objects\canvas.h">
       <Filter>canvas</Filter>
     </ClInclude>
+    <ClInclude Include="objects\text_render.hpp">
+      <Filter>canvas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Module.def">

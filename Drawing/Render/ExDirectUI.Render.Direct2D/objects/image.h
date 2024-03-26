@@ -85,5 +85,6 @@ namespace ExDirectUI
 		ExAutoPtr<IWICBitmapLock> m_bitmap_lock{};
 
 		friend class ExImageBrushD2D;
+		friend class ExCanvasD2D;
 	};
 }

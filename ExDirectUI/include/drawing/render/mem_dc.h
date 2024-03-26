@@ -26,7 +26,7 @@ namespace ExDirectUI
 		HBITMAP bitmap;
 
 		///位图像素数据
-		EXBITSDATA* bits;
+		EXBITSDATA bits;
 	};
 
 	/////////////////////////////////

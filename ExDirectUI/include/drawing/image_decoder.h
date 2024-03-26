@@ -42,7 +42,7 @@ namespace ExDirectUI
 	 * @return 返回执行状态
 	 */
 	HRESULT EXAPI EXCALL ExImageCopyData(uint32_t width, uint32_t height, EXBITSDATA r_dest, const EXBITSDATA src,
-		uint32_t stride_dst, uint32_t stride_src, uint32_t left, uint32_t top);
+		uint32_t stride_dst, uint32_t stride_src, uint32_t left = 0, uint32_t top = 0);
 
 	
 }
