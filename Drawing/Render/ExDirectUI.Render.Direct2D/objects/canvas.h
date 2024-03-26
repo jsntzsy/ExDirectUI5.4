@@ -24,11 +24,6 @@ namespace ExDirectUI
 			this->width = width;
 			this->height = height;
 		}
-
-		virtual ~ExCanvasTargetD2D()
-		{
-			if (bitmap) { bitmap->Release(); }
-		}
 	};
 
 	class ExCanvasD2D : public ExObjectImpl<IExCanvas>

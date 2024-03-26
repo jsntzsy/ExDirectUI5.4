@@ -11,3 +11,11 @@
 #include "ExDirectUI.h"
 using namespace ExDirectUI;
 
+namespace ExDirectUI
+{
+	EXTERN_C HRESULT EXAPI APIENTRY ExDbgEntry(HINSTANCE instance);
+	EXTERN_C EXAPI IExModuleUtils* EXCALL ExDbgGetModuleUtils();
+
+	void APIENTRY _RenderTest_(HINSTANCE instance);
+}
+

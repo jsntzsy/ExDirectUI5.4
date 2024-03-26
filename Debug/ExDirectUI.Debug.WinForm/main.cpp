@@ -9,13 +9,6 @@
 
 #include "stdafx.h"
 
-
-namespace ExDirectUI
-{
-	EXTERN_C HRESULT EXAPI APIENTRY ExDbgEntry(HINSTANCE instance);
-	EXTERN_C EXAPI IExModuleUtils* EXCALL ExDbgGetModuleUtils();
-}
-
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
 	try {
@@ -35,7 +28,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 		HRESULT status = ExEngineInit(&eii);
 		throw_if_failed(status, L"引擎初始化失败");
 		
-		
+		_RenderTest_(hInstance);
 		status = ExDbgEntry(hInstance);
 		
 		ExEngineUnInit();

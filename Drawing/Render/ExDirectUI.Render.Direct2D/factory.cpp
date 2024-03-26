@@ -21,6 +21,7 @@
 #include "objects/radial_brush.h"
 #include "objects/image_brush.h"
 #include "objects/device.h"
+#include "objects/canvas.h"
 
 namespace ExDirectUI
 {
@@ -414,7 +415,12 @@ namespace ExDirectUI
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateCanvas(uint32_t width, uint32_t height, IExCanvas** r_canvas)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		try
+		{
+			ExAutoPtr<ExCanvasD2D> canvas = NEW ExCanvasD2D(width, height);
+			return canvas->QueryInterface(r_canvas);
+		}
+		catch_default({});
 	}
 }
 

@@ -135,7 +135,9 @@ namespace ExDirectUI
 	HRESULT EXOBJCALL ExPenD2D::SetDashArray(const float* dash_array, uint32_t count)
 	{
 		m_dashes.resize(count);
-		memcpy(m_dashes.data(), dash_array, count * sizeof(float));
+		if (dash_array && count > 0) {
+			memcpy(m_dashes.data(), dash_array, count * sizeof(float));
+		}
 		return Flush(false);
 	}
 	float EXOBJCALL ExPenD2D::GetDashOffset() const
@@ -194,8 +196,9 @@ namespace ExDirectUI
 		}
 
 		// 获取线段信息
-		float* dashes = m_dashes.size() > 0 ? m_dashes.data() : nullptr;
 		uint32_t dash_count = (uint32_t)m_dashes.size();
+		float* dashes = dash_count > 0 ? m_dashes.data() : nullptr;
+		D2D1_DASH_STYLE dash_style = dashes ? D2D1_DASH_STYLE_CUSTOM : ToDashStyle(m_dash_style);
 
 		// 重新创建描边属性
 		handle_if_failed(
@@ -206,7 +209,7 @@ namespace ExDirectUI
 					ToCapStyle(m_dash_cap),
 					ToLineJion(m_line_join),
 					m_miter_limit,
-					ToDashStyle(m_dash_style),
+					dash_style,
 					m_dash_offset
 				), dashes, dash_count, -m_style
 			), L"创建描边属性失败"

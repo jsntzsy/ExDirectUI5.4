@@ -45,7 +45,6 @@ namespace ExDirectUI
 	EXTERN_C EXAPI IExModuleUtils* EXCALL ExDbgGetModuleUtils()
 	{
 		auto utils = ExModuleUtils::Instance();
-		utils->AddRef();
 		return utils;
 	}
 	

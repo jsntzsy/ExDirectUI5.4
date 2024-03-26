@@ -1475,7 +1475,7 @@ namespace ExDirectUI
 			return S_OK;
 		}
 		catch_default({
-				if (temp_draw) { throw_if_failed(canvas_src->EndDraw(), L"绘制中出现错误"); }
+				if (temp_draw) { canvas_src->EndDraw(); }
 			}
 		);
 	}
