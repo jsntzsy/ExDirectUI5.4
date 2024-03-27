@@ -9,6 +9,8 @@
 
 #include "stdafx.h"
 
+#pragma warning(disable:4305)
+
 namespace ExDirectUI
 {
 	ExAutoPtr<IExRender> render = nullptr;
@@ -19,8 +21,9 @@ namespace ExDirectUI
 	ExAutoPtr<IExLinearBrush> linear_brush = nullptr;
 	ExAutoPtr<IExRadialBrush> radial_brush = nullptr;
 	ExAutoPtr<IExImageBrush> image_brush = nullptr;
+	EXATOM atom_fontawesome = EXATOM_UNKNOWN;
 
-	int test_part = 0;
+	int test_part = 2;
 
 	std::vector<ExRectF> _RenderTest_SplitRect(ExRectF& bounds, int rows, int cells, ExPointF min_size = {})
 	{
@@ -53,12 +56,19 @@ namespace ExDirectUI
 		render->CreatePen(COLOR_BLACK, 1, &pen);
 		render->CreateSolidBrush(COLOR_BLUE, &solid_brush);
 		render->CreateLinearBrush(0, 0, 1, 1, COLOR_WHITE, COLOR_BLACK, &linear_brush);
-		render->CreateRadialBrush(0, 0, 1, 1, 0xFF00FF00, 0x0000FF00, &radial_brush);
+		render->CreateRadialBrush(0, 0, 1, 1, 0xFF00FF00, 0xFFFF0000, &radial_brush);
 		render->CreateImageBrush(image_jpg, nullptr, ExBrushExtendMode::Default, ALPHA_OPAQUE, &image_brush);
+
+		ExData data{};
+		ExDataReadFile(_ROOT_(L"_res/font/fontawesome.ttf"), &data);
+		render->LoadFontFile(data.data, data.size, &atom_fontawesome);
+		ExDataFree(&data);
 	}
 
 	void _RenderTest_ReleaseObjects_()
 	{
+		render->UnLoadFontFile(atom_fontawesome);
+
 		image_brush.Release();
 		radial_brush.Release();
 		linear_brush.Release();
@@ -152,6 +162,238 @@ namespace ExDirectUI
 				}
 
 			}
+			//测试路径区域绘制
+			else if (test_part == 1) {
+				ExAutoPtr<IExPath> path;
+				render->CreatePath(&path);
+
+				//描述路径
+				path->BeginPath(false);
+
+#pragma region 画箭头,其中测试了move,arc2,bezier,line
+
+				// M 448 440
+				// a 16 16 0 0 1 -12.61 -6.15
+				// c -22.86-29.27-44.07-51.86 -73.32 -67
+				// C 335 352.88 301 345.59 256 344.23
+				// V 424
+				// A 16 16 0 0 1  229 435.57
+				// l -176 -168
+				// a 16 16 0 0 1 0 -23.14
+				// l 176 -168
+				// A 16 16 0 0 1 256 88
+				// v 80.36
+				// c 74.14 3.41 129.38 30.91 164.35 81.87
+				// C 449.32 292.44 464 350.9 464 424
+				// a 16 16 0 0 1-16 16
+				// Z
+				path->StartFigure(448, 440);
+				path->ArcTo2(16, 16, 0, 0, 1, -12.61, -6.15, true);
+				path->BezierTo(-22.86, -29.27, -44.07, -51.86, -73.32, -67, true);
+				path->BezierTo(335, 352.88, 301, 345.59, 256, 344.23, false);
+
+				ExPointF point;
+				path->GetCurPoint(&point);
+				path->LineTo(point.x, 424);
+
+				path->ArcTo2(16, 16, 0, 0, 1, 229, 435.57, false);
+				path->LineTo(-176, -168, true);
+				path->ArcTo2(16, 16, 0, 0, 1, 0, -23.14, true);
+				path->LineTo(176, -168, true);
+				path->ArcTo2(16, 16, 0, 0, 1, 256, 88, false);
+				path->LineTo(0, 80.36, true);
+
+				path->BezierTo(74.14, 3.41, 129.38, 30.91, 164.35, 81.87, true);
+				path->BezierTo(449.32, 292.44, 464, 350.9, 464, 424, false);
+				path->ArcTo2(16, 16, 0, 0, 1, -16, 16, true);
+
+				path->FinishFigure(true);
+#pragma endregion
+
+#pragma region 画各种线段
+
+				path->StartFigure(10, 10);
+				path->LineTo(100, 0, true);
+				path->ArcTo(0, 0, 100, 100, -90, 90, true);
+				path->ArcTo2(50, 50, 0, false, true, -25, -25, true);
+				path->LineTo(0, 150, true);
+				path->RoundTo(0, 50, -50, +50, 40, true);
+				path->CurveTo(-50, -50, -100, 0, true);
+				path->BezierTo(-50, 50, 0, 100, 50, 50, true);
+				path->FinishFigure(true);
+
+#pragma endregion
+
+#pragma region 添加各种图形
+
+				ExRectF rect = { 200,10,300,110 };
+				path->AddRect(rect.left, rect.top, rect.right, rect.bottom);
+				rect.Offset(110, 0);
+				path->AddEllipse(rect.left, rect.top, rect.right, rect.bottom);
+				rect.Offset(110, 0);
+				path->AddSuperEllipse(
+					rect.GetHorzCenter(), rect.GetVertCenter(),
+					rect.Width() / 2, rect.Height() / 2,
+					3
+				);
+				rect.Offset(110, 0);
+				path->AddRoundRect(rect.left, rect.top, rect.right, rect.bottom, 20);
+				rect.Offset(110, 0);
+				path->AddCustomRoundRect(rect.left, rect.top, rect.right, rect.bottom,
+					0, 5, 10, 20
+				);
+				rect.Offset(110, 0);
+				//path->AddPolygon
+				//path->AddText()
+
+#pragma endregion
+
+				path->EndPath();
+
+				//绘制路径
+				canvas->FillPath(solid_brush, path);
+				canvas->DrawPath(pen, path);
+			}
+			//测试绘制文本
+			else if (test_part == 2) {
+
+				ExAutoPtr<IExFont> font_default;
+				ExAutoPtr<IExFont> font_lishu;
+				ExAutoPtr<IExFont> font_bold;
+				ExAutoPtr<IExFont> font_awesome;
+
+				render->CreateFont(&font_default);
+				render->CreateFontFromName(
+					L"隶书", 30, ExFontStyle::Normal, EXATOM_UNKNOWN, &font_lishu
+				);
+				render->CreateFontFromName(nullptr, 20,
+					MAKEDWORD(ExFontStyle::CustomWeight, FW_BLACK),
+					EXATOM_UNKNOWN,
+					&font_bold
+				);
+				ExFontInfo font_info{ L"FontAwesome",40,ExFontStyle::Normal, atom_fontawesome };
+				render->CreateFontFromInfo(&font_info, &font_awesome);
+
+				//将区域分割为 5 行 3 列
+				const int padding = 10;
+				client.Inflate(-padding, -padding);
+				auto rects = _RenderTest_SplitRect(client,
+					6, 3, { 200,20 }
+				);
+
+				//绘制填充各种字体
+				for (int i = 0; i < rects.size(); i++) {
+					int mode = i % 3;
+					int type = i / 3;
+
+					auto& rect = rects[i];
+					canvas->DrawRect(pen, rect.left, rect.top, rect.right, rect.bottom);
+					rect.Inflate(-padding, -padding);
+
+					std::wstring_view text = L"Hello,World! 你好，世界！ 123.456 &*@#$\t%^()";
+
+					//普通字体
+					if (type == 0) {
+						if (mode == 1 || mode == 2) {
+							canvas->FillText(
+								solid_brush, font_default, text.data(), -1,
+								ExTextFormat::SingleLine | ExTextFormat::Center | ExTextFormat::Middle,
+								rect.left, rect.top, rect.right, rect.bottom
+							);
+						}
+						if (mode == 0 || mode == 2) {
+							canvas->StrokeText(
+								pen, font_default, text.data(), -1,
+								ExTextFormat::SingleLine | ExTextFormat::Center | ExTextFormat::Middle,
+								rect.left, rect.top, rect.right, rect.bottom
+							);
+						}
+					}
+					//隶书
+					else if (type == 1) {
+						if (mode == 1 || mode == 2) {
+							canvas->FillText(
+								linear_brush, font_lishu, text.data(), -1,
+								ExTextFormat::Center | ExTextFormat::Middle,
+								rect.left, rect.top, rect.right, rect.bottom
+							);
+						}
+						if (mode == 0 || mode == 2) {
+							canvas->StrokeText(
+								pen, font_lishu, text.data(), -1,
+								ExTextFormat::Center | ExTextFormat::Middle,
+								rect.left, rect.top, rect.right, rect.bottom
+							);
+						}
+					}
+					//自定义粗细
+					else if (type == 2) {
+						if (mode == 1 || mode == 2) {
+							canvas->FillText(
+								linear_brush, font_bold, text.data(), -1,
+								ExTextFormat::Left | ExTextFormat::Middle |
+								ExTextFormat::SingleLine | ExTextFormat::Prefix | ExTextFormat::WordEllipsis,
+								rect.left, rect.top, rect.right, rect.bottom
+							);
+						}
+						if (mode == 0 || mode == 2) {
+							canvas->StrokeText(
+								pen, font_bold, text.data(), -1,
+								ExTextFormat::Left | ExTextFormat::Middle | 
+								ExTextFormat::SingleLine | ExTextFormat::Prefix | ExTextFormat::WordEllipsis,
+								rect.left, rect.top, rect.right, rect.bottom
+							);
+						}
+					}
+					//绘制自定义字体
+					else if (type == 3) {
+						WCHAR icon = 0xf1d7;
+						if (mode == 1 || mode == 2) {
+							canvas->FillText(
+								image_brush, font_awesome,&icon,1,
+								ExTextFormat::Center | ExTextFormat::Middle | ExTextFormat::NoClip,
+								rect.left, rect.top, rect.right, rect.bottom
+							);
+						}
+						if (mode == 0 || mode == 2) {
+							canvas->StrokeText(
+								pen, font_awesome, &icon, 1,
+								ExTextFormat::Center | ExTextFormat::Middle | ExTextFormat::NoClip ,
+								rect.left, rect.top, rect.right, rect.bottom
+							);
+						}
+					}
+					//其他绘制函数
+					else if (type == 4) {
+						if (mode == 0) {
+							canvas->DrawText(solid_brush, font_default, text.data(), -1,
+								ExTextFormat::Left | ExTextFormat::Middle | ExTextFormat::SingleLine |
+								ExTextFormat::EndEllipsis,
+								rect.left, rect.top, rect.right, rect.bottom
+							);
+						}
+						else if (mode == 1) {
+							canvas->DrawTextByColor(
+								font_default, text.data(), -1,
+								ExTextFormat::Left | ExTextFormat::Middle | ExTextFormat::SingleLine |
+								ExTextFormat::EndEllipsis,
+								rect.left, rect.top, rect.right, rect.bottom,
+								COLOR_RED
+							);
+						}
+						else if (mode == 2) {
+							canvas->DrawTextEx(
+								pen, radial_brush, font_bold, text.data(), -1,
+								ExTextFormat::Left | ExTextFormat::Middle | ExTextFormat::WordBreak,
+								rect.left, rect.top, rect.right, rect.bottom
+							);
+						}
+					}
+					//绘制文本效果
+					else if (type == 5) {
+
+					}
+				}
 
 
 
@@ -160,6 +402,14 @@ namespace ExDirectUI
 
 
 
+
+
+
+			}
+			//测试绘制图像
+			else if (test_part == 3) {
+
+			}
 
 #pragma endregion
 

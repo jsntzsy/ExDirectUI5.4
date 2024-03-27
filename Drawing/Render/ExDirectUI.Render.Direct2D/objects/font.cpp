@@ -191,7 +191,13 @@ namespace ExDirectUI
 			), L"创建字体文件池失败"
 		);
 
-		//注册字体集加载器
+		//创建并注册字体文件加载器和字体集加载器
+		throw_if_failed(
+			render->m_dwrite_factory->RegisterFontFileLoader(
+				ExLazySingleton<ExFontFileLoader>::GetInstance()
+			), L"注册字体文件加载器失败"
+		);
+
 		throw_if_failed(
 			render->m_dwrite_factory->RegisterFontCollectionLoader(
 				ExLazySingleton<ExFontCollectionLoader>::GetInstance()
@@ -204,13 +210,17 @@ namespace ExDirectUI
 	{
 		ZeroMemory(m_local_name, sizeof(m_local_name));
 
-		//取消注册字体集加载器
+		//取消注册字体集加载器和字体文件加载器
 		GetRender()->m_dwrite_factory->UnregisterFontCollectionLoader(
-			ExLazySingleton<ExFontCollectionLoader>::GetInstance()
+			ExLazySingleton<ExFontCollectionLoader>::Instance()
+		);
+		GetRender()->m_dwrite_factory->UnregisterFontFileLoader(
+			ExLazySingleton<ExFontFileLoader>::Instance()
 		);
 
-		//释放字体集加载器
+		//释放字体集加载器和字体文件加载器
 		ExLazySingleton<ExFontCollectionLoader>::ClearInstance(true);
+		ExLazySingleton<ExFontFileLoader>::ClearInstance(true);
 	}
 
 	const ExFontFileContextD2D* EXOBJCALL ExFontPoolD2D::LoadFontFile(const byte_t* data, size_t size)
@@ -256,7 +266,7 @@ namespace ExDirectUI
 		{
 			//复制数据块
 			ExData data_src = { (byte_t*)data, wparam };
-			throw_if_failed(ExDataCopy(&context->data, &data_src), L"复制字体文件数据失败");
+			throw_if_failed(ExDataCopy(&data_src ,&context->data), L"复制字体文件数据失败");
 
 			//创建字体集
 			throw_if_failed(
@@ -316,7 +326,8 @@ namespace ExDirectUI
 					&context->font
 				), L"创建字体失败"
 			);
-
+			
+			context->atom = key;
 			return S_OK;
 		}
 		catch_throw({

@@ -45,7 +45,8 @@ namespace ExDirectUI
 		{
 			SetName(name, file_atom);
 		}
-		ExFontInfo(const LOGFONTW* log_font, EXATOM file_atom = EXATOM_UNKNOWN)
+		ExFontInfo(const LOGFONTW* log_font, EXATOM file_atom = EXATOM_UNKNOWN) 
+			:file_atom(EXATOM_UNKNOWN)
 		{
 			size = abs(log_font->lfHeight);
 

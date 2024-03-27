@@ -77,7 +77,9 @@ namespace ExDirectUI
 	{
 		// 判断是否正在描述路径和图形
 		handle_if_false(m_sink, EE_NOREADY, L"尚未开始描述路径");
-		handle_if_false(!m_figure_started, EE_NOREADY, L"正在描述图形");
+		
+		//如果正在描述图形,则结束它
+		if(m_figure_started) { FinishFigure(false); }	
 
 		//偏移坐标参数
 		_offset_(false, x, y);
@@ -113,7 +115,7 @@ namespace ExDirectUI
 
 		return S_OK;
 	}
-	HRESULT EXOBJCALL ExPathD2D::MoveTo(float x, float y)
+	HRESULT EXOBJCALL ExPathD2D::MoveTo(float x, float y, bool relative)
 	{
 		// 判断是否正在描述路径和图形
 		handle_if_false(m_sink, EE_NOREADY, L"尚未开始描述路径");
@@ -130,7 +132,7 @@ namespace ExDirectUI
 
 		return S_OK;
 	}
-	HRESULT EXOBJCALL ExPathD2D::LineTo(float x, float y)
+	HRESULT EXOBJCALL ExPathD2D::LineTo(float x, float y, bool relative)
 	{
 		// 判断是否正在描述路径和图形
 		handle_if_false(m_sink, EE_NOREADY, L"尚未开始描述路径");
@@ -138,6 +140,10 @@ namespace ExDirectUI
 
 		//偏移坐标参数
 		_offset_(false, x, y);
+		if (relative) {
+			x += m_cur_point.x;
+			y += m_cur_point.y;
+		}
 
 		//添加直线
 		m_sink->AddLine(D2D1::Point2F(x, y));
@@ -154,7 +160,8 @@ namespace ExDirectUI
 		return angle;
 	}
 
-	HRESULT EXOBJCALL ExPathD2D::ArcTo(float left, float top, float right, float bottom, float start_angle, float sweep_angle)
+	HRESULT EXOBJCALL ExPathD2D::ArcTo(float left, float top, float right, float bottom,
+		float start_angle, float sweep_angle, bool relative)
 	{
 		// 判断是否正在描述路径和图形
 		handle_if_false(m_sink, EE_NOREADY, L"尚未开始描述路径");
@@ -162,13 +169,22 @@ namespace ExDirectUI
 
 		//偏移坐标参数
 		_offset_(false, left, top, right, bottom);
+		if (relative) {
+			left += m_cur_point.x;
+			top += m_cur_point.y;
+			right += m_cur_point.x;
+			bottom += m_cur_point.y;
+		}
 
 		//生成规格化后的边界矩形
 		ExRectF bounds = ExRectF(left, top, right, bottom).Normalize();
 
 		start_angle = FormatAngle(start_angle);	//0-360
 		float sweep_angle_format = FormatAngle(sweep_angle);	//0-360
-		float sweep_angle_format2 = fmod(sweep_angle, 360.0F) < 0 ? 360.0F - sweep_angle_format : sweep_angle_format;	// -180 - +180
+		float sweep_angle_format2 =
+			fmod(sweep_angle, 360.0F) < 0 ?
+			360.0F - sweep_angle_format :
+			sweep_angle_format;	// -180 - +180
 		float end_angle = FormatAngle(start_angle + sweep_angle_format);	//0-360
 
 		//求椭圆圆心、AB轴
@@ -210,7 +226,8 @@ namespace ExDirectUI
 
 		return S_OK;
 	}
-	HRESULT EXOBJCALL ExPathD2D::ArcTo2(float end_x, float end_y, float radius_horz, float radius_vert, float rotate, bool clockwise, bool large_arc)
+	HRESULT EXOBJCALL ExPathD2D::ArcTo2(float radius_horz, float radius_vert, float rotate,
+		bool large_arc, bool clockwise, float end_x, float end_y, bool relative)
 	{
 		// 判断是否正在描述路径和图形
 		handle_if_false(m_sink, EE_NOREADY, L"尚未开始描述路径");
@@ -218,6 +235,10 @@ namespace ExDirectUI
 
 		//偏移坐标参数
 		_offset_(false, end_x, end_y);
+		if (relative) {
+			end_x += m_cur_point.x;
+			end_y += m_cur_point.y;
+		}
 
 		//添加弧线
 		m_sink->AddArc(
@@ -232,7 +253,8 @@ namespace ExDirectUI
 		m_cur_point = { end_x,end_y };
 		return S_OK;
 	}
-	HRESULT EXOBJCALL ExPathD2D::RoundTo(float ctrl_x, float ctrl_y, float end_x, float end_y, float radius)
+	HRESULT EXOBJCALL ExPathD2D::RoundTo(float ctrl_x, float ctrl_y, float end_x, float end_y,
+		float radius, bool relative)
 	{
 		// 判断是否正在描述路径和图形
 		handle_if_false(m_sink, EE_NOREADY, L"尚未开始描述路径");
@@ -240,6 +262,12 @@ namespace ExDirectUI
 
 		//偏移坐标参数
 		_offset_(false, ctrl_x, ctrl_y, end_x, end_y);
+		if (relative) {
+			ctrl_x += m_cur_point.x;
+			ctrl_y += m_cur_point.y;
+			end_x += m_cur_point.x;
+			end_y += m_cur_point.y;
+		}
 
 		//计算控制点到起点终点的向量
 		D2D1_POINT_2F start_vector{ ctrl_x - m_cur_point.x, ctrl_y - m_cur_point.y };
@@ -293,7 +321,8 @@ namespace ExDirectUI
 
 		return S_OK;
 	}
-	HRESULT EXOBJCALL ExPathD2D::CurveTo(float ctrl_x, float ctrl_y, float end_x, float end_y)
+	HRESULT EXOBJCALL ExPathD2D::CurveTo(float ctrl_x, float ctrl_y, float end_x, float end_y,
+		bool relative)
 	{
 		// 判断是否正在描述路径和图形
 		handle_if_false(m_sink, EE_NOREADY, L"尚未开始描述路径");
@@ -301,6 +330,12 @@ namespace ExDirectUI
 
 		//偏移坐标参数
 		_offset_(false, ctrl_x, ctrl_y, end_x, end_y);
+		if (relative) {
+			ctrl_x += m_cur_point.x;
+			ctrl_y += m_cur_point.y;
+			end_x += m_cur_point.x;
+			end_y += m_cur_point.y;
+		}
 
 		//添加二次贝塞尔曲线
 		m_sink->AddQuadraticBezier(
@@ -312,7 +347,8 @@ namespace ExDirectUI
 		m_cur_point = { end_x,end_y };
 		return S_OK;
 	}
-	HRESULT EXOBJCALL ExPathD2D::BezierTo(float ctrl1_x, float ctrl1_y, float ctrl2_x, float ctrl2_y, float end_x, float end_y)
+	HRESULT EXOBJCALL ExPathD2D::BezierTo(float ctrl1_x, float ctrl1_y, float ctrl2_x, float ctrl2_y,
+		float end_x, float end_y, bool relative)
 	{
 		// 判断是否正在描述路径和图形
 		handle_if_false(m_sink, EE_NOREADY, L"尚未开始描述路径");
@@ -320,6 +356,14 @@ namespace ExDirectUI
 
 		//偏移坐标参数
 		_offset_(false, ctrl1_x, ctrl1_y, ctrl2_x, ctrl2_y, end_x, end_y);
+		if (relative) {
+			ctrl1_x += m_cur_point.x;
+			ctrl1_y += m_cur_point.y;
+			ctrl2_x += m_cur_point.x;
+			ctrl2_y += m_cur_point.y;
+			end_x += m_cur_point.x;
+			end_y += m_cur_point.y;
+		}
 
 		//添加三次贝塞尔曲线
 		m_sink->AddBezier(

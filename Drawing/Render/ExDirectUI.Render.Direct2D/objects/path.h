@@ -50,16 +50,18 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL FinishFigure(bool close_figure) override;
 
 		EXMETHOD HRESULT EXOBJCALL GetCurPoint(ExPointF* r_point) override;
-		EXMETHOD HRESULT EXOBJCALL MoveTo(float x, float y) override;
-		EXMETHOD HRESULT EXOBJCALL LineTo(float x, float y) override;
+		EXMETHOD HRESULT EXOBJCALL MoveTo(float x, float y, bool relative) override;
+		EXMETHOD HRESULT EXOBJCALL LineTo(float x, float y, bool relative) override;
 		EXMETHOD HRESULT EXOBJCALL ArcTo(float left, float top, float right, float bottom,
-			float start_angle, float sweep_angle) override;
-		EXMETHOD HRESULT EXOBJCALL ArcTo2(float end_x, float end_y, float radius_horz, float radius_vert,
-			float rotate, bool clockwise, bool large_arc) override;
-		EXMETHOD HRESULT EXOBJCALL RoundTo(float ctrl_x, float ctrl_y, float end_x, float end_y, float radius) override;
-		EXMETHOD HRESULT EXOBJCALL CurveTo(float ctrl_x, float ctrl_y, float end_x, float end_y) override;
+			float start_angle, float sweep_angle, bool relative) override;
+		EXMETHOD HRESULT EXOBJCALL ArcTo2(float radius_horz, float radius_vert, float rotate,
+			bool large_arc, bool clockwise, float end_x, float end_y, bool relative) override;
+		EXMETHOD HRESULT EXOBJCALL RoundTo(float ctrl_x, float ctrl_y, float end_x, float end_y,
+			float radius, bool relative) override;
+		EXMETHOD HRESULT EXOBJCALL CurveTo(float ctrl_x, float ctrl_y, float end_x, float end_y,
+			bool relative) override;
 		EXMETHOD HRESULT EXOBJCALL BezierTo(float ctrl1_x, float ctrl1_y, float ctrl2_x, float ctrl2_y,
-			float end_x, float end_y) override;
+			float end_x, float end_y, bool relative) override;
 
 		EXMETHOD HRESULT EXOBJCALL AddRect(float left, float top, float right, float bottom) override;
 		EXMETHOD HRESULT EXOBJCALL AddEllipse(float left, float top, float right, float bottom) override;
