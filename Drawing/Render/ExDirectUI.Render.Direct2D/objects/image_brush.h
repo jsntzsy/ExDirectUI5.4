@@ -32,7 +32,7 @@ namespace ExDirectUI
 			{
 			case 0: return m_brush;
 			case 1: return m_image;
-			case 2: return (void*)&m_transform;
+			case 2: return (void*)&m_transform_user;
 			case 3: return (void*)&m_src_rect;
 			default: return __super::GetContext(index);
 			}
@@ -51,6 +51,7 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL GetImage(IExImage** r_image) override;
 		EXMETHOD HRESULT EXOBJCALL GetSourceRect(ExRectF* r_src_rect) const override;
 		EXMETHOD HRESULT EXOBJCALL SetImage(IExImage* image, ExRectF* src_rect = nullptr) override;
+		EXMETHOD HRESULT EXOBJCALL TransformToRect(float left, float top, float right, float bottom) override;
 
 		EXMETHOD EXCHANNEL EXOBJCALL GetOpacity() const override;
 		EXMETHOD HRESULT EXOBJCALL SetOpacity(EXCHANNEL alpha) override;
@@ -60,10 +61,11 @@ namespace ExDirectUI
 	private:
 		ExAutoPtr<ID2D1ImageBrush> m_brush;
 		ExAutoPtr<ExImageD2D> m_image;
-		D2D1_MATRIX_3X2_F m_transform{};
+		D2D1_MATRIX_3X2_F m_transform_user = D2D1::Matrix3x2F::Identity();
+		D2D1_MATRIX_3X2_F m_transform_src = D2D1::Matrix3x2F::Identity();
 		D2D1_RECT_F m_src_rect{};
 		EXCHANNEL m_opacity = ALPHA_OPAQUE;
-		ExBrushExtendMode m_extend_mode = ExBrushExtendMode::None;
+		ExBrushExtendMode m_extend_mode = ExBrushExtendMode::Default;
 	};
 
 }

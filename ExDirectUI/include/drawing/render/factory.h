@@ -43,24 +43,24 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL CreateEllipseRegion(float left, float top, float right, float bottom, IExRegion** r_region) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreatePathRegion(const IExPath* path, const ExMatrixElements* tranform, IExRegion** r_region) PURE;
 
-		EXMETHOD HRESULT EXOBJCALL CreatePenFromColor(EXARGB color, float width, IExPen** r_pen) PURE;
+		EXMETHOD HRESULT EXOBJCALL CreatePen(EXARGB color, float width, IExPen** r_pen) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreatePenFromBrush(const IExBrush* brush, float width, IExPen** r_pen) PURE;
 
-		EXMETHOD HRESULT EXOBJCALL CreateSolidBrush(EXARGB color, IExBrush** r_brush) PURE;
+		EXMETHOD HRESULT EXOBJCALL CreateSolidBrush(EXARGB color, IExSolidBrush** r_brush) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateLinearBrush(float x_begin, float y_begin, float x_end, float y_end,
-			EXARGB color_begin, EXARGB color_end, IExBrush** r_brush) PURE;
+			EXARGB color_begin, EXARGB color_end, IExLinearBrush** r_brush) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateLinearBrushEx(float x_begin, float y_begin, float x_end, float y_end,
-			ExGradientPoint* gradient_points, uint32_t count, IExBrush** r_brush) PURE;
+			ExGradientPoint* gradient_points, uint32_t count, IExLinearBrush** r_brush) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateRadialBrush(float left, float top, float right, float bottom,
-			EXARGB color_inside, EXARGB color_outside, IExBrush** r_brush) PURE;
+			EXARGB color_inside, EXARGB color_outside, IExRadialBrush** r_brush) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateRadialBrushEx(float left, float top, float right, float bottom,
-			ExGradientPoint* gradient_points, uint32_t count, IExBrush** r_brush) PURE;
+			ExGradientPoint* gradient_points, uint32_t count, IExRadialBrush** r_brush) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateImageBrush(const IExImage* image, const ExRectF* src,
-			ExBrushExtendMode extend_mode, EXCHANNEL opacity, IExBrush** r_brush) PURE;
+			ExBrushExtendMode extend_mode, EXCHANNEL opacity, IExImageBrush** r_brush) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateCanvasBrush(const IExCanvas* canvas, const ExRectF* dst,
-			DWORD extend_mode, EXCHANNEL alpha, IExBrush** r_brush) PURE;
+			DWORD extend_mode, EXCHANNEL alpha, IExCanvasBrush** r_brush) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateCanvasBrushFromTarget(const IExCanvasTarget* target, const ExRectF* dst,
-			DWORD extend_mode, EXCHANNEL alpha, IExBrush** r_brush) PURE;
+			DWORD extend_mode, EXCHANNEL alpha, IExCanvasBrush** r_brush) PURE;
 
 		EXMETHOD HRESULT EXOBJCALL RegisterEffect(const ExEffectInfo* effect_info) PURE;
 		EXMETHOD HRESULT EXOBJCALL UnRegisterEffect(EXATOM effect_id) PURE;

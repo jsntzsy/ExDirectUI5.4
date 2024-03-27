@@ -115,7 +115,7 @@ namespace ExDirectUI
 		}
 		inline ExMatrix3x2& Translate(float x, float y, bool prepend = false)
 		{
-			return Multiply(MakeTranslation(x, y), prepend);
+			return Multiply(MakeTranslate(x, y), prepend);
 		}
 		inline ExMatrix3x2& Scale(float x, float y, float org_x = 0.0f, float org_y = 0.0f, bool prepend = false)
 		{
@@ -167,7 +167,7 @@ namespace ExDirectUI
 
 	public:
 		inline static ExMatrix3x2 MakeIdentity() { return ExMatrix3x2(); }
-		inline static ExMatrix3x2 MakeTranslation(float x, float y)
+		inline static ExMatrix3x2 MakeTranslate(float x, float y)
 		{
 			return ExMatrix3x2(
 				1.0f, 0.0f,

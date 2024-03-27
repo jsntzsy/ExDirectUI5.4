@@ -292,7 +292,7 @@ namespace ExDirectUI
 		}
 		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreatePenFromColor(EXARGB color, float width, IExPen** r_pen)
+	HRESULT EXOBJCALL ExRenderD2D::CreatePen(EXARGB color, float width, IExPen** r_pen)
 	{
 		try
 		{
@@ -311,7 +311,7 @@ namespace ExDirectUI
 		}
 		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreateSolidBrush(EXARGB color, IExBrush** r_brush)
+	HRESULT EXOBJCALL ExRenderD2D::CreateSolidBrush(EXARGB color, IExSolidBrush** r_brush)
 	{
 		try
 		{
@@ -320,7 +320,8 @@ namespace ExDirectUI
 		}
 		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreateLinearBrush(float begin_x, float begin_y, float end_x, float end_y, EXARGB color_begin, EXARGB color_end, IExBrush** r_brush)
+	HRESULT EXOBJCALL ExRenderD2D::CreateLinearBrush(float begin_x, float begin_y, float end_x, float end_y, 
+		EXARGB color_begin, EXARGB color_end, IExLinearBrush** r_brush)
 	{
 		try
 		{
@@ -329,7 +330,8 @@ namespace ExDirectUI
 		}
 		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreateLinearBrushEx(float begin_x, float begin_y, float end_x, float end_y, ExGradientPoint* gradient_points, uint32_t count, IExBrush** r_brush)
+	HRESULT EXOBJCALL ExRenderD2D::CreateLinearBrushEx(float begin_x, float begin_y, float end_x, float end_y,
+		ExGradientPoint* gradient_points, uint32_t count, IExLinearBrush** r_brush)
 	{
 		CHECK_PARAM(gradient_points && count >= 2);
 
@@ -340,7 +342,8 @@ namespace ExDirectUI
 		}
 		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreateRadialBrush(float left, float top, float right, float bottom, EXARGB color_inside, EXARGB color_outside, IExBrush** r_brush)
+	HRESULT EXOBJCALL ExRenderD2D::CreateRadialBrush(float left, float top, float right, float bottom, 
+		EXARGB color_inside, EXARGB color_outside, IExRadialBrush** r_brush)
 	{
 		try
 		{
@@ -349,7 +352,8 @@ namespace ExDirectUI
 		}
 		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreateRadialBrushEx(float left, float top, float right, float bottom, ExGradientPoint* gradient_points, uint32_t count, IExBrush** r_brush)
+	HRESULT EXOBJCALL ExRenderD2D::CreateRadialBrushEx(float left, float top, float right, float bottom,
+		ExGradientPoint* gradient_points, uint32_t count, IExRadialBrush** r_brush)
 	{
 		CHECK_PARAM(gradient_points && count >= 2);
 
@@ -361,7 +365,7 @@ namespace ExDirectUI
 		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateImageBrush(const IExImage* image, const ExRectF* src,
-		ExBrushExtendMode extend_mode, EXCHANNEL opacity, IExBrush** r_brush)
+		ExBrushExtendMode extend_mode, EXCHANNEL opacity, IExImageBrush** r_brush)
 	{
 		CHECK_PARAM(image);
 
@@ -373,11 +377,12 @@ namespace ExDirectUI
 		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateCanvasBrush(const IExCanvas* canvas, const ExRectF* dst, DWORD extend_mode, 
-		EXCHANNEL alpha, IExBrush** r_brush)
+		EXCHANNEL alpha, IExCanvasBrush** r_brush)
 	{
 		handle_ex(E_NOTIMPL, L"尚未实现");
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreateCanvasBrushFromTarget(const IExCanvasTarget* target, const ExRectF* dst, DWORD extend_mode, EXCHANNEL alpha, IExBrush** r_brush)
+	HRESULT EXOBJCALL ExRenderD2D::CreateCanvasBrushFromTarget(const IExCanvasTarget* target, const ExRectF* dst,
+		DWORD extend_mode, EXCHANNEL alpha, IExCanvasBrush** r_brush)
 	{
 		handle_ex(E_NOTIMPL, L"尚未实现");
 	}

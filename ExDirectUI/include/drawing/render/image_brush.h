@@ -16,6 +16,7 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL GetImage(IExImage * *r_image) PURE;
 		EXMETHOD HRESULT EXOBJCALL GetSourceRect(ExRectF* r_src_rect) const PURE;
 		EXMETHOD HRESULT EXOBJCALL SetImage(IExImage* image, ExRectF* src_rect = nullptr) PURE;
+		EXMETHOD HRESULT EXOBJCALL TransformToRect(float left, float top, float right, float bottom) PURE;
 
 		EXMETHOD EXCHANNEL EXOBJCALL GetOpacity() const PURE;
 		EXMETHOD HRESULT EXOBJCALL SetOpacity(EXCHANNEL alpha) PURE;

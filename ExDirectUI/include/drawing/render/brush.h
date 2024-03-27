@@ -13,9 +13,11 @@ namespace ExDirectUI
 	/// 画刷扩展模式
 	EXENUM(ExBrushExtendMode)
 	{
-		None = 0,				///< 画刷扩展模式：不扩展
-		Tile = 1,				///< 画刷扩展模式：平铺
-		Mirror = 2,				///< 画刷扩展模式：镜像平铺
+		None = 0,								///< 画刷扩展模式：不扩展
+		Tile = 1,								///< 画刷扩展模式：平铺
+		Mirror = 2,								///< 画刷扩展模式：镜像平铺
+
+		Default = ExBrushExtendMode::Tile,		///< 画刷扩展模式：默认
 	};
 
 	/// 渲染渐变点信息

@@ -85,7 +85,8 @@ namespace ExDirectUI
 		inline long GetHorzCenter() const { return (left + right) / 2; }
 		inline long GetVertCenter() const { return (top + bottom) / 2; }
 
-		inline void Offset(long x, long y) { left += x; top += y; right += x; bottom += y; }
+		inline ExRect& Offset(long x, long y) { left += x; top += y; right += x; bottom += y; return *this; }
+		inline ExRect& Inflate(long x, long y) { left -= x; top -= y; right += x; bottom += y; return *this; }
 		inline bool IsEmpty() const { return ::IsRectEmpty(this); }
 		inline bool PtInRect(long x, long y) const { return ::PtInRect(this, POINT{ x,y }); }
 
@@ -133,7 +134,8 @@ namespace ExDirectUI
 		inline float GetHorzCenter() const { return (left + right) / 2; }
 		inline float GetVertCenter() const { return (top + bottom) / 2; }
 
-		inline void Offset(float x, float y) { left += x; top += y; right += x; bottom += y; }
+		inline ExRectF& Offset(float x, float y) { left += x; top += y; right += x; bottom += y; return *this; }
+		inline ExRectF& Inflate(float x, float y) { left -= x; top -= y; right += x; bottom += y; return *this; }
 		inline bool IsEmpty() const { return float_eq(left, right) || float_eq(top, bottom); }
 		inline bool PtInRect(float x, float y) const { return x >= left && x <= top && y >= top && y <= bottom; }
 

@@ -82,12 +82,12 @@ namespace ExDirectUI
 		ExAutoPtr<ID2D1LinearGradientBrush> m_brush;
 		std::vector<ExGradientPoint> m_gradient_points;
 
-		D2D1_MATRIX_3X2_F m_transform{};
+		D2D1_MATRIX_3X2_F m_transform = D2D1::Matrix3x2F::Identity();
 		D2D1_POINT_2F m_begin_point{};
 		D2D1_POINT_2F m_end_point{};
 		EXARGB m_begin_color = COLOR_UNDEFINE;
 		EXARGB m_end_color = COLOR_UNDEFINE;
-		ExBrushExtendMode m_extend_mode = ExBrushExtendMode::None;
+		ExBrushExtendMode m_extend_mode = ExBrushExtendMode::Default;
 		bool m_gamma = false;
 	};
 

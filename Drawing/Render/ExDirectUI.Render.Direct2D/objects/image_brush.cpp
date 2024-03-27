@@ -35,13 +35,13 @@ namespace ExDirectUI
 	HRESULT EXOBJCALL ExImageBrushD2D::GetTransform(ExMatrixElements* r_tranform) const
 	{
 		CHECK_PARAM(r_tranform);
-		*r_tranform = Matrix(m_transform);
+		*r_tranform = Matrix(m_transform_user);
 		return S_OK;
 	}
 	HRESULT EXOBJCALL ExImageBrushD2D::SetTransform(const ExMatrixElements* tranform)
 	{
-		m_transform = Matrix(tranform);
-		m_brush->SetTransform(m_transform);
+		m_transform_user = Matrix(tranform);
+		m_brush->SetTransform(m_transform_src * m_transform_user);
 		return S_OK;
 	}
 	HRESULT EXOBJCALL ExImageBrushD2D::GetExtendMode(ExBrushExtendMode* r_mode) const
@@ -88,7 +88,22 @@ namespace ExDirectUI
 			m_src_rect.bottom = (float)m_image->GetHeight();
 		}
 		m_brush->SetSourceRectangle(&m_src_rect);
+		m_brush->GetTransform(&m_transform_src);
 
+		return S_OK;
+	}
+
+	HRESULT EXOBJCALL ExImageBrushD2D::TransformToRect(float left, float top, float right, float bottom)
+	{
+		ExRectF dst_rect = ExRectF(left, top, right, bottom).Normalize();
+		float scale_x = dst_rect.Width() / m_image->GetWidth();
+		float scale_y = dst_rect.Height() / m_image->GetHeight();
+
+		ExMatrix3x2 transform;
+		transform.Scale(scale_x, scale_y).Translate(left, top);
+
+		m_transform_user = Matrix(ExMatrix3x2::MakeScale(scale_x, scale_y).Translate(left, top));
+		m_brush->SetTransform(m_transform_src * m_transform_user);
 		return S_OK;
 	}
 
@@ -130,10 +145,8 @@ namespace ExDirectUI
 		);
 
 		//应用矩阵变换
-		if (!IsIdentityMatrix(m_transform)) {
-			D2D1::Matrix3x2F mx;
-			brush->GetTransform(&mx);
-			brush->SetTransform(mx * m_transform);
+		if (!IsIdentityMatrix(m_transform_user)) {
+			brush->SetTransform(m_transform_src * m_transform_user);
 		}
 
 		//替换成员变量

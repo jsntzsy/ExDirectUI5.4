@@ -11,6 +11,8 @@
 #include "ExDirectUI.h"
 using namespace ExDirectUI;
 
+#define _ROOT_(path)	(L"../../../../" path)
+
 namespace ExDirectUI
 {
 	EXTERN_C HRESULT EXAPI APIENTRY ExDbgEntry(HINSTANCE instance);

@@ -190,7 +190,7 @@ namespace ExDirectUI
 
 		// 重新创建画刷
 		if (recreate_brush && m_color != COLOR_UNDEFINE) {
-			ExAutoPtr<IExBrush> brush;
+			ExAutoPtr<IExSolidBrush> brush;
 			handle_if_failed(render->CreateSolidBrush(m_color, &brush), L"创建画刷失败");
 			handle_if_failed(brush->QueryInterface(-m_brush), L"查询画刷接口失败");
 		}
