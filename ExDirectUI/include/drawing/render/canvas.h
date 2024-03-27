@@ -54,6 +54,7 @@ namespace ExDirectUI
 		Vertical = 0x00200000						///< 文本格式：垂直显示
 	};
 
+	//TODO:此处需要修改，还原为值模式（非组合模式），防止出现传一个方向，另外一个方向没传导致报错
 	EXENUM(ExImageMode)
 	{
 		Left = 0x00000001,
@@ -232,12 +233,12 @@ namespace ExDirectUI
 
 		EXMETHOD HRESULT EXOBJCALL DrawImage(const IExImage* image, float left, float top, EXCHANNEL alpha = ALPHA_OPAQUE) PURE;
 		EXMETHOD HRESULT EXOBJCALL DrawImageRect(const IExImage* image, float left, float top, float right, float bottom,
-			ExImageMode mode = ExImageMode::Default, EXCHANNEL alpha = ALPHA_OPAQUE) PURE;
+			DWORD mode = ExImageMode::Default, EXCHANNEL alpha = ALPHA_OPAQUE) PURE;
 		EXMETHOD HRESULT EXOBJCALL DrawImagePart(const IExImage* image, float left, float top,
 			float src_left, float src_top, float src_right, float src_bottom, EXCHANNEL alpha = ALPHA_OPAQUE) PURE;
 		EXMETHOD HRESULT EXOBJCALL DrawImagePartRect(const IExImage* image, float left, float top, float right, float bottom,
 			float src_left, float src_top, float src_right, float src_bottom,
-			ExImageMode mode = ExImageMode::Default, EXCHANNEL alpha = ALPHA_OPAQUE) PURE;
+			DWORD mode = ExImageMode::Default, EXCHANNEL alpha = ALPHA_OPAQUE) PURE;
 
 		EXMETHOD HRESULT EXOBJCALL DrawGridsImage(const IExImage* image, float left, float top, float right, float bottom,
 			ExGridsImageInfo* grids, EXCHANNEL alpha = ALPHA_OPAQUE) PURE;

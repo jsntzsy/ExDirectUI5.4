@@ -1137,7 +1137,7 @@ namespace ExDirectUI
 		return OnDrawImage(bitmap, dst_rect, src_rect, ExImageMode::Default, alpha);
 	}
 	HRESULT EXOBJCALL ExCanvasD2D::DrawImageRect(const IExImage* image, float left, float top,
-		float right, float bottom, ExImageMode mode, EXCHANNEL alpha)
+		float right, float bottom, DWORD mode, EXCHANNEL alpha)
 	{
 		CHECK_PARAM(image);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
@@ -1174,7 +1174,8 @@ namespace ExDirectUI
 		return OnDrawImage(bitmap, dst_rect, src_rect, ExImageMode::Default, alpha);
 	}
 	HRESULT EXOBJCALL ExCanvasD2D::DrawImagePartRect(const IExImage* image, float left, float top,
-		float right, float bottom, float src_left, float src_top, float src_right, float src_bottom, ExImageMode mode, EXCHANNEL alpha)
+		float right, float bottom, float src_left, float src_top, float src_right, float src_bottom,
+		DWORD mode, EXCHANNEL alpha)
 	{
 		CHECK_PARAM(image);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
@@ -1484,7 +1485,7 @@ namespace ExDirectUI
 		handle_ex(E_NOTIMPL, L"尚未实现");
 	}
 	HRESULT EXOBJCALL ExCanvasD2D::OnDrawImage(ID2D1Bitmap* bitmap, ExRectF& dst_rect, ExRectF& src_rect,
-		ExImageMode mode, EXCHANNEL alpha, D2D1_INTERPOLATION_MODE interpolation)
+		DWORD mode, EXCHANNEL alpha, D2D1_INTERPOLATION_MODE interpolation)
 	{
 		//如果源矩形或目标矩形为空,则不绘制
 		if (dst_rect.IsEmpty() || src_rect.IsEmpty() || alpha == ALPHA_TRANSPARENT) { return S_FALSE; }

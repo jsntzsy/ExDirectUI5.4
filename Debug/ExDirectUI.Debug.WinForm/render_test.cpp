@@ -16,6 +16,12 @@ namespace ExDirectUI
 	ExAutoPtr<IExRender> render = nullptr;
 	ExAutoPtr<IExCanvas> canvas = nullptr;
 	ExAutoPtr<IExImage> image_jpg = nullptr;
+	ExAutoPtr<IExImage> image_png = nullptr;
+	ExAutoPtr<IExImage> image_apng = nullptr;
+	ExAutoPtr<IExImage> image_gif = nullptr;
+	ExAutoPtr<IExImage> image_button = nullptr;
+	ExAutoPtr<IExImage> image_shadow = nullptr;
+	ExAutoPtr<IExImage> image_icon = nullptr;
 	ExAutoPtr<IExPen> pen = nullptr;
 	ExAutoPtr<IExSolidBrush> solid_brush = nullptr;
 	ExAutoPtr<IExLinearBrush> linear_brush = nullptr;
@@ -23,7 +29,14 @@ namespace ExDirectUI
 	ExAutoPtr<IExImageBrush> image_brush = nullptr;
 	EXATOM atom_fontawesome = EXATOM_UNKNOWN;
 
-	int test_part = 1;
+	enum _TestPartValues {
+		FIGURE,
+		PATH,
+		TEXT,
+		IMAGE,
+	};
+	
+	_TestPartValues test_part = IMAGE;
 
 	std::vector<ExRectF> _RenderTest_SplitRect(ExRectF& bounds, int rows, int cells, ExPointF min_size = {})
 	{
@@ -59,7 +72,21 @@ namespace ExDirectUI
 		render->CreateRadialBrush(0, 0, 1, 1, 0xFF00FF00, 0xFFFF0000, &radial_brush);
 		render->CreateImageBrush(image_jpg, nullptr, ExBrushExtendMode::Default, ALPHA_OPAQUE, &image_brush);
 
+		render->CreateImageFromFile(_ROOT_(L"_res/1.png"), &image_png);
+		render->CreateImageFromFile(_ROOT_(L"_res/apng/ball.a.png"), &image_apng);
+		render->CreateImageFromFile(_ROOT_(L"_res/1.gif"), &image_gif);
+		render->CreateImageFromFile(_ROOT_(L"_res/button.png"), &image_button);
+		render->CreateImageFromFile(_ROOT_(L"_res/shadow.png"), &image_shadow);
+
 		ExData data{};
+		ExDataReadFile(_ROOT_(L"_res/icon/1.ico"), &data);
+		HICON icon = NULL;
+		ExImageLoadObject(data.data, data.size, IMAGE_ICON, 0, (HGDIOBJ*)&icon);
+		ExDataFree(&data);
+		render->CreateImageFromHICON(icon, &image_icon);
+		DestroyIcon(icon);
+
+
 		ExDataReadFile(_ROOT_(L"_res/font/fontawesome.ttf"), &data);
 		render->LoadFontFile(data.data, data.size, &atom_fontawesome);
 		ExDataFree(&data);
@@ -69,12 +96,19 @@ namespace ExDirectUI
 	{
 		render->UnLoadFontFile(atom_fontawesome);
 
+		image_png.Release();
+		image_apng.Release();
+		image_gif.Release();
+		image_button.Release();
+		image_shadow.Release();
+		image_jpg.Release();
+		image_icon.Release();
+
 		image_brush.Release();
 		radial_brush.Release();
 		linear_brush.Release();
 		solid_brush.Release();
 		pen.Release();
-		image_jpg.Release();
 		canvas.Release();
 		render.Release();
 	}
@@ -94,7 +128,7 @@ namespace ExDirectUI
 #pragma region 绘制测试代码
 
 			//测试基本图形绘制和填充
-			if (test_part == 0) {
+			if (test_part == FIGURE) {
 
 				//将区域分割为 3 行 4 列
 				const int padding = 10;
@@ -163,7 +197,7 @@ namespace ExDirectUI
 
 			}
 			//测试路径区域绘制
-			else if (test_part == 1) {
+			else if (test_part == PATH) {
 				ExAutoPtr<IExPath> path;
 				render->CreatePath(&path);
 
@@ -247,13 +281,13 @@ namespace ExDirectUI
 				std::vector<ExPointF> points;
 				points.push_back({ 100,0 });
 				points.push_back({ 150,50 });
-				points.push_back({ 100,25});
+				points.push_back({ 100,25 });
 				points.push_back({ 50,75 });
 				points.push_back({ 0,45 });
 				for (auto& pt : points) { pt.Offset(rect.left, rect.top); }
-				path->AddPolygon(points.data(), points.size(), true);
-				
-				
+				path->AddPolygon(points.data(), (uint32_t)points.size(), true);
+
+
 				ExAutoPtr<IExFont> font;
 				render->CreateFontFromName(
 					L"微软雅黑", 50, ExFontStyle::Normal, EXATOM_UNKNOWN, &font
@@ -274,7 +308,7 @@ namespace ExDirectUI
 				canvas->DrawPath(pen, path);
 			}
 			//测试绘制文本
-			else if (test_part == 2) {
+			else if (test_part == TEXT) {
 
 				ExAutoPtr<IExFont> font_default;
 				ExAutoPtr<IExFont> font_lishu;
@@ -358,7 +392,7 @@ namespace ExDirectUI
 						if (mode == 0 || mode == 2) {
 							canvas->StrokeText(
 								pen, font_bold, text.data(), -1,
-								ExTextFormat::Left | ExTextFormat::Middle | 
+								ExTextFormat::Left | ExTextFormat::Middle |
 								ExTextFormat::SingleLine | ExTextFormat::Prefix | ExTextFormat::WordEllipsis,
 								rect.left, rect.top, rect.right, rect.bottom
 							);
@@ -369,7 +403,7 @@ namespace ExDirectUI
 						WCHAR icon = 0xf1d7;
 						if (mode == 1 || mode == 2) {
 							canvas->FillText(
-								image_brush, font_awesome,&icon,1,
+								image_brush, font_awesome, &icon, 1,
 								ExTextFormat::Center | ExTextFormat::Middle | ExTextFormat::NoClip,
 								rect.left, rect.top, rect.right, rect.bottom
 							);
@@ -377,7 +411,7 @@ namespace ExDirectUI
 						if (mode == 0 || mode == 2) {
 							canvas->StrokeText(
 								pen, font_awesome, &icon, 1,
-								ExTextFormat::Center | ExTextFormat::Middle | ExTextFormat::NoClip ,
+								ExTextFormat::Center | ExTextFormat::Middle | ExTextFormat::NoClip,
 								rect.left, rect.top, rect.right, rect.bottom
 							);
 						}
@@ -426,7 +460,83 @@ namespace ExDirectUI
 
 			}
 			//测试绘制图像
-			else if (test_part == 3) {
+			else if (test_part == IMAGE) {
+
+				//将区域分割为 4 行 4 列
+				const int padding = 10;
+				client.Inflate(-padding, -padding);
+				auto rects = _RenderTest_SplitRect(client,
+					4, 4, { 100,100 }
+				);
+
+				//画一个浅浅的背景
+				canvas->DrawImageRect(
+					image_gif ,_expand_rect_(client),
+					ExImageMode::Mirror, 100
+				);
+
+				for (int i = 0; i < rects.size(); i++) {
+
+					int x = i % 4;
+					int y = i / 4;
+
+					auto& rect = rects[i];
+					canvas->DrawRect(pen, rect.left, rect.top, rect.right, rect.bottom);
+					//rect.Inflate(-padding, -padding);
+
+					//画8个角或居中
+					if (x <= 2 && y <= 2) {
+
+						DWORD mode = ((int)pow(2, x)) | (((int)pow(2, y)) << 4);
+
+						canvas->DrawImageRect(
+							image_png, _expand_rect_(rect),
+							mode, 255
+						);
+					}
+					else if (x == 3 && y <= 2) {
+						const ExImageMode modes[] = {
+							ExImageMode::Scale,
+							ExImageMode::ScaleCenter,
+							ExImageMode::ScaleFill
+						};
+							
+						canvas->DrawImageRect(
+							image_gif, _expand_rect_(rect),
+							modes[y]
+						);
+
+						canvas->DrawImageRect(
+							image_apng, _expand_rect_(rect),
+							modes[y]
+						);
+
+					}
+					else if (y == 3 && x<= 2) {
+						rect.Inflate(-padding, -padding);
+						ExRectF src_rect[3] = {
+							{0,0,69,24},
+							{0,24,69,48},
+							{0,48,69,72},
+						};
+						
+						ExGridsImageInfo grids{ 5 };
+						
+						canvas->DrawGridsImagePart(
+							image_button, _expand_rect_(rect),
+							_expand_rect_(src_rect[x]),
+							&grids, 200
+						);
+						
+						
+					}
+					else if (x == 3 && y == 3) {
+						canvas->DrawImageRect(
+							image_icon, _expand_rect_(rect),
+							ExImageMode::Center
+						);
+					}
+				}
 
 			}
 
@@ -458,9 +568,15 @@ namespace ExDirectUI
 		case WM_CREATE:
 			render = ExDbgGetModuleUtils()->GetRender();
 			_RenderTest_InitObjects_();
+			if (test_part == IMAGE) {
+				SetTimer(window, 101, 100, nullptr);
+			}
 			break;
 		case WM_DESTROY:
 			_RenderTest_ReleaseObjects_();
+			if (test_part == IMAGE) {
+				KillTimer(window, 101);
+			}
 			PostQuitMessage(0);
 			break;
 		case WM_SIZE:
@@ -472,6 +588,17 @@ namespace ExDirectUI
 			if (dc) {
 				_RenderTest_Paint_(ps);
 				EndPaint(window, &ps);
+			}
+		}break;
+		case WM_TIMER: {
+			if (wparam == 101) {
+				uint32_t delay = 0;
+				image_apng->NextFrame();
+				image_gif->NextFrame(nullptr,&delay);
+				InvalidateRect(window, nullptr, false);
+				
+				KillTimer(window, 101);
+				SetTimer(window, 101, delay, nullptr);
 			}
 		}break;
 		default: goto ON_DEFAULT_MESSAGE;

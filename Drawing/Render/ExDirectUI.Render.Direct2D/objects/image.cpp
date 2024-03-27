@@ -145,7 +145,7 @@ namespace ExDirectUI
 		);
 
 		//设置成员
-		throw_if_failed(m_wic_bitmap->GetSize(&m_width, &m_height), L"获取图像尺寸失败");
+		throw_if_failed(wic_bitmap->GetSize(&m_width, &m_height), L"获取图像尺寸失败");
 		m_wic_bitmap = wic_bitmap;
 		m_cur_frame = 0;
 
@@ -154,15 +154,37 @@ namespace ExDirectUI
 	}
 	ExImageD2D::ExImageD2D(HICON icon)
 	{
-		//创建WIC位图
+		auto render = GetRender();
+		
+		//通过HICON创建WIC位图
 		ExAutoPtr<IWICBitmap> wic_bitmap;
 		throw_if_failed(
-			GetRender()->m_wic_factory->CreateBitmapFromHICON(icon, &wic_bitmap),
+			render->m_wic_factory->CreateBitmapFromHICON(icon, &wic_bitmap),
 			L"创建WIC位图失败"
 		);
 
+		//创建像素格式转换器并初始化
+		ExAutoPtr<IWICFormatConverter> converter;
+		throw_if_failed(
+			render->m_wic_factory->CreateFormatConverter(&converter),
+			L"创建像素格式转换器失败"
+		);
+		throw_if_failed(
+			converter->Initialize(wic_bitmap, GUID_WICPixelFormat32bppPBGRA,
+				WICBitmapDitherTypeNone, nullptr, 0,
+				WICBitmapPaletteTypeCustom
+			), L"初始化像素格式转换器失败"
+		);
+
+		//创建符合像素格式要求的WIC位图
+		throw_if_failed(
+			render->m_wic_factory->CreateBitmapFromSource(converter,
+				WICBitmapCacheOnDemand, &wic_bitmap),
+			L"创建WIC位图对象失败"
+		);
+
 		//设置成员
-		throw_if_failed(m_wic_bitmap->GetSize(&m_width, &m_height), L"获取图像尺寸失败");
+		throw_if_failed(wic_bitmap->GetSize(&m_width, &m_height), L"获取图像尺寸失败");
 		m_wic_bitmap = wic_bitmap;
 		m_cur_frame = 0;
 
@@ -393,7 +415,7 @@ namespace ExDirectUI
 		UINT frame_size = 0;
 		EXBITSDATA frame_data = nullptr;
 		handle_if_failed(lock->GetDataPointer(&frame_size, &frame_data), L"获取图像数据失败");
-		memcpy(frame_data, pixel, sizeof(color));
+		CopyMemory(frame_data, pixel, sizeof(color));
 
 		//解锁并刷新
 		lock.Release();

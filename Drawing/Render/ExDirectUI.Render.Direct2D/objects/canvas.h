@@ -131,12 +131,12 @@ namespace ExDirectUI
 
 		EXMETHOD HRESULT EXOBJCALL DrawImage(const IExImage* image, float left, float top, EXCHANNEL alpha = ALPHA_OPAQUE) override;
 		EXMETHOD HRESULT EXOBJCALL DrawImageRect(const IExImage* image, float left, float top, float right, float bottom,
-			ExImageMode mode = ExImageMode::Default, EXCHANNEL alpha = ALPHA_OPAQUE) override;
+			DWORD mode = ExImageMode::Default, EXCHANNEL alpha = ALPHA_OPAQUE) override;
 		EXMETHOD HRESULT EXOBJCALL DrawImagePart(const IExImage* image, float left, float top,
 			float src_left, float src_top, float src_right, float src_bottom, EXCHANNEL alpha = ALPHA_OPAQUE) override;
 		EXMETHOD HRESULT EXOBJCALL DrawImagePartRect(const IExImage* image, float left, float top, float right, float bottom,
 			float src_left, float src_top, float src_right, float src_bottom,
-			ExImageMode mode = ExImageMode::Default, EXCHANNEL alpha = ALPHA_OPAQUE) override;
+			DWORD mode = ExImageMode::Default, EXCHANNEL alpha = ALPHA_OPAQUE) override;
 
 		EXMETHOD HRESULT EXOBJCALL DrawGridsImage(const IExImage* image, float left, float top, float right, float bottom,
 			ExGridsImageInfo* grids, EXCHANNEL alpha = ALPHA_OPAQUE) override;
@@ -159,7 +159,7 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL DrawEffect(const IExEffect* effect, float left, float top, LPARAM param = NULL) override;
 
 	private:
-		HRESULT EXOBJCALL OnDrawImage(ID2D1Bitmap* bitmap, ExRectF& dst_rect, ExRectF& src_rect, ExImageMode mode,
+		HRESULT EXOBJCALL OnDrawImage(ID2D1Bitmap* bitmap, ExRectF& dst_rect, ExRectF& src_rect, DWORD mode,
 			EXCHANNEL alpha, D2D1_INTERPOLATION_MODE interpolation = D2D1_INTERPOLATION_MODE_FORCE_DWORD);
 		static IDWriteTextLayout* EXOBJCALL MakeTextLayout(const IExFont* font, LPCWSTR text, uint32_t text_length,
 			ExRectF rect, DWORD text_format) MAYTHROW;

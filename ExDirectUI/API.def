@@ -39,6 +39,7 @@ EXPORTS
 		ExImageCopyData
 	;渲染器
 		;图像
+			ExImageLoadObject
 			ExImageCreate
 			ExImageCreateFromBitsData
 			ExImageCreateFromFile
