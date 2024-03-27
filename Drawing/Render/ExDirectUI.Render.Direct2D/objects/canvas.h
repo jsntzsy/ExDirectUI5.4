@@ -179,6 +179,7 @@ namespace ExDirectUI
 		friend class ExTextRenderD2D;
 		friend class ExCompositionWindowDeviceD2D;
 		friend class ExEffectD2D;
+		friend class ExPathD2D;
 	};
 
 }

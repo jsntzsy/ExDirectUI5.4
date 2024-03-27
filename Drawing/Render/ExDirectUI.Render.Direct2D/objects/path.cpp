@@ -9,6 +9,8 @@
 
 #include "stdafx.h"
 #include "objects/path.h"
+#include "objects/canvas.h"
+#include "objects/text_render.hpp"
 
 namespace ExDirectUI
 {
@@ -530,9 +532,37 @@ namespace ExDirectUI
 
 		return S_OK;
 	}
-	HRESULT EXOBJCALL ExPathD2D::AddText(const IExFont* font, LPCWSTR text, int len, DWORD text_format, float left, float top, float right, float bottom)
+	HRESULT EXOBJCALL ExPathD2D::AddText(const IExFont* font, LPCWSTR text, uint32_t text_length,
+		DWORD text_format, float left, float top, float right, float bottom)
 	{
-		handle_ex(E_NOTIMPL, L"暂未实现");
+		CHECK_PARAM(font);
+		CHECK_PARAM(text);
+
+		// 判断是否正在描述路径
+		handle_if_false(m_sink, EE_NOREADY, L"尚未开始描述路径");
+
+		// 如果正在描述图形,则结束它
+		if (m_figure_started) { FinishFigure(false); }
+
+		try
+		{
+			auto render = GetRender();
+
+			ExAutoPtr<IDWriteTextLayout> layout =
+				ExCanvasD2D::MakeTextLayout(font, text, text_length,
+				ExRectF(left, top, right, bottom), text_format
+			);
+
+			ExAutoPtr<ExTextFigureBuilderD2D> builder =
+				NEW ExTextFigureBuilderD2D(render->m_d2d_factory, m_sink);
+			
+			throw_if_failed(
+				layout->Draw(nullptr, builder, left, top),
+				L"生成文本轮廓失败"
+			);
+			return S_OK;
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExPathD2D::HitTest(float x, float y, const ExMatrixElements* tranform) const
 	{

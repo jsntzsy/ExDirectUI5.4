@@ -44,7 +44,7 @@ namespace ExDirectUI
 			float radius_left_top, float radius_right_top, float radius_right_bottom, float radius_left_bottom
 		) PURE;
 		EXMETHOD HRESULT EXOBJCALL AddPolygon(const ExPointF* points, uint32_t count, bool close_figure = true) PURE;
-		EXMETHOD HRESULT EXOBJCALL AddText(const IExFont* font, LPCWSTR text, int len, DWORD text_format,
+		EXMETHOD HRESULT EXOBJCALL AddText(const IExFont* font, LPCWSTR text, uint32_t text_length, DWORD text_format,
 			float left, float top, float right, float bottom) PURE;
 
 		EXMETHOD HRESULT EXOBJCALL HitTest(float x, float y, const ExMatrixElements* tranform) const PURE;

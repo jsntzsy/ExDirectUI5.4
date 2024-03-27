@@ -23,7 +23,7 @@ namespace ExDirectUI
 	ExAutoPtr<IExImageBrush> image_brush = nullptr;
 	EXATOM atom_fontawesome = EXATOM_UNKNOWN;
 
-	int test_part = 2;
+	int test_part = 1;
 
 	std::vector<ExRectF> _RenderTest_SplitRect(ExRectF& bounds, int rows, int cells, ExPointF min_size = {})
 	{
@@ -243,8 +243,27 @@ namespace ExDirectUI
 					0, 5, 10, 20
 				);
 				rect.Offset(110, 0);
-				//path->AddPolygon
-				//path->AddText()
+
+				std::vector<ExPointF> points;
+				points.push_back({ 100,0 });
+				points.push_back({ 150,50 });
+				points.push_back({ 100,25});
+				points.push_back({ 50,75 });
+				points.push_back({ 0,45 });
+				for (auto& pt : points) { pt.Offset(rect.left, rect.top); }
+				path->AddPolygon(points.data(), points.size(), true);
+				
+				
+				ExAutoPtr<IExFont> font;
+				render->CreateFontFromName(
+					L"微软雅黑", 50, ExFontStyle::Normal, EXATOM_UNKNOWN, &font
+				);
+				path->AddText(font, L"Hello &你好 123!@#", -1,
+					ExTextFormat::SingleLine | ExTextFormat::Center | ExTextFormat::Middle |
+					ExTextFormat::Prefix,
+					client.left, (client.top + client.bottom) / 2,
+					client.right, client.bottom
+				);
 
 #pragma endregion
 
