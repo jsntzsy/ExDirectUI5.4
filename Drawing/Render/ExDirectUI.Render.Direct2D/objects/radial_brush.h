@@ -81,7 +81,7 @@ namespace ExDirectUI
 		ExAutoPtr<ID2D1RadialGradientBrush> m_brush;
 		std::vector<ExGradientPoint> m_gradient_points;
 
-		D2D1::Matrix3x2F m_transform = D2D1::Matrix3x2F::Identity();
+		D2D1_MATRIX_3X2_F m_transform = D2D1::Matrix3x2F::Identity();
 		ExRectF m_bounds{};
 		ExPointF m_center_offset{};
 		EXARGB m_inside_color = COLOR_UNDEFINE;

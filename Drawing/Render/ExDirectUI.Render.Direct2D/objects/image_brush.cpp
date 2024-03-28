@@ -25,6 +25,7 @@ namespace ExDirectUI
 			m_src_rect.right = (float)m_image->GetWidth();
 			m_src_rect.bottom = (float)m_image->GetHeight();
 		}
+
 		throw_if_failed(Flush(), L"创建图像画刷失败");
 	}
 
@@ -52,10 +53,12 @@ namespace ExDirectUI
 	}
 	HRESULT EXOBJCALL ExImageBrushD2D::SetExtendMode(ExBrushExtendMode mode)
 	{
-		m_extend_mode = mode;
-		auto extend = GetD2DExtendMode(mode);
-		m_brush->SetExtendModeX(extend);
-		m_brush->SetExtendModeY(extend);
+		if (m_extend_mode != mode) {
+			m_extend_mode = mode;
+			auto extend = GetD2DExtendMode(mode);
+			m_brush->SetExtendModeX(extend);
+			m_brush->SetExtendModeY(extend);
+		}
 		return S_OK;
 	}
 
@@ -88,6 +91,8 @@ namespace ExDirectUI
 			m_src_rect.bottom = (float)m_image->GetHeight();
 		}
 		m_brush->SetSourceRectangle(&m_src_rect);
+
+		//获取原始变换
 		m_brush->GetTransform(&m_transform_src);
 
 		return S_OK;
@@ -95,13 +100,18 @@ namespace ExDirectUI
 
 	HRESULT EXOBJCALL ExImageBrushD2D::TransformToRect(float left, float top, float right, float bottom)
 	{
+		//获取最终目标矩形
 		ExRectF dst_rect = ExRectF(left, top, right, bottom).Normalize();
+
+		//计算缩放比例
 		float scale_x = dst_rect.Width() / m_image->GetWidth();
 		float scale_y = dst_rect.Height() / m_image->GetHeight();
 
+		//生成变换矩阵
 		ExMatrix3x2 transform;
 		transform.Scale(scale_x, scale_y).Translate(left, top);
 
+		//设置变换
 		m_transform_user = Matrix(ExMatrix3x2::MakeScale(scale_x, scale_y).Translate(left, top));
 		m_brush->SetTransform(m_transform_src * m_transform_user);
 		return S_OK;
@@ -113,8 +123,10 @@ namespace ExDirectUI
 	}
 	HRESULT EXOBJCALL ExImageBrushD2D::SetOpacity(EXCHANNEL alpha)
 	{
-		m_opacity = alpha;
-		m_brush->SetOpacity(alpha / 255.0F);
+		if (alpha != m_opacity) {
+			m_opacity = alpha;
+			m_brush->SetOpacity(alpha / 255.0F);
+		}
 		return S_OK;
 	}
 
@@ -125,7 +137,7 @@ namespace ExDirectUI
 		//获取扩展模式
 		auto extend_mode = GetD2DExtendMode(m_extend_mode);
 
-		//获取算法模式
+		//获取插值模式
 		DWORD antialias_mode = GetUtils()->GetAntialiasMode();
 		auto interpolation_mode =
 			query_flags(antialias_mode, ExAntiAliasMode::ImageHighQuality) ? D2D1_INTERPOLATION_MODE_HIGH_QUALITY_CUBIC :

@@ -55,7 +55,7 @@ namespace ExDirectUI
 
 	HRESULT __stdcall ExRenderAPI::DCompositionCreateDevice2(IUnknown* renderingDevice, REFIID iid, void** dcompositionDevice)
 	{
-		if (!_DCompositionCreateDevice2) return E_NOTIMPL;
+		if (!_DCompositionCreateDevice2) { return E_NOTIMPL; }
 		return _DCompositionCreateDevice2(renderingDevice, iid, dcompositionDevice);
 	}
 
@@ -77,8 +77,7 @@ namespace ExDirectUI
 	HRESULT ExRenderAPI::OnInit()
 	{
 		s_module_dcomp = LoadLibraryW(L"dcomp.dll");
-		if (s_module_dcomp)
-		{
+		if (s_module_dcomp) {
 			_DCompositionCreateDevice2 = (PFN_DCompositionCreateDevice2)
 				GetProcAddress(s_module_dcomp, "DCompositionCreateDevice2");
 		}

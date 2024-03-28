@@ -27,6 +27,7 @@ namespace ExDirectUI
 		m_inside_color = COLOR_UNDEFINE;
 		m_outside_color = COLOR_UNDEFINE;
 		m_bounds = ExRect(left, top, right, bottom).Normalize();
+
 		throw_if_failed(SetGradientPoints(points, count), L"创建径向渐变画刷失败");
 	}
 	ExRadialBrushD2D::~ExRadialBrushD2D()
@@ -40,20 +41,11 @@ namespace ExDirectUI
 	}
 	HRESULT EXOBJCALL ExRadialBrushD2D::SetTransform(const ExMatrixElements* tranform)
 	{
-		CHECK_PARAM(tranform);
-
-		if (tranform) {
-			m_transform = D2D1::Matrix3x2F(
-				tranform->_11, tranform->_12,
-				tranform->_21, tranform->_22,
-				tranform->_31, tranform->_32
-			);
-		}
-		else { m_transform = D2D1::Matrix3x2F::Identity(); }
-
+		m_transform = Matrix(tranform);
 		m_brush->SetTransform(m_transform);
 		return S_OK;
 	}
+
 	HRESULT EXOBJCALL ExRadialBrushD2D::GetExtendMode(ExBrushExtendMode* r_mode) const
 	{
 		CHECK_PARAM(r_mode);
@@ -72,12 +64,10 @@ namespace ExDirectUI
 	{
 		return m_inside_color;
 	}
-
 	EXARGB EXOBJCALL ExRadialBrushD2D::GetOutsideColor() const
 	{
 		return m_outside_color;
 	}
-
 	HRESULT EXOBJCALL ExRadialBrushD2D::SetInsideColor(EXARGB color)
 	{
 		if (m_inside_color == color) { return S_FALSE; }
@@ -85,7 +75,6 @@ namespace ExDirectUI
 		m_inside_color = color;
 		return Flush();
 	}
-
 	HRESULT EXOBJCALL ExRadialBrushD2D::SetOutsideColor(EXARGB color)
 	{
 		if (m_outside_color == color) { return S_FALSE; }
@@ -93,14 +82,12 @@ namespace ExDirectUI
 		m_outside_color = color;
 		return Flush();
 	}
-
 	HRESULT EXOBJCALL ExRadialBrushD2D::GetColors(EXARGB* r_inside_color, EXARGB* r_outside_color) const
 	{
 		if (r_inside_color) { *r_inside_color = m_inside_color; }
 		if (r_outside_color) { *r_outside_color = m_outside_color; }
 		return S_OK;
 	}
-
 	HRESULT EXOBJCALL ExRadialBrushD2D::SetColors(EXARGB inside_color, EXARGB outside_color)
 	{
 		bool changed = false;
@@ -123,7 +110,6 @@ namespace ExDirectUI
 		CopyMemory(r_rect, &m_bounds, sizeof(ExRectF));
 		return S_OK;
 	}
-
 	HRESULT EXOBJCALL ExRadialBrushD2D::SetBoundsRect(float left, float top, float right, float bottom)
 	{
 		m_bounds = ExRectF(left, top, right, bottom).Normalize();
@@ -132,7 +118,6 @@ namespace ExDirectUI
 		m_brush->SetCenter(D2D1::Point2F(m_bounds.GetHorzCenter(), m_bounds.GetVertCenter()));
 		return S_OK;
 	}
-
 	HRESULT EXOBJCALL ExRadialBrushD2D::GetCenterOffset(ExPointF* r_offset) const
 	{
 		CHECK_PARAM(r_offset);
@@ -140,7 +125,6 @@ namespace ExDirectUI
 		r_offset->y = m_center_offset.y;
 		return S_OK;
 	}
-
 	HRESULT EXOBJCALL ExRadialBrushD2D::SetCenterOffset(float horz, float vert)
 	{
 		m_brush->SetGradientOriginOffset(D2D1::Point2F(horz, vert));
@@ -151,7 +135,6 @@ namespace ExDirectUI
 	{
 		return (uint32_t)m_gradient_points.size();
 	}
-
 	HRESULT EXOBJCALL ExRadialBrushD2D::GetGradientPoints(ExGradientPoint* r_points, uint32_t count) const
 	{
 		CHECK_PARAM(r_points);
@@ -163,14 +146,15 @@ namespace ExDirectUI
 		memcpy(r_points, m_gradient_points.data(), c * sizeof(ExGradientPoint));
 		return S_OK;
 	}
-
 	HRESULT EXOBJCALL ExRadialBrushD2D::SetGradientPoints(const ExGradientPoint* points, uint32_t count)
 	{
-		CHECK_PARAM(points && count >= 2);
-
-		m_gradient_points.resize(count);
-		memcpy(m_gradient_points.data(), points, count * sizeof(ExGradientPoint));
-
+		// 如果渐变点数量少于2,则使用内部外部颜色
+		if (points && count >= 2) {
+			m_gradient_points.resize(count);
+			memcpy(m_gradient_points.data(), points, count * sizeof(ExGradientPoint));
+		}
+		else { m_gradient_points.resize(0); }
+		
 		return Flush();
 	}
 
@@ -178,7 +162,6 @@ namespace ExDirectUI
 	{
 		return m_gamma;
 	}
-
 	HRESULT EXOBJCALL ExRadialBrushD2D::SetGammaMode(bool gamma)
 	{
 		if (m_gamma == gamma) { return S_FALSE; }

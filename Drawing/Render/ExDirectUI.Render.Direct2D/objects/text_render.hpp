@@ -28,7 +28,6 @@ namespace ExDirectUI
 			m_storke_pen = (ExPenD2D*)pen;
 			m_fill_brush = (ID2D1Brush*)(brush ? brush->GetContext(0) : nullptr);
 		}
-
 		virtual ~ExTextRenderD2D()
 		{
 		}
