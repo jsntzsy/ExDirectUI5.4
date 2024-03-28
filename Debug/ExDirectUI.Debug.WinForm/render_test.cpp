@@ -34,9 +34,11 @@ namespace ExDirectUI
 		PATH,
 		TEXT,
 		IMAGE,
+
+		_TEST_PART_COUNT,
 	};
-	
-	_TestPartValues test_part = IMAGE;
+
+	_TestPartValues test_part = FIGURE;
 
 	std::vector<ExRectF> _RenderTest_SplitRect(ExRectF& bounds, int rows, int cells, ExPointF min_size = {})
 	{
@@ -122,7 +124,7 @@ namespace ExDirectUI
 			ExRectF client = { 0, 0, (float)width,(float)height };
 
 			canvas->BeginDraw();
-			canvas->Clear(COLOR_WHITE);
+			canvas->Clear(COLOR_GRAY);
 			canvas->SetAntiAliasMode(ExAntiAliasMode::AllHighQuality);
 
 #pragma region 绘制测试代码
@@ -471,7 +473,7 @@ namespace ExDirectUI
 
 				//画一个浅浅的背景
 				canvas->DrawImageRect(
-					image_gif ,_expand_rect_(client),
+					image_gif, _expand_rect_(client),
 					ExImageMode::Mirror, 100
 				);
 
@@ -500,7 +502,7 @@ namespace ExDirectUI
 							ExImageMode::ScaleCenter,
 							ExImageMode::ScaleFill
 						};
-							
+
 						canvas->DrawImageRect(
 							image_gif, _expand_rect_(rect),
 							modes[y]
@@ -512,23 +514,23 @@ namespace ExDirectUI
 						);
 
 					}
-					else if (y == 3 && x<= 2) {
+					else if (y == 3 && x <= 2) {
 						rect.Inflate(-padding, -padding);
 						ExRectF src_rect[3] = {
 							{0,0,69,24},
 							{0,24,69,48},
 							{0,48,69,72},
 						};
-						
+
 						ExGridsImageInfo grids{ 5 };
-						
+
 						canvas->DrawGridsImagePart(
 							image_button, _expand_rect_(rect),
 							_expand_rect_(src_rect[x]),
 							&grids, 200
 						);
-						
-						
+
+
 					}
 					else if (x == 3 && y == 3) {
 						canvas->DrawImageRect(
@@ -568,15 +570,12 @@ namespace ExDirectUI
 		case WM_CREATE:
 			render = ExDbgGetModuleUtils()->GetRender();
 			_RenderTest_InitObjects_();
-			if (test_part == IMAGE) {
-				SetTimer(window, 101, 100, nullptr);
-			}
+			SetTimer(window, 100, 5000, nullptr);
 			break;
 		case WM_DESTROY:
 			_RenderTest_ReleaseObjects_();
-			if (test_part == IMAGE) {
-				KillTimer(window, 101);
-			}
+			KillTimer(window, 100);
+			KillTimer(window, 101);
 			PostQuitMessage(0);
 			break;
 		case WM_SIZE:
@@ -591,12 +590,24 @@ namespace ExDirectUI
 			}
 		}break;
 		case WM_TIMER: {
-			if (wparam == 101) {
+			if (wparam == 100) {
+				test_part = (_TestPartValues)((test_part + 1) % _TEST_PART_COUNT);
+
+				if (test_part == IMAGE) {
+					SetTimer(window, 101, 100, nullptr);
+				}
+				else {
+					KillTimer(window, 101);
+				}
+
+				InvalidateRect(window, nullptr, false);
+			}
+			else if (wparam == 101) {
 				uint32_t delay = 0;
 				image_apng->NextFrame();
-				image_gif->NextFrame(nullptr,&delay);
+				image_gif->NextFrame(nullptr, &delay);
 				InvalidateRect(window, nullptr, false);
-				
+
 				KillTimer(window, 101);
 				SetTimer(window, 101, delay, nullptr);
 			}

@@ -61,6 +61,8 @@ namespace ExDirectUI
 
 #define COLOR_BLACK			0xFF000000		///<颜色：黑色
 #define COLOR_WHITE			0xFFFFFFFF		///<颜色：白色
+#define COLOR_GRAY			0xFFC0C0C0		///<颜色：灰色
+#define COLOR_DRAKGRAY		0xFF808A87		///<颜色：深灰色
 #define COLOR_RED			0xFFFF0000		///<颜色：红色
 #define COLOR_GREEN			0xFF00FF00		///<颜色：绿色
 #define COLOR_BLUE			0xFF0000FF		///<颜色：蓝色

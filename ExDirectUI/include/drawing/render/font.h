@@ -41,7 +41,7 @@ namespace ExDirectUI
 
 		ExFontInfo() :size(), style(), file_atom(EXATOM_UNKNOWN), name() {}
 		ExFontInfo(const wchar_t name[LF_FACESIZE], uint32_t size, DWORD style,
-			EXATOM file_atom = EXATOM_UNKNOWN) :size(size), style(style)
+			EXATOM file_atom = EXATOM_UNKNOWN) :size(size), style(style), file_atom(EXATOM_UNKNOWN)
 		{
 			SetName(name, file_atom);
 		}
