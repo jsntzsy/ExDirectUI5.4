@@ -94,6 +94,7 @@ namespace ExDirectUI
 
 		friend class ExCanvasD2D;
 		friend class ExTextRenderD2D;
+		friend class ExPathD2D;
 	};
 
 }

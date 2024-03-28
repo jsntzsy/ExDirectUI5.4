@@ -80,7 +80,7 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL GetBounds(ExRectF* r_rect, const ExMatrixElements* tranform) const override;
 
 	private:
-		static void MakeRoundedRect(ID2D1GeometrySink* sink, float left, float top, float right, float bottom,
+		static void MakeRoundRectFigure(ID2D1GeometrySink* sink, float left, float top, float right, float bottom,
 			float radius_left_top, float radius_right_top, float radius_right_bottom, float radius_left_bottom);
 
 		friend class ExRegionD2D;

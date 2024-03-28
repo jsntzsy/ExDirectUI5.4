@@ -242,6 +242,8 @@ namespace ExDirectUI
 
 	const ExFontContextD2D* EXOBJCALL ExFontPoolD2D::CreateFont(const ExFontInfo* info)
 	{
+		throw_if_false(info != nullptr, E_INVALIDARG, L"字体信息为空");
+
 		EXATOM key = ExAtomData(info, sizeof(ExFontInfo));
 		throw_if_failed(key != EXATOM_UNKNOWN, L"计算字体原子号失败");
 
@@ -347,15 +349,12 @@ namespace ExDirectUI
 
 	/////////////////////////
 
-
-
 	ExFontD2D::ExFontD2D()
 	{
 		ExFontInfo info;
 		throw_if_failed(GetUtils()->GetDefaultFont(&info), L"获取默认字体失败");
 		m_context = ExFontPoolD2D::Instance()->CreateFont(&info);
 	}
-
 	ExFontD2D::ExFontD2D(const wchar_t name[LF_FACESIZE], uint32_t size, DWORD style, EXATOM file_atom)
 	{
 		ExFontInfo info;
@@ -367,12 +366,10 @@ namespace ExDirectUI
 
 		m_context = ExFontPoolD2D::Instance()->CreateFont(&info);
 	}
-
 	ExFontD2D::ExFontD2D(const ExFontInfo* info)
 	{
 		m_context = ExFontPoolD2D::Instance()->CreateFont(info);
 	}
-
 	ExFontD2D::~ExFontD2D()
 	{
 		if (m_context) {
@@ -385,17 +382,14 @@ namespace ExDirectUI
 		if (r_atom) { *r_atom = m_context->atom; }
 		return m_context->info.name;
 	}
-
 	uint32_t EXCALL ExFontD2D::GetSize() const
 	{
 		return m_context->info.size;
 	}
-
 	DWORD EXCALL ExFontD2D::GetStyle() const
 	{
 		return m_context->info.style;
 	}
-
 	HRESULT EXOBJCALL ExFontD2D::GetInfo(ExFontInfo* r_info) const
 	{
 		CHECK_PARAM(r_info);
@@ -410,21 +404,18 @@ namespace ExDirectUI
 		info.SetName(name, atom);
 		return SetInfo(&info);
 	}
-
 	HRESULT EXOBJCALL ExFontD2D::SetSize(uint32_t size)
 	{
 		ExFontInfo info = m_context->info;
 		info.size = size;
 		return SetInfo(&info);
 	}
-
 	HRESULT EXOBJCALL ExFontD2D::SetStyle(DWORD style)
 	{
 		ExFontInfo info = m_context->info;
 		info.style = style;
 		return SetInfo(&info);
 	}
-
 	HRESULT EXOBJCALL ExFontD2D::SetInfo(const ExFontInfo* info)
 	{
 		try

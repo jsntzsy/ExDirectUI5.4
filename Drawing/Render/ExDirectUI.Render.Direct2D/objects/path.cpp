@@ -378,6 +378,7 @@ namespace ExDirectUI
 		m_cur_point = { end_x,end_y };
 		return S_OK;
 	}
+	
 	HRESULT EXOBJCALL ExPathD2D::AddRect(float left, float top, float right, float bottom)
 	{
 		// 判断是否正在描述路径
@@ -499,7 +500,7 @@ namespace ExDirectUI
 		if (m_figure_started) { FinishFigure(false); }
 
 		//生成圆角矩形(偏移由内部函数完成)
-		MakeRoundedRect(m_sink, left, top, right, bottom, radius_left_top,
+		MakeRoundRectFigure(m_sink, left, top, right, bottom, radius_left_top,
 			radius_right_top, radius_right_bottom, radius_left_bottom);
 
 		return S_OK;
@@ -547,15 +548,18 @@ namespace ExDirectUI
 		try
 		{
 			auto render = GetRender();
-
+			
+			//创建文本布局对象
 			ExAutoPtr<IDWriteTextLayout> layout =
 				ExCanvasD2D::MakeTextLayout(font, text, text_length,
 				ExRectF(left, top, right, bottom), text_format
 			);
 
+			//创建文本图形生成器
 			ExAutoPtr<ExTextFigureBuilderD2D> builder =
 				new ExTextFigureBuilderD2D(render->m_d2d_factory, m_sink);
 			
+			//生成文本轮廓到路径中
 			throw_if_failed(
 				layout->Draw(nullptr, builder, left, top),
 				L"生成文本轮廓失败"
@@ -578,7 +582,8 @@ namespace ExDirectUI
 			m_geometry->FillContainsPoint(
 				D2D1::Point2F(x, y),
 				Matrix(tranform),
-				&hit), L"命中测试失败"
+				&hit
+			), L"命中测试失败"
 		);
 
 		//根据命中结果返回
@@ -591,7 +596,7 @@ namespace ExDirectUI
 
 		//获取画笔参数
 		float stroke_width = pen ? pen->GetStrokeWidth() : 1.0F;
-		ID2D1StrokeStyle* stroke_style = /*pen ? ((ExPenD2D*)pen)->m_stroke_style :*/ nullptr;
+		ID2D1StrokeStyle* stroke_style = pen ? ((ExPenD2D*)pen)->m_style : nullptr;
 
 		//偏移坐标参数
 		_offset_(false, x, y);
@@ -626,7 +631,7 @@ namespace ExDirectUI
 		return S_OK;
 	}
 
-	void ExPathD2D::MakeRoundedRect(ID2D1GeometrySink* sink, float left, float top, float right, float bottom,
+	void ExPathD2D::MakeRoundRectFigure(ID2D1GeometrySink* sink, float left, float top, float right, float bottom,
 		float radius_left_top, float radius_right_top, float radius_right_bottom, float radius_left_bottom)
 	{
 		//偏移,并获取边界矩形

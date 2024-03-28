@@ -28,6 +28,7 @@ namespace ExDirectUI
 	ExPenD2D::~ExPenD2D()
 	{
 	}
+	
 	HRESULT EXOBJCALL ExPenD2D::GetColor(EXARGB* r_color)
 	{
 		CHECK_PARAM(r_color);

@@ -73,7 +73,10 @@ namespace ExDirectUI
 				min(height, m_target->height)
 			);
 
-			handle_if_failed(bitmap->CopyFromBitmap(nullptr, m_target->bitmap, &rect), L"复制渲染位图失败");
+			handle_if_failed(
+				bitmap->CopyFromBitmap(nullptr, m_target->bitmap, &rect),
+				L"复制渲染位图失败"
+			);
 		}
 
 		//创建画布目标
@@ -88,7 +91,8 @@ namespace ExDirectUI
 		handle_if_false(m_target != target, EE_NOREADY, L"不可以销毁当前渲染目标");
 
 		//不可以销毁其他画布的目标
-		handle_if_false(m_target->owner == this, E_INVALIDARG, L"不可以销毁其他画布的目标");
+		// REMARK: 为了避免先释放画布导致目标无法被释放,这里不做判断
+		//handle_if_false(m_target->owner == this, E_INVALIDARG, L"不可以销毁其他画布的目标");
 
 		//销毁
 		delete (ExCanvasTargetD2D*)target;
@@ -182,10 +186,12 @@ namespace ExDirectUI
 	HRESULT EXOBJCALL ExCanvasD2D::GetClipRect(ExRectF* r_clip) const
 	{
 		CHECK_PARAM(r_clip);
+			
 		if (m_clip_region == nullptr) {
 			*r_clip = {};
 			return S_FALSE;
 		}
+		
 		return m_clip_region->GetBounds(r_clip);
 	}
 	HRESULT EXOBJCALL ExCanvasD2D::GetClipRegion(IExRegion* r_clip_region) const
@@ -203,11 +209,14 @@ namespace ExDirectUI
 		{
 			//如果已经有裁剪区域,则先清除
 			if (m_clip_region) { throw_if_failed(ResetClip(), L"重置剪辑区失败"); }
-
-			//创建新的裁剪区域对象
+			
+			//创建新的裁剪区域对象(内部会做偏移)
 			D2D1_RECT_F clip = D2D1Rect(left, top, right, bottom);
 			m_clip_region = new ExRegionD2D(clip.left, clip.top, clip.right, clip.bottom, true);
-
+			
+			//偏移矩形
+			_offset_(false, clip);
+			
 			//压入裁剪区域
 			m_dc->PushAxisAlignedClip(clip, m_dc->GetAntialiasMode());
 			return S_OK;
@@ -315,10 +324,12 @@ namespace ExDirectUI
 	HRESULT EXOBJCALL ExCanvasD2D::RenderToImage(IExImage* r_target_image)
 	{
 		CHECK_PARAM(r_target_image);
+		
 		ExMemDC temp_dc{};
 		HDC src_dc = NULL;
 		ExImageLock lock{};
 
+		//看看是否正在绘制
 		bool temp_draw = !m_drawing;
 		if (temp_draw) { handle_if_failed(BeginDraw(), L"开始绘制画布失败"); }
 
@@ -552,7 +563,7 @@ namespace ExDirectUI
 			//生成圆角矩形路径
 			ExAutoPtr<ID2D1GeometrySink> sink;
 			throw_if_failed(geometry->Open(&sink), L"开始描述路径失败");
-			ExPathD2D::MakeRoundedRect(sink, left, top, right, bottom,
+			ExPathD2D::MakeRoundRectFigure(sink, left, top, right, bottom,
 				radius_left_top, radius_right_top, radius_right_bottom, radius_left_bottom
 			);
 			throw_if_failed(sink->Close(), L"描述几何形路径错误");
@@ -660,7 +671,7 @@ namespace ExDirectUI
 			//生成圆角矩形路径
 			ExAutoPtr<ID2D1GeometrySink> sink;
 			throw_if_failed(geometry->Open(&sink), L"开始描述路径失败");
-			ExPathD2D::MakeRoundedRect(sink, left, top, right, bottom,
+			ExPathD2D::MakeRoundRectFigure(sink, left, top, right, bottom,
 				radius_left_top, radius_right_top, radius_right_bottom, radius_left_bottom
 			);
 			throw_if_failed(sink->Close(), L"描述几何形路径错误");
@@ -703,6 +714,7 @@ namespace ExDirectUI
 		DWORD text_format, float max_width, float max_height,
 		DWORD effect_type, LPARAM effect_param, float* r_width, float* r_height)
 	{
+		CHECK_PARAM(font);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
 
 		//默认参数处理
@@ -715,10 +727,13 @@ namespace ExDirectUI
 			ExAutoPtr<IDWriteTextLayout> layout = MakeTextLayout(font, text, text_length,
 				ExRectF(0, 0, max_width, max_height), text_format
 			);
+			if (!layout) { return S_FALSE; }
 
 			//获得测量结果
 			DWRITE_TEXT_METRICS tm;
 			throw_if_failed(layout->GetMetrics(&tm), L"获取测量结果失败");
+
+			//TODO:这里还需要额外处理文本效果带来的尺寸
 
 			//返回结果
 			if (r_width) { *r_width = tm.width; }
@@ -916,6 +931,8 @@ namespace ExDirectUI
 	HRESULT EXOBJCALL ExCanvasD2D::StrokeText(const IExPen* pen, const IExFont* font,
 		LPCWSTR text, uint32_t text_length, DWORD text_format, float left, float top, float right, float bottom)
 	{
+		CHECK_PARAM(pen);
+		CHECK_PARAM(font);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
 
 		bool clip = false;
@@ -926,6 +943,7 @@ namespace ExDirectUI
 			ExAutoPtr<IDWriteTextLayout> layout = MakeTextLayout(
 				font, text, text_length, rect, text_format
 			);
+			if (!layout) { return S_FALSE; }
 
 			_offset_(false, rect);
 
@@ -947,6 +965,8 @@ namespace ExDirectUI
 	HRESULT EXOBJCALL ExCanvasD2D::FillText(const IExBrush* brush, const IExFont* font,
 		LPCWSTR text, uint32_t text_length, DWORD text_format, float left, float top, float right, float bottom)
 	{
+		CHECK_PARAM(brush);
+		CHECK_PARAM(font);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
 
 		bool clip = false;
@@ -957,6 +977,7 @@ namespace ExDirectUI
 			ExAutoPtr<IDWriteTextLayout> layout = MakeTextLayout(
 				font, text, text_length, rect, text_format
 			);
+			if (!layout) { return S_FALSE; }
 
 			_offset_(false, rect);
 
@@ -978,8 +999,10 @@ namespace ExDirectUI
 	HRESULT EXOBJCALL ExCanvasD2D::DrawTextByColor(const IExFont* font, LPCWSTR text, uint32_t text_length,
 		DWORD text_format, float left, float top, float right, float bottom, EXARGB text_color)
 	{
+		CHECK_PARAM(font);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
-
+		if (ALPHA(text_color) == ALPHA_TRANSPARENT) { return S_OK; }
+		
 		bool clip = false;
 		try
 		{
@@ -989,6 +1012,7 @@ namespace ExDirectUI
 			ExAutoPtr<IDWriteTextLayout> layout(
 				MakeTextLayout(font, text, text_length, rect, text_format)
 			);
+			if (!layout) { return S_FALSE; }
 
 			_offset_(false, rect);
 
@@ -1015,6 +1039,8 @@ namespace ExDirectUI
 		LPCWSTR text, uint32_t text_length, DWORD text_format,
 		float left, float top, float right, float bottom)
 	{
+		CHECK_PARAM(brush);
+		CHECK_PARAM(font);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
 
 		bool clip = false;
@@ -1026,6 +1052,7 @@ namespace ExDirectUI
 			ExAutoPtr<IDWriteTextLayout> layout(
 				MakeTextLayout(font, text, text_length, rect, text_format)
 			);
+			if (!layout) { return S_FALSE; }
 
 			_offset_(false, rect);
 
@@ -1048,6 +1075,7 @@ namespace ExDirectUI
 		const IExFont* font, LPCWSTR text, uint32_t text_length, DWORD text_format,
 		float left, float top, float right, float bottom)
 	{
+		CHECK_PARAM(font);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
 
 		bool clip = false;
@@ -1058,6 +1086,7 @@ namespace ExDirectUI
 			ExAutoPtr<IDWriteTextLayout> layout = MakeTextLayout(
 				font, text, text_length, rect, text_format
 			);
+			if (!layout) { return S_FALSE; }
 
 			_offset_(false, rect);
 
@@ -1087,6 +1116,7 @@ namespace ExDirectUI
 		float left, float top, float right, float bottom,
 		DWORD effect_type, EXARGB effect_color, LPARAM effect_param)
 	{
+		CHECK_PARAM(font);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
 
 		bool clip = false;
@@ -1097,6 +1127,7 @@ namespace ExDirectUI
 			ExAutoPtr<IDWriteTextLayout> layout = MakeTextLayout(
 				font, text, text_length, rect, text_format
 			);
+			if (!layout) { return S_FALSE; }
 
 			_offset_(false, rect);
 
@@ -1122,6 +1153,7 @@ namespace ExDirectUI
 	{
 		CHECK_PARAM(image);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
+		if (alpha == ALPHA_TRANSPARENT) { return S_FALSE; }
 
 		//坐标偏移
 		_offset_(false, left, top);
@@ -1160,7 +1192,8 @@ namespace ExDirectUI
 	{
 		CHECK_PARAM(image);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
-
+		if (alpha == ALPHA_TRANSPARENT) { return S_FALSE; }
+		
 		//坐标偏移
 		_offset_(false, left, top);
 
@@ -1179,6 +1212,7 @@ namespace ExDirectUI
 	{
 		CHECK_PARAM(image);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
+		if (alpha == ALPHA_TRANSPARENT) { return S_FALSE; }
 
 		//坐标偏移
 		_offset_(false, left, top, right, bottom);
@@ -1198,6 +1232,7 @@ namespace ExDirectUI
 		CHECK_PARAM(image);
 		CHECK_PARAM(grids);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
+		if (alpha == ALPHA_TRANSPARENT) { return S_FALSE; }
 
 		//获得图像尺寸
 		D2D1_SIZE_F size = ((ExImageD2D*)image)->m_d2d_bitmap->GetSize();
@@ -1208,7 +1243,8 @@ namespace ExDirectUI
 		);
 	}
 
-	inline ExImageMode _gflag_to_imode(DWORD flags, int pos) {
+	inline ExImageMode _gflag_to_imode(DWORD flags, int pos) 
+	{
 		flags = (flags >> pos) & 0x0F;
 		return flags == 0 ? ExImageMode::Default :
 			flags & ExGridsImageMode::LeftNone ? (ExImageMode)-1 :
@@ -1356,6 +1392,7 @@ namespace ExDirectUI
 	{
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
 		if (!target_src) { return S_FALSE; }
+		if (alpha == ALPHA_TRANSPARENT) { return S_FALSE; }
 
 		//获取源渲染目标
 		ExCanvasTargetD2D* target = (ExCanvasTargetD2D*)target_src;
@@ -1382,6 +1419,7 @@ namespace ExDirectUI
 		CHECK_PARAM(canvas_src);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
 		handle_if_false(canvas_src != this, E_INVALIDARG, L"不允许绘制自身");
+		if (alpha == ALPHA_TRANSPARENT) { return S_FALSE; }
 
 		//获取渲染目标
 		ExCanvasTargetD2D* target = ((ExCanvasD2D*)canvas_src)->m_target;
@@ -1488,7 +1526,7 @@ namespace ExDirectUI
 		DWORD mode, EXCHANNEL alpha, D2D1_INTERPOLATION_MODE interpolation)
 	{
 		//如果源矩形或目标矩形为空,则不绘制
-		if (dst_rect.IsEmpty() || src_rect.IsEmpty() || alpha == ALPHA_TRANSPARENT) { return S_FALSE; }
+		if (dst_rect.IsEmpty() || src_rect.IsEmpty()) { return S_FALSE; }
 
 		ExAutoPtr<ID2D1ImageBrush> image_brush;
 		HRESULT hr = S_OK;
@@ -1557,29 +1595,29 @@ namespace ExDirectUI
 			);
 
 		}break;
-		case (ExImageMode::Left | ExImageMode::Top): {
+		case ExImageMode::LeftTop: {
 			dst_rect.right = dst_rect.left + src_rect.Width();
 			dst_rect.bottom = dst_rect.top + src_rect.Height();
 		}break;
-		case (ExImageMode::HCenter | ExImageMode::Top): {
+		case ExImageMode::CenterTop: {
 			float width = src_rect.Width();
 			dst_rect.left += (dst_rect.Width() - width) / 2;
 			dst_rect.right = dst_rect.left + width;
 
 			dst_rect.bottom = dst_rect.top + src_rect.Height();
 		}break;
-		case (ExImageMode::Right | ExImageMode::Top): {
+		case ExImageMode::RightTop: {
 			dst_rect.left = dst_rect.right - src_rect.Width();
 			dst_rect.bottom = dst_rect.top + src_rect.Height();
 		}break;
-		case (ExImageMode::Left | ExImageMode::VCenter): {
+		case ExImageMode::LeftMiddle: {
 			dst_rect.right = dst_rect.left + src_rect.Width();
 
 			float height = src_rect.Height();
 			dst_rect.top += (dst_rect.Height() - height) / 2;
 			dst_rect.bottom = dst_rect.top + height;
 		}break;
-		case (ExImageMode::HCenter | ExImageMode::VCenter): {
+		case ExImageMode::CenterMiddle: {
 			float width = src_rect.Width();
 			dst_rect.left += (dst_rect.Width() - width) / 2;
 			dst_rect.right = dst_rect.left + width;
@@ -1588,25 +1626,25 @@ namespace ExDirectUI
 			dst_rect.top += (dst_rect.Height() - height) / 2;
 			dst_rect.bottom = dst_rect.top + height;
 		}break;
-		case (ExImageMode::Right | ExImageMode::VCenter): {
+		case ExImageMode::RightMiddle: {
 			dst_rect.left = dst_rect.right - src_rect.Width();
 
 			float height = src_rect.Height();
 			dst_rect.top += (dst_rect.Height() - height) / 2;
 			dst_rect.bottom = dst_rect.top + height;
 		}break;
-		case (ExImageMode::Left | ExImageMode::Bottom): {
+		case ExImageMode::LeftBottom: {
 			dst_rect.right = dst_rect.left + src_rect.Width();
 			dst_rect.top = dst_rect.bottom - src_rect.Height();
 		}break;
-		case (ExImageMode::HCenter | ExImageMode::Bottom): {
+		case ExImageMode::CenterBottom: {
 			float width = src_rect.Width();
 			dst_rect.left += (dst_rect.Width() - width) / 2;
 			dst_rect.right = dst_rect.left + width;
 
 			dst_rect.top = dst_rect.bottom - src_rect.Height();
 		}break;
-		case (ExImageMode::Right | ExImageMode::Bottom): {
+		case ExImageMode::RightBottom: {
 			dst_rect.left = dst_rect.right - src_rect.Width();
 			dst_rect.top = dst_rect.bottom - src_rect.Height();
 		}break;

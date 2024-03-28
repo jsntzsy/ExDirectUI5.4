@@ -54,25 +54,27 @@ namespace ExDirectUI
 		Vertical = 0x00200000						///< 文本格式：垂直显示
 	};
 
-	//TODO:此处需要修改，还原为值模式（非组合模式），防止出现传一个方向，另外一个方向没传导致报错
+	
 	EXENUM(ExImageMode)
 	{
-		Left = 0x00000001,
-		HCenter = 0x00000002,
-		Right = 0x00000004,
-		Top = 0x00000010,
-		VCenter = 0x00000020,
-		Bottom = 0x00000040,
+		Scale = 0,
+		ScaleFill = 1,
+		ScaleCenter = 2,
+		Tile = 3,
+		Mirror = 4,
 
-		Scale = 0x00000000,
-		ScaleFill = 0x00000100,
-		ScaleCenter = 0x00000200,
-		Tile = 0x00000400,
-		Mirror = 0x00000800,
-
+		LeftTop = 11,
+		CenterTop = 12,
+		RightTop = 13,
+		LeftMiddle = 14,
+		CenterMiddle = 15,
+		RightMiddle = 16,
+		LeftBottom = 17,
+		CenterBottom = 18,
+		RightBottom = 19,
+			
 		Default = ExImageMode::Scale,
-		Center = ExImageMode::HCenter | ExImageMode::VCenter,
-		LeftTop = ExImageMode::Left | ExImageMode::Top,
+		Center = ExImageMode::CenterMiddle,
 
 		Grids = 0x01000000,
 	};
