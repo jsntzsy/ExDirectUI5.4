@@ -118,16 +118,16 @@ namespace ExDirectUI
 		bytes_per_row = png_ptr_read->width * 4;
 		bytes_per_frame = bytes_per_row * png_ptr_read->height;
 
-		ExAPngImageInfo* apng = NEW ExAPngImageInfo;
+		ExAPngImageInfo* apng = new ExAPngImageInfo;
 		ZeroMemory(apng, sizeof(ExAPngImageInfo));
 		apng->width = png_ptr_read->width;
 		apng->height = png_ptr_read->height;
 
 		//图像帧数据
-		data_frame = NEW png_byte[bytes_per_row * apng->height];
+		data_frame = new png_byte[bytes_per_row * apng->height];
 		ZeroMemory(data_frame, bytes_per_frame);
 		//获得扫描行指针
-		row_pointers = NEW png_bytep[apng->height];
+		row_pointers = new png_bytep[apng->height];
 		for (UINT i = 0; i < apng->height; i++)
 			row_pointers[i] = data_frame + bytes_per_row * i;
 
@@ -146,14 +146,14 @@ namespace ExDirectUI
 			//为每一帧分配内存
 
 			//所有帧数据
-			png_bytep data = NEW png_byte[bytes_per_frame * apng->frame_count];
+			png_bytep data = new png_byte[bytes_per_frame * apng->frame_count];
 
 			//当前帧数据
-			png_bytep curFrame = NEW png_byte[bytes_per_frame];
+			png_bytep curFrame = new png_byte[bytes_per_frame];
 			memset(curFrame, 0, bytes_per_frame);
 
 			apng->loop_count = png_get_num_plays(png_ptr_read, info_ptr_read);
-			apng->delays = (UINT*)NEW UINT[apng->frame_count];
+			apng->delays = (UINT*)new UINT[apng->frame_count];
 
 			for (UINT iFrame = 0; iFrame < apng->frame_count; iFrame++)
 			{

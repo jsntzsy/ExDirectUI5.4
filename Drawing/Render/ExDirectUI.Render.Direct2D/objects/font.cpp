@@ -79,7 +79,7 @@ namespace ExDirectUI
 				ExData* data = (ExData*)fontFileReferenceKey;
 				if (data->data != nullptr && data->size > 0)
 				{
-					*fontFileStream = NEW ExFontFileStream(data);
+					*fontFileStream = new ExFontFileStream(data);
 					return (*fontFileStream) ? S_OK : E_FAIL;
 				}
 			}
@@ -166,7 +166,7 @@ namespace ExDirectUI
 			if (!collectionKey) return E_FAIL;
 			if (collectionKeySize % sizeof(ExData) != 0) return E_FAIL;
 
-			*fontFileEnumerator = NEW ExFontFileEnumerator(factory, (ExData*)collectionKey, collectionKeySize / sizeof(ExData));
+			*fontFileEnumerator = new ExFontFileEnumerator(factory, (ExData*)collectionKey, collectionKeySize / sizeof(ExData));
 
 			return (*fontFileEnumerator) ? S_OK : E_FAIL;
 		}

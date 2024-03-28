@@ -57,7 +57,7 @@ namespace ExDirectUI
 		);
 
 		//创建解码图像对象
-		ExAutoPtr<ExDecodeImageWIC> image = NEW ExDecodeImageWIC(context);
+		ExAutoPtr<ExDecodeImageWIC> image = new ExDecodeImageWIC(context);
 		return image->QueryInterface(r_image);
 	}
 
@@ -80,7 +80,7 @@ namespace ExDirectUI
 		);
 
 		//创建解码图像对象
-		ExAutoPtr<ExDecodeImageWIC> image = NEW ExDecodeImageWIC(context);
+		ExAutoPtr<ExDecodeImageWIC> image = new ExDecodeImageWIC(context);
 		return image->QueryInterface(r_image);
 	}
 
@@ -140,11 +140,11 @@ namespace ExDirectUI
 			//分配点阵数据
 			uint32_t stride = context->width * sizeof(EXARGB);
 			uint32_t frame_size = stride * context->height;
-			context->frames_data = NEW EXCHANNEL[frame_size * frame_count];
+			context->frames_data = new EXCHANNEL[frame_size * frame_count];
 
 			//如果是多帧图像,还要分配帧延时信息数组
 			if (frame_count > 1) {
-				context->delays = NEW uint32_t[frame_count];
+				context->delays = new uint32_t[frame_count];
 			}
 
 			//遍历每一帧,获取图像数据及帧延时

@@ -9,6 +9,10 @@
 
 #include "pch.h"
 
+#ifdef new
+#undef new
+#endif // new
+
 #include <d2d1.h>
 #include <gdiplus.h>
 #pragma comment(lib, "d2d1.lib")

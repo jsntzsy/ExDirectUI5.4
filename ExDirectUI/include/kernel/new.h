@@ -22,17 +22,15 @@ inline void* operator new[](size_t size, LPCWSTR file, int line) { return ::ExDi
 inline void operator delete(void* p, LPCWSTR file, int line) { ::ExDirectUI::ExMemFreeD(p); }
 inline void operator delete[](void* p, LPCWSTR file, int line) { ::ExDirectUI::ExMemFreeD(p); }
 
-#define NEW new(__CALLINFO__)
+#define new new(__CALLINFO__)
+
 #else
 inline void* operator new(size_t size) { return ::ExDirectUI::ExMemAlloc(size); }
 inline void* operator new[](size_t size) { return ::ExDirectUI::ExMemAlloc(size); }
 inline void operator delete(void* p) { ::ExDirectUI::ExMemFree(p); }
 inline void operator delete[](void* p) { ::ExDirectUI::ExMemFree(p); }
 
-#define NEW new
 #endif
-#else
-#define NEW new
-#endif // 
+#endif // EX_CFG_DEBUG_CALL_INFO
 
 

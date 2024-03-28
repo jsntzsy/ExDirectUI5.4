@@ -77,7 +77,7 @@ namespace ExDirectUI
 		}
 
 		//创建画布目标
-		*r_target = NEW ExCanvasTargetD2D(this, bitmap, width, height);
+		*r_target = new ExCanvasTargetD2D(this, bitmap, width, height);
 		return S_OK;
 	}
 	HRESULT EXOBJCALL ExCanvasD2D::DestroyTarget(IExCanvasTarget* target)
@@ -206,7 +206,7 @@ namespace ExDirectUI
 
 			//创建新的裁剪区域对象
 			D2D1_RECT_F clip = D2D1Rect(left, top, right, bottom);
-			m_clip_region = NEW ExRegionD2D(clip.left, clip.top, clip.right, clip.bottom, true);
+			m_clip_region = new ExRegionD2D(clip.left, clip.top, clip.right, clip.bottom, true);
 
 			//压入裁剪区域
 			m_dc->PushAxisAlignedClip(clip, m_dc->GetAntialiasMode());
@@ -227,7 +227,7 @@ namespace ExDirectUI
 			if (clip_regioin) {
 
 				//创建新的裁剪区域对象
-				ExAutoPtr<ExRegionD2D> region = NEW ExRegionD2D(clip_regioin);
+				ExAutoPtr<ExRegionD2D> region = new ExRegionD2D(clip_regioin);
 
 				//压入裁剪区域
 				ExAutoPtr<ID2D1Layer> layer;

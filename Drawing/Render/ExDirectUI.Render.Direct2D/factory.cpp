@@ -104,6 +104,8 @@ namespace ExDirectUI
 		m_wic_factory.Release();
 		m_dwrite_factory.Release();
 
+		ExRenderD2D::ClearInstance(true);
+
 		return S_OK;
 	}
 	bool EXOBJCALL ExRenderD2D::IsSupportComposition() const
@@ -114,7 +116,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExImageD2D> image = NEW ExImageD2D(width, height);
+			ExAutoPtr<ExImageD2D> image = new ExImageD2D(width, height);
 			return image->QueryInterface(r_image);
 		}
 		catch_default({});
@@ -123,7 +125,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExImageD2D> image = NEW ExImageD2D(file);
+			ExAutoPtr<ExImageD2D> image = new ExImageD2D(file);
 			return image->QueryInterface(r_image);
 		}
 		catch_default({});
@@ -132,7 +134,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExImageD2D> image = NEW ExImageD2D(data, size);
+			ExAutoPtr<ExImageD2D> image = new ExImageD2D(data, size);
 			return image->QueryInterface(r_image);
 		}
 		catch_default({});
@@ -141,7 +143,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExImageD2D> image = NEW ExImageD2D(width, height, bits, stride);
+			ExAutoPtr<ExImageD2D> image = new ExImageD2D(width, height, bits, stride);
 			return image->QueryInterface(r_image);
 		}
 		catch_default({});
@@ -150,7 +152,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExImageD2D> image = NEW ExImageD2D(data);
+			ExAutoPtr<ExImageD2D> image = new ExImageD2D(data);
 			return image->QueryInterface(r_image);
 		}
 		catch_default({});
@@ -159,7 +161,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExImageD2D> image = NEW ExImageD2D(bitmap, palette, pre_alpha);
+			ExAutoPtr<ExImageD2D> image = new ExImageD2D(bitmap, palette, pre_alpha);
 			return image->QueryInterface(r_image);
 		}
 		catch_default({});
@@ -168,7 +170,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExImageD2D> image = NEW ExImageD2D(icon);
+			ExAutoPtr<ExImageD2D> image = new ExImageD2D(icon);
 			return image->QueryInterface(r_image);
 		}
 		catch_default({});
@@ -196,7 +198,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExFontD2D> font = NEW ExFontD2D();
+			ExAutoPtr<ExFontD2D> font = new ExFontD2D();
 			return font->QueryInterface(r_font);
 		}
 		catch_default({});
@@ -205,7 +207,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExFontD2D> font = NEW ExFontD2D(name, size, style, file_atom);
+			ExAutoPtr<ExFontD2D> font = new ExFontD2D(name, size, style, file_atom);
 			return font->QueryInterface(r_font);
 		}
 		catch_default({});
@@ -214,7 +216,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExFontD2D> font = NEW ExFontD2D(font_info);
+			ExAutoPtr<ExFontD2D> font = new ExFontD2D(font_info);
 			return font->QueryInterface(r_font);
 		}
 		catch_default({});
@@ -223,7 +225,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExPathD2D> path = NEW ExPathD2D();
+			ExAutoPtr<ExPathD2D> path = new ExPathD2D();
 			return path->QueryInterface(r_path);
 		}
 		catch_default({});
@@ -232,7 +234,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExRegionD2D> region = NEW ExRegionD2D(true);
+			ExAutoPtr<ExRegionD2D> region = new ExRegionD2D(true);
 			return region->QueryInterface(r_region);
 		}
 		catch_default({});
@@ -241,7 +243,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExRegionD2D> region = NEW ExRegionD2D(false);
+			ExAutoPtr<ExRegionD2D> region = new ExRegionD2D(false);
 			return region->QueryInterface(r_region);
 		}
 		catch_default({});
@@ -250,7 +252,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExRegionD2D> region = NEW ExRegionD2D(left, top, right, bottom,false);
+			ExAutoPtr<ExRegionD2D> region = new ExRegionD2D(left, top, right, bottom,false);
 			return region->QueryInterface(r_region);
 		}
 		catch_default({});
@@ -259,7 +261,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExRegionD2D> region = NEW ExRegionD2D(left, top, right, bottom, radius, radius, radius, radius);
+			ExAutoPtr<ExRegionD2D> region = new ExRegionD2D(left, top, right, bottom, radius, radius, radius, radius);
 			return region->QueryInterface(r_region);
 		}
 		catch_default({});
@@ -268,7 +270,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExRegionD2D> region = NEW ExRegionD2D(left, top, right, bottom, 
+			ExAutoPtr<ExRegionD2D> region = new ExRegionD2D(left, top, right, bottom, 
 				radius_left_top, radius_right_top, radius_right_bottom, radius_left_bottom);
 			return region->QueryInterface(r_region);
 		}
@@ -278,7 +280,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExRegionD2D> region = NEW ExRegionD2D(left, top, right, bottom);
+			ExAutoPtr<ExRegionD2D> region = new ExRegionD2D(left, top, right, bottom);
 			return region->QueryInterface(r_region);
 		}
 		catch_default({});
@@ -287,7 +289,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExRegionD2D> region = NEW ExRegionD2D(path, tranform);
+			ExAutoPtr<ExRegionD2D> region = new ExRegionD2D(path, tranform);
 			return region->QueryInterface(r_region);
 		}
 		catch_default({});
@@ -297,7 +299,7 @@ namespace ExDirectUI
 		try
 		{
 			if (color == COLOR_UNDEFINE) { color = COLOR_TRANSPARENT; }
-			ExAutoPtr<ExPenD2D> pen = NEW ExPenD2D(color, width);
+			ExAutoPtr<ExPenD2D> pen = new ExPenD2D(color, width);
 			return pen->QueryInterface(r_pen);
 		}
 		catch_default({});
@@ -306,7 +308,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExPenD2D> pen = NEW ExPenD2D(brush, width);
+			ExAutoPtr<ExPenD2D> pen = new ExPenD2D(brush, width);
 			return pen->QueryInterface(r_pen);
 		}
 		catch_default({});
@@ -315,7 +317,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExSolidBrushD2D> brush = NEW ExSolidBrushD2D(color);
+			ExAutoPtr<ExSolidBrushD2D> brush = new ExSolidBrushD2D(color);
 			return brush->QueryInterface(r_brush);
 		}
 		catch_default({});
@@ -325,7 +327,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExLinearBrushD2D> brush = NEW ExLinearBrushD2D(begin_x, begin_y, end_x, end_y, color_begin, color_end);
+			ExAutoPtr<ExLinearBrushD2D> brush = new ExLinearBrushD2D(begin_x, begin_y, end_x, end_y, color_begin, color_end);
 			return brush->QueryInterface(r_brush);
 		}
 		catch_default({});
@@ -337,7 +339,7 @@ namespace ExDirectUI
 
 		try
 		{
-			ExAutoPtr<ExLinearBrushD2D> brush = NEW ExLinearBrushD2D(begin_x, begin_y, end_x, end_y, gradient_points, count);
+			ExAutoPtr<ExLinearBrushD2D> brush = new ExLinearBrushD2D(begin_x, begin_y, end_x, end_y, gradient_points, count);
 			return brush->QueryInterface(r_brush);
 		}
 		catch_default({});
@@ -347,7 +349,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExRadialBrushD2D> brush = NEW ExRadialBrushD2D(left, top, right, bottom, color_inside, color_outside);
+			ExAutoPtr<ExRadialBrushD2D> brush = new ExRadialBrushD2D(left, top, right, bottom, color_inside, color_outside);
 			return brush->QueryInterface(r_brush);
 		}
 		catch_default({});
@@ -359,7 +361,7 @@ namespace ExDirectUI
 
 		try
 		{
-			ExAutoPtr<ExRadialBrushD2D> brush = NEW ExRadialBrushD2D(left, top, right, bottom, gradient_points, count);
+			ExAutoPtr<ExRadialBrushD2D> brush = new ExRadialBrushD2D(left, top, right, bottom, gradient_points, count);
 			return brush->QueryInterface(r_brush);
 		}
 		catch_default({});
@@ -371,7 +373,7 @@ namespace ExDirectUI
 
 		try
 		{
-			ExAutoPtr<ExImageBrushD2D> brush = NEW ExImageBrushD2D(image, src, extend_mode, opacity);
+			ExAutoPtr<ExImageBrushD2D> brush = new ExImageBrushD2D(image, src, extend_mode, opacity);
 			return brush->QueryInterface(r_brush);
 		}
 		catch_default({});
@@ -413,7 +415,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExBitmapDeviceD2D> device = NEW ExBitmapDeviceD2D(width, height);
+			ExAutoPtr<ExBitmapDeviceD2D> device = new ExBitmapDeviceD2D(width, height);
 			return device->QueryInterface(r_device);
 		}
 		catch_default({});
@@ -422,7 +424,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExCanvasD2D> canvas = NEW ExCanvasD2D(width, height);
+			ExAutoPtr<ExCanvasD2D> canvas = new ExCanvasD2D(width, height);
 			return canvas->QueryInterface(r_canvas);
 		}
 		catch_default({});

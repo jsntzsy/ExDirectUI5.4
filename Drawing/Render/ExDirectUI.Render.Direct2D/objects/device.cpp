@@ -371,11 +371,11 @@ namespace ExDirectUI
 
 		if (composition) {
 			//如果创建并初始化成功了,则直接使用
-			try_ignore({ return NEW ExCompositionWindowDeviceD2D(window); });
+			try_ignore({ return new ExCompositionWindowDeviceD2D(window); });
 		}
 
 		//否则使用普通的窗口设备
-		return NEW ExWindowDeviceD2D(window);
+		return new ExWindowDeviceD2D(window);
 	}
 
 

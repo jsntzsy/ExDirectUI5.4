@@ -458,7 +458,7 @@ namespace ExDirectUI
 		int count = ceil(radius_x * 2 / step);
 
 		//计算生成多边形点阵
-		D2D1_POINT_2F* points = NEW D2D1_POINT_2F[count * 2];
+		D2D1_POINT_2F* points = new D2D1_POINT_2F[count * 2];
 		for (int i = 0; i < count; i++)
 		{
 			float y = 1 - pow(fabs(x) / radius_x, order);
@@ -554,7 +554,7 @@ namespace ExDirectUI
 			);
 
 			ExAutoPtr<ExTextFigureBuilderD2D> builder =
-				NEW ExTextFigureBuilderD2D(render->m_d2d_factory, m_sink);
+				new ExTextFigureBuilderD2D(render->m_d2d_factory, m_sink);
 			
 			throw_if_failed(
 				layout->Draw(nullptr, builder, left, top),

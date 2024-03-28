@@ -450,7 +450,7 @@ namespace ExDirectUI
 		try
 		{
 			//用新WIC位图创建图像对象,并赋值
-			ExAutoPtr<ExImageD2D> dest = NEW ExImageD2D(new_bitmap);
+			ExAutoPtr<ExImageD2D> dest = new ExImageD2D(new_bitmap);
 			return dest->QueryInterface(r_dest);
 		}
 		catch_default({});
@@ -502,7 +502,7 @@ namespace ExDirectUI
 		try
 		{
 			//用新WIC位图创建图像对象,并赋值
-			ExAutoPtr<ExImageD2D> dest = NEW ExImageD2D(new_bitmap);
+			ExAutoPtr<ExImageD2D> dest = new ExImageD2D(new_bitmap);
 			return dest->QueryInterface(r_dest);
 		}
 		catch_default({});

@@ -47,7 +47,7 @@ namespace ExDirectUI
 		);
 
 		//创建解码图像对象
-		ExAutoPtr<ExDecodeImageLibPng> image = NEW ExDecodeImageLibPng(context);
+		ExAutoPtr<ExDecodeImageLibPng> image = new ExDecodeImageLibPng(context);
 		return image->QueryInterface(r_image);
 	}
 
@@ -70,7 +70,7 @@ namespace ExDirectUI
 		);
 
 		//创建解码图像对象
-		ExAutoPtr<ExDecodeImageLibPng> image = NEW ExDecodeImageLibPng(context);
+		ExAutoPtr<ExDecodeImageLibPng> image = new ExDecodeImageLibPng(context);
 		return image->QueryInterface(r_image);
 	}
 

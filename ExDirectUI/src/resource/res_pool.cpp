@@ -280,7 +280,7 @@ namespace ExDirectUI
 
 		try
 		{
-			ExAutoPtr<ExResPool> pool = NEW ExResPool(item_size, init_item_proc, free_item_proc);
+			ExAutoPtr<ExResPool> pool = new ExResPool(item_size, init_item_proc, free_item_proc);
 			return pool->QueryInterface(r_pool);
 		}
 		catch_default({});
