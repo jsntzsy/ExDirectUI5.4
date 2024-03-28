@@ -154,6 +154,46 @@ namespace ExDirectUI
 		*r_size = fs.tellg();
 		return S_OK;
 	}
+
+	HRESULT EXAPI EXCALL ExDataRc4(byte_t* data, size_t data_size, const byte_t* key, size_t key_size)
+	{
+		CHECK_PARAM(data);
+		CHECK_PARAM(key);
+		CHECK_PARAM(key_size > 0);
+
+		int S[256];
+		int T[256];
+		ULONG i = 0, j = 0;
+
+		for (i = 0; i < 256; i++)
+		{
+			S[i] = i;
+			T[i] = key[i % key_size];
+		}
+
+		for (i = 0; i < 256; i++)
+		{
+			j = (j + S[i] + T[i]) % 256;
+			int tmp = S[j];
+			S[j] = S[i];
+			S[i] = tmp;
+		}
+
+		i = 0, j = 0;
+		for (size_t p = 0; p < data_size; p++)
+		{
+			i = (i + 1) % 256;
+			j = (j + S[i]) % 256;
+			int tmp = S[j];
+			S[j] = S[i];
+			S[i] = tmp;
+
+			int k = S[(S[i] + S[j]) % 256];
+			data[p] = data[p] ^ k;
+		}
+
+		return S_OK;
+	}
 }
 
 

@@ -225,6 +225,9 @@
     <ClCompile Include="src\drawing\render\device.cpp">
       <Filter>drawing\render\device</Filter>
     </ClCompile>
+    <ClCompile Include="src\resource\package.cpp">
+      <Filter>resouce\package</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -400,6 +403,12 @@
     </ClInclude>
     <ClInclude Include="include\drawing\render\device.h">
       <Filter>drawing\render\device</Filter>
+    </ClInclude>
+    <ClInclude Include="include\resource\package.h">
+      <Filter>resouce\package</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resource\package_processor.hpp">
+      <Filter>resouce\package</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

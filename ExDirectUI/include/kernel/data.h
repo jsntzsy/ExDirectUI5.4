@@ -18,6 +18,10 @@ namespace ExDirectUI
 
 		/// 数据大小
 		size_t size;
+
+		ExData() : data(nullptr), size(0) {}
+		ExData(byte_t* data, size_t size) : data(data), size(size) {}
+		ExData(LPCWSTR str) : data((byte_t*)str), size((wcslen(str) + 1) * sizeof(wchar_t)) {}
 	};
 
 	/////////////////////
@@ -89,4 +93,15 @@ namespace ExDirectUI
 	 */
 	HRESULT EXAPI EXCALL ExDataGetFileSize(LPCWSTR file, size_t* r_size);
 	
+	/**
+	 * @brief 数据块_RC4加解密
+	 * 为一段数据运算一次RC4加解密
+	 * @param data 被处理的数据
+	 * @param data_size 数据尺寸
+	 * @param key 密钥
+	 * @param key_size 密钥尺寸 
+	 * @return 返回执行状态
+	 */
+	HRESULT EXAPI EXCALL ExDataRc4(byte_t* data, size_t data_size, const byte_t* key, size_t key_size);
+
 }

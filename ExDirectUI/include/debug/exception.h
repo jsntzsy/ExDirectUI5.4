@@ -78,7 +78,8 @@ namespace ExDirectUI
 #define try_continue(try_block,todo)	try{ try_block; } catch_continue(todo);								// 捕获异常并继续执行
 #define try_ignore(try_block,todo)		try{ try_block; } catch_ignore(todo);								// 捕获异常但忽略
 
-#define handle_ex(status,message) return ExStatusHandle(status,__CALLINFO__,message)						// 处理异常
+#define handle_ex(status,message)			return ExStatusHandle(status,__CALLINFO__,message)				// 处理异常
+#define handle_continue(status,message)		ExStatusHandle(status,__CALLINFO__,message)						// 处理异常
 
 	// 错误则处理异常
 #define handle_if_false(exp,status,message,todo) \

@@ -191,6 +191,7 @@
     <ClCompile Include="src\kernel\module.cpp" />
     <ClCompile Include="src\kernel\module_utils.cpp" />
     <ClCompile Include="src\kernel\winapi.cpp" />
+    <ClCompile Include="src\resource\package.cpp" />
     <ClCompile Include="src\resource\res_pool.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -245,6 +246,7 @@
     <ClInclude Include="include\kernel\memory.h" />
     <ClInclude Include="include\kernel\module.h" />
     <ClInclude Include="include\kernel\new.h" />
+    <ClInclude Include="include\resource\package.h" />
     <ClInclude Include="include\resource\res_pool.h" />
     <ClInclude Include="include\status.h" />
     <ClInclude Include="src\app\engine.h" />
@@ -257,6 +259,7 @@
     <ClInclude Include="src\kernel\module.h" />
     <ClInclude Include="src\kernel\module_utils.h" />
     <ClInclude Include="src\kernel\winapi.h" />
+    <ClInclude Include="src\resource\package_processor.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
