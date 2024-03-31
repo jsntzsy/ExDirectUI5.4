@@ -17,6 +17,7 @@
 #include "objects/effect.h"
 
 #include "objects/text_render.hpp"
+#include "render_api.h"
 
 namespace ExDirectUI
 {
@@ -1255,7 +1256,8 @@ namespace ExDirectUI
 	}
 
 	HRESULT EXOBJCALL ExCanvasD2D::DrawGridsImagePart(const IExImage* image, float left, float top,
-		float right, float bottom, float src_left, float src_top, float src_right, float src_bottom, ExGridsImageInfo* grids, EXCHANNEL alpha)
+		float right, float bottom, float src_left, float src_top, float src_right, float src_bottom,
+		ExGridsImageInfo* grids, EXCHANNEL alpha)
 	{
 		CHECK_PARAM(image);
 		CHECK_PARAM(grids);
@@ -1379,14 +1381,191 @@ namespace ExDirectUI
 		return S_OK;
 	}
 	HRESULT EXOBJCALL ExCanvasD2D::DrawShadow(const IExBrush* bkg_brush, float left, float top,
-		float right, float bottom, float size, float radius_left_top, float radius_right_top, float radius_right_bottom, float radius_left_bottom, float offset_x, float offset_y)
+		float right, float bottom, float size, float radius_left_top, float radius_right_top,
+		float radius_right_bottom, float radius_left_bottom, float offset_x, float offset_y)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		CHECK_PARAM(bkg_brush);
+		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
+
+		try
+		{
+			ExRegionD2D region(left, top, right, bottom,
+				radius_left_top, radius_right_top, 
+				radius_right_bottom, radius_left_bottom
+			);
+
+			return DrawShadowFromRegion(bkg_brush, &region, size, offset_x, offset_y);
+		}
+		catch_default({});
+
+		//auto render = GetRender();
+
+		////创建临时渲染目标
+		//ExAutoPtr<ID2D1BitmapRenderTarget> rt;
+		//handle_if_failed(
+		//	m_dc->CreateCompatibleRenderTarget(&rt),
+		//	L"创建临时渲染目标失败"
+		//);
+
+		////生成一个圆角矩形几何形
+		//ExAutoPtr<ID2D1PathGeometry> round_rect_geometry;
+		//ExAutoPtr<ID2D1GeometrySink> sink;
+		//handle_if_failed(
+		//	render->m_d2d_factory->CreatePathGeometry(&round_rect_geometry),
+		//	L"创建圆角几何形失败"
+		//);
+		//handle_if_failed(round_rect_geometry->Open(&sink), L"开始描述圆角几何形失败");
+		//ExPathD2D::MakeRoundRectFigure(sink, left, top, right, bottom,
+		//	radius_left_top, radius_right_top,
+		//	radius_right_bottom, radius_left_bottom
+		//);
+		//handle_if_failed(sink->Close(), L"描述圆角几何形错误");
+		//sink.Release();
+
+		////坐标偏移
+		//_offset_(true, left, top, right, bottom);
+
+		////填充图形
+		//ID2D1Brush* brush = (ID2D1Brush*)bkg_brush->GetContext(0);
+		//rt->BeginDraw();
+		//rt->Clear();
+		//rt->SetTransform(D2D1::Matrix3x2F::Translation(offset_x, offset_y));
+		//rt->FillGeometry(round_rect_geometry, brush);
+		//handle_if_failed(rt->EndDraw(), L"填充圆角矩形错误");
+
+		////创建一个与画布一样大小的图形
+		//ExAutoPtr<ID2D1RectangleGeometry> rect_geometry;
+		//handle_if_failed(render->m_d2d_factory->CreateRectangleGeometry(
+		//	D2D1::RectF(0, 0, m_target->width, m_target->height),
+		//	&rect_geometry
+		//), L"创建临时矩形几何形失败");
+
+		////生成裁剪了中心圆角矩形的图形(ClipRegion)
+		//ExAutoPtr<ID2D1PathGeometry> geometry;
+		//handle_if_failed(
+		//	render->m_d2d_factory->CreatePathGeometry(&geometry),
+		//	L"创建剪辑区几何形失败"
+		//);
+		//handle_if_failed(geometry->Open(&sink), L"开始描述剪辑区几何形失败");
+
+		////用大区域排除中心圆角矩形
+		//handle_if_failed(
+		//	rect_geometry->CombineWithGeometry(round_rect_geometry,
+		//		D2D1_COMBINE_MODE_EXCLUDE, nullptr, sink
+		//	), L"生成剪辑区几何形错误"
+		//);
+		//handle_if_failed(sink->Close(), L"生成剪辑区几何形错误");
+		//sink.Release();
+
+		////获得绘制阴影的位图
+		//ExAutoPtr<ID2D1Bitmap> bitmap;
+		//handle_if_failed(rt->GetBitmap(&bitmap), L"获取阴影位图失败");
+
+		////创建模糊效果器
+		//ExAutoPtr<ID2D1Effect> effect;
+		//handle_if_failed(m_dc->CreateEffect(_CLSID_D2D1GaussianBlur, &effect), L"创建模糊效果器失败");
+
+		////设置效果器参数
+		//effect->SetInput(0, bitmap);
+		//effect->SetValue(D2D1_GAUSSIANBLUR_PROP_STANDARD_DEVIATION, size / 2.0F);
+
+		////设置剪辑区
+		//ExAutoPtr<ID2D1Layer> layer;
+		//handle_if_failed(m_dc->CreateLayer(&layer), L"创建剪辑层失败");
+		//m_dc->PushLayer(
+		//	D2D1::LayerParameters(
+		//		D2D1::InfiniteRect(),
+		//		geometry,
+		//		D2D1_ANTIALIAS_MODE_PER_PRIMITIVE
+		//	), layer
+		//);
+
+		////将模糊后的阴影图绘制到画布上
+		//m_dc->DrawImage(effect, m_interpolation_mode);
+		//m_dc->PopLayer();
+
+		return S_OK;
 	}
 	HRESULT EXOBJCALL ExCanvasD2D::DrawShadowFromRegion(const IExBrush* bkg_brush, const IExRegion* region,
 		float size, float offset_x, float offset_y)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		CHECK_PARAM(bkg_brush);
+		CHECK_PARAM(region);
+		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
+
+		auto render = GetRender();
+
+		//创建临时渲染目标
+		ExAutoPtr<ID2D1BitmapRenderTarget> rt;
+		handle_if_failed(
+			m_dc->CreateCompatibleRenderTarget(&rt),
+			L"创建临时渲染目标失败"
+		);
+
+		//生成一个圆角矩形几何形
+		ID2D1Geometry* src_geometry = ((ExRegionD2D*)region)->m_geometry;
+
+		//填充图形
+		ID2D1Brush* brush = (ID2D1Brush*)bkg_brush->GetContext(0);
+		rt->BeginDraw();
+		rt->Clear();
+		rt->SetTransform(D2D1::Matrix3x2F::Translation(offset_x, offset_y));
+		rt->FillGeometry(src_geometry, brush);
+		handle_if_failed(rt->EndDraw(), L"填充圆角矩形错误");
+
+		//创建一个与画布一样大小的图形
+		ExAutoPtr<ID2D1RectangleGeometry> rect_geometry;
+		handle_if_failed(render->m_d2d_factory->CreateRectangleGeometry(
+			D2D1::RectF(0, 0, m_target->width, m_target->height),
+			&rect_geometry
+		), L"创建临时矩形几何形失败");
+
+		//生成裁剪了中心圆角矩形的图形(ClipRegion)
+		ExAutoPtr<ID2D1PathGeometry> geometry;
+		ExAutoPtr<ID2D1GeometrySink> sink;
+		handle_if_failed(
+			render->m_d2d_factory->CreatePathGeometry(&geometry),
+			L"创建剪辑区几何形失败"
+		);
+		handle_if_failed(geometry->Open(&sink), L"开始描述剪辑区几何形失败");
+
+		//用大区域排除中心圆角矩形
+		handle_if_failed(
+			rect_geometry->CombineWithGeometry(src_geometry,
+				D2D1_COMBINE_MODE_EXCLUDE, nullptr, sink
+			), L"生成剪辑区几何形错误"
+		);
+		handle_if_failed(sink->Close(), L"生成剪辑区几何形错误");
+		sink.Release();
+
+		//获得绘制阴影的位图
+		ExAutoPtr<ID2D1Bitmap> bitmap;
+		handle_if_failed(rt->GetBitmap(&bitmap), L"获取阴影位图失败");
+
+		//创建模糊效果器
+		ExAutoPtr<ID2D1Effect> effect;
+		handle_if_failed(m_dc->CreateEffect(_CLSID_D2D1GaussianBlur, &effect), L"创建模糊效果器失败");
+
+		//设置效果器参数
+		effect->SetInput(0, bitmap);
+		effect->SetValue(D2D1_GAUSSIANBLUR_PROP_STANDARD_DEVIATION, size / 2.0F);
+
+		//设置剪辑区
+		ExAutoPtr<ID2D1Layer> layer;
+		handle_if_failed(m_dc->CreateLayer(&layer), L"创建剪辑层失败");
+		m_dc->PushLayer(
+			D2D1::LayerParameters(
+				D2D1::InfiniteRect(),
+				geometry,
+				D2D1_ANTIALIAS_MODE_PER_PRIMITIVE
+			), layer
+		);
+
+		//将模糊后的阴影图绘制到画布上
+		m_dc->DrawImage(effect, m_interpolation_mode);
+		m_dc->PopLayer();
+
+		return S_OK;
 	}
 	HRESULT EXOBJCALL ExCanvasD2D::DrawTarget(const IExCanvasTarget* target_src, float left, float top,
 		float right, float bottom, ExRectF* src_rect, EXCHANNEL alpha)

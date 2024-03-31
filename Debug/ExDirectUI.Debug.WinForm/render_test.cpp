@@ -128,6 +128,13 @@ namespace ExDirectUI
 			canvas->BeginDraw();
 			canvas->Clear(COLOR_GRAY);
 			canvas->SetAntiAliasMode(ExAntiAliasMode::AllHighQuality);
+			
+			client.Inflate(-50, -50);
+			canvas->DrawShadow(
+				solid_brush, _expand_rect_(client),
+				30, 0, 0, 0, 0,
+				0, +10
+			);
 
 #pragma region 绘制测试代码
 			int l_test_part = test_part;
@@ -585,6 +592,7 @@ namespace ExDirectUI
 				}
 				
 			}
+
 #pragma endregion
 
 
