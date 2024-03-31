@@ -86,5 +86,6 @@ namespace ExDirectUI
 
 		friend class ExImageBrushD2D;
 		friend class ExCanvasD2D;
+		friend class ExEffectD2D;
 	};
 }

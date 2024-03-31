@@ -22,6 +22,7 @@
 #include "objects/image_brush.h"
 #include "objects/device.h"
 #include "objects/canvas.h"
+#include "objects/effect.h"
 
 namespace ExDirectUI
 {
@@ -82,8 +83,8 @@ namespace ExDirectUI
 		//因为此时构造函数还未结束，LazySingleton::Instance返回nullptr,所以需要手动传this，以下同理
 		ExFontPoolD2D::GetInstance(this);
 
-		//ExEffectD2D::RegisterEffects(this);
-
+		//注册内建效果器
+		ExEffectD2D::RegisterEffects(this);
 	}
 	ExRenderD2D::~ExRenderD2D()
 	{
@@ -98,14 +99,15 @@ namespace ExDirectUI
 	{
 		ExFontPoolD2D::ClearInstance(true);
 
+		m_effects.clear();
+
 		m_d2d_dc.Release();
 		m_d2d_device.Release();
 		m_d2d_factory.Release();
 		m_wic_factory.Release();
 		m_dwrite_factory.Release();
 
-		ExRenderD2D::ClearInstance(true);
-
+		ExRenderD2D::ClearInstance(false);
 		return S_OK;
 	}
 	bool EXOBJCALL ExRenderD2D::IsSupportComposition() const
@@ -252,7 +254,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExRegionD2D> region = new ExRegionD2D(left, top, right, bottom,false);
+			ExAutoPtr<ExRegionD2D> region = new ExRegionD2D(left, top, right, bottom, false);
 			return region->QueryInterface(r_region);
 		}
 		catch_default({});
@@ -270,7 +272,7 @@ namespace ExDirectUI
 	{
 		try
 		{
-			ExAutoPtr<ExRegionD2D> region = new ExRegionD2D(left, top, right, bottom, 
+			ExAutoPtr<ExRegionD2D> region = new ExRegionD2D(left, top, right, bottom,
 				radius_left_top, radius_right_top, radius_right_bottom, radius_left_bottom);
 			return region->QueryInterface(r_region);
 		}
@@ -322,7 +324,7 @@ namespace ExDirectUI
 		}
 		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreateLinearBrush(float begin_x, float begin_y, float end_x, float end_y, 
+	HRESULT EXOBJCALL ExRenderD2D::CreateLinearBrush(float begin_x, float begin_y, float end_x, float end_y,
 		EXARGB color_begin, EXARGB color_end, IExLinearBrush** r_brush)
 	{
 		try
@@ -344,7 +346,7 @@ namespace ExDirectUI
 		}
 		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreateRadialBrush(float left, float top, float right, float bottom, 
+	HRESULT EXOBJCALL ExRenderD2D::CreateRadialBrush(float left, float top, float right, float bottom,
 		EXARGB color_inside, EXARGB color_outside, IExRadialBrush** r_brush)
 	{
 		try
@@ -378,7 +380,7 @@ namespace ExDirectUI
 		}
 		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreateCanvasBrush(const IExCanvas* canvas, const ExRectF* dst, DWORD extend_mode, 
+	HRESULT EXOBJCALL ExRenderD2D::CreateCanvasBrush(const IExCanvas* canvas, const ExRectF* dst, DWORD extend_mode,
 		EXCHANNEL alpha, IExCanvasBrush** r_brush)
 	{
 		handle_ex(E_NOTIMPL, L"尚未实现");
@@ -390,15 +392,79 @@ namespace ExDirectUI
 	}
 	HRESULT EXOBJCALL ExRenderD2D::RegisterEffect(const ExEffectInfo* effect_info)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		CHECK_PARAM(effect_info);
+		CHECK_PARAM(effect_info->id != EXATOM_UNKNOWN);
+
+		auto it = m_effects.find(effect_info->id);
+		handle_if_false(it == m_effects.end(), EE_EXISTS, L"该特效类已经存在");
+
+		m_effects[effect_info->id] = *effect_info;
+		return S_OK;
 	}
 	HRESULT EXOBJCALL ExRenderD2D::UnRegisterEffect(EXATOM effect_id)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		CHECK_PARAM(effect_id != EXATOM_UNKNOWN);
+
+		auto it = m_effects.find(effect_id);
+		handle_if_false(it != m_effects.end(), EE_NOEXISTS, L"该特效类不存在");
+
+		m_effects.erase(it);
+		return S_OK;
+	}
+	bool EXOBJCALL ExRenderD2D::IsSupportEffect(EXATOM effect_id) const
+	{
+		return m_effects.find(effect_id) != m_effects.end();
+	}
+	HRESULT EXOBJCALL ExRenderD2D::GetEffectInfo(EXATOM effect_id, ExEffectInfo* const r_effect_info) const
+	{
+		CHECK_PARAM(effect_id != EXATOM_UNKNOWN);
+		CHECK_PARAM(r_effect_info);
+
+		auto it = m_effects.find(r_effect_info->id);
+		handle_if_false(it != m_effects.end(), EE_NOEXISTS, L"该特效类不存在");
+
+		*r_effect_info = it->second;
+		return S_OK;
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateEffect(EXATOM effect_id, LPARAM lparam, IExEffect** r_effect)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		CHECK_PARAM(effect_id != EXATOM_UNKNOWN);
+		CHECK_PARAM(r_effect);
+
+		auto it = m_effects.find(effect_id);
+		handle_if_false(it != m_effects.end(), EE_NOEXISTS, L"该特效类不存在");
+
+		try
+		{
+			ExAutoPtr<IExEffect> effect;
+			return it->second.create_proc(effect_id, &it->second, lparam, &effect);
+		}
+		catch_default({});
+	}
+	HRESULT EXOBJCALL ExRenderD2D::CreateEffectByName(LPCWSTR effect_name, LPARAM lparam, IExEffect** r_effect)
+	{
+		CHECK_PARAM(effect_name);
+		CHECK_PARAM(r_effect);
+
+		//先尝试用atom找一下
+		const ExEffectInfo* effect_info = nullptr;
+		EXATOM effect_id = ExAtom(effect_name);
+		auto it = m_effects.find(effect_id);
+
+		//如果没找到,则遍历判断名字
+		if (it == m_effects.end()) {
+			for (auto& effect : m_effects) {
+				if (_wcsicmp(effect.second.name, effect_name) == 0) {
+					effect_info = &effect.second;
+					break;
+				}
+			}
+		}
+		else { effect_info = &it->second; }
+
+		handle_if_false(effect_info != nullptr, EE_NOEXISTS, L"该特效类不存在");
+
+		try_default({ return effect_info->create_proc(effect_info->id, effect_info, lparam, r_effect); });
 	}
 	HRESULT EXOBJCALL ExRenderD2D::CreateWindowDevice(HWND window, ExDeviceType type, IExDevice** r_device)
 	{

@@ -14,6 +14,7 @@
 #include "objects/path.h"
 #include "objects/font.h"
 #include "objects/image.h"
+#include "objects/effect.h"
 
 #include "objects/text_render.hpp"
 
@@ -186,12 +187,12 @@ namespace ExDirectUI
 	HRESULT EXOBJCALL ExCanvasD2D::GetClipRect(ExRectF* r_clip) const
 	{
 		CHECK_PARAM(r_clip);
-			
+
 		if (m_clip_region == nullptr) {
 			*r_clip = {};
 			return S_FALSE;
 		}
-		
+
 		return m_clip_region->GetBounds(r_clip);
 	}
 	HRESULT EXOBJCALL ExCanvasD2D::GetClipRegion(IExRegion* r_clip_region) const
@@ -209,14 +210,14 @@ namespace ExDirectUI
 		{
 			//如果已经有裁剪区域,则先清除
 			if (m_clip_region) { throw_if_failed(ResetClip(), L"重置剪辑区失败"); }
-			
+
 			//创建新的裁剪区域对象(内部会做偏移)
 			D2D1_RECT_F clip = D2D1Rect(left, top, right, bottom);
 			m_clip_region = new ExRegionD2D(clip.left, clip.top, clip.right, clip.bottom, true);
-			
+
 			//偏移矩形
 			_offset_(false, clip);
-			
+
 			//压入裁剪区域
 			m_dc->PushAxisAlignedClip(clip, m_dc->GetAntialiasMode());
 			return S_OK;
@@ -324,7 +325,7 @@ namespace ExDirectUI
 	HRESULT EXOBJCALL ExCanvasD2D::RenderToImage(IExImage* r_target_image)
 	{
 		CHECK_PARAM(r_target_image);
-		
+
 		ExMemDC temp_dc{};
 		HDC src_dc = NULL;
 		ExImageLock lock{};
@@ -1002,7 +1003,7 @@ namespace ExDirectUI
 		CHECK_PARAM(font);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
 		if (ALPHA(text_color) == ALPHA_TRANSPARENT) { return S_OK; }
-		
+
 		bool clip = false;
 		try
 		{
@@ -1169,7 +1170,7 @@ namespace ExDirectUI
 		return OnDrawImage(bitmap, dst_rect, src_rect, ExImageMode::Default, alpha);
 	}
 	HRESULT EXOBJCALL ExCanvasD2D::DrawImageRect(const IExImage* image, float left, float top,
-		float right, float bottom, DWORD mode, EXCHANNEL alpha)
+		float right, float bottom, ExImageMode mode, EXCHANNEL alpha)
 	{
 		CHECK_PARAM(image);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
@@ -1193,7 +1194,7 @@ namespace ExDirectUI
 		CHECK_PARAM(image);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
 		if (alpha == ALPHA_TRANSPARENT) { return S_FALSE; }
-		
+
 		//坐标偏移
 		_offset_(false, left, top);
 
@@ -1208,7 +1209,7 @@ namespace ExDirectUI
 	}
 	HRESULT EXOBJCALL ExCanvasD2D::DrawImagePartRect(const IExImage* image, float left, float top,
 		float right, float bottom, float src_left, float src_top, float src_right, float src_bottom,
-		DWORD mode, EXCHANNEL alpha)
+		ExImageMode mode, EXCHANNEL alpha)
 	{
 		CHECK_PARAM(image);
 		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
@@ -1243,7 +1244,7 @@ namespace ExDirectUI
 		);
 	}
 
-	inline ExImageMode _gflag_to_imode(DWORD flags, int pos) 
+	inline ExImageMode _gflag_to_imode(DWORD flags, int pos)
 	{
 		flags = (flags >> pos) & 0x0F;
 		return flags == 0 ? ExImageMode::Default :
@@ -1520,7 +1521,12 @@ namespace ExDirectUI
 	}
 	HRESULT EXOBJCALL ExCanvasD2D::DrawEffect(const IExEffect* effect, float left, float top, LPARAM param)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		CHECK_PARAM(effect);
+		handle_if_false(m_drawing, EE_NOREADY, L"画布尚未开始绘制");
+
+		_offset_(false, left, top);
+
+		return ((ExEffectD2D*)effect)->OnDraw(this, left, top, param);
 	}
 	HRESULT EXOBJCALL ExCanvasD2D::OnDrawImage(ID2D1Bitmap* bitmap, ExRectF& dst_rect, ExRectF& src_rect,
 		DWORD mode, EXCHANNEL alpha, D2D1_INTERPOLATION_MODE interpolation)

@@ -183,6 +183,7 @@
     <ClCompile Include="factory.cpp" />
     <ClCompile Include="objects\canvas.cpp" />
     <ClCompile Include="objects\device.cpp" />
+    <ClCompile Include="objects\effect.cpp" />
     <ClCompile Include="objects\font.cpp" />
     <ClCompile Include="objects\image.cpp" />
     <ClCompile Include="objects\image_brush.cpp" />
@@ -201,9 +202,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="effects\3DPerspectiveEffect.hpp" />
+    <ClInclude Include="effects\3DTransformEffect.hpp" />
+    <ClInclude Include="effects\BlurEffect.hpp" />
+    <ClInclude Include="effects\HueRotateEffect.hpp" />
     <ClInclude Include="factory.h" />
     <ClInclude Include="objects\canvas.h" />
     <ClInclude Include="objects\device.h" />
+    <ClInclude Include="objects\effect.h" />
     <ClInclude Include="objects\font.h" />
     <ClInclude Include="objects\image.h" />
     <ClInclude Include="objects\image_brush.h" />

@@ -61,6 +61,9 @@
     <Filter Include="brush\canvas_brush">
       <UniqueIdentifier>{1b526320-395d-4415-9373-283f02ef029b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="effect\builting_effects">
+      <UniqueIdentifier>{98105e9a-e917-4c17-a382-d3ba5393dc53}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -108,6 +111,9 @@
     <ClCompile Include="objects\canvas.cpp">
       <Filter>canvas</Filter>
     </ClCompile>
+    <ClCompile Include="objects\effect.cpp">
+      <Filter>effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -154,6 +160,21 @@
     </ClInclude>
     <ClInclude Include="objects\text_render.hpp">
       <Filter>canvas</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\effect.h">
+      <Filter>effect</Filter>
+    </ClInclude>
+    <ClInclude Include="effects\3DTransformEffect.hpp">
+      <Filter>effect\builting_effects</Filter>
+    </ClInclude>
+    <ClInclude Include="effects\BlurEffect.hpp">
+      <Filter>effect\builting_effects</Filter>
+    </ClInclude>
+    <ClInclude Include="effects\HueRotateEffect.hpp">
+      <Filter>effect\builting_effects</Filter>
+    </ClInclude>
+    <ClInclude Include="effects\3DPerspectiveEffect.hpp">
+      <Filter>effect\builting_effects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

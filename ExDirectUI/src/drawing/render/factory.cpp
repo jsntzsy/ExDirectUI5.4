@@ -65,7 +65,6 @@ namespace ExDirectUI
 		g_drawing_antialias_mode = 0;
 		g_drawing_default_dpi = EX_DEFAULT_DPI;
 		_UpdateLayeredWindowIndirect = nullptr;
-		g_drawing_render = nullptr;
 	}
 
 	HRESULT EXCALL _ExRender_Group(IExRender* render)

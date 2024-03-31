@@ -8,6 +8,7 @@
  */
 
 #include "stdafx.h"
+#include "atom.h"
 
 #pragma warning(disable:4305)
 
@@ -34,6 +35,7 @@ namespace ExDirectUI
 		PATH,
 		TEXT,
 		IMAGE,
+		EFFECT,
 
 		_TEST_PART_COUNT,
 	};
@@ -128,9 +130,11 @@ namespace ExDirectUI
 			canvas->SetAntiAliasMode(ExAntiAliasMode::AllHighQuality);
 
 #pragma region 绘制测试代码
-
+			int l_test_part = test_part;
+			//l_test_part = EFFECT;
+			
 			//测试基本图形绘制和填充
-			if (test_part == FIGURE) {
+			if (l_test_part == FIGURE) {
 
 				//将区域分割为 3 行 4 列
 				const int padding = 10;
@@ -199,7 +203,7 @@ namespace ExDirectUI
 
 			}
 			//测试路径区域绘制
-			else if (test_part == PATH) {
+			else if (l_test_part == PATH) {
 				ExAutoPtr<IExPath> path;
 				render->CreatePath(&path);
 
@@ -310,7 +314,7 @@ namespace ExDirectUI
 				canvas->DrawPath(pen, path);
 			}
 			//测试绘制文本
-			else if (test_part == TEXT) {
+			else if (l_test_part == TEXT) {
 
 				ExAutoPtr<IExFont> font_default;
 				ExAutoPtr<IExFont> font_lishu;
@@ -402,17 +406,17 @@ namespace ExDirectUI
 					}
 					//绘制自定义字体
 					else if (type == 3) {
-						WCHAR icon = 0xf1d7;
+						WCHAR icon[] = { 0xf1d7, 0xf110, 0xf11b, 0xf293 };
 						if (mode == 1 || mode == 2) {
 							canvas->FillText(
-								image_brush, font_awesome, &icon, 1,
+								image_brush, font_awesome, icon, _countof(icon),
 								ExTextFormat::Center | ExTextFormat::Middle | ExTextFormat::NoClip,
 								rect.left, rect.top, rect.right, rect.bottom
 							);
 						}
 						if (mode == 0 || mode == 2) {
 							canvas->StrokeText(
-								pen, font_awesome, &icon, 1,
+								pen, font_awesome, icon, _countof(icon),
 								ExTextFormat::Center | ExTextFormat::Middle | ExTextFormat::NoClip,
 								rect.left, rect.top, rect.right, rect.bottom
 							);
@@ -462,7 +466,7 @@ namespace ExDirectUI
 
 			}
 			//测试绘制图像
-			else if (test_part == IMAGE) {
+			else if (l_test_part == IMAGE) {
 
 				//将区域分割为 4 行 4 列
 				const int padding = 10;
@@ -488,12 +492,9 @@ namespace ExDirectUI
 
 					//画8个角或居中
 					if (x <= 2 && y <= 2) {
-
-						DWORD mode = ((int)pow(2, x)) | (((int)pow(2, y)) << 4);
-
 						canvas->DrawImageRect(
 							image_png, _expand_rect_(rect),
-							mode, 255
+							(ExImageMode)(ExImageMode::LeftTop + y * 3 + x)
 						);
 					}
 					else if (x == 3 && y <= 2) {
@@ -541,7 +542,49 @@ namespace ExDirectUI
 				}
 
 			}
+			//测试绘制效果
+			else if (l_test_part == EFFECT) {
+				auto rects = _RenderTest_SplitRect(client,
+					2, 3, { 100,100 }
+				);
 
+				for (int i = 0; i < rects.size(); i++) {
+					auto& rect = rects[i];
+					canvas->DrawRect(pen, rect.left, rect.top, rect.right, rect.bottom);
+					rect.Inflate(-10, -10);
+
+					ExAutoPtr<IExEffect> effect;
+					if (i == 0) {
+						render->CreateEffectByName(L"ExDirectUI.BlurEffect", 0, &effect);
+						effect->SetSource(image_button);
+						float r = 5;
+						effect->SetParam(0, &r);
+					}
+					else if (i == 1) {
+						render->CreateEffectByName(L"ExDirectUI.HueRotateEffect", 0, &effect);
+						effect->SetSource(image_button);
+						float r = 240;
+						effect->SetParam(0, &r);
+					}
+					else if (i == 2) {
+						render->CreateEffectByName(L"ExDirectUI.3DPerspectiveEffect", 0, &effect);
+						effect->SetSource(image_button);
+						
+						float rotate_angle[3] = { 0,30,0 };
+						effect->SetParam(1, rotate_angle);
+						
+						float n = 200;
+						effect->SetParam(3, &n);
+						
+					}
+					else if (i == 3) {
+						
+					}
+
+					if (effect) { canvas->DrawEffect(effect, rect.left, rect.top); }
+				}
+				
+			}
 #pragma endregion
 
 

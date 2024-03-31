@@ -64,7 +64,10 @@ namespace ExDirectUI
 
 		EXMETHOD HRESULT EXOBJCALL RegisterEffect(const ExEffectInfo* effect_info) PURE;
 		EXMETHOD HRESULT EXOBJCALL UnRegisterEffect(EXATOM effect_id) PURE;
+		EXMETHOD bool EXOBJCALL IsSupportEffect(EXATOM effect_id) const PURE;
+		EXMETHOD HRESULT EXOBJCALL GetEffectInfo(EXATOM effect_id, ExEffectInfo* const r_effect_info) const PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateEffect(EXATOM effect_id, LPARAM lparam, IExEffect** r_effect) PURE;
+		EXMETHOD HRESULT EXOBJCALL CreateEffectByName(LPCWSTR effect_name, LPARAM lparam, IExEffect** r_effect) PURE;
 
 		EXMETHOD HRESULT EXOBJCALL CreateWindowDevice(HWND window, ExDeviceType type, IExDevice** r_device) PURE;
 		EXMETHOD HRESULT EXOBJCALL CreateBitmapDevice(uint32_t width, uint32_t height, IExDevice** r_device) PURE;

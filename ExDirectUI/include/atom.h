@@ -44,5 +44,14 @@
 
 
 
+#pragma region 效果器名称
+
+#define ATOM_BLUREFFECT					0xFF660944		// 原子号: blureffect
+#define ATOM_HUEROTATEEFFECT			0x2AEB072D		// 原子号: huerotateeffect
+#define ATOM_3DTRANSFORMEFFECT			0x1A83A190		// 原子号: 3dtransformeffect
+#define ATOM_3DPERSPECTIVEEFFECT		0xB6C56CF0		// 原子号: 3dperspectiveeffect
+
+
+#pragma endregion
 
 

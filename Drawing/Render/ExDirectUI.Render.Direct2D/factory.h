@@ -102,7 +102,7 @@ namespace ExDirectUI
 			EXARGB color_inside, EXARGB color_outside, IExRadialBrush** r_brush) override;
 		EXMETHOD HRESULT EXOBJCALL CreateRadialBrushEx(float left, float top, float right, float bottom,
 			ExGradientPoint* gradient_points, uint32_t count, IExRadialBrush** r_brush) override;
-		EXMETHOD HRESULT EXOBJCALL CreateImageBrush(const IExImage* image, const ExRectF* src, 
+		EXMETHOD HRESULT EXOBJCALL CreateImageBrush(const IExImage* image, const ExRectF* src,
 			ExBrushExtendMode extend_mode, EXCHANNEL opacity, IExImageBrush** r_brush) override;
 		EXMETHOD HRESULT EXOBJCALL CreateCanvasBrush(const IExCanvas* canvas, const ExRectF* dst,
 			DWORD extend_mode, EXCHANNEL alpha, IExCanvasBrush** r_brush) override;
@@ -111,7 +111,10 @@ namespace ExDirectUI
 
 		EXMETHOD HRESULT EXOBJCALL RegisterEffect(const ExEffectInfo* effect_info) override;
 		EXMETHOD HRESULT EXOBJCALL UnRegisterEffect(EXATOM effect_id) override;
+		EXMETHOD bool EXOBJCALL IsSupportEffect(EXATOM effect_id) const override;
+		EXMETHOD HRESULT EXOBJCALL GetEffectInfo(EXATOM effect_id, ExEffectInfo* const r_effect_info) const override;
 		EXMETHOD HRESULT EXOBJCALL CreateEffect(EXATOM effect_id, LPARAM lparam, IExEffect** r_effect) override;
+		EXMETHOD HRESULT EXOBJCALL CreateEffectByName(LPCWSTR effect_name, LPARAM lparam, IExEffect** r_effect) override;
 
 		EXMETHOD HRESULT EXOBJCALL CreateWindowDevice(HWND window, ExDeviceType type, IExDevice** r_device) override;
 		EXMETHOD HRESULT EXOBJCALL CreateBitmapDevice(uint32_t width, uint32_t height, IExDevice** r_device) override;
@@ -125,6 +128,7 @@ namespace ExDirectUI
 		ExAutoPtr<IWICImagingFactory> m_wic_factory;
 		ExAutoPtr<ID2D1Device> m_d2d_device;
 		ExAutoPtr<ID2D1DeviceContext> m_d2d_dc;
+		std::unordered_map<EXATOM, ExEffectInfo> m_effects;
 
 		friend inline IExModuleUtils* GetUtils();
 		friend class ExImageD2D;
