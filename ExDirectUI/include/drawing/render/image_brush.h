@@ -24,4 +24,19 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL Flush() PURE;
 	};
 
+	/////////////////////////////////
+	
+	/**
+	 * @brief 图像画刷_创建
+	 * 通过图像对象创建图像画刷
+	 * @param image 源图像对象
+	 * @param src 源矩形 @可空
+	 * @param extend_mode 扩展模式
+	 * @param opacity 画刷透明度
+	 * @param r_brush 接收的图像画刷对象
+	 * @return 返回执行状态
+	 */
+	HRESULT EXAPI EXCALL ExImageBrushCreate(const IExImage* image, const ExRectF* src,
+		ExBrushExtendMode extend_mode, EXCHANNEL opacity, IExImageBrush** r_brush);
+
 }

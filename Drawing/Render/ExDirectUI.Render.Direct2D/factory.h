@@ -104,10 +104,10 @@ namespace ExDirectUI
 			ExGradientPoint* gradient_points, uint32_t count, IExRadialBrush** r_brush) override;
 		EXMETHOD HRESULT EXOBJCALL CreateImageBrush(const IExImage* image, const ExRectF* src,
 			ExBrushExtendMode extend_mode, EXCHANNEL opacity, IExImageBrush** r_brush) override;
-		EXMETHOD HRESULT EXOBJCALL CreateCanvasBrush(const IExCanvas* canvas, const ExRectF* dst,
-			DWORD extend_mode, EXCHANNEL alpha, IExCanvasBrush** r_brush) override;
-		EXMETHOD HRESULT EXOBJCALL CreateCanvasBrushFromTarget(const IExCanvasTarget* target, const ExRectF* dst,
-			DWORD extend_mode, EXCHANNEL alpha, IExCanvasBrush** r_brush) override;
+		EXMETHOD HRESULT EXOBJCALL CreateCanvasBrush(const IExCanvas* canvas, ExBrushExtendMode extend_mode,
+			EXCHANNEL alpha, IExCanvasBrush** r_brush) override;
+		EXMETHOD HRESULT EXOBJCALL CreateCanvasBrushFromTarget(const IExCanvasTarget* target,
+			ExBrushExtendMode extend_mode, EXCHANNEL alpha, IExCanvasBrush** r_brush) override;
 
 		EXMETHOD HRESULT EXOBJCALL RegisterEffect(const ExEffectInfo* effect_info) override;
 		EXMETHOD HRESULT EXOBJCALL UnRegisterEffect(EXATOM effect_id) override;

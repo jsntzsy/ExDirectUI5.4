@@ -180,6 +180,7 @@ namespace ExDirectUI
 		friend class ExCompositionWindowDeviceD2D;
 		friend class ExEffectD2D;
 		friend class ExPathD2D;
+		friend class ExRenderD2D;
 	};
 
 }

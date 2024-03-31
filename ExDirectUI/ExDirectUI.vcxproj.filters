@@ -228,6 +228,15 @@
     <ClCompile Include="src\resource\package.cpp">
       <Filter>resouce\package</Filter>
     </ClCompile>
+    <ClCompile Include="src\drawing\render\canvas_brush.cpp">
+      <Filter>drawing\render\brush\canvas_brush</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawing\render\image_brush.cpp">
+      <Filter>drawing\render\brush\image_brush</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawing\render\linear_brush.cpp">
+      <Filter>drawing\render\brush\linear_brush</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

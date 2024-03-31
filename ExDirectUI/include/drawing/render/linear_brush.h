@@ -35,4 +35,36 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL SetGammaMode(bool gamma) PURE;
 	};
 
+	//////////////////////////////
+
+	/**
+	 * @brief 线性渐变画刷_创建
+	 * 通过颜色创建线性渐变画刷
+	 * @param x_begin 起点X
+	 * @param y_begin 起点Y
+	 * @param x_end 终点X
+	 * @param y_end 终点Y
+	 * @param color_begin 起点颜色 
+	 * @param color_end 终点颜色
+	 * @param r_brush 接收创建的画刷对象
+	 * @return 返回执行状态
+	 */
+	HRESULT EXAPI EXOBJCALL ExLinearBrushCreate(float x_begin, float y_begin, float x_end, float y_end,
+		EXARGB color_begin, EXARGB color_end, IExLinearBrush** r_brush);
+
+	/**
+	 * @brief 线性渐变画刷_创建
+	 * 通过颜色创建线性渐变画刷
+	 * @param x_begin 起点X
+	 * @param y_begin 起点Y
+	 * @param x_end 终点X
+	 * @param y_end 终点Y
+	 * @param gradient_points 渐变点数组指针
+	 * @param count 渐变点数量 <需要至少两个>
+	 * @param r_brush 接收创建的画刷对象
+	 * @return 返回执行状态
+	 */
+	HRESULT EXAPI EXOBJCALL ExLinearBrushCreateEx(float x_begin, float y_begin, float x_end, float y_end,
+		ExGradientPoint* gradient_points, uint32_t count, IExLinearBrush** r_brush);
+
 }

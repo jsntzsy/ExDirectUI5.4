@@ -20,6 +20,7 @@
 #include "objects/linear_brush.h"
 #include "objects/radial_brush.h"
 #include "objects/image_brush.h"
+#include "objects/canvas_brush.h"
 #include "objects/device.h"
 #include "objects/canvas.h"
 #include "objects/effect.h"
@@ -380,15 +381,32 @@ namespace ExDirectUI
 		}
 		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreateCanvasBrush(const IExCanvas* canvas, const ExRectF* dst, DWORD extend_mode,
+	HRESULT EXOBJCALL ExRenderD2D::CreateCanvasBrush(const IExCanvas* canvas, ExBrushExtendMode extend_mode,
 		EXCHANNEL alpha, IExCanvasBrush** r_brush)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		CHECK_PARAM(canvas);
+		CHECK_PARAM(((ExCanvasD2D*)canvas)->m_target);
+		CHECK_PARAM(r_brush);
+
+		try
+		{
+			ExAutoPtr<ExCanvasBrushD2D> brush = new ExCanvasBrushD2D(canvas, extend_mode, alpha);
+			return brush->QueryInterface(r_brush);
+		}
+		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreateCanvasBrushFromTarget(const IExCanvasTarget* target, const ExRectF* dst,
-		DWORD extend_mode, EXCHANNEL alpha, IExCanvasBrush** r_brush)
+	HRESULT EXOBJCALL ExRenderD2D::CreateCanvasBrushFromTarget(const IExCanvasTarget* target, 
+		ExBrushExtendMode extend_mode, EXCHANNEL alpha, IExCanvasBrush** r_brush)
 	{
-		handle_ex(E_NOTIMPL, L"尚未实现");
+		CHECK_PARAM(target);
+		CHECK_PARAM(r_brush);
+
+		try
+		{
+			ExAutoPtr<ExCanvasBrushD2D> brush = new ExCanvasBrushD2D(target, extend_mode, alpha);
+			return brush->QueryInterface(r_brush);
+		}
+		catch_default({});
 	}
 	HRESULT EXOBJCALL ExRenderD2D::RegisterEffect(const ExEffectInfo* effect_info)
 	{

@@ -114,6 +114,9 @@
     <ClCompile Include="objects\effect.cpp">
       <Filter>effect</Filter>
     </ClCompile>
+    <ClCompile Include="objects\canvas_brush.cpp">
+      <Filter>brush\canvas_brush</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -175,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="effects\3DPerspectiveEffect.hpp">
       <Filter>effect\builting_effects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\canvas_brush.h">
+      <Filter>brush\canvas_brush</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
