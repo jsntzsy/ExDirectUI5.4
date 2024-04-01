@@ -180,6 +180,7 @@
     <ClCompile Include="src\debug\mem_leak.cpp" />
     <ClCompile Include="src\debug\status_handle.cpp" />
     <ClCompile Include="src\drawing\image_decoder.cpp" />
+    <ClCompile Include="src\drawing\render\canvas.cpp" />
     <ClCompile Include="src\drawing\render\canvas_brush.cpp" />
     <ClCompile Include="src\drawing\render\device.cpp" />
     <ClCompile Include="src\drawing\render\factory.cpp" />
@@ -188,6 +189,8 @@
     <ClCompile Include="src\drawing\render\image_brush.cpp" />
     <ClCompile Include="src\drawing\render\linear_brush.cpp" />
     <ClCompile Include="src\drawing\render\mem_dc.cpp" />
+    <ClCompile Include="src\drawing\render\radial_brush.cpp" />
+    <ClCompile Include="src\drawing\render\solid_brush.cpp" />
     <ClCompile Include="src\kernel\atom.cpp" />
     <ClCompile Include="src\kernel\data.cpp" />
     <ClCompile Include="src\kernel\memory.cpp" />

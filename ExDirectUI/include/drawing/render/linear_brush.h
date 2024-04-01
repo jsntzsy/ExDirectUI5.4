@@ -53,7 +53,7 @@ namespace ExDirectUI
 		EXARGB color_begin, EXARGB color_end, IExLinearBrush** r_brush);
 
 	/**
-	 * @brief 线性渐变画刷_创建
+	 * @brief 线性渐变画刷_创建自渐变点
 	 * 通过颜色创建线性渐变画刷
 	 * @param x_begin 起点X
 	 * @param y_begin 起点Y

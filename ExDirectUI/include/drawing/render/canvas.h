@@ -261,7 +261,19 @@ namespace ExDirectUI
 
 		EXMETHOD HRESULT EXOBJCALL DrawEffect(const IExEffect* effect, float left, float top, LPARAM param = NULL) PURE;
 
-
 	};
+
+	
+	/////////////////////////////////////////
+
+	/**
+	 * @brief 画布_创建
+	 * 创建画布对象
+	 * @param width 画布宽度 
+	 * @param height 画布高度
+	 * @param r_canvas 接收创建的画布对象
+	 * @return 返回执行状态
+	 */
+	HRESULT EXAPI EXCALL ExCanvasCreate(uint32_t width, uint32_t height, IExCanvas** r_canvas);
 
 }

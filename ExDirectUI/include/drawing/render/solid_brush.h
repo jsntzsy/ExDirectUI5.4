@@ -18,7 +18,14 @@ namespace ExDirectUI
 	};
 
 	/////////////////////
-	
-	//HRESULT EXAPI EXCALL ExSolidBrushCreate(EXARGB color, IExSolidBrush** r_brush);
-	
+
+	/**
+	 * @brief 纯色画刷_创建
+	 * 创建纯色画刷对象
+	 * @param color 画刷颜色
+	 * @param r_brush 接收创建的画刷对象
+	 * @return 返回执行状态
+	 */
+	HRESULT EXAPI EXCALL ExSolidBrushCreate(EXARGB color, IExSolidBrush** r_brush);
+
 }

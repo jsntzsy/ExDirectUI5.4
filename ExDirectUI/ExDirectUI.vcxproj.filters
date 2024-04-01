@@ -237,6 +237,15 @@
     <ClCompile Include="src\drawing\render\linear_brush.cpp">
       <Filter>drawing\render\brush\linear_brush</Filter>
     </ClCompile>
+    <ClCompile Include="src\drawing\render\radial_brush.cpp">
+      <Filter>drawing\render\brush\radial_brush</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawing\render\solid_brush.cpp">
+      <Filter>drawing\render\brush\solid_brush</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawing\render\canvas.cpp">
+      <Filter>drawing\render\canvas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
