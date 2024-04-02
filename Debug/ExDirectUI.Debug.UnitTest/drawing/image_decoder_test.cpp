@@ -41,24 +41,24 @@ TEST_F(TEST_MODULE_NAME, DecodeImage)
 	ExAutoPtr<IExDecodeImage> image1;
 
 	ASSERT_EQ(
-		module_utils->DecodeImageFile(nullptr, &image1),
+		module_utils->DecodeImageFromFile(nullptr, &image1),
 		E_INVALIDARG
 	);
 
 	ASSERT_EQ(
-		module_utils->DecodeImageFile(_ROOT_("_res/apng/ball.a.png"), nullptr),
+		module_utils->DecodeImageFromFile(_ROOT_("_res/apng/ball.a.png"), nullptr),
 		E_INVALIDARG
 	);
 
 	ASSERT_EQ(
-		module_utils->DecodeImageFile(L"_NO_EXISTS_FILE_", &image1),
+		module_utils->DecodeImageFromFile(L"_NO_EXISTS_FILE_", &image1),
 		E_NOTIMPL
 	);
 
 	///////////////////
 	
 	ASSERT_EQ(
-		module_utils->DecodeImageFile(_ROOT_("_res/apng/ball.a.png"), &image1),
+		module_utils->DecodeImageFromFile(_ROOT_("_res/apng/ball.a.png"), &image1),
 		S_OK
 	);
 	ASSERT_NE(image1, nullptr);
@@ -74,7 +74,7 @@ TEST_F(TEST_MODULE_NAME, DecodeImage)
 
 	ExAutoPtr<IExDecodeImage> image2;
 	ASSERT_EQ(
-		module_utils->DecodeImageFile(_ROOT_("_res/1.gif"), &image2),
+		module_utils->DecodeImageFromFile(_ROOT_("_res/1.gif"), &image2),
 		S_OK
 	);
 	
@@ -91,7 +91,7 @@ TEST_F(TEST_MODULE_NAME, DecodeImage)
 
 	ExAutoPtr<IExDecodeImage> image3;
 	ASSERT_EQ(
-		module_utils->DecodeImageFile(_ROOT_("_res/1.jpg"), &image3),
+		module_utils->DecodeImageFromFile(_ROOT_("_res/1.jpg"), &image3),
 		S_OK
 	);
 

@@ -19,14 +19,14 @@
 
 namespace ExDirectUI
 {
-	HRESULT EXOBJCALL ExModuleUtils::DecodeImageFile(LPCWSTR file, IExDecodeImage** r_image) const
+	HRESULT EXOBJCALL ExModuleUtils::DecodeImageFromFile(LPCWSTR file, IExDecodeImage** r_image) const
 	{
 		CHECK_PARAM(file);
 		CHECK_PARAM(r_image);
 
 		return _ExImageDecoder_LoadFromFile(file, r_image);
 	}
-	HRESULT EXOBJCALL ExModuleUtils::DecodeImageMemory(const byte_t* data, size_t size, IExDecodeImage** r_image) const
+	HRESULT EXOBJCALL ExModuleUtils::DecodeImageFromMemory(const byte_t* data, size_t size, IExDecodeImage** r_image) const
 	{
 		CHECK_PARAM(data);
 		CHECK_PARAM(size > 0);

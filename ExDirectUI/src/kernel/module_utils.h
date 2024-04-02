@@ -25,8 +25,8 @@ namespace ExDirectUI
 		EX_DECLEAR_INTERFACE_END();
 		
 
-		EXMETHOD HRESULT EXOBJCALL DecodeImageFile(LPCWSTR file, IExDecodeImage** r_image) const override;
-		EXMETHOD HRESULT EXOBJCALL DecodeImageMemory(const byte_t* data, size_t size, IExDecodeImage** r_image) const override;
+		EXMETHOD HRESULT EXOBJCALL DecodeImageFromFile(LPCWSTR file, IExDecodeImage** r_image) const override;
+		EXMETHOD HRESULT EXOBJCALL DecodeImageFromMemory(const byte_t* data, size_t size, IExDecodeImage** r_image) const override;
 
 		EXMETHOD IExRender* EXOBJCALL GetRender() const override;
 		EXMETHOD HRESULT EXOBJCALL GetDefaultFont(ExFontInfo* r_info) const override;

@@ -36,7 +36,7 @@ namespace ExDirectUI
 	ExImageD2D::ExImageD2D(LPCWSTR file)
 	{
 		//解码图像
-		throw_if_failed(GetUtils()->DecodeImageFile(file, &m_decode_image), L"解码图像失败");
+		throw_if_failed(GetUtils()->DecodeImageFromFile(file, &m_decode_image), L"解码图像失败");
 
 		//获取图像信息
 		m_width = m_decode_image->GetWidth();
@@ -61,7 +61,7 @@ namespace ExDirectUI
 	ExImageD2D::ExImageD2D(const byte_t* data, size_t size)
 	{
 		//解码图像
-		throw_if_failed(GetUtils()->DecodeImageMemory(data, size, &m_decode_image), L"解码图像失败");
+		throw_if_failed(GetUtils()->DecodeImageFromMemory(data, size, &m_decode_image), L"解码图像失败");
 
 		//获取图像信息
 		m_width = m_decode_image->GetWidth();
