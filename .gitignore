@@ -37,3 +37,4 @@ __*/
 bin/
 obj/
 packages/
+*.bak
