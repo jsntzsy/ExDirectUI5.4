@@ -65,9 +65,6 @@ namespace ExDirectUI
 
 	///////////////////////////
 
-	HRESULT EXAPI EXCALL ExImageLoadObject(const byte_t* data, size_t size,
-		uint32_t type, uint32_t index, HGDIOBJ* r_object);
-
 	HRESULT EXAPI EXCALL ExImageCreate(uint32_t width, uint32_t height, IExImage** r_image);
 	HRESULT EXAPI EXCALL ExImageCreateFromFile(LPCWSTR file, IExImage** r_image);
 	HRESULT EXAPI EXCALL ExImageCreateFromMemory(const byte_t* data, size_t size, IExImage** r_image);

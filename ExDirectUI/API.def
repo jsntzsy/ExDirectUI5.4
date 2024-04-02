@@ -20,6 +20,7 @@ EXPORTS
 		ExDataReadFile
 		ExDataWriteFile
 		ExDataGetFileSize
+		ExDataRc4
 	;原子号计算
 		ExAtomData
 		ExAtomStrCase
@@ -53,10 +54,32 @@ EXPORTS
 			ExMemDCResize
 		;设备
 			ExUpdateLayeredWindow
+			ExDeviceCreateToBitmap
+			ExDeviceCreateToWindow
+		;画刷
+			;纯色画刷
+				ExSolidBrushCreate
+			;线性渐变画刷
+				ExLinearBrushCreate
+				ExLinearBrushCreateEx
+			;径向渐变画刷
+				ExRadialBrushCreate
+				ExRadialBrushCreateEx
+			;图像画刷
+				ExImageBrushCreate
+			;画布画刷
+				ExCanvasBrushCreate
+				ExCanvasBrushCreateFromTarget
+			;画布
+				ExCanvasCreate
 		
 ;资源层
-	;资源池管理器
+	;资源池管理
 		ExResPoolCreate
+	;数据包管理
+		ExPackageBuild
+		ExPackageBuildFromDirectory
+		ExPackageLoad
 
 ;调试层
 	;状态处理
@@ -65,6 +88,10 @@ EXPORTS
 		ExStatusGetText
 		ExStatusHandle
 		ExStatusHandleEx
+	;输出管理
+		ExDbgOutput
+		ExDbgSetOutputHandler
+		ExDbgGetOutputHandler
 	
 
 ;应用层

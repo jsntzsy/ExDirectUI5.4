@@ -14,6 +14,7 @@
 namespace ExDirectUI
 {
 	static ExStatusHandleProc s_debug_status_handler = nullptr;
+	static ExDbgOutputHandleProc s_debug_output_handler = nullptr;
 
 	////////////////////////////////////////////////////////////////////////////
 
@@ -86,9 +87,9 @@ namespace ExDirectUI
 			if (file) {
 				wchar_t file_info[EX_CFG_SIZEOF_FORMAT_BUF]{};
 				swprintf_s(file_info, L"%s(%d): ", file, line);
-				OutputDebugStringW(file_info);
+				ExDbgOutput(file_info);
 			}
-			OutputDebugStringW(buffer);
+			ExDbgOutput(buffer);
 #endif 
 		}
 
@@ -104,6 +105,31 @@ namespace ExDirectUI
 			va_end(args);
 		}
 		return ExStatusHandle(status, file, line, buffer);
+	}
+
+	void EXAPI EXCALL ExDbgOutput(LPCWSTR str)
+	{
+		if (str == nullptr || *str == L'\0') { return; }
+		if (s_debug_output_handler && s_debug_output_handler(str)) { return; }
+
+		//系统默认处理
+		if (ExEngineQueryFlag(ExEngineFlags::Debug)) {
+#ifdef EX_CFG_DEBUG_OUTPUT
+			OutputDebugStringW(str);
+#endif 
+		}
+	}
+
+	ExDbgOutputHandleProc EXAPI EXCALL ExDbgSetOutputHandler(ExDbgOutputHandleProc proc)
+	{
+		auto old_proc = s_debug_output_handler;
+		s_debug_output_handler = proc;
+		return old_proc;
+	}
+
+	ExDbgOutputHandleProc EXAPI EXCALL ExDbgGetOutputHandler()
+	{
+		return s_debug_output_handler;
 	}
 
 }

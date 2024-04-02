@@ -102,7 +102,7 @@ namespace ExDirectUI
 	{
 		_Locked(m_lock);
 
-		OutputDebugStringW(L"========= ExDirectUI Dump Memory Leaks Begin =========\n");
+		ExDbgOutput(L"========= ExDirectUI Dump Memory Leaks Begin =========\n");
 
 		//遍历链表
 		uint32_t index = 0;
@@ -119,13 +119,13 @@ namespace ExDirectUI
 			swprintf_s(buffer, L"%u. %p (%zuBytes) %llums\n",
 				++index, block->ptr, block->size, now - block->alloc_time);
 #endif // EX_CFG_DEBUG_CALL_INFO
-			OutputDebugStringW(buffer);
+			ExDbgOutput(buffer);
 
 			//继续遍历
 			block = block->next;
 		}
 
-		OutputDebugStringW(L"========= ExDirectUI Dump Memory Leaks Finish ========\n");
+		ExDbgOutput(L"========= ExDirectUI Dump Memory Leaks Finish ========\n");
 	}
 
 	EXTERN_C LPVOID EXAPI EXCALL ExMemAllocD(size_t size, LPCWSTR file, int line)

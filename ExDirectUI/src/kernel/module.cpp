@@ -13,6 +13,7 @@
 #include "src/kernel/module_utils.h"
 #include "src/kernel/builtin_modules.hpp"
 #include "common/auto_ptr.hpp"
+#include <common/string.hpp>
 
 
 namespace ExDirectUI
@@ -62,6 +63,12 @@ namespace ExDirectUI
 			L"模块入口函数执行失败"
 		);
 
+		ExDbgOutput(
+			ExString::format(L"TryToLoadModule: 0x%08X %s (%s)\n",
+				info.id, info.name, info.description
+			).c_str()
+		);
+
 		// 检查模块ID是否已存在
 		auto it = g_modules.find(info.id);
 		throw_if_false(it == g_modules.end(), EE_EXISTS, L"模块ID冲突");
@@ -97,7 +104,7 @@ namespace ExDirectUI
 			ExModuleUtils::UnGroup(instance),
 			L"模块取消分组失败"
 		);
-		
+
 		//调用OnModuleUnLoad
 		handle_if_failed(instance->OnModuleUnLoad(), L"模块卸载失败");
 
@@ -126,10 +133,10 @@ namespace ExDirectUI
 
 		//加载初始化时传入的模块
 		if (init_info->modules.unknown && init_info->module_count != 0) {
-			
+
 			EXATOM module_id = 0;
 			HRESULT status = S_OK;
-			
+
 			for (uint32_t i = 0; i < init_info->module_count; ++i) {
 				switch (init_info->module_load_mode) {
 				case ExModuleLoadFileMode::FromHandle:
@@ -182,13 +189,13 @@ namespace ExDirectUI
 
 	/////////////////////////
 
-	HRESULT EXAPI EXCALL ExModuleLoadFromFile(const void* file, WPARAM waram, LPARAM lparam, EXATOM* r_module_id)
+	HRESULT EXAPI EXCALL ExModuleLoadFromFile(const void* file, WPARAM wparam, LPARAM lparam, EXATOM* r_module_id)
 	{
 		CHECK_PARAM(file);
 		CHECK_PARAM(r_module_id);
 
 		// 加载模块
-		HMODULE module_handle = g_module_loader.LoadModule(file, waram, lparam);
+		HMODULE module_handle = g_module_loader.LoadModule(file, wparam, lparam);
 		handle_if_false(module_handle, EE_LOAD, L"模块加载失败");
 
 		try
@@ -257,7 +264,7 @@ namespace ExDirectUI
 		auto it = g_modules.find(module_id);
 		handle_if_false(it != g_modules.end(), EE_NOEXISTS, L"模块未找到");
 
-		return it->second.module_instance->Invoke(msg, wparam, lparam, r_result);
+		try_default({ return it->second.module_instance->Invoke(msg, wparam, lparam, r_result); });
 	}
 
 }

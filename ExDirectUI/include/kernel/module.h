@@ -108,7 +108,7 @@ namespace ExDirectUI
 
 	////////////////////////////
 
-	HRESULT EXAPI EXCALL ExModuleLoadFromFile(const void* file, WPARAM waram, LPARAM lparam, EXATOM* r_module_id);
+	HRESULT EXAPI EXCALL ExModuleLoadFromFile(const void* file, WPARAM wparam, LPARAM lparam, EXATOM* r_module_id);
 	HRESULT EXAPI EXCALL ExModuleLoadFromHandle(HMODULE module_handle, EXATOM* r_module_id);
 	HRESULT EXAPI EXCALL ExModuleLoadFromEntry(ExModuleEntryProc entry_proc, EXATOM* r_module_id);
 

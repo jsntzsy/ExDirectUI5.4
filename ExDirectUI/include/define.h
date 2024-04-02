@@ -108,8 +108,8 @@ enum _##name##_Enum_::Values
 #define __STR__(x) __VAL__(x)
 
 
-#define ExDebugOutputRaw(str)		OutputDebugStringW(str)
-#define ExDebugOutputLine(str)		OutputDebugStringW(str); OutputDebugStringW(L"\n")
+#define ExDebugOutputRaw(str)		ExDbgOutput(str)
+#define ExDebugOutputLine(str)		ExDbgOutput(str); ExDbgOutput(L"\n")
 
 #ifdef EX_CFG_DEBUG_CALL_INFO
 #define ExDebugOutput(str)	ExDebugOutputRaw(__FILEW__  "("  __STR__(__LINE__) "): "); ExDebugOutputLine(str)

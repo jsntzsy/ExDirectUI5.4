@@ -22,7 +22,7 @@ namespace ExDirectUI
 
 		handle_if_failed(
 			g_drawing_render->CreateCanvas(width, height, r_canvas),
-			L"创建XXX对象失败"
+			L"创建画布对象失败"
 		);
 		return S_OK;
 	}

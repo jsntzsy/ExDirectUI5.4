@@ -162,7 +162,7 @@ namespace ExDirectUI
 		return angle;
 	}
 
-	HRESULT EXOBJCALL ExPathD2D::ArcTo(float left, float top, float right, float bottom,
+	HRESULT EXOBJCALL ExPathD2D::AngleArcTo(float left, float top, float right, float bottom,
 		float start_angle, float sweep_angle, bool relative)
 	{
 		// 判断是否正在描述路径和图形
@@ -228,7 +228,7 @@ namespace ExDirectUI
 
 		return S_OK;
 	}
-	HRESULT EXOBJCALL ExPathD2D::ArcTo2(float radius_horz, float radius_vert, float rotate,
+	HRESULT EXOBJCALL ExPathD2D::ArcTo(float radius_horz, float radius_vert, float rotate,
 		bool large_arc, bool clockwise, float end_x, float end_y, bool relative)
 	{
 		// 判断是否正在描述路径和图形

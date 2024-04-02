@@ -234,8 +234,9 @@ namespace ExDirectUI
 				// C 449.32 292.44 464 350.9 464 424
 				// a 16 16 0 0 1-16 16
 				// Z
+
 				path->StartFigure(448, 440);
-				path->ArcTo2(16, 16, 0, 0, 1, -12.61, -6.15, true);
+				path->ArcTo(16, 16, 0, 0, 1, -12.61, -6.15, true);
 				path->BezierTo(-22.86, -29.27, -44.07, -51.86, -73.32, -67, true);
 				path->BezierTo(335, 352.88, 301, 345.59, 256, 344.23, false);
 
@@ -243,16 +244,16 @@ namespace ExDirectUI
 				path->GetCurPoint(&point);
 				path->LineTo(point.x, 424);
 
-				path->ArcTo2(16, 16, 0, 0, 1, 229, 435.57, false);
+				path->ArcTo(16, 16, 0, 0, 1, 229, 435.57, false);
 				path->LineTo(-176, -168, true);
-				path->ArcTo2(16, 16, 0, 0, 1, 0, -23.14, true);
+				path->ArcTo(16, 16, 0, 0, 1, 0, -23.14, true);
 				path->LineTo(176, -168, true);
-				path->ArcTo2(16, 16, 0, 0, 1, 256, 88, false);
+				path->ArcTo(16, 16, 0, 0, 1, 256, 88, false);
 				path->LineTo(0, 80.36, true);
 
 				path->BezierTo(74.14, 3.41, 129.38, 30.91, 164.35, 81.87, true);
 				path->BezierTo(449.32, 292.44, 464, 350.9, 464, 424, false);
-				path->ArcTo2(16, 16, 0, 0, 1, -16, 16, true);
+				path->ArcTo(16, 16, 0, 0, 1, -16, 16, true);
 
 				path->FinishFigure(true);
 #pragma endregion
@@ -261,8 +262,8 @@ namespace ExDirectUI
 
 				path->StartFigure(10, 10);
 				path->LineTo(100, 0, true);
-				path->ArcTo(0, 0, 100, 100, -90, 90, true);
-				path->ArcTo2(50, 50, 0, false, true, -25, -25, true);
+				path->AngleArcTo(0, 0, 100, 100, -90, 90, true);
+				path->ArcTo(50, 50, 0, false, true, -25, -25, true);
 				path->LineTo(0, 150, true);
 				path->RoundTo(0, 50, -50, +50, 40, true);
 				path->CurveTo(-50, -50, -100, 0, true);
