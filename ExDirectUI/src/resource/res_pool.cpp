@@ -43,19 +43,16 @@ namespace ExDirectUI
 			m_res.clear();
 			m_pool.Clear();
 		}
-		EXMETHOD HRESULT EXOBJCALL GetItemCount(size_t* r_count) const override
+		EXMETHOD uint32_t EXOBJCALL GetItemCount() const override
 		{
-			CHECK_PARAM(r_count);
 			_Locked(m_lock);
-
-			*r_count = m_res.size();
-			return S_OK;
+			return (uint32_t)m_res.size();
 		}
 
-		EXMETHOD HRESULT EXOBJCALL ItemExists(EXATOM key) const override
+		EXMETHOD bool EXOBJCALL ItemExists(EXATOM key) const override
 		{
 			_Locked(m_lock);
-			return m_res.find(key) != m_res.end() ? S_OK : S_FALSE;
+			return m_res.find(key) != m_res.end();
 		}
 
 		EXMETHOD HRESULT EXOBJCALL FindKeyByPtr(void* res, EXATOM* r_key) const override

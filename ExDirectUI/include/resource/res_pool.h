@@ -35,8 +35,8 @@ namespace ExDirectUI
 
 	EXINTERFACE("DCF4F67A-2D44-4D4C-9338-F0822DEB32CB") IExResPool : public IExObject
 	{
-		EXMETHOD HRESULT EXOBJCALL GetItemCount(size_t * r_count) const PURE;
-		EXMETHOD HRESULT EXOBJCALL ItemExists(EXATOM key) const PURE;
+		EXMETHOD uint32_t EXOBJCALL GetItemCount() const PURE;
+		EXMETHOD bool EXOBJCALL ItemExists(EXATOM key) const PURE;
 		EXMETHOD HRESULT EXOBJCALL FindKeyByPtr(void* res, EXATOM* r_key) const PURE;
 		EXMETHOD HRESULT EXOBJCALL UseOrCreateItem(EXATOM key,  const void* data, WPARAM wparam, LPARAM lparam,
 			DWORD flags, void** r_res) PURE;
