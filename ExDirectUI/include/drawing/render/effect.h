@@ -30,7 +30,6 @@ namespace ExDirectUI
 		LPCWSTR attribute_info;
 	};
 
-
 	EXINTERFACE("5294F665-B0FC-48C7-B0CD-923DDD70CF6A") IExEffect : public IExRenderObject
 	{
 		EXMETHOD bool EXOBJCALL HaveSource() PURE;
@@ -42,5 +41,14 @@ namespace ExDirectUI
 
 		EXMETHOD HRESULT EXOBJCALL OnDraw(IExCanvas* canvas, float left, float top, LPARAM lparam) PURE;
 	};
+
+	//////////////////////////////
+
+	HRESULT EXAPI EXCALL ExEffectRegister(const ExEffectInfo* effect_info);
+	HRESULT EXAPI EXCALL ExEffectUnRegister(EXATOM effect_id);
+	HRESULT EXAPI EXCALL ExEffectIsSupport(EXATOM effect_id);
+	HRESULT EXAPI EXCALL ExEffectGetInfo(EXATOM effect_id, ExEffectInfo* const r_effect_info);
+	HRESULT EXAPI EXCALL ExEffectCreate(EXATOM effect_id, LPARAM lparam, IExEffect** r_effect);
+	HRESULT EXAPI EXCALL ExEffectCreateByName(LPCWSTR effect_name, LPARAM lparam, IExEffect** r_effect);
 
 }

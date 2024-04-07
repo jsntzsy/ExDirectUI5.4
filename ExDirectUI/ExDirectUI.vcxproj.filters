@@ -246,6 +246,18 @@
     <ClCompile Include="src\drawing\render\canvas.cpp">
       <Filter>drawing\render\canvas</Filter>
     </ClCompile>
+    <ClCompile Include="src\drawing\render\path.cpp">
+      <Filter>drawing\render\path</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawing\render\pen.cpp">
+      <Filter>drawing\render\pen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawing\render\region.cpp">
+      <Filter>drawing\render\region</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawing\render\effect.cpp">
+      <Filter>drawing\render\effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

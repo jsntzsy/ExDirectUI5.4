@@ -40,11 +40,7 @@ namespace ExDirectUI
 		CHECK_PARAM(r_device);
 		handle_if_false(g_drawing_render, EE_NOREADY, L"渲染引擎未就绪");
 
-		handle_if_failed(
-			g_drawing_render->CreateBitmapDevice(width, height, r_device),
-			L"创建位图设备对象失败"
-		);
-		return S_OK;
+		return g_drawing_render->CreateBitmapDevice(width, height, r_device);
 	}
 
 	HRESULT EXAPI EXCALL ExDeviceCreateToWindow(HWND window, bool composition_mode, IExDevice** r_device)
@@ -53,14 +49,10 @@ namespace ExDirectUI
 		CHECK_PARAM(r_device);
 		handle_if_false(g_drawing_render, EE_NOREADY, L"渲染引擎未就绪");
 
-		handle_if_failed(
-			g_drawing_render->CreateWindowDevice(
-				window,
-				composition_mode ? ExDeviceType::CompositionWindow : ExDeviceType::Window,
-				r_device
-			), L"创建窗口设备对象失败"
+		return g_drawing_render->CreateWindowDevice(window,
+			composition_mode ? ExDeviceType::CompositionWindow : ExDeviceType::Window,
+			r_device
 		);
-		return S_OK;
 	}
 
 }

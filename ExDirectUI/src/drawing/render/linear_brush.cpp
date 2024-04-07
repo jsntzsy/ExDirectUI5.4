@@ -20,11 +20,7 @@ namespace ExDirectUI
 		CHECK_PARAM(r_brush);
 		handle_if_false(g_drawing_render, EE_NOREADY, L"渲染引擎未就绪");
 
-		handle_if_failed(
-			g_drawing_render->CreateLinearBrush(x_begin, y_begin, x_end, y_end, color_begin, color_end, r_brush),
-			L"创建线性渐变画刷对象失败"
-		);
-		return S_OK;
+		return g_drawing_render->CreateLinearBrush(x_begin, y_begin, x_end, y_end, color_begin, color_end, r_brush);
 	}
 
 	HRESULT EXAPI EXOBJCALL ExLinearBrushCreateEx(float x_begin, float y_begin, float x_end, float y_end,
@@ -34,11 +30,7 @@ namespace ExDirectUI
 		CHECK_PARAM(r_brush);
 		handle_if_false(g_drawing_render, EE_NOREADY, L"渲染引擎未就绪");
 
-		handle_if_failed(
-			g_drawing_render->CreateLinearBrushEx(x_begin, y_begin, x_end, y_end, gradient_points, count, r_brush),
-			L"创建线性渐变画刷对象失败"
-		);
-		return S_OK;
+		return g_drawing_render->CreateLinearBrushEx(x_begin, y_begin, x_end, y_end, gradient_points, count, r_brush);
 	}
 
 }

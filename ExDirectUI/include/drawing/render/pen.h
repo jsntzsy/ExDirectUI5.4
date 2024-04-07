@@ -79,17 +79,7 @@ namespace ExDirectUI
 
 	///////////////////
 
-	//HRESULT EXAPI EXCALL ExPenCreate(EXARGB color, float stroke_width, IExPen** r_pen);
-	//HRESULT EXAPI EXCALL ExPenCreateEx(EXARGB color, float stroke_width,
-	//	ExDashStyle dash_style, ExCapStyle start_cap, ExCapStyle end_cap, ExCapStyle dash_cap,
-	//	ExLineJoinStyle line_join, float miter_limit, const float* dash_array, uint32_t dash_count,
-	//	IExPen** r_pen
-	//);
-	//HRESULT EXAPI EXCALL ExPenCreateFromBrush(IExBrush* brush, float stroke_width, IExPen** r_pen);
-	//HRESULT EXAPI EXCALL ExPenCreateFromBrushEx(IExBrush* brush, float stroke_width,
-	//	ExDashStyle dash_style, ExCapStyle start_cap, ExCapStyle end_cap, ExCapStyle dash_cap,
-	//	ExLineJoinStyle line_join, float miter_limit, const float* dash_array, uint32_t dash_count,
-	//	IExPen** r_pen
-	//);
+	HRESULT EXAPI EXCALL ExPenCreate(EXARGB color, float stroke_width, IExPen** r_pen);
+	HRESULT EXAPI EXCALL ExPenCreateFromBrush(IExBrush* brush, float stroke_width, IExPen** r_pen);
 
 }

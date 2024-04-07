@@ -55,5 +55,5 @@ namespace ExDirectUI
 
 	////////////////////////////
 
-	//HRESULT EXAPI EXCALL ExPathCreate(IExPath** r_path);
+	HRESULT EXAPI EXCALL ExPathCreate(IExPath** r_path);
 }

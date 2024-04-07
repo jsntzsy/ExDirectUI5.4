@@ -42,13 +42,13 @@ namespace ExDirectUI
 		}
 
 		//设置抗锯齿模式
-		if(info->antialias_mode != -1){ g_drawing_antialias_mode = info->antialias_mode;}
+		if (info->antialias_mode != -1) { g_drawing_antialias_mode = info->antialias_mode; }
 		else { g_drawing_antialias_mode = ExAntiAliasMode::Default; }
 
 		//尝试获取UpdateLayeredWindowIndirect函数
 		_UpdateLayeredWindowIndirect = (_UpdateLayeredWindowIndirectProc)
 			GetProcAddress(g_winapi_user32, "UpdateLayeredWindowIndirect");
-		
+
 		//获取系统默认DPI
 		HDC hdc = GetDC(NULL);
 		if (hdc) {
@@ -56,7 +56,7 @@ namespace ExDirectUI
 			ReleaseDC(NULL, hdc);
 		}
 		else { g_drawing_default_dpi = EX_DEFAULT_DPI; }
-		
+
 	}
 
 	void EXCALL _ExRender_UnInit()
@@ -87,5 +87,12 @@ namespace ExDirectUI
 		return S_OK;
 	}
 
+	///////////////////////////
+
+	bool EXAPI EXCALL ExRenderIsSupportComposition()
+	{
+		if (g_drawing_render == nullptr) { return false; }
+		return g_drawing_render->IsSupportComposition();
+	}
 
 }

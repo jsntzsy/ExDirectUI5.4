@@ -183,13 +183,17 @@
     <ClCompile Include="src\drawing\render\canvas.cpp" />
     <ClCompile Include="src\drawing\render\canvas_brush.cpp" />
     <ClCompile Include="src\drawing\render\device.cpp" />
+    <ClCompile Include="src\drawing\render\effect.cpp" />
     <ClCompile Include="src\drawing\render\factory.cpp" />
     <ClCompile Include="src\drawing\render\font.cpp" />
     <ClCompile Include="src\drawing\render\image.cpp" />
     <ClCompile Include="src\drawing\render\image_brush.cpp" />
     <ClCompile Include="src\drawing\render\linear_brush.cpp" />
     <ClCompile Include="src\drawing\render\mem_dc.cpp" />
+    <ClCompile Include="src\drawing\render\path.cpp" />
+    <ClCompile Include="src\drawing\render\pen.cpp" />
     <ClCompile Include="src\drawing\render\radial_brush.cpp" />
+    <ClCompile Include="src\drawing\render\region.cpp" />
     <ClCompile Include="src\drawing\render\solid_brush.cpp" />
     <ClCompile Include="src\kernel\atom.cpp" />
     <ClCompile Include="src\kernel\data.cpp" />

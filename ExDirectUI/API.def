@@ -39,6 +39,7 @@ EXPORTS
 	;图像解码器
 		ExImageCopyData
 	;渲染器
+		ExRenderIsSupportComposition
 		;图像
 			ExImageLoadObject
 			ExImageCreate
@@ -48,14 +49,9 @@ EXPORTS
 			ExImageCreateFromHICON
 			ExImageCreateFromImageData
 			ExImageCreateFromMemory
-		;内存DC
-			ExMemDCCreate
-			ExMemDCDestroy
-			ExMemDCResize
-		;设备
-			ExUpdateLayeredWindow
-			ExDeviceCreateToBitmap
-			ExDeviceCreateToWindow
+		;画笔
+			ExPenCreate
+			ExPenCreateFromBrush
 		;画刷
 			;纯色画刷
 				ExSolidBrushCreate
@@ -70,9 +66,36 @@ EXPORTS
 			;画布画刷
 				ExCanvasBrushCreate
 				ExCanvasBrushCreateFromTarget
-			;画布
-				ExCanvasCreate
-		
+		;内存DC
+			ExMemDCCreate
+			ExMemDCDestroy
+			ExMemDCResize
+		;设备
+			ExUpdateLayeredWindow
+			ExDeviceCreateToBitmap
+			ExDeviceCreateToWindow
+		;画布
+			ExCanvasCreate
+		;效果
+			ExEffectCreate
+			ExEffectCreateByName
+			ExEffectGetInfo
+			ExEffectIsSupport
+			ExEffectRegister
+			ExEffectUnRegister
+		;字体
+			ExFontCreate
+			ExFontCreateFromInfo
+			ExFontCreateFromName
+			ExFontLoadFile
+			ExFontUnLoadFile
+		;路径
+			ExPathCreate
+		;区域
+			ExRegionCreate
+			ExRegionCreateFromPath
+			ExRegionCreateFromRect
+			
 ;资源层
 	;资源池管理
 		ExResPoolCreate

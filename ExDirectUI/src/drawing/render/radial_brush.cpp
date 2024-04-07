@@ -20,11 +20,7 @@ namespace ExDirectUI
 		CHECK_PARAM(r_brush);
 		handle_if_false(g_drawing_render, EE_NOREADY, L"渲染引擎未就绪");
 
-		handle_if_failed(
-			g_drawing_render->CreateRadialBrush(left, top, right, bottom, color_inside, color_outside, r_brush),
-			L"创建径向渐变画刷对象失败"
-		);
-		return S_OK;
+		return g_drawing_render->CreateRadialBrush(left, top, right, bottom, color_inside, color_outside, r_brush);
 	}
 
 	HRESULT EXAPI EXCALL ExRadialBrushCreateEx(float left, float top, float right, float bottom,
@@ -34,11 +30,7 @@ namespace ExDirectUI
 		CHECK_PARAM(r_brush);
 		handle_if_false(g_drawing_render, EE_NOREADY, L"渲染引擎未就绪");
 
-		handle_if_failed(
-			g_drawing_render->CreateRadialBrushEx(left, top, right, bottom, gradient_points, count, r_brush),
-			L"创建径向渐变画刷对象失败"
-		);
-		return S_OK;
+		return g_drawing_render->CreateRadialBrushEx(left, top, right, bottom, gradient_points, count, r_brush);
 	}
 
 

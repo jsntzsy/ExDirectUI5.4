@@ -38,9 +38,8 @@ namespace ExDirectUI
 
 	////////////////
 
-	//HRESULT EXAPI EXCALL ExRegionCreate(IExRegion** r_region, bool infinite = false);
-	//HRESULT EXAPI EXCALL ExRegionCreateFromRect(float left, float top, float right, float bottom, IExRegion** r_region);
-	//HRESULT EXAPI EXCALL ExRegionCreateFromPath(const IExPath* path, const ExMatrixElements* tranform, IExRegion** r_region);
-	//HRESULT EXAPI EXCALL ExRegionCopy(const IExRegion* region, const ExMatrixElements* tranform, IExRegion** r_region);
-
+	HRESULT EXAPI EXCALL ExRegionCreate(IExRegion** r_region, bool infinite = false);
+	HRESULT EXAPI EXCALL ExRegionCreateFromRect(float left, float top, float right, float bottom, IExRegion** r_region);
+	HRESULT EXAPI EXCALL ExRegionCreateFromPath(const IExPath* path, const ExMatrixElements* tranform, IExRegion** r_region);
+	
 }

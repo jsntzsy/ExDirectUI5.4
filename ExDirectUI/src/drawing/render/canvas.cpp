@@ -20,11 +20,7 @@ namespace ExDirectUI
 		CHECK_PARAM(r_canvas);
 		handle_if_false(g_drawing_render, EE_NOREADY, L"渲染引擎未就绪");
 
-		handle_if_failed(
-			g_drawing_render->CreateCanvas(width, height, r_canvas),
-			L"创建画布对象失败"
-		);
-		return S_OK;
+		return g_drawing_render->CreateCanvas(width, height, r_canvas);
 	}
 
 }

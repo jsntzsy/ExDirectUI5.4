@@ -77,4 +77,6 @@ namespace ExDirectUI
 
 	///////////////////
 
+	bool EXAPI EXCALL ExRenderIsSupportComposition();
+	
 }

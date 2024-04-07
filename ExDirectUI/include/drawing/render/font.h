@@ -112,11 +112,11 @@ namespace ExDirectUI
 
 	/////////////////////////////////
 
-	//HRESULT EXAPI EXCALL ExFontLoadFile(const byte_t* data, size_t size, EXATOM* r_atom);
-	//HRESULT EXAPI EXCALL ExFontUnLoadFile(EXATOM atom);
-	//HRESULT EXAPI EXCALL ExFontCreate(IExFont** r_font);
-	//HRESULT EXAPI EXCALL ExFontCreateFromName(const wchar_t name[LF_FACESIZE], uint32_t size,
-	//	DWORD style, EXATOM file_atom, IExFont** r_font);
-	//HRESULT EXAPI EXCALL ExFontCreateFromInfo(const ExFontInfo* info, IExFont** r_font);
+	HRESULT EXAPI EXCALL ExFontLoadFile(const byte_t* data, size_t size, EXATOM* r_atom);
+	HRESULT EXAPI EXCALL ExFontUnLoadFile(EXATOM atom);
+	HRESULT EXAPI EXCALL ExFontCreate(IExFont** r_font);
+	HRESULT EXAPI EXCALL ExFontCreateFromName(const wchar_t name[LF_FACESIZE], uint32_t size,
+		DWORD style, EXATOM file_atom, IExFont** r_font);
+	HRESULT EXAPI EXCALL ExFontCreateFromInfo(const ExFontInfo* info, IExFont** r_font);
 
 }

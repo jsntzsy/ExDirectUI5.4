@@ -20,11 +20,7 @@ namespace ExDirectUI
 		CHECK_PARAM(r_brush);
 		handle_if_false(g_drawing_render, EE_NOREADY, L"渲染引擎未就绪");
 
-		handle_if_failed(
-			g_drawing_render->CreateCanvasBrush(canvas,extend_mode,alpha, r_brush),
-			L"创建画布画刷对象失败"
-		);
-		return S_OK;
+		return g_drawing_render->CreateCanvasBrush(canvas, extend_mode, alpha, r_brush);
 	}
 	HRESULT EXAPI EXCALL ExCanvasBrushCreateFromTarget(const IExCanvasTarget* target, 
 		ExBrushExtendMode extend_mode, EXCHANNEL alpha, IExCanvasBrush** r_brush)
@@ -33,11 +29,7 @@ namespace ExDirectUI
 		CHECK_PARAM(r_brush);
 		handle_if_false(g_drawing_render, EE_NOREADY, L"渲染引擎未就绪");
 
-		handle_if_failed(
-			g_drawing_render->CreateCanvasBrushFromTarget(target, extend_mode, alpha, r_brush),
-			L"创建画布画刷对象失败"
-		);
-		return S_OK;
+		return g_drawing_render->CreateCanvasBrushFromTarget(target, extend_mode, alpha, r_brush);
 	}
 }
 
