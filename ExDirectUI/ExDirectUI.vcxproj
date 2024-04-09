@@ -202,6 +202,7 @@
     <ClCompile Include="src\kernel\module_utils.cpp" />
     <ClCompile Include="src\kernel\winapi.cpp" />
     <ClCompile Include="src\resource\package.cpp" />
+    <ClCompile Include="src\resource\parse.cpp" />
     <ClCompile Include="src\resource\res_pool.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -257,6 +258,7 @@
     <ClInclude Include="include\kernel\module.h" />
     <ClInclude Include="include\kernel\new.h" />
     <ClInclude Include="include\resource\package.h" />
+    <ClInclude Include="include\resource\parse.h" />
     <ClInclude Include="include\resource\res_pool.h" />
     <ClInclude Include="include\status.h" />
     <ClInclude Include="src\app\engine.h" />

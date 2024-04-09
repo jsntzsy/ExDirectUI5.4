@@ -22,9 +22,6 @@
     <Filter Include="drawing">
       <UniqueIdentifier>{6a44d0d9-630e-48de-8b19-e0865d43a94d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resouce">
-      <UniqueIdentifier>{3e235b32-265f-45bf-9a6c-34c874d7f518}</UniqueIdentifier>
-    </Filter>
     <Filter Include="element">
       <UniqueIdentifier>{77a63077-c2e7-4022-b7ee-46cf198ebaf3}</UniqueIdentifier>
     </Filter>
@@ -103,12 +100,6 @@
     <Filter Include="utils\xxx">
       <UniqueIdentifier>{e0b7c614-b97a-4770-82cb-08227806bd8e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resouce\package">
-      <UniqueIdentifier>{0b78baaa-1f33-4b6b-914f-9f87c6fca59a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="resouce\theme">
-      <UniqueIdentifier>{788debc7-0c72-4047-94d3-4cb294e72009}</UniqueIdentifier>
-    </Filter>
     <Filter Include="debug\mem_leak">
       <UniqueIdentifier>{9ecf558d-4ae5-4436-8bdb-3f2c47081c19}</UniqueIdentifier>
     </Filter>
@@ -117,9 +108,6 @@
     </Filter>
     <Filter Include="kernel\module">
       <UniqueIdentifier>{fb8098d9-d5ae-48c2-920f-213cfc58aee7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="resouce\res_pool">
-      <UniqueIdentifier>{40b59794-2c0d-4425-b49d-f2df06691e25}</UniqueIdentifier>
     </Filter>
     <Filter Include="drawing\render\image">
       <UniqueIdentifier>{e858227c-588e-4a02-8ee5-9280c21fc337}</UniqueIdentifier>
@@ -169,6 +157,21 @@
     <Filter Include="drawing\render\device">
       <UniqueIdentifier>{79a3d660-356c-4739-8a2b-a2613af87455}</UniqueIdentifier>
     </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{3e235b32-265f-45bf-9a6c-34c874d7f518}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource\package">
+      <UniqueIdentifier>{0b78baaa-1f33-4b6b-914f-9f87c6fca59a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource\theme">
+      <UniqueIdentifier>{788debc7-0c72-4047-94d3-4cb294e72009}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource\res_pool">
+      <UniqueIdentifier>{40b59794-2c0d-4425-b49d-f2df06691e25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource\parse">
+      <UniqueIdentifier>{99015457-7fea-4a28-b7b2-8eabcb00d63d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -205,7 +208,7 @@
       <Filter>kernel\module</Filter>
     </ClCompile>
     <ClCompile Include="src\resource\res_pool.cpp">
-      <Filter>resouce\res_pool</Filter>
+      <Filter>resource\res_pool</Filter>
     </ClCompile>
     <ClCompile Include="src\drawing\image_decoder.cpp">
       <Filter>drawing\image_decoder</Filter>
@@ -226,7 +229,7 @@
       <Filter>drawing\render\device</Filter>
     </ClCompile>
     <ClCompile Include="src\resource\package.cpp">
-      <Filter>resouce\package</Filter>
+      <Filter>resource\package</Filter>
     </ClCompile>
     <ClCompile Include="src\drawing\render\canvas_brush.cpp">
       <Filter>drawing\render\brush\canvas_brush</Filter>
@@ -257,6 +260,9 @@
     </ClCompile>
     <ClCompile Include="src\drawing\render\effect.cpp">
       <Filter>drawing\render\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resource\parse.cpp">
+      <Filter>resource\parse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -324,7 +330,7 @@
       <Filter>kernel\module</Filter>
     </ClInclude>
     <ClInclude Include="include\resource\res_pool.h">
-      <Filter>resouce\res_pool</Filter>
+      <Filter>resource\res_pool</Filter>
     </ClInclude>
     <ClInclude Include="src\drawing\image_decoder.h">
       <Filter>drawing\image_decoder</Filter>
@@ -435,10 +441,13 @@
       <Filter>drawing\render\device</Filter>
     </ClInclude>
     <ClInclude Include="include\resource\package.h">
-      <Filter>resouce\package</Filter>
+      <Filter>resource\package</Filter>
     </ClInclude>
     <ClInclude Include="src\resource\package_processor.hpp">
-      <Filter>resouce\package</Filter>
+      <Filter>resource\package</Filter>
+    </ClInclude>
+    <ClInclude Include="include\resource\parse.h">
+      <Filter>resource\parse</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

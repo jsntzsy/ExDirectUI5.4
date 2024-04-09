@@ -103,6 +103,22 @@ EXPORTS
 		ExPackageBuild
 		ExPackageBuildFromDirectory
 		ExPackageLoad
+	;文本解析
+		ExParseToBool
+		ExParseToByte
+		ExParseToColor
+		ExParseToConst
+		ExParseToConsts
+		ExParseToData
+		ExParseToDouble
+		ExParseToFloat
+		ExParseToInt32
+		ExParseToInt64
+		ExParseToPointF
+		ExParseToRectF
+		ExParseToUInt32
+		ExParseToUInt64
+		ExParseToWChar
 
 ;调试层
 	;状态处理

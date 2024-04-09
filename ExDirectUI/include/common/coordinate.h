@@ -161,7 +161,7 @@ namespace ExDirectUI
 	inline ExRectF ExRect::ToRectF() const { return ExRectF(left, top, right, bottom); }
 	inline ExRect ExRectF::ToRect() const { return ExRect(roundf(left), roundf(top), roundf(right), roundf(bottom)); }
 
-	struct ExNumberU
+	struct ExNumU
 	{
 		float value;
 		DWORD unit;
