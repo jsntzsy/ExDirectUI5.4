@@ -164,17 +164,17 @@ namespace ExDirectUI
 	struct ExNumU
 	{
 		float value;
-		DWORD unit;
+		uint8_t unit;
 	};
 
 	struct ExPointU : public ExPointF
 	{
-		ExPoint unit;
+		uint8_t units[4];
 	};
 
 	struct ExRectU : public ExRectF
 	{
-		ExRect unit;
+		uint8_t units[4];
 	};
 }
 

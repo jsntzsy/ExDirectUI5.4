@@ -13,7 +13,7 @@
 
 namespace ExDirectUI
 {
-	inline ExNumberUnit _ExParse_GetUnit(LPCWSTR unit)
+	inline uint8_t _ExParse_GetUnit(LPCWSTR unit)
 	{
 		//空则直接返回
 		if (!unit || unit[0] == L'\0') { return ExNumberUnit::None; }
@@ -106,7 +106,7 @@ namespace ExDirectUI
 		return S_OK;
 	}
 
-	HRESULT EXAPI EXCALL ExParseToFloat(LPCWSTR str, float* r_value, DWORD* r_unit)
+	HRESULT EXAPI EXCALL ExParseToFloat(LPCWSTR str, float* r_value, uint8_t* r_unit)
 	{
 		CHECK_PARAM(str);
 		CHECK_PARAM(r_value);
@@ -118,7 +118,7 @@ namespace ExDirectUI
 		return S_OK;
 	}
 
-	HRESULT EXAPI EXCALL ExParseToDouble(LPCWSTR str, double* r_value, DWORD* r_unit)
+	HRESULT EXAPI EXCALL ExParseToDouble(LPCWSTR str, double* r_value, uint8_t* r_unit)
 	{
 		CHECK_PARAM(str);
 		CHECK_PARAM(r_value);
@@ -186,7 +186,7 @@ namespace ExDirectUI
 		return S_OK;
 	}
 
-	HRESULT EXAPI EXCALL ExParseToPointF(LPCWSTR str, ExPointF* r_value, ExPoint* r_units)
+	HRESULT EXAPI EXCALL ExParseToPointF(LPCWSTR str, ExPointF* r_value, uint8_t r_units[2])
 	{
 		CHECK_PARAM(str);
 		CHECK_PARAM(r_value);
@@ -208,15 +208,15 @@ namespace ExDirectUI
 
 		//解析单位
 		if (r_units) {
-			r_units->x = _ExParse_GetUnit(end_of_number[0]);
-			r_units->y = (args.size() == 1) ?
-				r_units->x : _ExParse_GetUnit(end_of_number[1]);
+			r_units[0] = _ExParse_GetUnit(end_of_number[0]);
+			r_units[1] = (args.size() == 1) ?
+				r_units[0] : _ExParse_GetUnit(end_of_number[1]);
 		}
 
 		return S_OK;
 	}
 
-	HRESULT EXAPI EXCALL ExParseToRectF(LPCWSTR str, ExRectF* r_value, ExRect* r_units)
+	HRESULT EXAPI EXCALL ExParseToRectF(LPCWSTR str, ExRectF* r_value, uint8_t r_units[4])
 	{
 		CHECK_PARAM(str);
 		CHECK_PARAM(r_value);
@@ -249,22 +249,22 @@ namespace ExDirectUI
 
 		//解析单位
 		if (r_units) {
-			r_units->left = _ExParse_GetUnit(end_of_number[0]);
+			r_units[0] = _ExParse_GetUnit(end_of_number[0]);
 			if (args.size() == 4) {
-				r_units->top = _ExParse_GetUnit(end_of_number[1]);
-				r_units->right = _ExParse_GetUnit(end_of_number[2]);
-				r_units->bottom = _ExParse_GetUnit(end_of_number[3]);
+				r_units[1] = _ExParse_GetUnit(end_of_number[1]);
+				r_units[2] = _ExParse_GetUnit(end_of_number[2]);
+				r_units[3] = _ExParse_GetUnit(end_of_number[3]);
 			}
 			else if (args.size() == 2) {
-				r_units->top = _ExParse_GetUnit(end_of_number[1]);
+				r_units[1] = _ExParse_GetUnit(end_of_number[1]);
 
-				r_units->right = r_units->left;
-				r_units->bottom = r_units->top;
+				r_units[2] = r_units[0];
+				r_units[3] = r_units[1];
 			}
 			else if (args.size() == 1) {
-				r_units->top = r_units->left;
-				r_units->right = r_units->left;
-				r_units->bottom = r_units->left;
+				r_units[1]= r_units[0];
+				r_units[2] = r_units[0];
+				r_units[3] = r_units[0];
 			}
 		}
 		

@@ -172,6 +172,9 @@
     <Filter Include="resource\parse">
       <UniqueIdentifier>{99015457-7fea-4a28-b7b2-8eabcb00d63d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="resource\variant">
+      <UniqueIdentifier>{579ab877-1e0a-47ad-ad4f-aa2e4fcf9824}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -263,6 +266,9 @@
     </ClCompile>
     <ClCompile Include="src\resource\parse.cpp">
       <Filter>resource\parse</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resource\variant.cpp">
+      <Filter>resource\variant</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -448,6 +454,9 @@
     </ClInclude>
     <ClInclude Include="include\resource\parse.h">
       <Filter>resource\parse</Filter>
+    </ClInclude>
+    <ClInclude Include="include\resource\variant.h">
+      <Filter>resource\variant</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
