@@ -169,11 +169,14 @@
     <Filter Include="resource\res_pool">
       <UniqueIdentifier>{40b59794-2c0d-4425-b49d-f2df06691e25}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resource\parse">
-      <UniqueIdentifier>{99015457-7fea-4a28-b7b2-8eabcb00d63d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="resource\variant">
       <UniqueIdentifier>{579ab877-1e0a-47ad-ad4f-aa2e4fcf9824}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource\parser">
+      <UniqueIdentifier>{99015457-7fea-4a28-b7b2-8eabcb00d63d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource\parser\type_parsers">
+      <UniqueIdentifier>{01729f0c-3189-4928-9893-24aca2a90611}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -264,11 +267,14 @@
     <ClCompile Include="src\drawing\render\effect.cpp">
       <Filter>drawing\render\effect</Filter>
     </ClCompile>
-    <ClCompile Include="src\resource\parse.cpp">
-      <Filter>resource\parse</Filter>
+    <ClCompile Include="src\resource\string_parser.cpp">
+      <Filter>resource\parser</Filter>
     </ClCompile>
     <ClCompile Include="src\resource\variant.cpp">
       <Filter>resource\variant</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resource\type_parser.cpp">
+      <Filter>resource\parser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -452,11 +458,29 @@
     <ClInclude Include="src\resource\package_processor.hpp">
       <Filter>resource\package</Filter>
     </ClInclude>
-    <ClInclude Include="include\resource\parse.h">
-      <Filter>resource\parse</Filter>
+    <ClInclude Include="include\resource\string_parser.h">
+      <Filter>resource\parser</Filter>
     </ClInclude>
     <ClInclude Include="include\resource\variant.h">
       <Filter>resource\variant</Filter>
+    </ClInclude>
+    <ClInclude Include="include\resource\type_parser.h">
+      <Filter>resource\parser</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resource\type_parser.h">
+      <Filter>resource\parser</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resource\type_parsers\number_type_parser.hpp">
+      <Filter>resource\parser\type_parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resource\type_parsers\logic_type_parser.hpp">
+      <Filter>resource\parser\type_parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resource\type_parsers\color_type_parser.hpp">
+      <Filter>resource\parser\type_parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resource\type_parsers\coordinate_type_parser.hpp">
+      <Filter>resource\parser\type_parsers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

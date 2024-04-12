@@ -9,7 +9,7 @@
 
 #include "stdafx.h"
 #include "resource/variant.h"
-#include "resource/parse.h"
+#include "resource/string_parser.h"
 #include "common/mem_pool.hpp"
 #include "common/string.hpp"
 
@@ -17,7 +17,7 @@ namespace ExDirectUI
 {
 	ExMemPool<ExVariantExtendValues> m_variant_pool;
 
-	HRESULT EXAPI EXCALL ExVariantInit(VARIANT* variant, VARTYPE vt)
+	HRESULT EXAPI EXCALL ExVariantInit(ExVariant* variant, VARTYPE vt)
 	{
 		CHECK_PARAM(variant);
 
@@ -31,9 +31,11 @@ namespace ExDirectUI
 			V_VT(variant) = vt;
 		}
 
+		//设置初始类型
+		V_VT(variant) = vt;
 		return S_OK;
 	}
-	HRESULT EXAPI EXCALL ExVariantClear(VARIANT* variant)
+	HRESULT EXAPI EXCALL ExVariantClear(ExVariant* variant)
 	{
 		CHECK_PARAM(variant);
 
@@ -61,14 +63,14 @@ namespace ExDirectUI
 		//由操作系统清空
 		return VariantClear(variant);
 	}
-	HRESULT EXAPI EXCALL ExVariantCopy(VARIANT* dest_variant, const VARIANT* src_variant)
+	HRESULT EXAPI EXCALL ExVariantCopy(ExVariant* dest_variant, const ExVariant* src_variant)
 	{
 		CHECK_PARAM(dest_variant);
 		CHECK_PARAM(src_variant);
 
 		//保存当前类型
 		VARTYPE vt = V_VT(src_variant);
-		VARIANT var = *src_variant;
+		ExVariant var = *src_variant;
 
 		//如果是扩展内容
 		if (IS_EVT(vt)) {
@@ -107,7 +109,7 @@ namespace ExDirectUI
 
 		return S_OK;
 	}
-	HRESULT EXAPI EXCALL ExVariantToString(VARIANT* variant, VARTYPE vt, BSTR* r_str)
+	HRESULT EXAPI EXCALL ExVariantToString(ExVariant* variant, VARTYPE vt, BSTR* r_str)
 	{
 		CHECK_PARAM(variant);
 		CHECK_PARAM(r_str);
@@ -172,7 +174,7 @@ namespace ExDirectUI
 			return S_OK;
 		}
 
-		VARIANT var{};
+		ExVariant var{};
 		V_VT(&var) = vt;
 		handle_if_failed(
 			VariantChangeType(&var, variant, 0, VT_BSTR),
@@ -183,7 +185,7 @@ namespace ExDirectUI
 		*r_str = var.bstrVal;
 		return S_OK;
 	}
-	HRESULT EXAPI EXCALL ExVariantGetValuePtr(VARIANT* variant, void** r_value)
+	HRESULT EXAPI EXCALL ExVariantGetValuePtr(ExVariant* variant, void** r_value)
 	{
 		CHECK_PARAM(variant);
 		CHECK_PARAM(r_value);

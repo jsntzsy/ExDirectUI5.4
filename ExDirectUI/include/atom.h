@@ -55,3 +55,42 @@
 #pragma endregion
 
 
+#pragma region 类型名称
+
+#define ATOM_BOOL				0xA44306DE		// 原子号: bool
+#define ATOM_BYTE				0x27168C8F		// 原子号: byte
+#define ATOM_INT				0x0E93C3F3		// 原子号: int
+#define ATOM_UINT				0x3EC322CD		// 原子号: uint
+#define ATOM_LONG				0xEA81AA42		// 原子号: long
+#define ATOM_ULONG				0x7C495381		// 原子号: ulong
+#define ATOM_FLOAT				0x895C38AE		// 原子号: float
+#define ATOM_DOUBLE				0xB89B2819		// 原子号: double
+#define ATOM_NUMBER				0xB5F530DB		// 原子号: number
+#define ATOM_NUMBERU			0x578406C1		// 原子号: numberu
+
+#define ATOM_COLOR				0xD1EB5612		// 原子号: color
+#define ATOM_CHANNEL			0x035359B4		// 原子号: channel
+#define ATOM_OPACITY			0x7AA2A01C		// 原子号: opacity
+#define ATOM_ALPHA				0xD3BD3A07		// 原子号: alpha
+
+#define ATOM_POINT				0xA3593DA9		// 原子号: point
+#define ATOM_SIZE				0x740EC892		// 原子号: size
+#define ATOM_RECT				0xB1AE3372		// 原子号: rect
+#define ATOM_POINTU				0x343C77A4		// 原子号: pointu
+#define ATOM_SIZEU				0xC5594958		// 原子号: sizeu
+#define ATOM_RECTU				0xB1485480		// 原子号: rectu
+
+
+#pragma endregion
+
+
+#pragma region 颜色相关
+
+#define ATOM_TRANSPARENT		0xA17FBD6E		// 原子号: transparent
+#define ATOM_OPAQUE				0x4F0E0183		// 原子号: opaque
+#define ATOM_HALF				0xE7D33C02		// 原子号: half
+
+#pragma endregion
+
+
+

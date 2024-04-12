@@ -36,12 +36,14 @@ namespace ExDirectUI
 	{
 		CHECK_PARAM(r_data);
 
-		//如果数据块不为空，则释放内存
-		if (r_data->data) {
+		//如果数据块不为空且尺寸不为0，则释放内存
+		if (r_data->data && r_data->size != 0) {
 			exfree(r_data->data);
-			r_data->data = nullptr;
-			r_data->size = 0;
 		}
+		
+		//清空变量
+		r_data->data = nullptr;
+		r_data->size = 0;
 
 		return S_OK;
 	}

@@ -16,8 +16,7 @@ namespace ExDirectUI
 	public:
 		static std::wstring encode(const byte_t* data, size_t size) 
 		{
-			PARAM_CHECK_THROW(data);
-			if (size == 0) return L"";
+			if (data == nullptr || size == 0) { return L""; }
 
 			const wchar_t* base64_chars =
 				L"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -74,7 +73,7 @@ namespace ExDirectUI
 					continue;
 				}
 
-				throw_if_false(decoding_table[c] != -1, ES_INVALID, L"非法的base64字符串");
+				throw_if_false(decoding_table[c] != -1, E_INVALIDARG, L"非法的base64字符串");
 
 				val = (val << 6) + decoding_table[c];
 				bits += 6;

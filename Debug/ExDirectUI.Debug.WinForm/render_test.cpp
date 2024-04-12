@@ -155,7 +155,7 @@ namespace ExDirectUI
 				pen2->SetDashStyle(ExDashStyle::Dash);
 
 				//绘制填充基本图形
-				for (int i = 0; i < rects.size(); i++) {
+				for (int i = 0; i < (int)rects.size(); i++) {
 					int type = i % 4;
 					int mode = i / 4;
 
@@ -349,7 +349,7 @@ namespace ExDirectUI
 				);
 
 				//绘制填充各种字体
-				for (int i = 0; i < rects.size(); i++) {
+				for (int i = 0; i < (int)rects.size(); i++) {
 					int mode = i % 3;
 					int type = i / 3;
 
@@ -489,7 +489,7 @@ namespace ExDirectUI
 					ExImageMode::Mirror, 100
 				);
 
-				for (int i = 0; i < rects.size(); i++) {
+				for (int i = 0; i < (int)rects.size(); i++) {
 
 					int x = i % 4;
 					int y = i / 4;
@@ -556,7 +556,7 @@ namespace ExDirectUI
 					2, 3, { 100,100 }
 				);
 
-				for (int i = 0; i < rects.size(); i++) {
+				for (int i = 0; i < (int)rects.size(); i++) {
 					auto& rect = rects[i];
 					canvas->DrawRect(pen, rect.left, rect.top, rect.right, rect.bottom);
 					rect.Inflate(-10, -10);

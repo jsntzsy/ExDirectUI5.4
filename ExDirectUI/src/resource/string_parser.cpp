@@ -1,5 +1,5 @@
 ﻿/**
- * @file parse.cpp
+ * @file string_parser.cpp
  * @brief 文本解析实现文件
  * @author EternalZSY
  * @version 5.4.0.0
@@ -8,11 +8,14 @@
  */
 
 #include "stdafx.h"
-#include "resource/parse.h"
+#include "resource/string_parser.h"
 #include "common/string.hpp"
+
+#include "common/base64.hpp"
 
 namespace ExDirectUI
 {
+
 	inline uint8_t _ExParse_GetUnit(LPCWSTR unit)
 	{
 		//空则直接返回
@@ -65,8 +68,16 @@ namespace ExDirectUI
 		CHECK_PARAM(str);
 		CHECK_PARAM(r_value);
 
-		//准备改为 支持数值和'c'这种形式
-		*r_value = *str;
+		//支持 单个字符 或者 \[ucode(10或0x16进制)] 或者 \\
+
+		if (*str == L'\\') {
+			if (str[1] != '\\' && str[1] != L'\0') {
+				*r_value = (wchar_t)wcstoul(str, nullptr, 0);
+			}
+			else { *r_value = L'\\'; }
+		}
+		else { *r_value = *str; }
+
 		return S_OK;
 	}
 
@@ -262,26 +273,112 @@ namespace ExDirectUI
 				r_units[3] = r_units[1];
 			}
 			else if (args.size() == 1) {
-				r_units[1]= r_units[0];
+				r_units[1] = r_units[0];
 				r_units[2] = r_units[0];
 				r_units[3] = r_units[0];
 			}
 		}
-		
+
 		return S_OK;
 	}
 
 	HRESULT EXAPI EXCALL ExParseToData(LPCWSTR str, ExData* r_value, DWORD* r_type)
 	{
-		return S_FALSE;
+		CHECK_PARAM(str);
+		CHECK_PARAM(r_value);
+
+		/*
+			支持的格式：
+			b: base64
+			f: 文件名
+			w: http地址
+			s: unicode字符串
+			u: utf8字符串
+			d: 10进制逗号分割字符串
+			r: 资源id (并不会读取真实数据,只会将r_value.data设置为资源id,value.size设置为0,不需要释放)
+
+			其他情况按16进制字符串处理
+		*/
+
+		DWORD type = ExDataParseType::Hex;
+		int len = lstrlenW(str);
+
+		//?:
+		if (len >= 2 && str[1] == L':') {
+			wchar_t header = str[0];
+			CharLowerBuffW(&header, 1);
+
+			if (header == L'b') {
+				try {
+					ExBase64 b64;
+					auto data = b64.decode(str + 2);
+					ExData data_src{ data.data(), data.size() };
+					handle_if_failed(ExDataCopy(&data_src, r_value), L"复制数据失败");
+					type = ExDataParseType::Base64;
+				}
+				catch_default({});
+			}
+			else if (header == L'f') {
+				handle_if_failed(ExDataReadFile(str + 2, r_value), L"读取文件失败");
+				type = ExDataParseType::File;
+			}
+			else if (header == L'w') {
+				handle_ex(E_NOTIMPL, L"尚未支持");
+			}
+			else if (header == L's') {
+				ExData data_src{ (byte_t*)str + 2, (len - 2) * sizeof(wchar_t) };
+				handle_if_failed(ExDataCopy(&data_src, r_value), L"复制数据失败");
+				type = ExDataParseType::String;
+			}
+			else if (header == L'u') {
+				auto s = ExString::w2a(str + 2, CP_UTF8);
+				ExData data_src{ (byte_t*)s.data(), s.size() };
+				handle_if_failed(ExDataCopy(&data_src, r_value), L"复制数据失败");
+				type = ExDataParseType::Utf8;
+			}
+			else if (header == L'd') {
+				handle_ex(E_NOTIMPL, L"尚未支持");
+			}
+			else if (header == L'r') {
+				r_value->data = (byte_t*)(str + 2);
+				r_value->size = 0;
+				type = ExDataParseType::Resource;
+			}
+			else { handle_ex(E_INVALIDARG, L"不支持的数据格式"); }
+		}
+
+		if (type == ExDataParseType::Hex) {
+			//其他情况按16进制字符串处理(两位一个字节,不分割)
+			
+			int size = (int)ceil(len / 2.0f);
+			handle_if_failed(ExDataAlloc(size, r_value), L"申请内存失败");
+
+			const wchar_t* p = str;
+			
+
+			//std::vector<byte_t> data;
+			//std::wistringstream iss(str);
+			//std::wstring byte;
+			//while (iss >> std::hex >> byte) {
+			//	byte_t b = (byte_t)wcstoul(byte.c_str(), nullptr, 16);
+			//	data.push_back(b);
+			//}
+			//
+			//ExData data_src{ data.data(), data.size() };
+			//handle_if_failed(ExDataCopy(&data_src, r_value), L"复制数据失败");
+			type = ExDataParseType::Hex;
+		}
+
+		if (r_type) { *r_type = type; }
+		return S_OK;
 	}
 
-	HRESULT EXAPI EXCALL ExParseToConst(LPCWSTR str, DWORD key_values[][2], uint32_t count, DWORD* r_values)
+	HRESULT EXAPI EXCALL ExParseToConst(LPCWSTR str, const DWORD key_values[][2], uint32_t count, DWORD* r_values)
 	{
 		CHECK_PARAM(str);
 		CHECK_PARAM(key_values);
 		CHECK_PARAM(r_values);
-		
+
 		//计算原子号
 		EXATOM key = ExAtom(str);
 
@@ -292,13 +389,13 @@ namespace ExDirectUI
 				return S_OK;
 			}
 		}
-		
+
 		//如果遍历没找到,则按数值解析
 		*r_values = (DWORD)wcstoul(str, nullptr, 0);
 		return S_OK;
 	}
 
-	HRESULT EXAPI EXCALL ExParseToConsts(LPCWSTR str, DWORD key_values[][2], uint32_t count, DWORD* r_values)
+	HRESULT EXAPI EXCALL ExParseToConsts(LPCWSTR str, const DWORD key_values[][2], uint32_t count, DWORD* r_values)
 	{
 		CHECK_PARAM(str);
 		CHECK_PARAM(key_values);
@@ -306,17 +403,17 @@ namespace ExDirectUI
 
 		//如果只有一个键值,则直接按一个解析
 		if (count <= 1) { return ExParseToConst(str, key_values, count, r_values); }
-		
+
 		//按逗号分割,如果没有逗号,则也按一个解析
 		auto args = ExString::split(str, L",");
 		if (args.size() <= 1) { return ExParseToConst(str, key_values, count, r_values); }
-		
+
 		//将键值对转换为map
 		std::unordered_map<EXATOM, DWORD> kv_map;
 		for (uint32_t i = 0; i < count; i++) {
 			kv_map[key_values[i][0]] = key_values[i][1];
 		}
-		
+
 		//遍历每个值,在表里找
 		DWORD value = 0;
 		for (auto& arg : args) {
@@ -330,7 +427,7 @@ namespace ExDirectUI
 			if (it != kv_map.end()) { value |= it->second; }
 			else { value |= (DWORD)wcstoul(arg.c_str(), nullptr, 0); }
 		}
-		
+
 		return S_OK;
 	}
 

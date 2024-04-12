@@ -1,5 +1,5 @@
 ﻿/**
- * @file parse.h
+ * @file string_parser.h
  * @brief 文本解析头文件
  * @author EternalZSY
  * @version 5.4.0.0
@@ -21,6 +21,18 @@ namespace ExDirectUI
 		Alert,
 		Question,
 		Sharp
+	};
+
+	EXENUM(ExDataParseType)
+	{
+		Hex,
+		Base64,
+		File,
+		Web,
+		String,
+		Utf8,
+		Data,
+		Resource,
 	};
 
 	inline LPCWSTR ExNumberUnitToString(uint8_t unit)
@@ -57,7 +69,7 @@ namespace ExDirectUI
 	HRESULT EXAPI EXCALL ExParseToRectF(LPCWSTR str, ExRectF* r_value, uint8_t r_units[4] = nullptr);
 	HRESULT EXAPI EXCALL ExParseToData(LPCWSTR str, ExData* r_value, DWORD* r_type = nullptr);
 
-	HRESULT EXAPI EXCALL ExParseToConst(LPCWSTR str, DWORD key_values[][2], uint32_t count, DWORD* r_values);
-	HRESULT EXAPI EXCALL ExParseToConsts(LPCWSTR str, DWORD key_values[][2], uint32_t count, DWORD* r_values);
+	HRESULT EXAPI EXCALL ExParseToConst(LPCWSTR str, const DWORD key_values[][2], uint32_t count, DWORD* r_values);
+	HRESULT EXAPI EXCALL ExParseToConsts(LPCWSTR str, const DWORD key_values[][2], uint32_t count, DWORD* r_values);
 }
 

@@ -10,6 +10,9 @@
 
 namespace ExDirectUI
 {
+	/// 变体类型
+	typedef VARIANT ExVariant;
+
 	/// 变体扩展类型
 	enum ExVariantExtendType : VARTYPE
 	{
@@ -38,11 +41,11 @@ namespace ExDirectUI
 		ExRectU rectu_;
 	};
 
-	HRESULT EXAPI EXCALL ExVariantInit(VARIANT* variant, VARTYPE vt = VT_EMPTY);
-	HRESULT EXAPI EXCALL ExVariantClear(VARIANT* variant);
-	HRESULT EXAPI EXCALL ExVariantCopy(VARIANT* dest_variant, const VARIANT* src_variant);
-	HRESULT EXAPI EXCALL ExVariantToString(VARIANT* variant, VARTYPE vt, BSTR* r_str);
-	HRESULT EXAPI EXCALL ExVariantGetValuePtr(VARIANT* variant, void** r_value);
+	HRESULT EXAPI EXCALL ExVariantInit(ExVariant* variant, VARTYPE vt = VT_EMPTY);
+	HRESULT EXAPI EXCALL ExVariantClear(ExVariant* variant);
+	HRESULT EXAPI EXCALL ExVariantCopy(ExVariant* dest_variant, const ExVariant* src_variant);
+	HRESULT EXAPI EXCALL ExVariantToString(ExVariant* variant, VARTYPE vt, BSTR* r_str);
+	HRESULT EXAPI EXCALL ExVariantGetValuePtr(ExVariant* variant, void** r_value);
 
 }
 
@@ -52,9 +55,9 @@ namespace ExDirectUI
 #define IS_EVTR(VT)		((VT & 0xF800) == EVT_EXTEND_MARK)
 #define V_ISEVTR(X)		(IS_EVTR(V_VT(X)))
 
-#define V_EX(X)			((ExDirectUI::ExVariantExtendValues*)V_BYREF(X))
-#define V_EXF(X,F)		(((ExDirectUI::ExVariantExtendValues*)V_BYREF(X))->F)
+#define V_EX(X)			((::ExDirectUI::ExVariantExtendValues*)V_BYREF(X))
+#define V_EXF(X,F)		(((::ExDirectUI::ExVariantExtendValues*)V_BYREF(X))->F)
 
-#define V_EXOBJ(X)		((ExDirectUI::IExObject*)V_UNION(X, punkVal))
+#define V_EXOBJ(X)		((::ExDirectUI::IExObject*)V_UNION(X, punkVal))
 
 
