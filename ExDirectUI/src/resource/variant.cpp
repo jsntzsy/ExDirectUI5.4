@@ -15,6 +15,9 @@
 
 namespace ExDirectUI
 {
+	//TODO: 考虑直接采用各类指针来管理，不统一采用一个大的ExVariantExtendValues
+	//因为可能不一定所有存储都需要这么大空间，会造成内存的浪费
+
 	ExMemPool<ExVariantExtendValues> m_variant_pool;
 
 	HRESULT EXAPI EXCALL ExVariantInit(ExVariant* variant, VARTYPE vt)

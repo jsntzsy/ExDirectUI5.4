@@ -76,7 +76,7 @@ namespace ExDirectUI
 		Default = ExImageMode::Scale,
 		Center = ExImageMode::CenterMiddle,
 
-		Grids = 0x01000000,
+		Grids = 0x1000,
 	};
 
 	EXENUM(ExGridsImageMode)
