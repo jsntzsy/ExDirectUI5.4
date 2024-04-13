@@ -63,7 +63,7 @@ namespace ExDirectUI
 			return (uint32_t)m_items.size();
 		}
 
-		EXMETHOD bool EXOBJCALL ItemExists(EXATOM id) const override
+		EXMETHOD bool EXOBJCALL HasItem(EXATOM id) const override
 		{
 			return m_items.find(id) != m_items.end();
 		}

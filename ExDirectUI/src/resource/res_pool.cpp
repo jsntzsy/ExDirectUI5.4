@@ -49,7 +49,7 @@ namespace ExDirectUI
 			return (uint32_t)m_res.size();
 		}
 
-		EXMETHOD bool EXOBJCALL ItemExists(EXATOM key) const override
+		EXMETHOD bool EXOBJCALL HasItem(EXATOM key) const override
 		{
 			_Locked(m_lock);
 			return m_res.find(key) != m_res.end();

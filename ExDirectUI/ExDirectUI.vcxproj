@@ -260,6 +260,7 @@
     <ClInclude Include="include\kernel\memory.h" />
     <ClInclude Include="include\kernel\module.h" />
     <ClInclude Include="include\kernel\new.h" />
+    <ClInclude Include="include\resource\extend_type.h" />
     <ClInclude Include="include\resource\package.h" />
     <ClInclude Include="include\resource\string_parser.h" />
     <ClInclude Include="include\resource\res_pool.h" />

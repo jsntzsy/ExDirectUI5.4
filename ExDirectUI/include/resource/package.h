@@ -98,7 +98,7 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL GetPackageInfo(ExPackageInfo * r_info) const PURE;
 		EXMETHOD uint32_t EXOBJCALL GetItemCount() const PURE;
 
-		EXMETHOD bool EXOBJCALL ItemExists(EXATOM id) const PURE;
+		EXMETHOD bool EXOBJCALL HasItem(EXATOM id) const PURE;
 		EXMETHOD EXATOM EXOBJCALL FindItem(LPCWSTR path) const PURE;
 
 		EXMETHOD HRESULT EXOBJCALL GetItemInfo(EXATOM id, ExPackageItemInfo* r_info) const PURE;

@@ -494,6 +494,9 @@
     <ClInclude Include="src\resource\type_parsers\data_type_parser.hpp">
       <Filter>resource\parser\type_parsers</Filter>
     </ClInclude>
+    <ClInclude Include="include\resource\extend_type.h">
+      <Filter>resource\variant</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="API.def">

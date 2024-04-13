@@ -7,7 +7,7 @@
  * @copyright
  */
 #pragma once
-#include "resource/theme.h"
+#include "resource/extend_type.h"
 
 namespace ExDirectUI
 {

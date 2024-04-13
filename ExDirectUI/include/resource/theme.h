@@ -24,20 +24,40 @@ namespace ExDirectUI
 		wchar_t description[256];
 	};
 
-	/////////////////////////////
-
-	/// 元素透明度信息
-	struct ExEleOpacityInfo
-	{
-		EXCHANNEL normal;
-		float disable_percent;
-	};
-
-
+	interface IExTheme;
+	typedef VARIANT ExVariant;
+	
+	typedef bool (CALLBACK* ExThemeEnumClassProc)(IExTheme* theme, EXATOM class_atom,
+		LPCWSTR class_name, EXATOM base_class, LPARAM lparam);
+	typedef bool (CALLBACK* ExThemeEnumAttributeProc)(IExTheme* theme, EXATOM class_atom,
+		EXATOM attribute_atom, const ExVariant* value, LPARAM lparam);
+	
 	//////////////////////
 
+	interface IExClass;
 
+	EXINTERFACE("366C621E-6225-4458-B2A9-3788D8086920") IExTheme : public IExObject
+	{
+		EXMETHOD HRESULT EXOBJCALL GetInfo(ExThemeInfo * r_info) const PURE;
 
+		EXMETHOD bool EXOBJCALL HasClass(EXATOM atom_class) const PURE;
+		EXMETHOD bool EXOBJCALL HasAttribute(EXATOM atom_class , EXATOM atom_attr) const PURE;
+
+		EXMETHOD HRESULT EXOBJCALL GetAttribute(EXATOM atom_class, EXATOM atom_attr,
+			ExVariant* r_attr) const PURE;
+		EXMETHOD HRESULT EXOBJCALL CopyAttribute(EXATOM atom_class, EXATOM atom_attr,
+			ExVariant* r_attr) const PURE;
+		EXMETHOD HRESULT EXOBJCALL DrawAttribute(IExCanvas* canvas, float left, float top,
+			float right, float bottom, EXATOM atom_class, EXATOM atom_attr) const PURE;
+
+		EXMETHOD HRESULT EXOBJCALL EnumClasses(ExThemeEnumClassProc proc, LPARAM lparam = 0) const PURE;
+		EXMETHOD HRESULT EXOBJCALL EnumAttributes(EXATOM class_atom, 
+			ExThemeEnumAttributeProc proc, LPARAM lparam = 0) const PURE;
+
+	};
+
+	/////////////////////////////////
+	
 
 
 }

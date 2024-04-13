@@ -96,8 +96,8 @@ TEST_F(TEST_MODULE_NAME, UseResource)
 	ASSERT_NE(p, nullptr);
 	ASSERT_EQ(*p, key);
 
-	ASSERT_EQ(pool->ItemExists(key), S_OK);
-	ASSERT_EQ(pool->ItemExists(key + 1), S_FALSE);
+	ASSERT_EQ(pool->HasItem(key), S_OK);
+	ASSERT_EQ(pool->HasItem(key + 1), S_FALSE);
 
 	EXATOM key2 = -1;
 	ASSERT_EQ(pool->FindKeyByPtr(p, &key2), S_OK);
@@ -107,7 +107,7 @@ TEST_F(TEST_MODULE_NAME, UseResource)
 	ASSERT_EQ(pool->UnUseItem(key), S_OK);
 	ASSERT_EQ(pool->UnUseItem(key), S_OK);
 	ASSERT_EQ(pool->UnUseItem(key), S_OK);
-	ASSERT_EQ(pool->ItemExists(key), S_FALSE);
+	ASSERT_EQ(pool->HasItem(key), S_FALSE);
 
 	ASSERT_EQ(pool->FindKeyByPtr(p, &key2), EE_NOEXISTS);
 	

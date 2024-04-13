@@ -41,6 +41,7 @@
 #include "drawing/render.h"
 
 #include "resource/res_pool.h"
+#include "resource/extend_type.h"
 #include "resource/variant.h"
 #include "resource/string_parser.h"
 #include "resource/type_parser.h"
