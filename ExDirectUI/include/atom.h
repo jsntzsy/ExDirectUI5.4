@@ -83,6 +83,8 @@
 #define ATOM_SIZEU				0xC5594958		// 原子号: sizeu
 #define ATOM_RECTU				0xB1485480		// 原子号: rectu
 
+#define ATOM_DATA				0x6A90C0FA		// 原子号: data
+#define ATOM_CHAR				0x41727E14		// 原子号: char
 
 #pragma endregion
 

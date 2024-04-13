@@ -491,6 +491,9 @@
     <ClInclude Include="include\resource\theme.h">
       <Filter>resource\theme</Filter>
     </ClInclude>
+    <ClInclude Include="src\resource\type_parsers\data_type_parser.hpp">
+      <Filter>resource\parser\type_parsers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="API.def">

@@ -33,6 +33,8 @@ namespace ExDirectUI
 		EVT_POINTU,
 		EVT_RECTU,
 
+		EVT_DATA,
+
 		EVT_ELE_OPACITY,
 	};
 
@@ -46,6 +48,7 @@ namespace ExDirectUI
 		ExPointU pointu_;
 		ExRectU rectu_;
 		
+		ExData data_;
 		ExEleOpacityInfo ele_opacity_;
 	};
 

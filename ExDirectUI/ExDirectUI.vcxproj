@@ -282,6 +282,7 @@
     <ClInclude Include="src\resource\type_parser.h" />
     <ClInclude Include="src\resource\type_parsers\color_type_parser.hpp" />
     <ClInclude Include="src\resource\type_parsers\coordinate_type_parser.hpp" />
+    <ClInclude Include="src\resource\type_parsers\data_type_parser.hpp" />
     <ClInclude Include="src\resource\type_parsers\logic_type_parser.hpp" />
     <ClInclude Include="src\resource\type_parsers\number_type_parser.hpp" />
     <ClInclude Include="stdafx.h" />

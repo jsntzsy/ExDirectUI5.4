@@ -17,6 +17,7 @@
 #include "src/resource/type_parsers/logic_type_parser.hpp"
 #include "src/resource/type_parsers/color_type_parser.hpp"
 #include "src/resource/type_parsers/coordinate_type_parser.hpp"
+#include "src/resource/type_parsers/data_type_parser.hpp"
 
 
 namespace ExDirectUI
@@ -54,6 +55,11 @@ namespace ExDirectUI
 		{ATOM_SIZEU, ExPointSizeUTypeParser::Instance()},
 		{ATOM_RECTU, ExRectUTypeParser::Instance()},
 		
+		//文本和数据类
+		{ATOM_DATA, ExDataTypeParser::Instance()},
+		{ATOM_CHAR, ExCharTypeParser::Instance()},
+
+
 	};
 
 	////////////////

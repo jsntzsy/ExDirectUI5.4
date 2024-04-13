@@ -26,8 +26,10 @@ namespace ExDirectUI
 
 		//如果是扩展指针内容,则生成对应的扩展块
 		if (IS_EVTR(vt)) {
-			V_BYREF(variant) = m_variant_pool.Alloc();
-			handle_if_false(V_BYREF(variant), E_OUTOFMEMORY, L"分配内存失败");
+			auto ext = m_variant_pool.Alloc();
+			handle_if_false(ext, E_OUTOFMEMORY, L"分配内存失败");
+			ZeroMemory(ext, sizeof(*ext));
+			V_BYREF(variant) = ext;
 			V_VT(variant) = vt;
 		}
 
@@ -47,6 +49,9 @@ namespace ExDirectUI
 			{
 			case EVT_OBJECT:
 				SAFE_RELEASE(V_UNKNOWN(variant));
+				break;
+			case EVT_DATA:
+				ExDataFree(&V_EXF(variant, data_));
 				break;
 
 			}
@@ -96,6 +101,15 @@ namespace ExDirectUI
 				//根据类型判断是否还需要复制对应的指针
 				switch (vt)
 				{
+				case EVT_DATA:
+					if (V_EXF(src_variant, data_).data) {
+						return ExDataCopy(
+							&V_EXF(dest_variant, data_),
+							&V_EXF(src_variant, data_)
+						);
+					}
+					break;
+					
 				}
 
 				//不用系统继续处理了
@@ -173,11 +187,14 @@ namespace ExDirectUI
 						rc.bottom, ExNumberUnitToString(rc.units[3])
 					);
 				}break;
+				case EVT_DATA: {
+					auto& data = V_EXF(variant, data_);
+					str = ExString::format(L"0x%p[%zu]", data.data, data.size);
+				}break;
 				case EVT_ELE_OPACITY: {
 					auto& opacity = V_EXF(variant, ele_opacity_);
 					str = ExString::format(L"opacity: %u, disable: %f%",
 						opacity.normal, opacity.disable_percent * 100.f);
-					break;
 				}break;
 				}
 			}
