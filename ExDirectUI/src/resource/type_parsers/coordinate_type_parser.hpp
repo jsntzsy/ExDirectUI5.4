@@ -12,13 +12,31 @@
 namespace ExDirectUI
 {
 	EX_SAMPLE_TYPE_PARSER(PointSize, EVT_POINT, {
-			ExPointF & pt = V_EXF(V, point_);
-			return ExParseToPointF(str, &pt);
+			ExPoint & pt = V_EXF(V, point_);
+			ExPointF ptf{};
+			HRESULT hr = ExParseToPointF(str, &ptf);
+			pt = ptf.ToPoint();
+			return hr;
 		}
 	);
 
 	EX_SAMPLE_TYPE_PARSER(Rect, EVT_RECT, {
-			ExRectF & rc = V_EXF(V, rect_);
+			ExRect & rc = V_EXF(V, rect_);
+			ExRectF rcf{};
+			HRESULT hr = ExParseToRectF(str, &rcf);
+			rc = rcf.ToRect();
+			return hr;
+		}
+	);
+	
+	EX_SAMPLE_TYPE_PARSER(PointSizeF, EVT_POINTF, {
+			ExPointF & pt = V_EXF(V, pointf_);
+			return ExParseToPointF(str, &pt);
+		}
+	);
+
+	EX_SAMPLE_TYPE_PARSER(RectF, EVT_RECTF, {
+			ExRectF & rc = V_EXF(V, rectf_);
 			return ExParseToRectF(str, &rc);
 		}
 	);

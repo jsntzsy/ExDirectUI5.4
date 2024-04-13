@@ -7,6 +7,7 @@
  * @copyright
  */
 #pragma once
+#include "resource/theme.h"
 
 namespace ExDirectUI
 {
@@ -27,18 +28,25 @@ namespace ExDirectUI
 		EVT_NUMU,
 		EVT_POINT,
 		EVT_RECT,
+		EVT_POINTF,
+		EVT_RECTF,
 		EVT_POINTU,
 		EVT_RECTU,
 
+		EVT_ELE_OPACITY,
 	};
 
 	union ExVariantExtendValues
 	{
 		ExNumU numu_;
-		ExPointF point_;
-		ExRectF rect_;
+		ExPoint point_;
+		ExRect rect_;
+		ExPointF pointf_;
+		ExRectF rectf_;
 		ExPointU pointu_;
 		ExRectU rectu_;
+		
+		ExEleOpacityInfo ele_opacity_;
 	};
 
 	HRESULT EXAPI EXCALL ExVariantInit(ExVariant* variant, VARTYPE vt = VT_EMPTY);

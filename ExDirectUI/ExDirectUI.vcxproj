@@ -204,6 +204,7 @@
     <ClCompile Include="src\resource\package.cpp" />
     <ClCompile Include="src\resource\string_parser.cpp" />
     <ClCompile Include="src\resource\res_pool.cpp" />
+    <ClCompile Include="src\resource\theme.cpp" />
     <ClCompile Include="src\resource\type_parser.cpp" />
     <ClCompile Include="src\resource\variant.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -262,6 +263,7 @@
     <ClInclude Include="include\resource\package.h" />
     <ClInclude Include="include\resource\string_parser.h" />
     <ClInclude Include="include\resource\res_pool.h" />
+    <ClInclude Include="include\resource\theme.h" />
     <ClInclude Include="include\resource\type_parser.h" />
     <ClInclude Include="include\resource\variant.h" />
     <ClInclude Include="include\status.h" />
@@ -276,6 +278,7 @@
     <ClInclude Include="src\kernel\module_utils.h" />
     <ClInclude Include="src\kernel\winapi.h" />
     <ClInclude Include="src\resource\package_processor.hpp" />
+    <ClInclude Include="src\resource\theme.h" />
     <ClInclude Include="src\resource\type_parser.h" />
     <ClInclude Include="src\resource\type_parsers\color_type_parser.hpp" />
     <ClInclude Include="src\resource\type_parsers\coordinate_type_parser.hpp" />

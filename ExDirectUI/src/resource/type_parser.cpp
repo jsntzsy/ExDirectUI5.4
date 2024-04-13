@@ -40,15 +40,18 @@ namespace ExDirectUI
 		//颜色类
 		{ATOM_COLOR, ExColorTypeParser::Instance()},
 		{ATOM_CHANNEL, ExChannelTypeParser::Instance()},
-		{ATOM_OPACITY, ExChannelTypeParser::Instance()},
-		{ATOM_ALPHA, ExChannelTypeParser::Instance()},
+		{ATOM_ALPHA, ExOpacityTypeParser::Instance()},
+		{ATOM_OPACITY, ExOpacityTypeParser::Instance()},
 
 		//坐标系类
 		{ATOM_POINT, ExPointSizeTypeParser::Instance()},
 		{ATOM_SIZE, ExPointSizeTypeParser::Instance()},
+		{ATOM_RECT, ExRectTypeParser::Instance()},
+		{ATOM_POINTF, ExPointSizeFTypeParser::Instance()},
+		{ATOM_SIZEF, ExPointSizeFTypeParser::Instance()},
+		{ATOM_RECTF, ExRectFTypeParser::Instance()},
 		{ATOM_POINTU, ExPointSizeUTypeParser::Instance()},
 		{ATOM_SIZEU, ExPointSizeUTypeParser::Instance()},
-		{ATOM_RECT, ExRectTypeParser::Instance()},
 		{ATOM_RECTU, ExRectUTypeParser::Instance()},
 		
 	};

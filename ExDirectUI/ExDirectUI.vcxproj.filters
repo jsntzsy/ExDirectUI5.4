@@ -276,6 +276,9 @@
     <ClCompile Include="src\resource\type_parser.cpp">
       <Filter>resource\parser</Filter>
     </ClCompile>
+    <ClCompile Include="src\resource\theme.cpp">
+      <Filter>resource\theme</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -481,6 +484,12 @@
     </ClInclude>
     <ClInclude Include="src\resource\type_parsers\coordinate_type_parser.hpp">
       <Filter>resource\parser\type_parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resource\theme.h">
+      <Filter>resource\theme</Filter>
+    </ClInclude>
+    <ClInclude Include="include\resource\theme.h">
+      <Filter>resource\theme</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

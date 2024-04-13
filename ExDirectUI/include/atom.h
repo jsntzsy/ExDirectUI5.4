@@ -76,6 +76,9 @@
 #define ATOM_POINT				0xA3593DA9		// 原子号: point
 #define ATOM_SIZE				0x740EC892		// 原子号: size
 #define ATOM_RECT				0xB1AE3372		// 原子号: rect
+#define ATOM_POINTF				0x55D33636		// 原子号: pointf
+#define ATOM_SIZEF				0xA4B608CA		// 原子号: sizef
+#define ATOM_RECTF				0xD0A71512		// 原子号: rectf
 #define ATOM_POINTU				0x343C77A4		// 原子号: pointu
 #define ATOM_SIZEU				0xC5594958		// 原子号: sizeu
 #define ATOM_RECTU				0xB1485480		// 原子号: rectu

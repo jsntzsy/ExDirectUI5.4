@@ -143,10 +143,18 @@ namespace ExDirectUI
 				}break;
 				case EVT_POINT: {
 					auto& pt = V_EXF(variant, point_);
-					str = ExString::format(L"%f,%f", _expand_point_(pt));
+					str = ExString::format(L"%d,%d", _expand_point_(pt));
 				}break;
 				case EVT_RECT: {
 					auto& rc = V_EXF(variant, rect_);
+					str = ExString::format(L"%d,%d,%d,%d", _expand_rect_(rc));
+				}break;
+				case EVT_POINTF: {
+					auto& pt = V_EXF(variant, pointf_);
+					str = ExString::format(L"%f,%f", _expand_point_(pt));
+				}break;
+				case EVT_RECTF: {
+					auto& rc = V_EXF(variant, rectf_);
 					str = ExString::format(L"%f,%f,%f,%f", _expand_rect_(rc));
 				}break;
 				case EVT_POINTU: {
@@ -165,7 +173,12 @@ namespace ExDirectUI
 						rc.bottom, ExNumberUnitToString(rc.units[3])
 					);
 				}break;
-
+				case EVT_ELE_OPACITY: {
+					auto& opacity = V_EXF(variant, ele_opacity_);
+					str = ExString::format(L"opacity: %u, disable: %f%",
+						opacity.normal, opacity.disable_percent * 100.f);
+					break;
+				}break;
 				}
 			}
 
@@ -206,8 +219,11 @@ namespace ExDirectUI
 			case EVT_NUMU: *r_value = &V_EXF(variant, numu_); break;
 			case EVT_POINT: *r_value = &V_EXF(variant, point_); break;
 			case EVT_RECT: *r_value = &V_EXF(variant, rect_); break;
+			case EVT_POINTF: *r_value = &V_EXF(variant, pointf_); break;
+			case EVT_RECTF: *r_value = &V_EXF(variant, rectf_); break;
 			case EVT_POINTU: *r_value = &V_EXF(variant, pointu_); break;
 			case EVT_RECTU: *r_value = &V_EXF(variant, rectu_); break;
+			case EVT_ELE_OPACITY: *r_value = &V_EXF(variant, ele_opacity_); break;
 
 			default:
 				*r_value = nullptr;
@@ -219,41 +235,41 @@ namespace ExDirectUI
 
 		switch (V_VT(variant) & VT_TYPEMASK)
 		{
-			case VT_EMPTY: *r_value = nullptr; break;
-			case VT_NULL: *r_value = nullptr; break;
-			case VT_I2:*r_value = &V_I2(variant); break;
-			case VT_I4:*r_value = &V_I4(variant); break;
-			case VT_R4:*r_value = &V_R4(variant); break;
-			case VT_R8:*r_value = &V_R8(variant); break;
-			case VT_CY:*r_value = &V_CY(variant); break;
-			case VT_DATE: *r_value = &V_DATE(variant); break;
-			case VT_BSTR: *r_value = V_BSTR(variant); break;
-			case VT_DISPATCH: *r_value = V_DISPATCH(variant); break;
-			case VT_ERROR:  *r_value = &V_ERROR(variant); break;
-			case VT_BOOL: *r_value = &V_BOOL(variant); break;
-			case VT_VARIANT: *r_value = V_VARIANTREF(variant); break;
-			case VT_UNKNOWN: *r_value = V_UNKNOWN(variant); break;
-			case VT_DECIMAL: *r_value = &V_DECIMAL(variant); break;
-			case VT_I1: *r_value = &V_I1(variant); break;
-			case VT_UI1: *r_value = &V_UI1(variant); break;
-			case VT_UI2:*r_value = &V_UI2(variant); break;
-			case VT_UI4:*r_value = &V_UI4(variant); break;
-			case VT_I8:*r_value = &V_I8(variant); break;
-			case VT_UI8:*r_value = &V_UI8(variant); break;
-			case VT_INT:*r_value = &V_INT(variant); break;
-			case VT_UINT:*r_value = &V_UINT(variant); break;
-			case VT_VOID:*r_value = V_BYREF(variant); break;
-			case VT_HRESULT:*r_value = &V_UI4(variant); break;
-			case VT_PTR: *r_value = V_BYREF(variant); break;
-			case VT_SAFEARRAY: *r_value = V_ARRAY(variant); break;
-			case VT_CARRAY: *r_value = V_ARRAY(variant); break;
-			case VT_USERDEFINED: *r_value = V_BYREF(variant); break;
-			case VT_LPSTR: *r_value = V_BYREF(variant); break;
-			case VT_LPWSTR: *r_value = V_BYREF(variant); break;
-			case VT_RECORD: *r_value = V_RECORD(variant); break;
-			case VT_INT_PTR:  *r_value = &V_INT_PTR(variant); break;
-			case VT_UINT_PTR: *r_value = &V_UINT_PTR(variant); break;
-			case VT_FILETIME: *r_value = V_BYREF(variant); break;
+		case VT_EMPTY: *r_value = nullptr; break;
+		case VT_NULL: *r_value = nullptr; break;
+		case VT_I2:*r_value = &V_I2(variant); break;
+		case VT_I4:*r_value = &V_I4(variant); break;
+		case VT_R4:*r_value = &V_R4(variant); break;
+		case VT_R8:*r_value = &V_R8(variant); break;
+		case VT_CY:*r_value = &V_CY(variant); break;
+		case VT_DATE: *r_value = &V_DATE(variant); break;
+		case VT_BSTR: *r_value = V_BSTR(variant); break;
+		case VT_DISPATCH: *r_value = V_DISPATCH(variant); break;
+		case VT_ERROR:  *r_value = &V_ERROR(variant); break;
+		case VT_BOOL: *r_value = &V_BOOL(variant); break;
+		case VT_VARIANT: *r_value = V_VARIANTREF(variant); break;
+		case VT_UNKNOWN: *r_value = V_UNKNOWN(variant); break;
+		case VT_DECIMAL: *r_value = &V_DECIMAL(variant); break;
+		case VT_I1: *r_value = &V_I1(variant); break;
+		case VT_UI1: *r_value = &V_UI1(variant); break;
+		case VT_UI2:*r_value = &V_UI2(variant); break;
+		case VT_UI4:*r_value = &V_UI4(variant); break;
+		case VT_I8:*r_value = &V_I8(variant); break;
+		case VT_UI8:*r_value = &V_UI8(variant); break;
+		case VT_INT:*r_value = &V_INT(variant); break;
+		case VT_UINT:*r_value = &V_UINT(variant); break;
+		case VT_VOID:*r_value = V_BYREF(variant); break;
+		case VT_HRESULT:*r_value = &V_UI4(variant); break;
+		case VT_PTR: *r_value = V_BYREF(variant); break;
+		case VT_SAFEARRAY: *r_value = V_ARRAY(variant); break;
+		case VT_CARRAY: *r_value = V_ARRAY(variant); break;
+		case VT_USERDEFINED: *r_value = V_BYREF(variant); break;
+		case VT_LPSTR: *r_value = V_BYREF(variant); break;
+		case VT_LPWSTR: *r_value = V_BYREF(variant); break;
+		case VT_RECORD: *r_value = V_RECORD(variant); break;
+		case VT_INT_PTR:  *r_value = &V_INT_PTR(variant); break;
+		case VT_UINT_PTR: *r_value = &V_UINT_PTR(variant); break;
+		case VT_FILETIME: *r_value = V_BYREF(variant); break;
 			//case VT_BLOB: *r_value = &V_BLOB(variant); break;
 			//case VT_STREAM: 
 			//case VT_STORAGE:
@@ -263,11 +279,11 @@ namespace ExDirectUI
 			//case VT_CF:
 			//case VT_CLSID:
 			//case VT_VERSIONED_STREAM:
-			
-			default:
-				*r_value = nullptr;
-				handle_ex(E_NOTIMPL, L"不支持的变体类型");
-				break;
+
+		default:
+			*r_value = nullptr;
+			handle_ex(E_NOTIMPL, L"不支持的变体类型");
+			break;
 		}
 
 		return S_OK;

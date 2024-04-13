@@ -8,14 +8,17 @@
  */
 #pragma once
 #include "src/resource/type_parser.h"
+#include "resource/theme.h"
+#include "common/string.hpp"
 
 namespace ExDirectUI
 {
 	EX_SAMPLE_TYPE_PARSER(Color, EVT_COLOR, return ExParseToColor(str, (EXARGB*)&V_UI4(V)));
+	EX_SAMPLE_TYPE_PARSER(Channel, VT_UI1, return ExParseToByte(str, (byte_t*)&V_UI1(V)));
 
 	///////////
 
-	class ExChannelTypeParser : public ExStandardTypeParser,
+	class ExOpacityTypeParser : public ExStandardTypeParser,
 		public ExSingleton<ExChannelTypeParser>
 	{
 	public:
@@ -25,21 +28,68 @@ namespace ExDirectUI
 			{ATOM_HALF, ALPHA_HALF},
 		};
 
+		EXMETHOD HRESULT EXOBJCALL ParseFromXmlNode(EXATOM type, const pugi::xml_node* node,
+			LPARAM lparam, ExVariant* V) override
+		{
+			if (type == ATOM_ALPHA) {
+				return __super::ParseFromXmlNode(type, node, lparam, V);
+			}
+			
+			return_if_failed(ExVariantInit(V, EVT_ELE_OPACITY));
+			
+			auto& opacity = V_EXF(V, ele_opacity_);
+			
+			pugi::xml_attribute attr = node->attribute(L"normal");
+			DWORD alpha = ALPHA_OPAQUE;
+			if (attr) {
+				ExParseToConst(attr.value(), _KV_ALPHA_,
+					_countof(_KV_ALPHA_), &alpha);
+			}
+			opacity.normal = (EXCHANNEL)alpha;
+
+			attr = node->attribute(L"disable");
+			if (attr) {
+				uint8_t unit = 0;
+				ExParseToFloat(attr.value(), &opacity.disable_percent,&unit);
+				if (unit == ExNumberUnit::Percent) { opacity.disable_percent /= 100.f; }
+			}
+			else { opacity.disable_percent = 0.5f; }
+
+			return S_OK;
+		}
+
 		EXMETHOD HRESULT EXOBJCALL ParseFromString(EXATOM type, LPCWSTR str,
 			LPARAM lparam, ExVariant* V) override
 		{
-			HRESULT hr = ExVariantInit(V, VT_UI1);
-			if (FAILED(hr)) { return hr; }
-
-			//如果是透明度则先做一个常量值的判断
-			if (type == ATOM_OPACITY || type == ATOM_ALPHA) {
-				DWORD alpha = 0;
-				hr = ExParseToConst(str, _KV_ALPHA_, 3, &alpha);
-				V_UI1(V) = (uint8_t)alpha;
+			DWORD alpha = ALPHA_OPAQUE;
+			if (type == ATOM_ALPHA) {
+				return_if_failed(ExVariantInit(V, VT_UI1));
+				ExParseToConst(str, _KV_ALPHA_, 
+					_countof(_KV_ALPHA_), &alpha);
+				V_UI1(V) = (EXCHANNEL)alpha;
 			}
-			else { hr = ExParseToByte(str, (byte_t*)&V_UI1(V)); }
+			else {
+				return_if_failed(ExVariantInit(V, EVT_ELE_OPACITY));
+				auto& opacity = V_EXF(V, ele_opacity_);
 
-			return hr;
+				wstring normal, disable;
+				ExString::slice(str, L" ", normal, disable);
+
+				if (normal.size() != 0) {
+					ExParseToConst(normal.c_str(), _KV_ALPHA_, 
+						_countof(_KV_ALPHA_), &alpha);
+				}
+				opacity.normal = (EXCHANNEL)alpha;
+
+				if (disable.size() != 0) {
+					uint8_t unit = 0;
+					ExParseToFloat(disable.c_str(), &opacity.disable_percent, &unit);
+					if (unit == ExNumberUnit::Percent) { opacity.disable_percent /= 100.f; }
+				}
+				else { opacity.disable_percent = 0.5f; }
+
+			}
+			return S_OK;
 		}
 	};
 
