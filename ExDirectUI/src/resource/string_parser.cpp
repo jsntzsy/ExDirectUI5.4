@@ -282,21 +282,48 @@ namespace ExDirectUI
 		return S_OK;
 	}
 
+	inline byte_t _ExParse_2CharToByte(wchar_t low, wchar_t high)
+	{
+		byte_t byte = 0;
+
+		if (high == L'\0') { byte = 0; }
+		else if (high >= L'0' && high <= L'9') { byte = high - L'0'; }
+		else if (high >= L'A' && high <= L'F') { byte = high - L'A' + 10; }
+		else if (high >= L'a' && high <= L'f') { byte = high - L'a' + 10; }
+		byte <<= 4;
+
+		if (low == L'\0') {}
+		else if (low >= L'0' && low <= L'9') { byte |= low - L'0'; }
+		else if (low >= L'A' && low <= L'F') { byte |= low - L'A' + 10; }
+		else if (low >= L'a' && low <= L'f') { byte |= low - L'a' + 10; }
+
+		return byte;
+	}
+
 	HRESULT EXAPI EXCALL ExParseToData(LPCWSTR str, ExData* r_value, DWORD* r_type)
 	{
 		CHECK_PARAM(str);
 		CHECK_PARAM(r_value);
 
+		//空字符串则直接返回
+		if (*str == L'\0') {
+			r_value->data = nullptr;
+			r_value->size = 0;
+			if (r_type) { *r_type = ExDataParseType::Hex; }
+			return S_FALSE;
+		}
+
 		/*
 			支持的格式：
 			b: base64
 			f: 文件名
-			w: http地址
 			s: unicode字符串
 			u: utf8字符串
 			d: 10进制逗号分割字符串
 			r: 资源id (并不会读取真实数据,只会将r_value.data设置为资源id,value.size设置为0,不需要释放)
-
+			c: 自定义数据 (并不会读取真实数据,只会将r_value.data设置为字符串,value.size设置为0,不需要释放)
+			//TODO:这里自定义数据的获取方式考虑改为调用回调函数
+			
 			其他情况按16进制字符串处理
 		*/
 
@@ -322,11 +349,8 @@ namespace ExDirectUI
 				handle_if_failed(ExDataReadFile(str + 2, r_value), L"读取文件失败");
 				type = ExDataParseType::File;
 			}
-			else if (header == L'w') {
-				handle_ex(E_NOTIMPL, L"尚未支持");
-			}
 			else if (header == L's') {
-				ExData data_src{ (byte_t*)str + 2, (len - 2) * sizeof(wchar_t) };
+				ExData data_src{ (byte_t*)(str + 2), (len - 2) * sizeof(wchar_t)};
 				handle_if_failed(ExDataCopy(&data_src, r_value), L"复制数据失败");
 				type = ExDataParseType::String;
 			}
@@ -337,24 +361,102 @@ namespace ExDirectUI
 				type = ExDataParseType::Utf8;
 			}
 			else if (header == L'd') {
-				handle_ex(E_NOTIMPL, L"尚未支持");
+				std::vector<byte_t> data;
+				LPWSTR p = (LPWSTR)str + 2;
+				while (p) {
+					data.push_back(
+						(byte_t)wcstoul(p, &p, 10)
+					);
+					if (p) { p = wcsstr(p, L","); }
+					if (p) { p += 1; }
+				}
+
+				ExData data_src{ data.data(), data.size() };
+				handle_if_failed(ExDataCopy(&data_src, r_value), L"复制数据失败");
+				type = ExDataParseType::Data;
 			}
 			else if (header == L'r') {
 				r_value->data = (byte_t*)(str + 2);
 				r_value->size = 0;
 				type = ExDataParseType::Resource;
 			}
+			else if (header == L'c') {
+				r_value->data = (byte_t*)(str + 2);
+				r_value->size = 0;
+				type = ExDataParseType::Custom;
+			}
 			else { handle_ex(E_INVALIDARG, L"不支持的数据格式"); }
 		}
 
 		if (type == ExDataParseType::Hex) {
 			//其他情况按16进制字符串处理(两位一个字节,不分割)
+
+			uint32_t max_size = (uint32_t)ceil(len / 2.0f);
+			uint32_t real_size = 0;
+			handle_if_failed(ExDataAlloc(max_size, r_value), L"申请内存失败");
+
+			/*
 			
-			int size = (int)ceil(len / 2.0f);
-			handle_if_failed(ExDataAlloc(size, r_value), L"申请内存失败");
+			wchar_t h = 0, l = 0;
+			while (true) {
+				wchar_t ch = *p;
+
+				//如果当前字符是空白,则结束这个字节
+				if (iswspace(ch)) {
+					r_value->data[real_size++] = _ExParse_2CharToByte(l, h);
+					h = l = 0;
+				}
+				//如果当前字符是结束符
+				else if (ch == L'\0') {
+					if (l != 0) {
+						r_value->data[real_size++] = _ExParse_2CharToByte(l, 0);
+					}
+					break;
+				}
+				else {
+					h = l; l = ch;
+
+					//如果低位和高位都有了,则算出这个字节
+					if (h != 0) {
+						r_value->data[real_size++] = _ExParse_2CharToByte(l, h);
+						h = l = 0;
+					}
+				}
+
+				p++;
+			}
+			*/
 
 			const wchar_t* p = str;
-			
+			wchar_t char_buff[3]{};
+			while (*p) {
+				
+				//复制出两个字符
+				memcpy(char_buff, p, sizeof(wchar_t) * 2);
+				
+				//如果第一个字符是空白字符,则跳过这个字符
+				if (iswspace(char_buff[0])) { p++; continue; }
+				
+				//如果第二个字符是结束符或空白字符,则表示只有低位字符
+				if (char_buff[1] == L'\0' || iswspace(char_buff[1])) {
+					char_buff[1] = char_buff[0];
+					char_buff[0] = L'0';
+				}
+				r_value->data[real_size++] = (byte_t)wcstoul(char_buff, nullptr, 16);
+				if (char_buff[1] == L'\0') { break; }
+				p += 2;
+			}
+
+			//如果长度不一致,按真实长度调整
+			if (real_size != max_size) {
+				handle_if_failed(
+					ExDataResize(r_value, real_size),
+					L"调整数据块尺寸失败",
+					ExDataFree(r_value)
+				);
+			}
+
+			type = ExDataParseType::Hex;
 
 			//std::vector<byte_t> data;
 			//std::wistringstream iss(str);
@@ -366,7 +468,6 @@ namespace ExDirectUI
 			//
 			//ExData data_src{ data.data(), data.size() };
 			//handle_if_failed(ExDataCopy(&data_src, r_value), L"复制数据失败");
-			type = ExDataParseType::Hex;
 		}
 
 		if (r_type) { *r_type = type; }

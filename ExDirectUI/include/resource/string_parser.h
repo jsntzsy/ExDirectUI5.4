@@ -33,6 +33,7 @@ namespace ExDirectUI
 		Utf8,
 		Data,
 		Resource,
+		Custom,
 	};
 
 	inline LPCWSTR ExNumberUnitToString(uint8_t unit)
