@@ -12,8 +12,10 @@
 namespace ExDirectUI
 {
 	EX_SAMPLE_TYPE_PARSER(Data, EVT_DATA, {
+		
+		auto data = V_DATA(V);
 		DWORD type = ExDataParseType::Hex;
-		HRESULT hr = ExParseToData(str, &V_EXF(V, data_), &type);
+		HRESULT hr = ExParseToData(str, data, &type);
 		if (FAILED(hr)) { return hr; }
 		//后处理
 		

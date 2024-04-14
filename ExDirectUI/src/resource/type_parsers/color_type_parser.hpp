@@ -37,7 +37,7 @@ namespace ExDirectUI
 			
 			return_if_failed(ExVariantInit(V, EVT_ELE_OPACITY));
 			
-			auto& opacity = V_EXF(V, ele_opacity_);
+			auto opacity = V_ELE_OPACITY(V);
 			
 			pugi::xml_attribute attr = node->attribute(L"normal");
 			DWORD alpha = ALPHA_OPAQUE;
@@ -45,15 +45,15 @@ namespace ExDirectUI
 				ExParseToConst(attr.value(), _KV_ALPHA_,
 					_countof(_KV_ALPHA_), &alpha);
 			}
-			opacity.normal = (EXCHANNEL)alpha;
+			opacity->normal = (EXCHANNEL)alpha;
 
 			attr = node->attribute(L"disable");
 			if (attr) {
 				uint8_t unit = 0;
-				ExParseToFloat(attr.value(), &opacity.disable_percent,&unit);
-				if (unit == ExNumberUnit::Percent) { opacity.disable_percent /= 100.f; }
+				ExParseToFloat(attr.value(), &opacity->disable_percent,&unit);
+				if (unit == ExNumberUnit::Percent) { opacity->disable_percent /= 100.f; }
 			}
-			else { opacity.disable_percent = 0.5f; }
+			else { opacity->disable_percent = 0.5f; }
 
 			return S_OK;
 		}
@@ -70,7 +70,7 @@ namespace ExDirectUI
 			}
 			else {
 				return_if_failed(ExVariantInit(V, EVT_ELE_OPACITY));
-				auto& opacity = V_EXF(V, ele_opacity_);
+				auto opacity = V_ELE_OPACITY(V);
 
 				wstring normal, disable;
 				ExString::slice(str, L" ", normal, disable);
@@ -79,14 +79,14 @@ namespace ExDirectUI
 					ExParseToConst(normal.c_str(), _KV_ALPHA_, 
 						_countof(_KV_ALPHA_), &alpha);
 				}
-				opacity.normal = (EXCHANNEL)alpha;
+				opacity->normal = (EXCHANNEL)alpha;
 
 				if (disable.size() != 0) {
 					uint8_t unit = 0;
-					ExParseToFloat(disable.c_str(), &opacity.disable_percent, &unit);
-					if (unit == ExNumberUnit::Percent) { opacity.disable_percent /= 100.f; }
+					ExParseToFloat(disable.c_str(), &opacity->disable_percent, &unit);
+					if (unit == ExNumberUnit::Percent) { opacity->disable_percent /= 100.f; }
 				}
-				else { opacity.disable_percent = 0.5f; }
+				else { opacity->disable_percent = 0.5f; }
 
 			}
 			return S_OK;

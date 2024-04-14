@@ -69,17 +69,17 @@ namespace ExDirectUI
 		data->size = new_size;
 		return S_OK;
 	}
-	HRESULT EXAPI EXCALL ExDataCopy(ExData* data, ExData* r_new_data, size_t new_size)
+	
+	HRESULT EXAPI EXCALL ExDataCopy(ExData* r_new_data, const byte_t* data_src, size_t size_src, size_t new_size)
 	{
-		CHECK_PARAM(data);
 		CHECK_PARAM(r_new_data);
 
 		//默认值处理
-		if (new_size == 0) { new_size = data->size; }
-		if (new_size == 0 || data->data == nullptr || data->size == 0) { 
+		if (new_size == 0) { new_size = size_src; }
+		if (new_size == 0 || data_src == nullptr || size_src == 0) {
 			r_new_data->data = nullptr;
 			r_new_data->size = 0;
-			return S_OK; 
+			return S_OK;
 		}
 
 		//申请内存
@@ -87,7 +87,7 @@ namespace ExDirectUI
 		handle_if_false(new_data, E_OUTOFMEMORY, L"申请数据块内存失败");
 
 		//拷贝数据
-		memcpy(new_data, data->data, min(data->size, new_size));
+		memcpy(new_data, data_src, min(size_src, new_size));
 
 		//设置到数据块
 		r_new_data->data = new_data;

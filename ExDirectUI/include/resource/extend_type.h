@@ -35,6 +35,9 @@ namespace ExDirectUI
 		/// 图像显示模式
 		DWORD show_mode;
 
+		/// 宫格信息
+		ExGridsImageInfo grids;
+
 		/// 透明度
 		EXCHANNEL alpha;
 	};
@@ -96,7 +99,7 @@ namespace ExDirectUI
 		DWORD common;
 		
 		/// 控件风格
-		DWORD ctrl;
+		DWORD control;
 
 		/// 文本格式
 		DWORD text_format;
@@ -129,6 +132,14 @@ namespace ExDirectUI
 		
 		/// 缓动计算函数
 		//easing
+	};
+
+	/// 元素阴影类型
+	EXENUM(ExEleShadowType)
+	{
+		None,
+		Param,
+		Texture
 	};
 
 	/// 元素阴影信息

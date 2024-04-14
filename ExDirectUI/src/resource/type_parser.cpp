@@ -34,16 +34,16 @@ namespace ExDirectUI
 		{ATOM_DOUBLE, ExDoubleTypeParser::Instance()},
 		{ATOM_NUMBER, ExFloatTypeParser::Instance()},
 		{ATOM_NUMBERU, ExNumberUTypeParser::Instance()},
-
+		
 		//逻辑类
 		{ATOM_BOOL, ExBoolTypeParser::Instance()},
-
+		
 		//颜色类
 		{ATOM_COLOR, ExColorTypeParser::Instance()},
 		{ATOM_CHANNEL, ExChannelTypeParser::Instance()},
 		{ATOM_ALPHA, ExOpacityTypeParser::Instance()},
 		{ATOM_OPACITY, ExOpacityTypeParser::Instance()},
-
+		
 		//坐标系类
 		{ATOM_POINT, ExPointSizeTypeParser::Instance()},
 		{ATOM_SIZE, ExPointSizeTypeParser::Instance()},
@@ -58,7 +58,7 @@ namespace ExDirectUI
 		//文本和数据类
 		{ATOM_DATA, ExDataTypeParser::Instance()},
 		{ATOM_CHAR, ExCharTypeParser::Instance()},
-
+		
 
 	};
 

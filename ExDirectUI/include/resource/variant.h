@@ -17,39 +17,34 @@ namespace ExDirectUI
 	/// 变体扩展类型
 	enum ExVariantExtendType : VARTYPE
 	{
-		EVT_BEGIN = 0x0800,
+		EVT_MARK = 0x0800,
 
-		EVT_COLOR = 0x0800,
+		EVT_CHANNEL,
+		EVT_COLOR,
 		EVT_FLAGS,
-		EVT_OBJECT,
-
-		EVT_EXTEND_MARK = 0x4800,	// byref | begin_mark
-
-		EVT_NUMU,
-		EVT_POINT,
-		EVT_RECT,
-		EVT_POINTF,
-		EVT_RECTF,
-		EVT_POINTU,
-		EVT_RECTU,
+		EVT_EXOBJECT,
 
 		EVT_DATA,
-
-		EVT_ELE_OPACITY,
-	};
-
-	union ExVariantExtendValues
-	{
-		ExNumU numu_;
-		ExPoint point_;
-		ExRect rect_;
-		ExPointF pointf_;
-		ExRectF rectf_;
-		ExPointU pointu_;
-		ExRectU rectu_;
 		
-		ExData data_;
-		ExEleOpacityInfo ele_opacity_;
+		EVT_NUMU,
+		EVT_POINT,
+		EVT_POINTF,
+		EVT_POINTU,
+		EVT_RECT,
+		EVT_RECTF,
+		EVT_RECTU,
+
+		EVT_FONT,
+		EVT_GRIDS_IMAGE,
+		EVT_DISPLAY_IMAGE,
+		EVT_STATE_IMAGE,
+		EVT_STATE_COLOR,
+
+		EVT_ELE_STYLE,
+		EVT_ELE_OPACITY,
+		EVT_ELE_ANIMATION,
+		EVT_ELE_SHADOW,
+
 	};
 
 	HRESULT EXAPI EXCALL ExVariantInit(ExVariant* variant, VARTYPE vt = VT_EMPTY);
@@ -60,15 +55,37 @@ namespace ExDirectUI
 
 }
 
-#define IS_EVT(VT)		((VT & 0x0800) == EVT_BEGIN)
-#define V_ISEVT(X)		(IS_EVT(V_VT(X)))
+#define EVT_IS(vt)				((EVT_MARK & vt) == EVT_MARK)
+#define V_ISEXT(X)				EVT_IS(V_VT(X))
 
-#define IS_EVTR(VT)		((VT & 0xF800) == EVT_EXTEND_MARK)
-#define V_ISEVTR(X)		(IS_EVTR(V_VT(X)))
+#define V_PTR(X,type)			((type*)V_BYREF(X))
 
-#define V_EX(X)			((::ExDirectUI::ExVariantExtendValues*)V_BYREF(X))
-#define V_EXF(X,F)		(((::ExDirectUI::ExVariantExtendValues*)V_BYREF(X))->F)
+#define V_CHANNEL(X)			((EXCHANNEL)V_UI1(X))
+#define V_COLOR(X)				((EXARGB)V_UI4(X))
+#define V_FLAGS(X)				((DWORD)V_UI4(X))
+#define V_EXOBJECT(X)			((IExObject*)V_UNKNOWN(X))
 
-#define V_EXOBJ(X)		((::ExDirectUI::IExObject*)V_UNION(X, punkVal))
+#define V_DATA(X)				V_PTR(X,ExData)
+#define V_NUMU(X)				((ExNumU*)&V_CY(X))
+#define V_POINT(X)				((ExPoint*)&V_CY(X))
+#define V_POINTF(X)				((ExPointF*)&V_CY(X))
+#define V_POINTU(X)				V_PTR(X,ExPointU)
+#define V_RECT(X)				V_PTR(X,ExRect)
+#define V_RECTF(X)				V_PTR(X,ExRectF)
+#define V_RECTU(X)				V_PTR(X,ExRectU)
+
+#define V_FONT(X)				V_PTR(X,ExFontInfo)
+#define V_GRIDS_IMAGE(X)		V_PTR(X,ExGridsImageInfo)
+#define V_DISPLAY_IMAGE(X)		V_PTR(X,ExDisplayImageInfo)
+#define V_STATE_IMAGE(X)		V_PTR(X,ExStateImageInfo)
+#define V_STATE_COLOR(X)		V_PTR(X,ExStateColorInfo)
+
+#define V_ELE_STYLE(X)			V_PTR(X,ExEleStyleInfo)
+#define V_ELE_OPACITY(X)		((ExEleOpacityInfo*)&V_CY(X))
+#define V_ELE_ANIMATION(X)		V_PTR(X,ExEleAnimationInfo)
+#define V_ELE_SHADOW(X)			V_PTR(X,ExEleShadowInfo)
+
+
+
 
 

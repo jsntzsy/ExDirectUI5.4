@@ -267,8 +267,10 @@ namespace ExDirectUI
 		try
 		{
 			//复制数据块
-			ExData data_src = { (byte_t*)data, wparam };
-			throw_if_failed(ExDataCopy(&data_src ,&context->data), L"复制字体文件数据失败");
+			throw_if_failed(
+				ExDataCopy(&context->data, (byte_t*)data, wparam),
+				L"复制字体文件数据失败"
+			);
 
 			//创建字体集
 			throw_if_failed(

@@ -51,15 +51,14 @@ TEST_F(TEST_MODULE_NAME, AllocAndFree)
 	ASSERT_NE(data.data, nullptr);
 	ASSERT_EQ(data.size, 20);
 
-	ASSERT_EQ(ExDataCopy(nullptr, &data2, 0), E_INVALIDARG);
-	ASSERT_EQ(ExDataCopy(&data, nullptr, 0), E_INVALIDARG);
-	ASSERT_EQ(ExDataCopy(&data, &data2, 0), S_OK);
+	ASSERT_EQ(ExDataCopy(nullptr, data.data, data.size, 0), E_INVALIDARG);
+	ASSERT_EQ(ExDataCopy(&data2, data.data, data.size, 0), E_INVALIDARG);
 	ASSERT_EQ(data2.size, data.size);
 	ASSERT_NE(data2.data, data.data);
 	ASSERT_TRUE(memcmp(data2.data, data.data, min(data.size, data2.size)) == 0);
 	ExDataFree(&data2);
 
-	ASSERT_EQ(ExDataCopy( &data, &data2, 40), S_OK);
+	ASSERT_EQ(ExDataCopy(&data2, data.data, data.size, 40), S_OK);
 	ASSERT_EQ(data2.size, 40);
 	ASSERT_NE(data2.data, data.data);
 

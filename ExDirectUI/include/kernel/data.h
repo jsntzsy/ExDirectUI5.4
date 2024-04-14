@@ -56,13 +56,14 @@ namespace ExDirectUI
 	/**
 	 * @brief 数据块_复制
 	 * 复制数据块
-	 * @param data 源数据块
 	 * @param r_new_data 接收新数据块
+	 * @param data_src 源数据指针
+	 * @param size_src 源数据尺寸
 	 * @param new_size 新尺寸 @可空(0则与源相同)
 	 * @return 返回执行状态
 	 * @attention 创建的数据块使用完毕后，调用{ExDatFree}释放
 	 */
-	HRESULT EXAPI EXCALL ExDataCopy(ExData* data, ExData* r_new_data, size_t new_size = 0);
+	HRESULT EXAPI EXCALL ExDataCopy(ExData* r_new_data, const byte_t* data_src, size_t size_src, size_t new_size = 0);
 
 	/**
 	 * @brief 数据块_读取文件
@@ -92,14 +93,14 @@ namespace ExDirectUI
 	 * @return 返回执行状态
 	 */
 	HRESULT EXAPI EXCALL ExDataGetFileSize(LPCWSTR file, size_t* r_size);
-	
+
 	/**
 	 * @brief 数据块_RC4加解密
 	 * 为一段数据运算一次RC4加解密
 	 * @param data 被处理的数据
 	 * @param data_size 数据尺寸
 	 * @param key 密钥
-	 * @param key_size 密钥尺寸 
+	 * @param key_size 密钥尺寸
 	 * @return 返回执行状态
 	 */
 	HRESULT EXAPI EXCALL ExDataRc4(byte_t* data, size_t data_size, const byte_t* key, size_t key_size);

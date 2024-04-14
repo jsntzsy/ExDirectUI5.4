@@ -560,8 +560,10 @@ namespace ExDirectUI
 			throw_if_false(data_src, E_OUTOFMEMORY, L"内存锁定失败");
 
 			//分配数据并拷贝
-			ExData src_data = { (byte_t*)data_src,size };
-			throw_if_failed(ExDataCopy(&src_data, r_data), L"数据复制失败");
+			throw_if_failed(
+				ExDataCopy(r_data, (byte_t*)data_src, size),
+				L"数据复制失败"
+			);
 			::GlobalUnlock(data);
 
 			//释放内存

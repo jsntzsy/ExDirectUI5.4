@@ -12,44 +12,44 @@
 namespace ExDirectUI
 {
 	EX_SAMPLE_TYPE_PARSER(PointSize, EVT_POINT, {
-			ExPoint & pt = V_EXF(V, point_);
+			auto pt = V_POINT(V);
 			ExPointF ptf{};
 			HRESULT hr = ExParseToPointF(str, &ptf);
-			pt = ptf.ToPoint();
+			*pt = ptf.ToPoint();
 			return hr;
 		}
 	);
 
 	EX_SAMPLE_TYPE_PARSER(Rect, EVT_RECT, {
-			ExRect & rc = V_EXF(V, rect_);
+			auto rc = V_RECT(V);
 			ExRectF rcf{};
 			HRESULT hr = ExParseToRectF(str, &rcf);
-			rc = rcf.ToRect();
+			*rc = rcf.ToRect();
 			return hr;
 		}
 	);
 	
 	EX_SAMPLE_TYPE_PARSER(PointSizeF, EVT_POINTF, {
-			ExPointF & pt = V_EXF(V, pointf_);
-			return ExParseToPointF(str, &pt);
+			auto pt = V_POINTF(V);
+			return ExParseToPointF(str, pt);
 		}
 	);
 
 	EX_SAMPLE_TYPE_PARSER(RectF, EVT_RECTF, {
-			ExRectF & rc = V_EXF(V, rectf_);
-			return ExParseToRectF(str, &rc);
+			auto rc = V_RECTF(V);
+			return ExParseToRectF(str, rc);
 		}
 	);
 
 	EX_SAMPLE_TYPE_PARSER(PointSizeU, EVT_POINTU, {
-			ExPointU & pt = V_EXF(V, pointu_);
-			return ExParseToPointF(str, &pt, pt.units);
+			auto pt = V_POINTU(V);
+			return ExParseToPointF(str, pt, pt->units);
 		}
 	);
 
 	EX_SAMPLE_TYPE_PARSER(RectU, EVT_RECTU, {
-			ExRectU & rc = V_EXF(V, rectu_);
-			return ExParseToRectF(str, &rc, rc.units);
+			auto rc = V_RECTU(V);
+			return ExParseToRectF(str, rc, rc->units);
 		}
 	);
 

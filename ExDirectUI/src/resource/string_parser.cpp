@@ -338,9 +338,11 @@ namespace ExDirectUI
 			if (header == L'b') {
 				try {
 					ExBase64 b64;
-					auto data = b64.decode(str + 2);
-					ExData data_src{ data.data(), data.size() };
-					handle_if_failed(ExDataCopy(&data_src, r_value), L"复制数据失败");
+					const auto data = b64.decode(str + 2);
+					handle_if_failed(
+						ExDataCopy(r_value, data.data(), data.size()),
+						L"复制数据失败"
+					);
 					type = ExDataParseType::Base64;
 				}
 				catch_default({});
@@ -350,29 +352,43 @@ namespace ExDirectUI
 				type = ExDataParseType::File;
 			}
 			else if (header == L's') {
-				ExData data_src{ (byte_t*)(str + 2), (len - 2) * sizeof(wchar_t)};
-				handle_if_failed(ExDataCopy(&data_src, r_value), L"复制数据失败");
+				handle_if_failed(
+					ExDataCopy(r_value,
+						(byte_t*)(str + 2), (len - 2) * sizeof(wchar_t)
+					), L"复制数据失败"
+				);
 				type = ExDataParseType::String;
 			}
 			else if (header == L'u') {
 				auto s = ExString::w2a(str + 2, CP_UTF8);
-				ExData data_src{ (byte_t*)s.data(), s.size() };
-				handle_if_failed(ExDataCopy(&data_src, r_value), L"复制数据失败");
+				handle_if_failed(
+					ExDataCopy(r_value, (byte_t*)s.data(), s.size()),
+					L"复制数据失败"
+				);
 				type = ExDataParseType::Utf8;
 			}
 			else if (header == L'd') {
+				
 				std::vector<byte_t> data;
+
+				//找到起始位置
 				LPWSTR p = (LPWSTR)str + 2;
 				while (p) {
+					//将它转为10进制数值,拿到数值后面的字符串指针
 					data.push_back(
 						(byte_t)wcstoul(p, &p, 10)
 					);
+
+					//找下一个逗号,找到了的话p就指到逗号后一个字符
 					if (p) { p = wcsstr(p, L","); }
 					if (p) { p += 1; }
 				}
-
-				ExData data_src{ data.data(), data.size() };
-				handle_if_failed(ExDataCopy(&data_src, r_value), L"复制数据失败");
+				
+				//全部解析完毕后,生成数据块
+				handle_if_failed(
+					ExDataCopy(r_value, data.data(), data.size()),
+					L"复制数据失败"
+				);
 				type = ExDataParseType::Data;
 			}
 			else if (header == L'r') {
@@ -429,20 +445,26 @@ namespace ExDirectUI
 
 			const wchar_t* p = str;
 			wchar_t char_buff[3]{};
+
+			//循环整个字符串，直到结束符
 			while (*p) {
 				
-				//复制出两个字符
-				memcpy(char_buff, p, sizeof(wchar_t) * 2);
+				//如果当前字符是空白字符,则跳过
+				if (iswspace(*p)) { p++; continue; }
 				
-				//如果第一个字符是空白字符,则跳过这个字符
-				if (iswspace(char_buff[0])) { p++; continue; }
+				//复制出两个字符(如果是正常字符串,不会超界的)
+				memcpy(char_buff, p, sizeof(wchar_t) * 2);
 				
 				//如果第二个字符是结束符或空白字符,则表示只有低位字符
 				if (char_buff[1] == L'\0' || iswspace(char_buff[1])) {
 					char_buff[1] = char_buff[0];
 					char_buff[0] = L'0';
 				}
+				
+				//将这两个字符按16进制转为字节数据
 				r_value->data[real_size++] = (byte_t)wcstoul(char_buff, nullptr, 16);
+				
+				//如果遇到了结束符，则结束循环
 				if (char_buff[1] == L'\0') { break; }
 				p += 2;
 			}
@@ -457,17 +479,6 @@ namespace ExDirectUI
 			}
 
 			type = ExDataParseType::Hex;
-
-			//std::vector<byte_t> data;
-			//std::wistringstream iss(str);
-			//std::wstring byte;
-			//while (iss >> std::hex >> byte) {
-			//	byte_t b = (byte_t)wcstoul(byte.c_str(), nullptr, 16);
-			//	data.push_back(b);
-			//}
-			//
-			//ExData data_src{ data.data(), data.size() };
-			//handle_if_failed(ExDataCopy(&data_src, r_value), L"复制数据失败");
 		}
 
 		if (r_type) { *r_type = type; }

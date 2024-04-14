@@ -23,8 +23,8 @@ namespace ExDirectUI
 	EX_SAMPLE_TYPE_PARSER(Double, VT_R8, return ExParseToDouble(str, &V_R8(V)));
 
 	EX_SAMPLE_TYPE_PARSER(NumberU, EVT_NUMU, {
-		ExNumU& num = V_EXF(V, numu_);
-		return ExParseToFloat(str, &num.value, &num.unit);
+		auto num = V_NUMU(V);
+		return ExParseToFloat(str, &num->value, &num->unit);
 		}
 	);
 	
