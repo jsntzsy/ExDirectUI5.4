@@ -21,13 +21,13 @@ namespace ExDirectUI
 	
 	interface IExTypeParser
 	{
-		EXMETHOD HRESULT EXOBJCALL ParseFromXmlNode(EXATOM type, const pugi::xml_node* node, LPARAM lparam, ExVariant* r_value) PURE;
-		EXMETHOD HRESULT EXOBJCALL ParseFromString(EXATOM type, LPCWSTR str, LPARAM lparam, ExVariant* r_value) PURE;
+		EXMETHOD HRESULT EXOBJCALL ParseFromXmlNode(EXATOM type, const pugi::xml_node* node, IUnknown* owner, ExVariant* r_value) PURE;
+		EXMETHOD HRESULT EXOBJCALL ParseFromString(EXATOM type, LPCWSTR str, IUnknown* owner, ExVariant* r_value) PURE;
 	};
 
 	///////////////////////
 
-	HRESULT EXAPI EXCALL ExParseFromXmlNode(const pugi::xml_node* node, LPARAM lparam, ExVariant* r_value);
-	HRESULT EXAPI EXCALL ExParseFromString(EXATOM type, LPCWSTR str, LPARAM lparam, ExVariant* r_value);
+	HRESULT EXAPI EXCALL ExParseFromXmlNode(const pugi::xml_node* node, IUnknown* owner, ExVariant* r_value);
+	HRESULT EXAPI EXCALL ExParseFromString(EXATOM type, LPCWSTR str, IUnknown* owner, ExVariant* r_value);
 
 }

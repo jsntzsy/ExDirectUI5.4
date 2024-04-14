@@ -64,7 +64,7 @@ namespace ExDirectUI
 
 	////////////////
 
-	HRESULT EXAPI EXCALL ExParseFromXmlNode(const pugi::xml_node* node, LPARAM lparam, ExVariant* r_value)
+	HRESULT EXAPI EXCALL ExParseFromXmlNode(const pugi::xml_node* node, IUnknown* owner, ExVariant* r_value)
 	{
 		CHECK_PARAM(node);
 		CHECK_PARAM(r_value);
@@ -82,7 +82,7 @@ namespace ExDirectUI
 		V_VT(r_value) = VT_EMPTY;
 
 		//解析
-		HRESULT hr = it->second->ParseFromXmlNode(type, node, lparam, r_value);
+		HRESULT hr = it->second->ParseFromXmlNode(type, node, owner, r_value);
 
 		//如果解析失败,但是初始化了值,则清除掉
 		if (FAILED(hr) && V_VT(r_value) != VT_EMPTY) {
@@ -92,7 +92,7 @@ namespace ExDirectUI
 		return hr;
 	}
 
-	HRESULT EXAPI EXCALL ExParseFromString(EXATOM type, LPCWSTR str, LPARAM lparam, ExVariant* r_value)
+	HRESULT EXAPI EXCALL ExParseFromString(EXATOM type, LPCWSTR str, IUnknown* owner, ExVariant* r_value)
 	{
 		CHECK_PARAM(type != EXATOM_UNKNOWN);
 		CHECK_PARAM(str);
@@ -106,7 +106,7 @@ namespace ExDirectUI
 		V_VT(r_value) = VT_EMPTY;
 
 		//解析
-		HRESULT hr = it->second->ParseFromString(type, str, lparam, r_value);
+		HRESULT hr = it->second->ParseFromString(type, str, owner, r_value);
 
 		//如果解析失败,但是初始化了值,则清除掉
 		if (FAILED(hr) && V_VT(r_value) != VT_EMPTY) {

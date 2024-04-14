@@ -20,13 +20,13 @@ namespace ExDirectUI
 	{
 	public:
 
-		EXMETHOD HRESULT EXOBJCALL ParseFromXmlNode(EXATOM type, const pugi::xml_node* node, LPARAM lparam, ExVariant* r_value) override
+		EXMETHOD HRESULT EXOBJCALL ParseFromXmlNode(EXATOM type, const pugi::xml_node* node, IUnknown* owner, ExVariant* r_value) override
 		{
 			LPCWSTR value = L"";
 			pugi::xml_attribute attr = node->attribute(L"value");
 			if (attr) { value = attr.value(); }
 			else { value = node->text().get(); }
-			return this->ParseFromString(type, value, lparam, r_value);
+			return this->ParseFromString(type, value, owner, r_value);
 		}
 
 	};
@@ -38,7 +38,7 @@ namespace ExDirectUI
 		public ExSingleton<Ex##name##TypeParser> {												\
 	public:																						\
 		EXMETHOD HRESULT EXOBJCALL ParseFromString(EXATOM type, LPCWSTR str,					\
-			LPARAM lparam, ExVariant* V) override {												\
+			IUnknown* owner, ExVariant* V) override {											\
 			return_if_failed(ExVariantInit(V,vt));												\
 			todo;																				\
 			return S_OK;																		\
@@ -52,7 +52,7 @@ namespace ExDirectUI
 		static const DWORD _KV_[count][2];														\
 	public:																						\
 		EXMETHOD HRESULT EXOBJCALL ParseFromString(EXATOM type, LPCWSTR str,					\
-			LPARAM lparam, ExVariant* V) override {												\
+			IUnknown* owner, ExVariant* V) override {												\
 			return_if_failed(ExVariantInit(V,EVT_FLAGS), ExVariantClear(V));					\
 			todo;																				\
 			if (multiple) { return ExParseToConsts(str, _KV_, count, (DWORD*)&V_UI4(V)); }		\

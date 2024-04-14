@@ -29,10 +29,10 @@ namespace ExDirectUI
 		};
 
 		EXMETHOD HRESULT EXOBJCALL ParseFromXmlNode(EXATOM type, const pugi::xml_node* node,
-			LPARAM lparam, ExVariant* V) override
+			IUnknown* owner, ExVariant* V) override
 		{
 			if (type == ATOM_ALPHA) {
-				return __super::ParseFromXmlNode(type, node, lparam, V);
+				return __super::ParseFromXmlNode(type, node, owner, V);
 			}
 			
 			return_if_failed(ExVariantInit(V, EVT_ELE_OPACITY));
@@ -59,7 +59,7 @@ namespace ExDirectUI
 		}
 
 		EXMETHOD HRESULT EXOBJCALL ParseFromString(EXATOM type, LPCWSTR str,
-			LPARAM lparam, ExVariant* V) override
+			IUnknown* owner, ExVariant* V) override
 		{
 			DWORD alpha = ALPHA_OPAQUE;
 			if (type == ATOM_ALPHA) {
