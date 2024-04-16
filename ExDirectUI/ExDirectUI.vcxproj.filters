@@ -500,6 +500,9 @@
     <ClInclude Include="src\resource\type_parsers\font_type_parser.hpp">
       <Filter>resource\parser\type_parsers</Filter>
     </ClInclude>
+    <ClInclude Include="src\resource\type_parsers\image_type_parser.hpp">
+      <Filter>resource\parser\type_parsers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="API.def">

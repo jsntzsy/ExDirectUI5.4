@@ -93,4 +93,79 @@ namespace ExDirectUI
 		}
 	};
 
+	////////////
+
+	class ExStateColorTypeParser : public IExTypeParser, public ExSingleton<ExStateColorTypeParser>
+	{
+		inline static void SetDefaultColor(ExStateColorInfo* sc)
+		{
+			//根据需求决定要不要调用
+			if (sc->disable == COLOR_UNDEFINE) { sc->disable = sc->normal; }
+			if (sc->hover == COLOR_UNDEFINE) { sc->hover = sc->normal; }
+			if (sc->press == COLOR_UNDEFINE) { sc->press = sc->normal; }
+			if (sc->focus == COLOR_UNDEFINE) { sc->press = sc->focus; }
+		}
+
+	public:
+		EXMETHOD HRESULT EXOBJCALL ParseFromXmlNode(EXATOM type, const pugi::xml_node* node,
+			IUnknown* owner, ExVariant* r_value) override
+		{
+			auto sc = V_STATE_COLOR(r_value);
+
+			auto attr = node->attribute(L"normal");
+			if (attr) { ExParseToColor(attr.value(), &sc->normal); }
+			else { sc->normal = COLOR_UNDEFINE; }
+			
+			attr = node->attribute(L"hover");
+			if (attr) { ExParseToColor(attr.value(), &sc->hover); }
+			else { sc->hover = COLOR_UNDEFINE; }
+			
+			attr = node->attribute(L"press");
+			if (attr) { ExParseToColor(attr.value(), &sc->press); }
+			else { sc->press = COLOR_UNDEFINE; }
+
+			attr = node->attribute(L"focus");
+			if (attr) { ExParseToColor(attr.value(), &sc->focus); }
+			else { sc->focus = COLOR_UNDEFINE; }
+
+			attr = node->attribute(L"disable");
+			if (attr) { ExParseToColor(attr.value(), &sc->disable); }
+			else { sc->disable = COLOR_UNDEFINE; }
+
+			SetDefaultColor(sc);
+			return S_OK;
+		}
+
+		EXMETHOD HRESULT EXOBJCALL ParseFromString(EXATOM type, LPCWSTR str, IUnknown* owner,
+			ExVariant* r_value) override
+		{
+			auto sc = V_STATE_COLOR(r_value);
+			sc->normal = COLOR_UNDEFINE;
+			sc->hover = COLOR_UNDEFINE;
+			sc->press = COLOR_UNDEFINE;
+			sc->focus = COLOR_UNDEFINE;
+			sc->disable = COLOR_UNDEFINE;
+			
+			auto args = ExString::split(str, L" ");
+			wstring key, value;
+			for (auto& arg : args) {
+				if (ExString::slice(arg, L":", key, value)) {
+					EXATOM atom_key = ExAtom(key.c_str());
+					switch (atom_key)
+					{
+					case ATOM_NORMAL: ExParseToColor(value.c_str(), &sc->normal); break;
+					case ATOM_HOVER: ExParseToColor(value.c_str(), &sc->hover); break;
+					case ATOM_PRESS: ExParseToColor(value.c_str(), &sc->press); break;
+					case ATOM_FOCUS: ExParseToColor(value.c_str(), &sc->focus); break;
+					case ATOM_DISABLE: ExParseToColor(value.c_str(), &sc->disable); break;
+					}
+				}
+			}
+
+			SetDefaultColor(sc);
+			return S_OK;
+		}
+
+	};
+
 }

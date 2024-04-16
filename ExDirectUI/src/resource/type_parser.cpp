@@ -19,6 +19,7 @@
 #include "src/resource/type_parsers/coordinate_type_parser.hpp"
 #include "src/resource/type_parsers/data_type_parser.hpp"
 #include "src/resource/type_parsers/font_type_parser.hpp"
+#include "src/resource/type_parsers/image_type_parser.hpp"
 
 
 namespace ExDirectUI
@@ -44,7 +45,8 @@ namespace ExDirectUI
 		{ATOM_CHANNEL, ExChannelTypeParser::Instance()},
 		{ATOM_ALPHA, ExOpacityTypeParser::Instance()},
 		{ATOM_OPACITY, ExOpacityTypeParser::Instance()},
-		
+		{ATOM_STATECOLOR, ExStateColorTypeParser::Instance()},
+
 		//坐标系类
 		{ATOM_POINT, ExPointSizeTypeParser::Instance()},
 		{ATOM_SIZE, ExPointSizeTypeParser::Instance()},
@@ -60,6 +62,12 @@ namespace ExDirectUI
 		{ATOM_DATA, ExDataTypeParser::Instance()},
 		{ATOM_CHAR, ExCharTypeParser::Instance()},
 		
+		//字体类
+		{ATOM_FONT, ExFontTypeParser::Instance()},
+
+		//图像类
+		
+
 
 	};
 

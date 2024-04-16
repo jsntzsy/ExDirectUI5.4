@@ -34,9 +34,9 @@ namespace ExDirectUI
 
 
 		EXMETHOD HRESULT EXOBJCALL ParseFromXmlNode(EXATOM type, const pugi::xml_node* node,
-			IUnknown* owner, ExVariant* V) override
+			IUnknown* owner, ExVariant* r_value) override
 		{
-			auto font = V_FONT(V);
+			auto font = V_FONT(r_value);
 			*font = g_drawing_default_font;
 
 			auto attr = node->attribute(L"size");
@@ -68,10 +68,11 @@ namespace ExDirectUI
 
 			return S_OK;
 		}
+		
 		EXMETHOD HRESULT EXOBJCALL ParseFromString(EXATOM type, LPCWSTR str, IUnknown* owner,
-			ExVariant* V) override
+			ExVariant* r_value) override
 		{
-			auto font = V_FONT(V);
+			auto font = V_FONT(r_value);
 			*font = g_drawing_default_font;
 			
 			auto args = ExString::split(str, L" ");

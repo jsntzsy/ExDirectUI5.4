@@ -9,6 +9,7 @@
 #pragma once
 
 
+#define ATOM_DEFAULT			0x55CFDEC4		// 原子号: default
 
 
 
@@ -55,6 +56,35 @@
 #pragma endregion
 
 
+#pragma region 状态
+
+#define ATOM_HOVER				0xE4FB6C7C		// 原子号: hover
+#define ATOM_PRESS				0xDE17C0AD		// 原子号: press
+#define ATOM_FOCUS				0xE02BA939		// 原子号: focus
+#define ATOM_FOCUSBLEND			0x48D0FCE7		// 原子号: focusblend
+#define ATOM_DISABLE			0xDC48C8DA		// 原子号: disable
+
+#pragma endregion
+
+#pragma region 图像模式
+
+#define ATOM_SCALE				0x0A42FA13		// 原子号: scale
+#define ATOM_SCALE_FILL			0xD8679299		// 原子号: scale-fill
+#define ATOM_SCALE_CENTER		0x83E1B67A		// 原子号: scale-center
+#define ATOM_TILE				0x0BB9C9C8		// 原子号: tile
+#define ATOM_MIRROR				0x36094235		// 原子号: mirror
+#define ATOM_LEFT_TOP			0xFCD1BEA7		// 原子号: left-top
+#define ATOM_CENTER_TOP			0x9ABE20D1		// 原子号: center-top
+#define ATOM_RIGHT_TOP			0xC9CB0FD1		// 原子号: right-top
+#define ATOM_LEFT_MIDDLE		0xA65B6026		// 原子号: left-middle
+#define ATOM_CENTER_MIDDLE		0x3A09474C		// 原子号: center-middle
+#define ATOM_RIGHT_MIDDLE		0x4B833FDE		// 原子号: right-middle
+#define ATOM_LEFT_BOTTOM		0x7CD09946		// 原子号: left-bottom
+#define ATOM_CENTER_BOTTOM		0xE082BE2C		// 原子号: center-bottom
+#define ATOM_RIGHT_BOTTOM		0x9108C6BE		// 原子号: right-bottom
+#define ATOM_CENTER				0x57F456B8		// 原子号: center
+
+#pragma endregion
 
 
 #pragma region 效果器名称
@@ -98,6 +128,16 @@
 
 #define ATOM_DATA				0x6A90C0FA		// 原子号: data
 #define ATOM_CHAR				0x41727E14		// 原子号: char
+
+#define ATOM_FONT				0x1AAEF718		// 原子号: font
+#define ATOM_IMAGE				0xF8457E01		// 原子号: image
+#define ATOM_STATEIMAGE			0x62AAE316		// 原子号: stateimage
+#define ATOM_STATECOLOR			0x4B04CB05		// 原子号: statecolor
+#define ATOM_DISPLAYIMAGE		0x7AE9BCCC		// 原子号: displayimage
+#define ATOM_GRIDS				0xA169F561		// 原子号: grids
+#define ATOM_STYLE				0x93B942D7		// 原子号: style
+#define ATOM_ANIMATION			0x43C8D895		// 原子号: animation
+#define ATOM_SHADOW				0x662E34E2		// 原子号: shadow
 
 #pragma endregion
 
