@@ -18,6 +18,7 @@
 #include "src/resource/type_parsers/color_type_parser.hpp"
 #include "src/resource/type_parsers/coordinate_type_parser.hpp"
 #include "src/resource/type_parsers/data_type_parser.hpp"
+#include "src/resource/type_parsers/font_type_parser.hpp"
 
 
 namespace ExDirectUI

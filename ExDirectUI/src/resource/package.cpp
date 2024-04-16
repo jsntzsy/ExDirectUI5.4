@@ -69,7 +69,7 @@ namespace ExDirectUI
 		}
 		EXMETHOD EXATOM EXOBJCALL FindItem(LPCWSTR path) const override
 		{
-			CHECK_PARAM(path);
+			CHECK_PARAM_RET(path, EXATOM_UNKNOWN);
 
 			//先使用路径原子号找一遍
 			EXATOM atom = ExAtom(path);

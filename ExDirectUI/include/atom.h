@@ -38,8 +38,21 @@
 #pragma endregion
 
 
+#pragma region 字体
 
+#define ATOM_NAME				0xB22D0123		// 原子号: name
+#define ATOM_SIZE				0x740EC892		// 原子号: size
+#define ATOM_STYLE				0x93B942D7		// 原子号: style
+#define ATOM_WEIGHT				0x735D864C		// 原子号: weight
+#define ATOM_FILE				0x3527FF9E		// 原子号: file
 
+#define ATOM_NORMAL				0x8A971820		// 原子号: normal
+#define ATOM_BOLD				0x7E2F2338		// 原子号: bold
+#define ATOM_ITALIC				0x5A055AFD		// 原子号: italic
+#define ATOM_UNDERLINE			0xEFBAFBF5		// 原子号: underline
+#define ATOM_STRIKEOUT			0xAE445803		// 原子号: strikeout
+
+#pragma endregion
 
 
 

@@ -8,17 +8,32 @@
  */
 #pragma once
 #include "src/resource/type_parser.h"
+#include "resource/package.h"
 
 namespace ExDirectUI
 {
 	EX_SAMPLE_TYPE_PARSER(Data, EVT_DATA, {
-		
+
 		auto data = V_DATA(V);
 		DWORD type = ExDataParseType::Hex;
 		HRESULT hr = ExParseToData(str, data, &type);
 		if (FAILED(hr)) { return hr; }
+
 		//后处理
-		
+		//这里可能还得做全局处理
+		if (type == ExDataParseType::Resource)
+		{
+			ExAutoPtr<IExPackage> package;
+			if (owner && SUCCEEDED(owner->QueryInterface(&package)))
+			{
+
+			}
+			else { return E_INVALIDARG; }
+		}
+		else if (type == ExDataParseType::Custom)
+		{
+
+		}
 
 		return hr;
 		}

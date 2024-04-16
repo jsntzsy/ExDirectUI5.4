@@ -8,6 +8,7 @@
  */
 #pragma once
 #include "common/singleton.hpp"
+#include "resource/package.h"
 
 #ifdef new
 #undef new
@@ -16,6 +17,19 @@
 
 namespace ExDirectUI
 {
+	inline HRESULT _ExParser_GetPackageItem(IUnknown* owner, LPCWSTR path, ExPackageItemInfo* r_item)
+	{
+		if (!owner) { return E_INVALIDARG; }
+		if (path == nullptr || *path == L'\0') { return E_INVALIDARG; }
+		
+		ExAutoPtr<IExPackage> package;
+		return_if_failed(owner->QueryInterface(&package));
+		EXATOM key = package->FindItem(path);
+		if (key == EXATOM_UNKNOWN) { return EE_NOEXISTS; }
+		return package->GetItemInfo(key, r_item);
+	}
+
+
 	class ExStandardTypeParser : public IExTypeParser
 	{
 	public:
