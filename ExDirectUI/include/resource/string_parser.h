@@ -72,5 +72,7 @@ namespace ExDirectUI
 
 	HRESULT EXAPI EXCALL ExParseToConst(LPCWSTR str, const DWORD key_values[][2], uint32_t count, DWORD* r_values);
 	HRESULT EXAPI EXCALL ExParseToConsts(LPCWSTR str, const DWORD key_values[][2], uint32_t count, DWORD* r_values);
+
+	HRESULT EXAPI EXCALL ExParseToGridsImageInfo(LPCWSTR str, ExGridsImageInfo* r_value);
 }
 

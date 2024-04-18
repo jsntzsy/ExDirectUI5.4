@@ -8,6 +8,7 @@
  */
 #pragma once
 #include "common/singleton.hpp"
+#include "common/string.hpp"
 #include "resource/package.h"
 
 #ifdef new
@@ -15,13 +16,31 @@
 #endif
 #include "../ThirdParts/pugixml/pugixml.hpp"
 
+#define _map_get_or_default(map, key, def)	(map.find(key) != map.end() ? map[key] : def)
+
 namespace ExDirectUI
 {
+	std::unordered_map<EXATOM, std::wstring> _ExParser_GetArgsMap(LPCWSTR str)
+	{
+		std::unordered_map<EXATOM, std::wstring> map;
+		auto args = ExString::split(str, L" ");
+		wstring key, value;
+		for (auto& arg : args) {
+			if (ExString::slice(arg, L":", key, value)) {
+				EXATOM atom_key = ExAtom(key.c_str());
+				if (atom_key != EXATOM_UNKNOWN) {
+					map[atom_key] = value;
+				}
+			}
+		}
+		return map;
+	}
+
 	inline HRESULT _ExParser_GetPackageItem(IUnknown* owner, LPCWSTR path, ExPackageItemInfo* r_item)
 	{
 		if (!owner) { return E_INVALIDARG; }
 		if (path == nullptr || *path == L'\0') { return E_INVALIDARG; }
-		
+
 		ExAutoPtr<IExPackage> package;
 		return_if_failed(owner->QueryInterface(&package));
 		EXATOM key = package->FindItem(path);

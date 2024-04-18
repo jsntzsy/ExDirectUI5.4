@@ -13,7 +13,6 @@
 
 
 
-#pragma region 文件后缀原子号
 
 #define ATOM_TXT				0xC4A9DAF5		// 原子号: txt
 #define ATOM_INI				0xF1FFAFEF		// 原子号: ini
@@ -36,10 +35,12 @@
 #define ATOM_SVG				0x589CDCEC		// 原子号: svg
 
 
-#pragma endregion
 
+#define ATOM_SRC				0xB3928EBF		// 原子号: src
+#define ATOM_PADDING			0xDA30C36C		// 原子号: padding
+#define ATOM_MODE				0x7BA0283A		// 原子号: mode
+#define ATOM_SHOW				0xA061CC49		// 原子号: show
 
-#pragma region 字体
 
 #define ATOM_NAME				0xB22D0123		// 原子号: name
 #define ATOM_SIZE				0x740EC892		// 原子号: size
@@ -53,20 +54,15 @@
 #define ATOM_UNDERLINE			0xEFBAFBF5		// 原子号: underline
 #define ATOM_STRIKEOUT			0xAE445803		// 原子号: strikeout
 
-#pragma endregion
 
 
-#pragma region 状态
 
 #define ATOM_HOVER				0xE4FB6C7C		// 原子号: hover
 #define ATOM_PRESS				0xDE17C0AD		// 原子号: press
 #define ATOM_FOCUS				0xE02BA939		// 原子号: focus
-#define ATOM_FOCUSBLEND			0x48D0FCE7		// 原子号: focusblend
+#define ATOM_FOCUS_BLEND		0xA3773C2E		// 原子号: focus-blend
 #define ATOM_DISABLE			0xDC48C8DA		// 原子号: disable
 
-#pragma endregion
-
-#pragma region 图像模式
 
 #define ATOM_SCALE				0x0A42FA13		// 原子号: scale
 #define ATOM_SCALE_FILL			0xD8679299		// 原子号: scale-fill
@@ -84,10 +80,8 @@
 #define ATOM_RIGHT_BOTTOM		0x9108C6BE		// 原子号: right-bottom
 #define ATOM_CENTER				0x57F456B8		// 原子号: center
 
-#pragma endregion
 
 
-#pragma region 效果器名称
 
 #define ATOM_BLUREFFECT					0xFF660944		// 原子号: blureffect
 #define ATOM_HUEROTATEEFFECT			0x2AEB072D		// 原子号: huerotateeffect
@@ -95,10 +89,8 @@
 #define ATOM_3DPERSPECTIVEEFFECT		0xB6C56CF0		// 原子号: 3dperspectiveeffect
 
 
-#pragma endregion
 
 
-#pragma region 类型名称
 
 #define ATOM_BOOL				0xA44306DE		// 原子号: bool
 #define ATOM_BYTE				0x27168C8F		// 原子号: byte
@@ -139,16 +131,13 @@
 #define ATOM_ANIMATION			0x43C8D895		// 原子号: animation
 #define ATOM_SHADOW				0x662E34E2		// 原子号: shadow
 
-#pragma endregion
 
 
-#pragma region 颜色相关
 
 #define ATOM_TRANSPARENT		0xA17FBD6E		// 原子号: transparent
 #define ATOM_OPAQUE				0x4F0E0183		// 原子号: opaque
 #define ATOM_HALF				0xE7D33C02		// 原子号: half
 
-#pragma endregion
 
 
 

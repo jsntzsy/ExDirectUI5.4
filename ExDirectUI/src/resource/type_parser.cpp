@@ -36,10 +36,10 @@ namespace ExDirectUI
 		{ATOM_DOUBLE, ExDoubleTypeParser::Instance()},
 		{ATOM_NUMBER, ExFloatTypeParser::Instance()},
 		{ATOM_NUMBERU, ExNumberUTypeParser::Instance()},
-		
+
 		//逻辑类
 		{ATOM_BOOL, ExBoolTypeParser::Instance()},
-		
+
 		//颜色类
 		{ATOM_COLOR, ExColorTypeParser::Instance()},
 		{ATOM_CHANNEL, ExChannelTypeParser::Instance()},
@@ -57,16 +57,19 @@ namespace ExDirectUI
 		{ATOM_POINTU, ExPointSizeUTypeParser::Instance()},
 		{ATOM_SIZEU, ExPointSizeUTypeParser::Instance()},
 		{ATOM_RECTU, ExRectUTypeParser::Instance()},
-		
+
 		//文本和数据类
 		{ATOM_DATA, ExDataTypeParser::Instance()},
 		{ATOM_CHAR, ExCharTypeParser::Instance()},
-		
+
 		//字体类
 		{ATOM_FONT, ExFontTypeParser::Instance()},
 
 		//图像类
-		
+		{ATOM_GRIDS, ExGridsImageInfoTypeParser::Instance()},
+		{ATOM_IMAGE, ExImageTypeParser::Instance()},
+		{ATOM_DISPLAYIMAGE, ExDisplayImageTypeParser::Instance()},
+		{ATOM_STATEIMAGE, ExStateImageTypeParser::Instance()}
 
 
 	};

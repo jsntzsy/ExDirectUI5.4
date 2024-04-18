@@ -112,23 +112,23 @@
 
     <CheckBox>
         <Style name="style" common="" ctrl="" text-format="" />
-        <StateImage name="none-texture" file="checkbox.png" normal="" press="" press=""/>
-        <StateImage name="half-texture" file="checkbox.png" normal="" press="" press=""/>
-        <StateImage name="check-texture" file="checkbox.png" normal="" press="" press=""/>
+        <StateImage name="none-texture" file="checkbox.png" normal="" hover="" press=""/>
+        <StateImage name="half-texture" file="checkbox.png" normal="" hover="" press=""/>
+        <StateImage name="check-texture" file="checkbox.png" normal="" hover="" press=""/>
     </CheckBox>
     
     <RadioButton>
         <Style name="style" common="" ctrl="" text-format="" />
-        <StateImage name="none-texture" file="radiobutton.png" normal="" press="" press=""/>
-        <StateImage name="check-texture" file="radiobutton.png" normal="" press="" press=""/>
+        <StateImage name="none-texture" file="radiobutton.png" normal="" hover="" press=""/>
+        <StateImage name="check-texture" file="radiobutton.png" normal="" hover="" press=""/>
     </RadioButton>
 
     <Switch>
         <Style name="style" common="" ctrl="" text-format="" />
-        <StateImage name="background-none-texture" file="switch.png" normal="" press="" press=""/>
-        <StateImage name="background-check-texture" file="switch.png" normal="" press="" press=""/>
-        <StateImage name="block-none-texture" file="switch.png" normal="" press="" press=""/>
-        <StateImage name="block-check-texture" file="switch.png" normal="" press="" press=""/>
+        <StateImage name="background-none-texture" file="switch.png" normal="" hover="" press=""/>
+        <StateImage name="background-check-texture" file="switch.png" normal="" hover="" press=""/>
+        <StateImage name="block-none-texture" file="switch.png" normal="" hover="" press=""/>
+        <StateImage name="block-check-texture" file="switch.png" normal="" hover="" press=""/>
     </Switch>
 
     <Edit>

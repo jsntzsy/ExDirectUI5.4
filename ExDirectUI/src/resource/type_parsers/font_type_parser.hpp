@@ -68,41 +68,45 @@ namespace ExDirectUI
 
 			return S_OK;
 		}
-		
+
 		EXMETHOD HRESULT EXOBJCALL ParseFromString(EXATOM type, LPCWSTR str, IUnknown* owner,
 			ExVariant* r_value) override
 		{
 			auto font = V_FONT(r_value);
 			*font = g_drawing_default_font;
-			
-			auto args = ExString::split(str, L" ");
-			wstring key, value;
-			DWORD weight = 0;
-			for (auto& arg : args) {
-				if (ExString::slice(arg, L":", key, value)) {
-					EXATOM atom_key = ExAtom(key.c_str());
-					switch (atom_key)
-					{
-					case ATOM_NAME: font->SetName(value.c_str()); break;
-					case ATOM_SIZE: font->size = wcstoul(value.c_str(), nullptr, 10); break;
-					case ATOM_STYLE: font->style = ConstToStyle(value.c_str()); break;
-					case ATOM_WEIGHT: weight = wcstoul(value.c_str(), nullptr, 10); break;
-					case ATOM_FILE: {
-						ExPackageItemInfo item{};
-						handle_if_failed(
-							_ExParser_GetPackageItem(owner, value.c_str(), &item),
-							L"获取字体文件失败"
-						);
-						handle_if_failed(
-							ExFontLoadFile(item.data, item.size, &font->file_atom),
-							L"加载字体文件失败"
-						);
-					}break;
-					}
 
-					//weight晚加载,确保在style后执行
-					if (weight != 0) { font->SetWeight(weight); }
+			auto args = _ExParser_GetArgsMap(str);
+			auto it = args.find(ATOM_NAME);
+			if (it != args.end()) {
+				font->SetName(it->second.c_str());
+
+				it = args.find(ATOM_FILE);
+				if (it != args.end()) {
+					ExPackageItemInfo item{};
+					handle_if_failed(
+						_ExParser_GetPackageItem(owner, it->second.c_str(), &item),
+						L"获取字体文件失败"
+					);
+					handle_if_failed(
+						ExFontLoadFile(item.data, item.size, &font->file_atom),
+						L"加载字体文件失败"
+					);
 				}
+			}
+
+			it = args.find(ATOM_SIZE);
+			if (it != args.end()) {
+				font->size = wcstoul(it->second.c_str(), nullptr, 10);
+			}
+
+			it = args.find(ATOM_STYLE);
+			if (it != args.end()) {
+				font->style = ConstToStyle(it->second.c_str());
+			}
+
+			it = args.find(ATOM_WEIGHT);
+			if (it != args.end()) {
+				font->SetWeight(wcstoul(it->second.c_str(), nullptr, 10));
 			}
 
 			return S_OK;

@@ -232,9 +232,6 @@ namespace ExDirectUI
 		CHECK_PARAM(str);
 		CHECK_PARAM(r_value);
 
-		CHECK_PARAM(str);
-		CHECK_PARAM(r_value);
-
 		//按逗号分割
 		wchar_t* end_of_number[4]{};
 		auto args = ExString::split(str, L",");
@@ -323,7 +320,7 @@ namespace ExDirectUI
 			r: 资源id (并不会读取真实数据,只会将r_value.data设置为资源id,value.size设置为0,不需要释放)
 			c: 自定义数据 (并不会读取真实数据,只会将r_value.data设置为字符串,value.size设置为0,不需要释放)
 			//TODO:这里自定义数据的获取方式考虑改为调用回调函数
-			
+
 			其他情况按16进制字符串处理
 		*/
 
@@ -368,7 +365,7 @@ namespace ExDirectUI
 				type = ExDataParseType::Utf8;
 			}
 			else if (header == L'd') {
-				
+
 				std::vector<byte_t> data;
 
 				//找到起始位置
@@ -383,7 +380,7 @@ namespace ExDirectUI
 					if (p) { p = wcsstr(p, L","); }
 					if (p) { p += 1; }
 				}
-				
+
 				//全部解析完毕后,生成数据块
 				handle_if_failed(
 					ExDataCopy(r_value, data.data(), data.size()),
@@ -412,7 +409,7 @@ namespace ExDirectUI
 			handle_if_failed(ExDataAlloc(max_size, r_value), L"申请内存失败");
 
 			/*
-			
+
 			wchar_t h = 0, l = 0;
 			while (true) {
 				wchar_t ch = *p;
@@ -448,22 +445,22 @@ namespace ExDirectUI
 
 			//循环整个字符串，直到结束符
 			while (*p) {
-				
+
 				//如果当前字符是空白字符,则跳过
 				if (iswspace(*p)) { p++; continue; }
-				
+
 				//复制出两个字符(如果是正常字符串,不会超界的)
 				memcpy(char_buff, p, sizeof(wchar_t) * 2);
-				
+
 				//如果第二个字符是结束符或空白字符,则表示只有低位字符
 				if (char_buff[1] == L'\0' || iswspace(char_buff[1])) {
 					char_buff[1] = char_buff[0];
 					char_buff[0] = L'0';
 				}
-				
+
 				//将这两个字符按16进制转为字节数据
 				r_value->data[real_size++] = (byte_t)wcstoul(char_buff, nullptr, 16);
-				
+
 				//如果遇到了结束符，则结束循环
 				if (char_buff[1] == L'\0') { break; }
 				p += 2;
@@ -538,6 +535,27 @@ namespace ExDirectUI
 			auto it = kv_map.find(key);
 			if (it != kv_map.end()) { value |= it->second; }
 			else { value |= (DWORD)wcstoul(arg.c_str(), nullptr, 0); }
+		}
+
+		return S_OK;
+	}
+
+	HRESULT EXAPI EXCALL ExParseToGridsImageInfo(LPCWSTR str, ExGridsImageInfo* r_value)
+	{
+		CHECK_PARAM(str);
+		CHECK_PARAM(r_value);
+
+		uint8_t units[4]{};
+		return_if_failed(ExParseToRectF(str, (ExRectF*)&r_value, units));
+		r_value->flags = 0;
+
+		for (int i = 0; i < 4; i++) {
+			uint8_t u = ExGridsImageMode::Scale;
+			if (units[i] == ExNumberUnit::Question) { u = ExGridsImageMode::LeftNone; }
+			else if (units[i] == ExNumberUnit::Star) { u = ExGridsImageMode::LeftTile; }
+			else if (units[i] == ExNumberUnit::Sharp) { u = ExGridsImageMode::LeftMirror; }
+
+			r_value->flags |= u << i;
 		}
 
 		return S_OK;

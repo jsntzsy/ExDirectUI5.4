@@ -5,7 +5,6 @@ EXPORTS
 ;公共函数
 
 
-
 ;内核层
 	;内存管理
 		ExMemAlloc
@@ -33,7 +32,6 @@ EXPORTS
 		ExModuleUnLoad
 		ExModuleGetInfo
 		ExModuleInvoke
-		
 
 ;渲染层
 	;图像解码器
@@ -103,7 +101,7 @@ EXPORTS
 		ExPackageBuild
 		ExPackageBuildFromDirectory
 		ExPackageLoad
-	;文本解析
+	;类型解析
 		ExParseToBool
 		ExParseToByte
 		ExParseToColor
@@ -119,6 +117,15 @@ EXPORTS
 		ExParseToUInt32
 		ExParseToUInt64
 		ExParseToWChar
+		ExParseToGridsImageInfo
+		ExParseFromString
+		ExParseFromXmlNode
+	;变体类型
+		ExVariantClear
+		ExVariantCopy
+		ExVariantGetValuePtr
+		ExVariantInit
+		ExVariantToString
 
 ;调试层
 	;状态处理
@@ -131,7 +138,6 @@ EXPORTS
 		ExDbgOutput
 		ExDbgSetOutputHandler
 		ExDbgGetOutputHandler
-	
 
 ;应用层
 	;引擎管理
