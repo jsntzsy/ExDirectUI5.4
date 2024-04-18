@@ -20,6 +20,7 @@
 #include "src/resource/type_parsers/data_type_parser.hpp"
 #include "src/resource/type_parsers/font_type_parser.hpp"
 #include "src/resource/type_parsers/image_type_parser.hpp"
+#include "src/resource/type_parsers/style_type_parser.hpp"
 
 
 namespace ExDirectUI
@@ -69,8 +70,10 @@ namespace ExDirectUI
 		{ATOM_GRIDS, ExGridsImageInfoTypeParser::Instance()},
 		{ATOM_IMAGE, ExImageTypeParser::Instance()},
 		{ATOM_DISPLAYIMAGE, ExDisplayImageTypeParser::Instance()},
-		{ATOM_STATEIMAGE, ExStateImageTypeParser::Instance()}
+		{ATOM_STATEIMAGE, ExStateImageTypeParser::Instance()},
 
+		//风格类
+		{ATOM_STYLE, ExEleStyleTypeParser::Instance()}
 
 	};
 

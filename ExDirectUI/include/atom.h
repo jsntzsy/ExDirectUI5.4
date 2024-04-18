@@ -54,7 +54,17 @@
 #define ATOM_UNDERLINE			0xEFBAFBF5		// 原子号: underline
 #define ATOM_STRIKEOUT			0xAE445803		// 原子号: strikeout
 
+#define ATOM_COMMON				0x634A2FF8		// 原子号: common
+#define ATOM_CONTROL			0x7012E4D1		// 原子号: control
+#define ATOM_TEXT_FORMAT		0xC1850416		// 原子号: text-format
 
+#define ATOM_TYPE				0x12A02374		// 原子号: type
+#define ATOM_NORMAL				0x8A971820		// 原子号: normal
+#define ATOM_ACTIVE				0xA3CDF821		// 原子号: active
+#define ATOM_OFFSET				0x21732CB1		// 原子号: offset
+#define ATOM_PADDING			0xDA30C36C		// 原子号: padding
+#define ATOM_ALPHA_NORMAL		0x7E705872		// 原子号: alpha-normal
+#define ATOM_ALPHA_ACTIVE		0x572AB873		// 原子号: alpha-active
 
 
 #define ATOM_HOVER				0xE4FB6C7C		// 原子号: hover
@@ -87,7 +97,6 @@
 #define ATOM_HUEROTATEEFFECT			0x2AEB072D		// 原子号: huerotateeffect
 #define ATOM_3DTRANSFORMEFFECT			0x1A83A190		// 原子号: 3dtransformeffect
 #define ATOM_3DPERSPECTIVEEFFECT		0xB6C56CF0		// 原子号: 3dperspectiveeffect
-
 
 
 

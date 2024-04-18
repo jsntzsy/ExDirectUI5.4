@@ -104,6 +104,13 @@ namespace ExDirectUI
 			attr = node->attribute(L"show");
 			ExParseToUInt32(attr.value(), (uint32_t*)&image->show_mode);
 
+			attr = node->attribute(L"grids");
+			if (attr) {
+				ExParseToGridsImageInfo(attr.value(), &image->grids);
+				image->image_mode = ExImageMode::Grids;
+			}
+			else { image->grids = {}; }
+
 			attr = node->attribute(L"alpha");
 			if (attr) { ExParseToByte(attr.value(), &image->alpha); }
 			else { image->alpha = ALPHA_OPAQUE; }
@@ -144,6 +151,13 @@ namespace ExDirectUI
 				ExParseToUInt32(it->second.c_str(), (uint32_t*)&image->show_mode);
 			}
 			else { image->show_mode = ExImageShowMode::None; }
+
+			it = args.find(ATOM_GRIDS);
+			if (it != args.end()) {
+				ExParseToGridsImageInfo(it->second.c_str(), &image->grids);
+				image->image_mode = ExImageMode::Grids;
+			}
+			else { image->grids = {}; }
 
 			it = args.find(ATOM_ALPHA);
 			if (it != args.end()) { ExParseToByte(it->second.c_str(), &image->alpha); }
@@ -198,8 +212,15 @@ namespace ExDirectUI
 			if (attr) { ExParseToRectF(attr.value(), &image->disable); }
 			else { image->disable = image->normal; }
 
+			attr = node->attribute(L"mode");
+			if (attr) { image->image_mode = _ExImageParser_ConstToImageMode(attr.value()); }
+			else { image->image_mode = ExImageMode::Default; }
+
 			attr = node->attribute(L"grids");
-			if (attr) { ExParseToGridsImageInfo(attr.value(), &image->grids); }
+			if (attr) { 
+				ExParseToGridsImageInfo(attr.value(), &image->grids);
+				image->image_mode = ExImageMode::Grids;
+			}
 			else { image->grids = {}; }
 
 			attr = node->attribute(L"alpha");
@@ -247,8 +268,17 @@ namespace ExDirectUI
 			if (it != args.end()) { ExParseToRectF(it->second.c_str(), &image->disable); }
 			else { image->disable = {}; }
 
+			it = args.find(ATOM_MODE);
+			if (it != args.end()) {
+				image->image_mode = _ExImageParser_ConstToImageMode(it->second.c_str());
+			}
+			else { image->image_mode = ExImageMode::Default; }
+
 			it = args.find(ATOM_GRIDS);
-			if (it != args.end()) { ExParseToGridsImageInfo(it->second.c_str(), &image->grids); }
+			if (it != args.end()) { 
+				ExParseToGridsImageInfo(it->second.c_str(), &image->grids);
+				image->image_mode = ExImageMode::Grids;
+			}
 			else { image->grids = {}; }
 
 			it = args.find(ATOM_ALPHA);

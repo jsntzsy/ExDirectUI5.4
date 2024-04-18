@@ -288,6 +288,7 @@
     <ClInclude Include="src\resource\type_parsers\image_type_parser.hpp" />
     <ClInclude Include="src\resource\type_parsers\logic_type_parser.hpp" />
     <ClInclude Include="src\resource\type_parsers\number_type_parser.hpp" />
+    <ClInclude Include="src\resource\type_parsers\style_type_parser.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

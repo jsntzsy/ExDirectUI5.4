@@ -36,6 +36,20 @@ namespace ExDirectUI
 		return map;
 	}
 
+	inline LPCWSTR _ExParser_GetArg(pugi::xml_node* node, LPCWSTR attr_name, LPCWSTR default_value = nullptr)
+	{
+		auto attr = node->attribute(attr_name);
+		if (attr) { return attr.value(); }
+		else { return default_value; }
+	}
+
+	inline LPCWSTR _ExParser_GetArg(std::unordered_map<EXATOM, wstring> map, EXATOM atom, LPCWSTR default_value = nullptr)
+	{
+		auto it = map.find(atom);
+		if (it != map.end()) { return it->second.c_str(); }
+		else { return default_value; }
+	}
+
 	inline HRESULT _ExParser_GetPackageItem(IUnknown* owner, LPCWSTR path, ExPackageItemInfo* r_item)
 	{
 		if (!owner) { return E_INVALIDARG; }

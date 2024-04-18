@@ -76,37 +76,35 @@ namespace ExDirectUI
 			*font = g_drawing_default_font;
 
 			auto args = _ExParser_GetArgsMap(str);
-			auto it = args.find(ATOM_NAME);
-			if (it != args.end()) {
-				font->SetName(it->second.c_str());
+			LPCWSTR value = _ExParser_GetArg(args, ATOM_NAME);
+			if (value) {
+				font->SetName(value);
 
-				it = args.find(ATOM_FILE);
-				if (it != args.end()) {
+				value = _ExParser_GetArg(args, ATOM_FILE);
+				if (value) {
 					ExPackageItemInfo item{};
-					handle_if_failed(
-						_ExParser_GetPackageItem(owner, it->second.c_str(), &item),
-						L"获取字体文件失败"
+					return_if_failed(
+						_ExParser_GetPackageItem(owner, value, &item)
 					);
-					handle_if_failed(
-						ExFontLoadFile(item.data, item.size, &font->file_atom),
-						L"加载字体文件失败"
+					return_if_failed(
+						ExFontLoadFile(item.data, item.size, &font->file_atom)
 					);
 				}
 			}
 
-			it = args.find(ATOM_SIZE);
-			if (it != args.end()) {
-				font->size = wcstoul(it->second.c_str(), nullptr, 10);
+			value = _ExParser_GetArg(args, ATOM_SIZE);
+			if (value) {
+				font->size = wcstoul(value, nullptr, 10);
 			}
 
-			it = args.find(ATOM_STYLE);
-			if (it != args.end()) {
-				font->style = ConstToStyle(it->second.c_str());
+			value = _ExParser_GetArg(args, ATOM_STYLE);
+			if (value) {
+				font->style = ConstToStyle(value);
 			}
 
-			it = args.find(ATOM_WEIGHT);
-			if (it != args.end()) {
-				font->SetWeight(wcstoul(it->second.c_str(), nullptr, 10));
+			value = _ExParser_GetArg(args, ATOM_WEIGHT);
+			if (value) {
+				font->SetWeight(wcstoul(value, nullptr, 10));
 			}
 
 			return S_OK;

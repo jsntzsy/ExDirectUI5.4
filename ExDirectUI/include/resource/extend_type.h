@@ -66,6 +66,9 @@ namespace ExDirectUI
 		/// 禁用态源矩形 (PX)
 		ExRectF disable;
 
+		/// 图像模式
+		DWORD image_mode;
+
 		/// 宫格图像信息
 		ExGridsImageInfo grids;
 
