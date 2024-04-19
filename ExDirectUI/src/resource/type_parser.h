@@ -20,50 +20,72 @@
 
 namespace ExDirectUI
 {
-	std::unordered_map<EXATOM, std::wstring> _ExParser_GetArgsMap(LPCWSTR str)
+	class ExTypeParserHelper
 	{
-		std::unordered_map<EXATOM, std::wstring> map;
-		auto args = ExString::split(str, L" ");
-		wstring key, value;
-		for (auto& arg : args) {
-			if (ExString::slice(arg, L":", key, value)) {
-				EXATOM atom_key = ExAtom(key.c_str());
-				if (atom_key != EXATOM_UNKNOWN) {
-					map[atom_key] = value;
+	public:
+		static std::unordered_map<EXATOM, std::wstring> GetArgsMap(LPCWSTR str)
+		{
+			std::unordered_map<EXATOM, std::wstring> map;
+			auto args = ExString::split(str, L" ");
+			wstring key, value;
+			for (auto& arg : args) {
+				if (ExString::slice(arg, L":", key, value)) {
+					EXATOM atom_key = ExAtom(key.c_str());
+					if (atom_key != EXATOM_UNKNOWN) {
+						map[atom_key] = value;
+					}
 				}
 			}
+			return map;
 		}
-		return map;
-	}
 
-	inline LPCWSTR _ExParser_GetArg(pugi::xml_node* node, LPCWSTR attr_name, LPCWSTR default_value = nullptr)
-	{
-		auto attr = node->attribute(attr_name);
-		if (attr) { return attr.value(); }
-		else { return default_value; }
-	}
+		inline static LPCWSTR GetArg(pugi::xml_node* node, LPCWSTR attr_name, LPCWSTR default_value = nullptr)
+		{
+			auto attr = node->attribute(attr_name);
+			if (attr) { return attr.value(); }
+			else { return default_value; }
+		}
 
-	inline LPCWSTR _ExParser_GetArg(std::unordered_map<EXATOM, wstring> map, EXATOM atom, LPCWSTR default_value = nullptr)
-	{
-		auto it = map.find(atom);
-		if (it != map.end()) { return it->second.c_str(); }
-		else { return default_value; }
-	}
+		inline static LPCWSTR GetArg(std::unordered_map<EXATOM, wstring> map, EXATOM atom, LPCWSTR default_value = nullptr)
+		{
+			auto it = map.find(atom);
+			if (it != map.end()) { return it->second.c_str(); }
+			else { return default_value; }
+		}
 
-	inline HRESULT _ExParser_GetPackageItem(IUnknown* owner, LPCWSTR path, ExPackageItemInfo* r_item)
-	{
-		if (!owner) { return E_INVALIDARG; }
-		if (path == nullptr || *path == L'\0') { return E_INVALIDARG; }
+		inline static HRESULT GetPackageItem(IUnknown* owner, LPCWSTR path, ExPackageItemInfo* r_item)
+		{
+			if (!owner) { return E_INVALIDARG; }
+			if (path == nullptr || *path == L'\0') { return E_INVALIDARG; }
 
-		ExAutoPtr<IExPackage> package;
-		return_if_failed(owner->QueryInterface(&package));
-		EXATOM key = package->FindItem(path);
-		if (key == EXATOM_UNKNOWN) { return EE_NOEXISTS; }
-		return package->GetItemInfo(key, r_item);
-	}
+			ExAutoPtr<IExPackage> package;
+			return_if_failed(owner->QueryInterface(&package));
+			EXATOM key = package->FindItem(path);
+			if (key == EXATOM_UNKNOWN) { return EE_NOEXISTS; }
+			return package->GetItemInfo(key, r_item);
+		}
 
+		inline static HRESULT LoadPackageImage(IUnknown* owner, LPCWSTR path, IExImage** r_image)
+		{
+			HRESULT hr;
+			ExPackageItemInfo item{};
+			return_if_failed(GetPackageItem(owner, path, &item));
+			if (item.type == ExPackageItemType::ImageData) {
+				hr = ExImageCreateFromImageData(item.data, r_image);
+			}
+			else if (item.type == ExPackageItemType::Icon) {
+				HICON icon = NULL;
+				return_if_failed(ExImageLoadObject(item.data, item.size, IMAGE_ICON, 0, (HGDIOBJ*)&icon));
+				hr = ExImageCreateFromHICON(icon, r_image);
+				DestroyIcon(icon);
+			}
+			else { hr = ExImageCreateFromMemory(item.data, item.size, r_image); }
+			return hr;
+		}
 
-	class ExStandardTypeParser : public IExTypeParser
+	};
+
+	class ExStandardTypeParser : public IExTypeParser, public ExTypeParserHelper
 	{
 	public:
 

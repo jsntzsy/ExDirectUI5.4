@@ -485,17 +485,18 @@ namespace ExDirectUI
 	HRESULT EXAPI EXCALL ExParseToConst(LPCWSTR str, const DWORD key_values[][2], uint32_t count, DWORD* r_values)
 	{
 		CHECK_PARAM(str);
-		CHECK_PARAM(key_values);
 		CHECK_PARAM(r_values);
 
 		//计算原子号
 		EXATOM key = ExAtom(str);
 
 		//遍历表
-		for (uint32_t i = 0; i < count; i++) {
-			if (key == key_values[i][0]) {
-				*r_values = key_values[i][1];
-				return S_OK;
+		if (key_values) {
+			for (uint32_t i = 0; i < count; i++) {
+				if (key == key_values[i][0]) {
+					*r_values = key_values[i][1];
+					return S_OK;
+				}
 			}
 		}
 
@@ -507,11 +508,12 @@ namespace ExDirectUI
 	HRESULT EXAPI EXCALL ExParseToConsts(LPCWSTR str, const DWORD key_values[][2], uint32_t count, DWORD* r_values)
 	{
 		CHECK_PARAM(str);
-		CHECK_PARAM(key_values);
 		CHECK_PARAM(r_values);
 
-		//如果只有一个键值,则直接按一个解析
-		if (count <= 1) { return ExParseToConst(str, key_values, count, r_values); }
+		//如果少于一个键值,则直接按一个解析
+		if (key_values == nullptr || count <= 1) {
+			return ExParseToConst(str, key_values, count, r_values); 
+		}
 
 		//按逗号分割,如果没有逗号,则也按一个解析
 		auto args = ExString::split(str, L",");

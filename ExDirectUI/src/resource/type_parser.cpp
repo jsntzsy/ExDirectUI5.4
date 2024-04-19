@@ -73,7 +73,8 @@ namespace ExDirectUI
 		{ATOM_STATEIMAGE, ExStateImageTypeParser::Instance()},
 
 		//风格类
-		{ATOM_STYLE, ExEleStyleTypeParser::Instance()}
+		{ATOM_STYLE, ExEleStyleTypeParser::Instance()},
+		{ATOM_SHADOW, ExShadowTypeParser::Instance()}
 
 	};
 
