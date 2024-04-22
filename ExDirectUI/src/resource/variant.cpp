@@ -15,6 +15,7 @@
 
 namespace ExDirectUI
 {
+	
 	//后期可能改为内存池分配(超过指定尺寸的按普通申请,小于某个尺寸则用内存池)
 #define V_NEW(size)			exalloc(size)
 #define V_FREE(ptr,size)	exfree(ptr)
@@ -472,6 +473,142 @@ namespace ExDirectUI
 		}
 
 		return S_OK;
+	}
+	
+
+	/////////////////////////
+
+	inline ExRectF& _StateToRectF(ExStateImageInfo* image, DWORD state)
+	{
+		return image->normal;
+	}
+
+	inline EXARGB _StateToColor(ExStateColorInfo* colors, DWORD state)
+	{
+		return colors->normal;
+	}
+
+	inline EXARGB _StateToColor(ExEleShadowInfo* shadow, DWORD state)
+	{
+		return shadow->info.param.normal;
+	}
+
+	inline ExRectF& _StateToRectF(ExEleShadowInfo* shadow, DWORD state, EXCHANNEL& r_alpha)
+	{
+		r_alpha = shadow->info.texture.alpha_normal;
+		return shadow->info.texture.src_normal;
+	}
+
+	
+	HRESULT EXAPI EXCALL ExVariantDraw(IExCanvas* canvas, float left, float top, float right, float bottom, ExVariant* variant, DWORD state, LPARAM lparam)
+	{
+		CHECK_PARAM(canvas);
+		CHECK_PARAM(variant);
+
+		HRESULT hr;
+		switch (V_VT(variant))
+		{
+		case EVT_COLOR: {
+			EXARGB color = V_COLOR(variant);
+			ExAutoPtr<IExSolidBrush> brush;
+			return_if_failed(ExSolidBrushCreate(color, &brush), L"创建画刷失败");
+			hr = canvas->FillRect(brush, left, top, right, bottom);
+		}break;
+		case EVT_DISPLAY_IMAGE: {
+			auto image = V_DISPLAY_IMAGE(variant);
+			if (image->image_mode == ExImageMode::Grids && !image->grids.IsEmpty()) {
+				hr = canvas->DrawGridsImagePart(
+					image->image, left, top, right, bottom,
+					_expand_rect_(image->src),
+					&image->grids, image->alpha
+				);
+			}
+			else {
+				hr = canvas->DrawImagePartRect(
+					image->image, left, top, right, bottom,
+					_expand_rect_(image->src),
+					image->image_mode, image->alpha
+				);
+			}
+		}break;
+		case EVT_STATE_IMAGE: {
+			auto image = V_STATE_IMAGE(variant);
+			ExRectF& src = _StateToRectF(image, state);
+
+			if (image->image_mode == ExImageMode::Grids && !image->grids.IsEmpty()) {
+				hr = canvas->DrawGridsImagePart(
+					image->image, left, top, right, bottom,
+					_expand_rect_(src),
+					&image->grids, image->alpha
+				);
+			}
+			else {
+				hr = canvas->DrawImagePartRect(
+					image->image, left, top, right, bottom,
+					_expand_rect_(src),
+					image->image_mode, image->alpha
+				);
+			}
+		}break;
+		case EVT_STATE_COLOR: {
+			auto colors = V_STATE_COLOR(variant);
+			EXARGB color = _StateToColor(colors, state);
+
+			if (ALPHA(color) != ALPHA_TRANSPARENT) {
+				ExAutoPtr<IExSolidBrush> brush;
+				throw_if_failed(ExSolidBrushCreate(color, &brush), L"创建画刷失败");
+				hr = canvas->FillRect(brush, left, top, right, bottom);
+			}
+			else { hr = S_FALSE; }
+		}break;
+		case EVT_ELE_SHADOW: {
+			auto shadow = V_ELE_SHADOW(variant);
+			if (shadow->type == ExEleShadowType::Param) {
+				auto& param = shadow->info.param;
+				EXARGB color = _StateToColor(shadow, state);
+				if (ALPHA(color) != ALPHA_TRANSPARENT && param.size > 0) {
+					ExAutoPtr<IExSolidBrush> brush;
+					throw_if_failed(ExSolidBrushCreate(color, &brush), L"创建画刷失败");
+					hr = canvas->DrawShadow(
+						brush, left, top, right, bottom,
+						param.size, 0, 0, 0, 0,
+						param.offset.x, param.offset.y
+					);
+				}
+				else { hr = S_FALSE; }
+			}
+			else if (shadow->type == ExEleShadowType::Texture) {
+				auto& texture = shadow->info.texture;
+				EXCHANNEL alpha = ALPHA_OPAQUE;
+				ExRectF& src = _StateToRectF(shadow, state, alpha);
+				
+				if (!texture.grids.IsEmpty()) {
+					hr = canvas->DrawGridsImagePart(
+						texture.image, left, top, right, bottom,
+						_expand_rect_(src),
+						&texture.grids, alpha
+					);
+				}
+				else {
+					hr = canvas->DrawImagePartRect(
+						texture.image, left, top, right, bottom,
+						_expand_rect_(src),
+						ExImageMode::Scale, alpha
+					);
+				}
+			}
+			else { hr = S_FALSE; }
+		}break;
+			
+
+
+		case EVT_EXOBJECT:
+			//这里在做判断
+			break;
+		default:
+			handle_if_failed(E_NOTIMPL, L"属性不支持绘制");
+		}
+		return hr;
 	}
 
 }

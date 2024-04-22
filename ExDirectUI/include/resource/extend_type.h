@@ -67,7 +67,7 @@ namespace ExDirectUI
 		ExRectF disable;
 
 		/// 图像模式
-		DWORD image_mode;
+		ExImageMode image_mode;
 
 		/// 宫格图像信息
 		ExGridsImageInfo grids;

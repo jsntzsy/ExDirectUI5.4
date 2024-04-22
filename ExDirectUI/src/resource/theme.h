@@ -7,9 +7,43 @@
  * @copyright
  */
 #pragma once
+#include "common/object_impl.hpp"
 
 namespace ExDirectUI
 {
+	struct ExThemeElementClassInfo
+	{
+		EXATOM atom;
+		std::wstring name;
+		ExThemeElementClassInfo* base;
+		std::unordered_map<EXATOM, ExVariant> attributes;
+	};
 
+	class ExTheme : public ExObjectImpl<IExTheme>
+	{
+	private:
+
+
+	public:
+		EXMETHOD HRESULT EXOBJCALL GetInfo(ExThemeInfo* r_info) const override;
+
+		EXMETHOD bool EXOBJCALL HasClass(EXATOM atom_class) const override;
+		EXMETHOD bool EXOBJCALL HasAttribute(EXATOM atom_class, EXATOM atom_attr, bool base = false) const override;
+
+		EXMETHOD HRESULT EXOBJCALL GetAttribute(EXATOM atom_class, EXATOM atom_attr,
+			ExVariant* r_attr, bool base = false) const override;
+		EXMETHOD HRESULT EXOBJCALL CopyAttribute(EXATOM atom_class, EXATOM atom_attr,
+			ExVariant* r_attr, bool base = false) const override;
+		EXMETHOD HRESULT EXOBJCALL DrawAttribute(IExCanvas* canvas, float left, float top,
+			float right, float bottom, EXATOM atom_class, EXATOM atom_attr, DWORD state, bool base = false) const override;
+
+		EXMETHOD HRESULT EXOBJCALL EnumClasses(ExThemeEnumClassProc proc, LPARAM lparam = 0) const override;
+		EXMETHOD HRESULT EXOBJCALL EnumAttributes(EXATOM class_atom,
+			ExThemeEnumAttributeProc proc, DWORD base_mode = 0, LPARAM lparam = 0) const override;
+
+	private:
+		ExThemeInfo m_info{};
+		std::unordered_map<EXATOM, ExThemeElementClassInfo> m_classes;
+	};
 
 }

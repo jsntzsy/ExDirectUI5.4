@@ -41,18 +41,18 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL GetInfo(ExThemeInfo * r_info) const PURE;
 
 		EXMETHOD bool EXOBJCALL HasClass(EXATOM atom_class) const PURE;
-		EXMETHOD bool EXOBJCALL HasAttribute(EXATOM atom_class , EXATOM atom_attr) const PURE;
+		EXMETHOD bool EXOBJCALL HasAttribute(EXATOM atom_class , EXATOM atom_attr, bool base = false) const PURE;
 
 		EXMETHOD HRESULT EXOBJCALL GetAttribute(EXATOM atom_class, EXATOM atom_attr,
-			ExVariant* r_attr) const PURE;
+			ExVariant* r_attr, bool base = false) const PURE;
 		EXMETHOD HRESULT EXOBJCALL CopyAttribute(EXATOM atom_class, EXATOM atom_attr,
-			ExVariant* r_attr) const PURE;
+			ExVariant* r_attr, bool base = false) const PURE;
 		EXMETHOD HRESULT EXOBJCALL DrawAttribute(IExCanvas* canvas, float left, float top,
-			float right, float bottom, EXATOM atom_class, EXATOM atom_attr) const PURE;
+			float right, float bottom, EXATOM atom_class, EXATOM atom_attr, DWORD state, bool base = false) const PURE;
 
 		EXMETHOD HRESULT EXOBJCALL EnumClasses(ExThemeEnumClassProc proc, LPARAM lparam = 0) const PURE;
 		EXMETHOD HRESULT EXOBJCALL EnumAttributes(EXATOM class_atom, 
-			ExThemeEnumAttributeProc proc, LPARAM lparam = 0) const PURE;
+			ExThemeEnumAttributeProc proc, DWORD base_mode = 0, LPARAM lparam = 0) const PURE;
 
 	};
 

@@ -121,7 +121,7 @@ namespace ExDirectUI
 		static const DWORD _KV_[count][2];														\
 	public:																						\
 		EXMETHOD HRESULT EXOBJCALL ParseFromString(EXATOM type, LPCWSTR str,					\
-			IUnknown* owner, ExVariant* V) override {												\
+			IUnknown* owner, ExVariant* V) override {											\
 			return_if_failed(ExVariantInit(V,EVT_FLAGS), ExVariantClear(V));					\
 			todo;																				\
 			if (multiple) { return ExParseToConsts(str, _KV_, count, (DWORD*)&V_UI4(V)); }		\
