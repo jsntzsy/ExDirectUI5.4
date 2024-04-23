@@ -114,7 +114,6 @@ namespace ExDirectUI
 					std::wstringstream ss;
 					ss << L"未知的主题属性: ";
 					anode.print(ss);
-					ss << L"\n";
 					ExDbgOutput(ss.str().c_str());
 				}
 			}
@@ -208,7 +207,7 @@ namespace ExDirectUI
 
 		ExVariant var{};
 		return_if_failed(GetAttribute(atom_class, atom_attr, &var, base));
-		return ExVariantDraw(canvas, left, top, right, bottom, &var, state, 0);
+		return ExVariantDraw(canvas, left, top, right, bottom, &var, state, draw_mode, 0);
 	}
 
 	HRESULT EXOBJCALL ExTheme::EnumClasses(ExThemeEnumClassProc proc, LPARAM lparam) const

@@ -50,6 +50,16 @@ namespace ExDirectUI
 			);
 		}
 
+		virtual ~ExPackage()
+		{
+			for (auto item : m_items)
+			{
+				if (item.second.data) {
+					delete[] item.second.data;
+				}
+			}
+		}
+
 	public:
 
 		EXMETHOD HRESULT EXOBJCALL GetPackageInfo(ExPackageInfo* r_info) const override

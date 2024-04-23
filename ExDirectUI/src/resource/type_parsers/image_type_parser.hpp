@@ -39,11 +39,28 @@ namespace ExDirectUI
 
 	///////////////////////////
 
-	EX_SAMPLE_TYPE_PARSER(Image, EVT_EXOBJECT, {
-			auto image = V_EXOBJECT(V);
+	class ExImageTypeParser : public IExTypeParser, public ExTypeParserHelper,
+		public ExSingleton<ExImageTypeParser>
+	{
+	public:
+		EXMETHOD HRESULT EXOBJCALL ParseFromXmlNode(EXATOM type, const pugi::xml_node* node,
+			IUnknown* owner, ExVariant* r_value) override
+		{
+			LPCWSTR value = L"";
+			pugi::xml_attribute attr = node->attribute(L"file");
+			if (attr) { value = attr.value(); }
+			else { value = node->text().get(); }
+			return this->ParseFromString(type, value, owner, r_value);
+		}
+
+		EXMETHOD HRESULT EXOBJCALL ParseFromString(EXATOM type, LPCWSTR str,
+			IUnknown* owner, ExVariant* r_value) override
+		{
+			return_if_failed(ExVariantInit(r_value));
+			auto image = V_EXOBJECT(r_value);
 			return LoadPackageImage(owner, str, (IExImage**)&image);
 		}
-	);
+	};
 
 	EX_SAMPLE_TYPE_PARSER(GridsImageInfo, EVT_GRIDS_IMAGE, {
 			auto grids = V_GRIDS_IMAGE(V);
@@ -105,41 +122,41 @@ namespace ExDirectUI
 			auto image = V_DISPLAY_IMAGE(r_value);
 			auto args = GetArgsMap(str);
 
-			LPCWSTR value = GetArg(args, ATOM_FILE);
-			handle_if_false(value, EE_NOEXISTS, L"文件属性不存在");
-			return_if_failed(LoadPackageImage(owner, value, &image->image));
+			auto value = GetArg(args, ATOM_FILE);
+			handle_if_false(!value.empty(), EE_NOEXISTS, L"文件属性不存在");
+			return_if_failed(LoadPackageImage(owner, value.c_str(), &image->image));
 
 			value = GetArg(args, ATOM_SRC);
-			if (value) { ExParseToRectF(value, &image->src); }
+			if (!value.empty()) { ExParseToRectF(value.c_str(), &image->src); }
 			else {
 				image->src = { 0, 0, (float)image->image->GetWidth(), (float)image->image->GetHeight() };
 			}
 
 			value = GetArg(args, ATOM_PADDING);
-			if (value) { ExParseToRectF(value, &image->padding); }
+			if (!value.empty()) { ExParseToRectF(value.c_str(), &image->padding); }
 			else { image->padding = { 0, 0, 0, 0 }; }
 
 			value = GetArg(args, ATOM_MODE);
-			if (value) {
-				image->image_mode = _ExImageParser_ConstToImageMode(value);
+			if (!value.empty()) {
+				image->image_mode = _ExImageParser_ConstToImageMode(value.c_str());
 			}
 			else { image->image_mode = ExImageMode::Default; }
 
 			value = GetArg(args, ATOM_SHOW);
-			if (value) {
-				ExParseToUInt32(value, (uint32_t*)&image->show_mode);
+			if (!value.empty()) {
+				ExParseToUInt32(value.c_str(), (uint32_t*)&image->show_mode);
 			}
 			else { image->show_mode = ExImageShowMode::None; }
 
 			value = GetArg(args, ATOM_GRIDS);
-			if (value) {
-				ExParseToGridsImageInfo(value, &image->grids);
+			if (!value.empty()) {
+				ExParseToGridsImageInfo(value.c_str(), &image->grids);
 				image->image_mode = ExImageMode::Grids;
 			}
 			else { image->grids = {}; }
 
 			value = GetArg(args, ATOM_ALPHA);
-			if (value) { ExParseToByte(value, &image->alpha); }
+			if (!value.empty()) { ExParseToByte(value.c_str(), &image->alpha); }
 			else { image->alpha = ALPHA_OPAQUE; }
 
 			return S_OK;
@@ -214,53 +231,53 @@ namespace ExDirectUI
 			auto image = V_STATE_IMAGE(r_value);
 			auto args = GetArgsMap(str);
 			auto value = GetArg(args, ATOM_FILE);
-			handle_if_false(value, EE_NOEXISTS, L"文件属性不存在");
+			handle_if_false(!value.empty(), EE_NOEXISTS, L"文件属性不存在");
 			handle_if_failed(
-				LoadPackageImage(owner, value, &image->image),
+				LoadPackageImage(owner, value.c_str(), &image->image),
 				L"加载图像失败"
 			);
 
 			value = GetArg(args, ATOM_NORMAL);
-			if (value) { ExParseToRectF(value, &image->normal); }
+			if (!value.empty()) { ExParseToRectF(value.c_str(), &image->normal); }
 			else {
 				image->normal = { 0, 0, (float)image->image->GetWidth(), (float)image->image->GetHeight() };
 			}
 
 			value = GetArg(args, ATOM_HOVER);
-			if (value) { ExParseToRectF(value, &image->hover); }
+			if (!value.empty()) { ExParseToRectF(value.c_str(), &image->hover); }
 			else { image->hover = image->normal; }
 
 			value = GetArg(args, ATOM_PRESS);
-			if (value) { ExParseToRectF(value, &image->press); }
+			if (!value.empty()) { ExParseToRectF(value.c_str(), &image->press); }
 			else { image->press = image->normal; }
 
 			value = GetArg(args, ATOM_FOCUS);
-			if (value) { ExParseToRectF(value, &image->focus); }
+			if (!value.empty()) { ExParseToRectF(value.c_str(), &image->focus); }
 			else { image->focus = image->normal; }
 
 			value = GetArg(args, ATOM_FOCUS_BLEND);
-			if (value) { ExParseToRectF(value, &image->focus_blend); }
+			if (!value.empty()) { ExParseToRectF(value.c_str(), &image->focus_blend); }
 			else { image->focus_blend = {}; }
 
 			value = GetArg(args, ATOM_DISABLE);
-			if (value) { ExParseToRectF(value, &image->disable); }
+			if (!value.empty()) { ExParseToRectF(value.c_str(), &image->disable); }
 			else { image->disable = {}; }
 
 			value = GetArg(args, ATOM_MODE);
-			if (value) {
-				image->image_mode = _ExImageParser_ConstToImageMode(value);
+			if (!value.empty()) {
+				image->image_mode = _ExImageParser_ConstToImageMode(value.c_str());
 			}
 			else { image->image_mode = ExImageMode::Default; }
 
 			value = GetArg(args, ATOM_GRIDS);
-			if (value) {
-				ExParseToGridsImageInfo(value, &image->grids);
+			if (!value.empty()) {
+				ExParseToGridsImageInfo(value.c_str(), &image->grids);
 				image->image_mode = ExImageMode::Grids;
 			}
 			else { image->grids = {}; }
 
 			value = GetArg(args, ATOM_ALPHA);
-			if (value) { ExParseToByte(value, &image->alpha); }
+			if (!value.empty()) { ExParseToByte(value.c_str(), &image->alpha); }
 			else { image->alpha = ALPHA_OPAQUE; }
 
 			return S_OK;

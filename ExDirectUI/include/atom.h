@@ -98,6 +98,11 @@
 #define ATOM_3DTRANSFORMEFFECT			0x1A83A190		// 原子号: 3dtransformeffect
 #define ATOM_3DPERSPECTIVEEFFECT		0xB6C56CF0		// 原子号: 3dperspectiveeffect
 
+#define ATOM_SOLIDBRUSH					0x5D90A819		// 原子号: solidbrush
+#define ATOM_LINEARBRUSH				0x08D9637E		// 原子号: linearbrush
+#define ATOM_RADIALBRUSH				0xA7C9ABA8		// 原子号: radialbrush
+#define ATOM_PEN						0x4D66ED7A		// 原子号: pen
+#define ATOM_MATRIX						0x3C35BC10		// 原子号: matrix
 
 
 
@@ -141,11 +146,52 @@
 #define ATOM_SHADOW				0x662E34E2		// 原子号: shadow
 
 
+#define ATOM_BEGIN				0x0632D3A6		// 原子号: begin
+#define ATOM_END				0x339311D9		// 原子号: end
+#define ATOM_RECT				0xB1AE3372		// 原子号: rect
+#define ATOM_COLORS				0xBF376D33		// 原子号: colors
 
 
 #define ATOM_TRANSPARENT		0xA17FBD6E		// 原子号: transparent
 #define ATOM_OPAQUE				0x4F0E0183		// 原子号: opaque
 #define ATOM_HALF				0xE7D33C02		// 原子号: half
+
+#define ATOM_SOLID				0xCFB63DF1		// 原子号: solid
+#define ATOM_DASH				0x2685430A		// 原子号: dash
+#define ATOM_DOT				0x0AB1B748		// 原子号: dot
+#define ATOM_DASHDOT			0x523ECAEC		// 原子号: dashdot
+#define ATOM_DASHDOTDOT			0xB75EE987		// 原子号: dashdotdot
+
+#define ATOM_FLAT				0xC45995E0		// 原子号: flat
+#define ATOM_ROUND				0x997A3D25		// 原子号: round
+#define ATOM_SQUARE				0xCF2ECF33		// 原子号: square
+#define ATOM_TRIANGLE			0xDED9A0C6		// 原子号: triangle
+#define ATOM_MITER				0x89750FB4		// 原子号: miter
+#define ATOM_BEVEL				0xB658DFA2		// 原子号: bevel
+
+#define ATOM_WIDTH				0xE2A7D62F		// 原子号: width
+#define ATOM_DASH_CAP			0xC14B1069		// 原子号: dash-cap
+#define ATOM_START_CAP			0x2915CECC		// 原子号: start-cap
+#define ATOM_END_CAP			0x801C607C		// 原子号: end-cap
+#define ATOM_LINE_JOIN			0x30DE4BC3		// 原子号: line-join
+#define ATOM_DASH_STYLE			0xD922983B		// 原子号: dash-style
+#define ATOM_DASH_ARRAY			0x42CCB52A		// 原子号: dash-array
+#define ATOM_DASH_OFFSET		0xB5BEE100		// 原子号: dash-offset
+
+
+#define ATOM_TRANSLATE			0x88E93489		// 原子号: translate
+#define ATOM_SCALE				0x0A42FA13		// 原子号: scale
+#define ATOM_ROTATE				0x842D6D45		// 原子号: rotate
+#define ATOM_SKEW				0x49485E83		// 原子号: skew
+#define ATOM_RESET				0x432057A0		// 原子号: reset
+#define ATOM_MULTIPLY			0x2B0D619D		// 原子号: multiply
+
+
+
+
+
+
+
 
 
 

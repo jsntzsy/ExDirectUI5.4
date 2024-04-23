@@ -23,13 +23,14 @@ namespace ExDirectUI
 	class ExTypeParserHelper
 	{
 	public:
-		static std::unordered_map<EXATOM, std::wstring> GetArgsMap(LPCWSTR str)
+		static std::unordered_map<EXATOM, std::wstring> GetArgsMap(LPCWSTR str, 
+			LPCWSTR arg_delim = L" ", LPCWSTR kv_delim = L":")
 		{
 			std::unordered_map<EXATOM, std::wstring> map;
-			auto args = ExString::split(str, L" ");
+			auto args = ExString::split(str, arg_delim);
 			wstring key, value;
 			for (auto& arg : args) {
-				if (ExString::slice(arg, L":", key, value)) {
+				if (ExString::slice(arg, kv_delim, key, value)) {
 					EXATOM atom_key = ExAtom(key.c_str());
 					if (atom_key != EXATOM_UNKNOWN) {
 						map[atom_key] = value;
@@ -39,17 +40,17 @@ namespace ExDirectUI
 			return map;
 		}
 
-		inline static LPCWSTR GetArg(pugi::xml_node* node, LPCWSTR attr_name, LPCWSTR default_value = nullptr)
+		inline static std::wstring GetArg(pugi::xml_node* node, LPCWSTR attr_name, std::wstring default_value = L"")
 		{
 			auto attr = node->attribute(attr_name);
 			if (attr) { return attr.value(); }
 			else { return default_value; }
 		}
 
-		inline static LPCWSTR GetArg(std::unordered_map<EXATOM, wstring> map, EXATOM atom, LPCWSTR default_value = nullptr)
+		inline static std::wstring GetArg(std::unordered_map<EXATOM, wstring> map, EXATOM atom, std::wstring default_value = L"")
 		{
 			auto it = map.find(atom);
-			if (it != map.end()) { return it->second.c_str(); }
+			if (it != map.end()) { return it->second; }
 			else { return default_value; }
 		}
 

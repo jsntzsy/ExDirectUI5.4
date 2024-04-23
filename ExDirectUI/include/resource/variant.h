@@ -33,6 +33,7 @@ namespace ExDirectUI
 		EVT_RECT,
 		EVT_RECTF,
 		EVT_RECTU,
+		EVT_MATRIX,
 
 		EVT_FONT,
 		EVT_GRIDS_IMAGE,
@@ -82,6 +83,7 @@ namespace ExDirectUI
 #define V_RECT(X)				V_PTR(X,ExRect)
 #define V_RECTF(X)				V_PTR(X,ExRectF)
 #define V_RECTU(X)				V_PTR(X,ExRectU)
+#define V_MATRIX(X)				V_PTR(X,ExMatrix)
 
 #define V_FONT(X)				V_PTR(X,ExFontInfo)
 #define V_GRIDS_IMAGE(X)		V_PTR(X,ExGridsImageInfo)

@@ -21,6 +21,7 @@
 #include "src/resource/type_parsers/font_type_parser.hpp"
 #include "src/resource/type_parsers/image_type_parser.hpp"
 #include "src/resource/type_parsers/style_type_parser.hpp"
+#include "src/resource/type_parsers/brush_type_parser.hpp"
 
 
 namespace ExDirectUI
@@ -58,6 +59,7 @@ namespace ExDirectUI
 		{ATOM_POINTU, ExPointSizeUTypeParser::Instance()},
 		{ATOM_SIZEU, ExPointSizeUTypeParser::Instance()},
 		{ATOM_RECTU, ExRectUTypeParser::Instance()},
+		{ATOM_MATRIX, ExMatrixTypeParser::Instance()},
 
 		//文本和数据类
 		{ATOM_DATA, ExDataTypeParser::Instance()},
@@ -71,6 +73,13 @@ namespace ExDirectUI
 		{ATOM_IMAGE, ExImageTypeParser::Instance()},
 		{ATOM_DISPLAYIMAGE, ExDisplayImageTypeParser::Instance()},
 		{ATOM_STATEIMAGE, ExStateImageTypeParser::Instance()},
+
+		//画刷画笔类
+		{ATOM_SOLIDBRUSH, ExSolidBrushTypeParser::Instance()},
+		{ATOM_LINEARBRUSH, ExLinearBrushTypeParser::Instance()},
+		{ATOM_RADIALBRUSH, ExRadialBrushTypeParser::Instance()},
+		{ATOM_PEN, ExPenTypeParser::Instance()},
+
 
 		//风格类
 		{ATOM_STYLE, ExEleStyleTypeParser::Instance()},

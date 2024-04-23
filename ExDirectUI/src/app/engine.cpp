@@ -53,7 +53,7 @@ namespace ExDirectUI
 
 			_ExWinAPI_UnInit();
 
-			g_engine_flags = 0;
+			//g_engine_flags = 0;
 			g_engine_instance = NULL;
 			return S_OK;
 		}

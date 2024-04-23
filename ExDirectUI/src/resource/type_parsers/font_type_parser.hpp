@@ -78,15 +78,15 @@ namespace ExDirectUI
 			*font = g_drawing_default_font;
 
 			auto args = GetArgsMap(str);
-			LPCWSTR value = GetArg(args, ATOM_NAME);
-			if (value) {
-				font->SetName(value);
+			auto value = GetArg(args, ATOM_NAME);
+			if(!value.empty()) {
+				font->SetName(value.c_str());
 
 				value = GetArg(args, ATOM_FILE);
-				if (value) {
+				if(!value.empty()) {
 					ExPackageItemInfo item{};
 					return_if_failed(
-						GetPackageItem(owner, value, &item)
+						GetPackageItem(owner, value.c_str(), &item)
 					);
 					return_if_failed(
 						ExFontLoadFile(item.data, item.size, &font->file_atom)
@@ -95,18 +95,18 @@ namespace ExDirectUI
 			}
 
 			value = GetArg(args, ATOM_SIZE);
-			if (value) {
-				font->size = wcstoul(value, nullptr, 10);
+			if(!value.empty()) {
+				font->size = wcstoul(value.c_str(),  nullptr, 10);
 			}
 
 			value = GetArg(args, ATOM_STYLE);
-			if (value) {
-				font->style = ConstToStyle(value);
+			if(!value.empty()) {
+				font->style = ConstToStyle(value.c_str());
 			}
 
 			value = GetArg(args, ATOM_WEIGHT);
-			if (value) {
-				font->SetWeight(wcstoul(value, nullptr, 10));
+			if(!value.empty()) {
+				font->SetWeight(wcstoul(value.c_str(),  nullptr, 10));
 			}
 
 			return S_OK;

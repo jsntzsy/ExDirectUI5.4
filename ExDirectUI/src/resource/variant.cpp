@@ -40,6 +40,7 @@ namespace ExDirectUI
 				case EVT_RECT: V_BYREF(variant) = V_NEW(sizeof(ExRect)); break;
 				case EVT_RECTF: V_BYREF(variant) = V_NEW(sizeof(ExRectF)); break;
 				case EVT_RECTU: V_BYREF(variant) = V_NEW(sizeof(ExRectU)); break;
+				case EVT_MATRIX: V_BYREF(variant) = V_NEW(sizeof(ExMatrix)); break;
 				case EVT_FONT: V_BYREF(variant) = V_NEW(sizeof(ExFontInfo)); break;
 				case EVT_GRIDS_IMAGE: V_BYREF(variant) = V_NEW(sizeof(ExGridsImageInfo)); break;
 				case EVT_DISPLAY_IMAGE: V_BYREF(variant) = V_NEW(sizeof(ExDisplayImageInfo)); break;
@@ -81,6 +82,7 @@ namespace ExDirectUI
 			case EVT_RECT: V_FREE(V_RECT(variant), sizeof(ExRect)); break;
 			case EVT_RECTF: V_FREE(V_RECTF(variant), sizeof(ExRectF)); break;
 			case EVT_RECTU: V_FREE(V_RECTU(variant), sizeof(ExRectU)); break;
+			case EVT_MATRIX: V_FREE(V_MATRIX(variant), sizeof(ExMatrix)); break;
 			case EVT_FONT: V_FREE(V_FONT(variant), sizeof(ExFontInfo)); break;
 			case EVT_GRIDS_IMAGE: V_FREE(V_GRIDS_IMAGE(variant), sizeof(ExGridsImageInfo)); break;
 			case EVT_DISPLAY_IMAGE:
@@ -147,6 +149,7 @@ namespace ExDirectUI
 		case EVT_RECT: *V_RECT(dest_variant) = *V_RECT(src_variant); break;
 		case EVT_RECTF: *V_RECTF(dest_variant) = *V_RECTF(src_variant); break;
 		case EVT_RECTU: *V_RECTU(dest_variant) = *V_RECTU(src_variant); break;
+		case EVT_MATRIX: *V_MATRIX(dest_variant) = *V_MATRIX(src_variant); break;
 
 		case EVT_FONT: *V_FONT(dest_variant) = *V_FONT(src_variant); break;
 		case EVT_GRIDS_IMAGE: *V_GRIDS_IMAGE(dest_variant) = *V_GRIDS_IMAGE(src_variant); break;
@@ -271,6 +274,15 @@ namespace ExDirectUI
 				rc->top, ExNumberUnitToString(rc->units[1]),
 				rc->right, ExNumberUnitToString(rc->units[2]),
 				rc->bottom, ExNumberUnitToString(rc->units[3])
+			);
+		}break;
+		case EVT_MATRIX: {
+			const auto matrix = V_MATRIX(variant);
+			str = ExString::format(
+				L"%f,%f,%f,%f,%f,%f",
+				matrix->_11, matrix->_12,
+				matrix->_21, matrix->_22,
+				matrix->_31, matrix->_32
 			);
 		}break;
 
@@ -456,6 +468,7 @@ namespace ExDirectUI
 		case EVT_RECT: *r_value = V_RECT(variant); break;
 		case EVT_RECTF: *r_value = V_RECTF(variant); break;
 		case EVT_RECTU: *r_value = V_RECTU(variant); break;
+		case EVT_MATRIX: *r_value = V_MATRIX(variant); break;
 		case EVT_FONT: *r_value = V_FONT(variant); break;
 		case EVT_GRIDS_IMAGE: *r_value = V_GRIDS_IMAGE(variant); break;
 		case EVT_DISPLAY_IMAGE: *r_value = V_DISPLAY_IMAGE(variant); break;
@@ -506,7 +519,7 @@ namespace ExDirectUI
 		CHECK_PARAM(canvas);
 		CHECK_PARAM(variant);
 
-		HRESULT hr;
+		HRESULT hr = S_FALSE;
 		switch (V_VT(variant))
 		{
 		case EVT_COLOR: {
@@ -563,9 +576,16 @@ namespace ExDirectUI
 			EXARGB color = _StateToColor(colors, state);
 
 			if (ALPHA(color) != ALPHA_TRANSPARENT) {
-				ExAutoPtr<IExSolidBrush> brush;
-				throw_if_failed(ExSolidBrushCreate(color, &brush), L"创建画刷失败");
-				hr = canvas->FillRect(brush, left, top, right, bottom);
+				if (draw_mode & ExVariantDrawMode::Fill) {
+					ExAutoPtr<IExSolidBrush> brush;
+					return_if_failed(ExSolidBrushCreate(color, &brush), L"创建画刷失败");
+					hr = canvas->FillRect(brush, left, top, right, bottom);
+				}
+				if (draw_mode & ExVariantDrawMode::Stroke) {
+					ExAutoPtr<IExPen> pen;
+					return_if_failed(ExPenCreate(color, 1, &pen), L"创建画笔失败");
+					hr = canvas->DrawRect(pen, left, top, right, bottom);
+				}
 			}
 			else { hr = S_FALSE; }
 		}break;

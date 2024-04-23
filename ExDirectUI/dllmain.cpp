@@ -10,6 +10,7 @@
 #include "stdafx.h"
 #include "src/kernel/module_utils.h"
 #include "common/string.hpp"
+#include "atom.h"
 
 #define _ROOT_(path)	(L"../../../../" path)
 
@@ -35,6 +36,12 @@ namespace ExDirectUI
 		{
 			auto render = ExModuleUtils::Instance()->GetRender();
 
+			ExVariant v{};
+			ExParseFromString(ATOM_MATRIX,
+				L"translate:100,200 reset:",
+				nullptr, &v);
+			auto mx = V_MATRIX(&v);
+			ExVariantClear(&v);
 
 			return S_OK;
 		}

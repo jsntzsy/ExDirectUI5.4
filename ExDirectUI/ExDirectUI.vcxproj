@@ -281,6 +281,7 @@
     <ClInclude Include="src\resource\package_processor.hpp" />
     <ClInclude Include="src\resource\theme.h" />
     <ClInclude Include="src\resource\type_parser.h" />
+    <ClInclude Include="src\resource\type_parsers\brush_type_parser.hpp" />
     <ClInclude Include="src\resource\type_parsers\color_type_parser.hpp" />
     <ClInclude Include="src\resource\type_parsers\coordinate_type_parser.hpp" />
     <ClInclude Include="src\resource\type_parsers\data_type_parser.hpp" />

@@ -9,6 +9,7 @@
 
 #include "stdafx.h"
 #include "src/debug/mem_leak.h"
+#include "src/app/engine.h"
 
 namespace ExDirectUI
 {
@@ -101,7 +102,9 @@ namespace ExDirectUI
 	void ExMemLeakChecker::DumpLeaks()
 	{
 		_Locked(m_lock);
-
+		
+		DWORD engine_flags = g_engine_flags;
+		g_engine_flags = ExEngineFlags::Default;
 		ExDbgOutput(L"========= ExDirectUI Dump Memory Leaks Begin =========\n");
 
 		//遍历链表
@@ -126,6 +129,7 @@ namespace ExDirectUI
 		}
 
 		ExDbgOutput(L"========= ExDirectUI Dump Memory Leaks Finish ========\n");
+		g_engine_flags = engine_flags;
 	}
 
 	EXTERN_C LPVOID EXAPI EXCALL ExMemAllocD(size_t size, LPCWSTR file, int line)

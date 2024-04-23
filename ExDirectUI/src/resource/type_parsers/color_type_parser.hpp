@@ -34,10 +34,10 @@ namespace ExDirectUI
 			if (type == ATOM_ALPHA) {
 				return __super::ParseFromXmlNode(type, node, owner, V);
 			}
-			
+
 			return_if_failed(ExVariantInit(V, EVT_ELE_OPACITY));
 			auto opacity = V_ELE_OPACITY(V);
-			
+
 			pugi::xml_attribute attr = node->attribute(L"normal");
 			DWORD alpha = ALPHA_OPAQUE;
 			if (attr) {
@@ -49,7 +49,7 @@ namespace ExDirectUI
 			attr = node->attribute(L"disable");
 			if (attr) {
 				uint8_t unit = 0;
-				ExParseToFloat(attr.value(), &opacity->disable_percent,&unit);
+				ExParseToFloat(attr.value(), &opacity->disable_percent, &unit);
 				if (unit == ExNumberUnit::Percent) { opacity->disable_percent /= 100.f; }
 			}
 			else { opacity->disable_percent = 0.5f; }
@@ -74,7 +74,7 @@ namespace ExDirectUI
 				ExString::slice(str, L" ", normal, disable);
 
 				if (normal.size() != 0) {
-					ExParseToConst(normal.c_str(), _KV_ALPHA_, 
+					ExParseToConst(normal.c_str(), _KV_ALPHA_,
 						_countof(_KV_ALPHA_), &alpha);
 				}
 				opacity->normal = (EXCHANNEL)alpha;
@@ -115,11 +115,11 @@ namespace ExDirectUI
 			auto attr = node->attribute(L"normal");
 			if (attr) { ExParseToColor(attr.value(), &sc->normal); }
 			else { sc->normal = COLOR_UNDEFINE; }
-			
+
 			attr = node->attribute(L"hover");
 			if (attr) { ExParseToColor(attr.value(), &sc->hover); }
 			else { sc->hover = COLOR_UNDEFINE; }
-			
+
 			attr = node->attribute(L"press");
 			if (attr) { ExParseToColor(attr.value(), &sc->press); }
 			else { sc->press = COLOR_UNDEFINE; }
@@ -146,19 +146,19 @@ namespace ExDirectUI
 			sc->press = COLOR_UNDEFINE;
 			sc->focus = COLOR_UNDEFINE;
 			sc->disable = COLOR_UNDEFINE;
-			
+
 			auto args = GetArgsMap(str);
 
-			LPCWSTR value = GetArg(args, ATOM_NORMAL);
-			if (value) { ExParseToColor(value, &sc->normal); }
+			auto value = GetArg(args, ATOM_NORMAL);
+			if (!value.empty()) { ExParseToColor(value.c_str(), &sc->normal); }
 			value = GetArg(args, ATOM_HOVER);
-			if (value) { ExParseToColor(value, &sc->hover); }
+			if (!value.empty()) { ExParseToColor(value.c_str(), &sc->hover); }
 			value = GetArg(args, ATOM_PRESS);
-			if (value) { ExParseToColor(value, &sc->press); }
+			if (!value.empty()) { ExParseToColor(value.c_str(), &sc->press); }
 			value = GetArg(args, ATOM_FOCUS);
-			if (value) { ExParseToColor(value, &sc->focus); }
+			if (!value.empty()) { ExParseToColor(value.c_str(), &sc->focus); }
 			value = GetArg(args, ATOM_DISABLE);
-			if (value) { ExParseToColor(value, &sc->disable); }
+			if (!value.empty()) { ExParseToColor(value.c_str(), &sc->disable); }
 
 			SetDefaultColor(sc);
 			return S_OK;

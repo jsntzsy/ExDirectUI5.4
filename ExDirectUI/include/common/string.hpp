@@ -244,7 +244,7 @@ namespace ExDirectUI
 			size_t delim_len = wcslen(delim);
 			if (index != std::wstring::npos) {
 				left = s.substr(0, index);
-				right = s.substr(index + delim_len + 1);
+				right = s.substr(index + delim_len);
 				return true;
 			}
 			return false;

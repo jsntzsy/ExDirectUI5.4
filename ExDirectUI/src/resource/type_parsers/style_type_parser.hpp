@@ -58,13 +58,13 @@ namespace ExDirectUI
 			auto args = GetArgsMap(str);
 
 			auto value = GetArg(args, ATOM_COMMON);
-			if (value) { style->common = _ToCommonStyle(value); }
+			if (!value.empty()) { style->common = _ToCommonStyle(value.c_str()); }
 
 			value = GetArg(args, ATOM_CONTROL);
-			if (value) { style->common = _ToControlStyle(value); }
+			if (!value.empty()) { style->common = _ToControlStyle(value.c_str()); }
 
 			value = GetArg(args, ATOM_TEXT_FORMAT);
-			if (value) { style->common = _ToTextFormat(value); }
+			if (!value.empty()) { style->common = _ToTextFormat(value.c_str()); }
 
 			return S_OK;
 		}
@@ -162,28 +162,28 @@ namespace ExDirectUI
 			auto args = GetArgsMap(str);
 
 			auto value = GetArg(args, ATOM_TYPE);
-			if (value) {
-				shadow->type = _ToShadowType(value);
+			if (!value.empty()) {
+				shadow->type = _ToShadowType(value.c_str());
 
 				if (shadow->type == ExEleShadowType::Param) {
 					auto& param = shadow->info.param;
 					value = GetArg(args, ATOM_SIZE);
-					if (value) { param.size = wcstof(value, nullptr); }
+					if (!value.empty()) { param.size = wcstof(value.c_str(), nullptr); }
 					if (param.size > 0) {
 						value = GetArg(args, ATOM_NORMAL);
-						if (value) { ExParseToColor(value, &param.normal); }
+						if (!value.empty()) { ExParseToColor(value.c_str(), &param.normal); }
 						else { param.normal = COLOR_UNDEFINE; }
 
 						value = GetArg(args, ATOM_ACTIVE);
-						if (value) { ExParseToColor(value, &param.active); }
+						if (!value.empty()) { ExParseToColor(value.c_str(), &param.active); }
 						else { param.active = param.normal; }
 
 						value = GetArg(args, ATOM_OFFSET);
-						if (value) { ExParseToPointF(value, &param.offset); }
+						if (!value.empty()) { ExParseToPointF(value.c_str(), &param.offset); }
 						else { param.offset = {}; }
 
 						value = GetArg(args, ATOM_PADDING);
-						if (value) { ExParseToRectF(value, &param.padding); }
+						if (!value.empty()) { ExParseToRectF(value.c_str(), &param.padding); }
 						else { param.padding = {}; }
 					}
 					else { shadow->type = ExEleShadowType::None; }
@@ -192,11 +192,11 @@ namespace ExDirectUI
 					auto& texture = shadow->info.texture;
 
 					value = GetArg(args, ATOM_FILE);
-					handle_if_false(value, EE_NOEXISTS, L"未找到图像文件");
-					return_if_failed(LoadPackageImage(owner, value, &texture.image));
+					handle_if_false(!value.empty(), EE_NOEXISTS, L"未找到图像文件");
+					return_if_failed(LoadPackageImage(owner, value.c_str(), &texture.image));
 
 					value = GetArg(args, ATOM_NORMAL);
-					if (value) { ExParseToRectF(value, &texture.src_normal); }
+					if (!value.empty()) { ExParseToRectF(value.c_str(), &texture.src_normal); }
 					else {
 						texture.src_normal = {
 							0,0,
@@ -206,19 +206,19 @@ namespace ExDirectUI
 					}
 
 					value = GetArg(args, ATOM_ACTIVE);
-					if (value) { ExParseToRectF(value, &texture.src_active); }
+					if (!value.empty()) { ExParseToRectF(value.c_str(), &texture.src_active); }
 					else { texture.src_active = texture.src_normal; }
 
 					value = GetArg(args, ATOM_ALPHA_NORMAL);
-					if (value) { ExParseToByte(value, &texture.alpha_normal); }
+					if (!value.empty()) { ExParseToByte(value.c_str(), &texture.alpha_normal); }
 					else { texture.alpha_normal = ALPHA_OPAQUE; }
 
 					value = GetArg(args, ATOM_ALPHA_ACTIVE);
-					if (value) { ExParseToByte(value, &texture.alpha_active); }
+					if (!value.empty()) { ExParseToByte(value.c_str(), &texture.alpha_active); }
 					else { texture.alpha_active = texture.alpha_normal; }
 
 					value = GetArg(args, ATOM_GRIDS);
-					if (value) { ExParseToGridsImageInfo(value, &texture.grids); }
+					if (!value.empty()) { ExParseToGridsImageInfo(value.c_str(), &texture.grids); }
 					else { texture.grids = {}; }
 				}
 				else { shadow->type = ExEleShadowType::None; }
