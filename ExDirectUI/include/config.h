@@ -48,6 +48,9 @@
 // 配置项：检查参数
 #define EX_CFG_DEBUG_CHECK_PARAM
 
+// 配置项：中断警告
+//#define EX_CFG_DEBUG_INTERRUPT_WARNING
+
 
 #endif // EX_CFG_DEBUG
 #endif // _DEBUG

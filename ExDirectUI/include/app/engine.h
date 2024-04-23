@@ -15,6 +15,7 @@ namespace ExDirectUI
 	{
 		None = 0x00000000,				///< 引擎标识：无
 		Debug = 0x01000000,				///< 引擎标识：调试模式
+		InterruptWarning = 0x02000000,	///< 引擎标识：警告时中断
 
 		Default = -1,					///< 引擎标识：默认
 	};

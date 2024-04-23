@@ -82,7 +82,21 @@ namespace ExDirectUI
 		//系统默认处理
 		if (ExEngineQueryFlag(ExEngineFlags::Debug)) {
 #ifdef EX_CFG_DEBUG_INTERRUPT
-			ExAssertFmtCallInfo(SUCCEEDED(status), file, line, buffer);
+
+			bool interrupt = ExEngineQueryFlag(ExEngineFlags::InterruptWarning);
+
+#ifndef EX_CFG_DEBUG_INTERRUPT_WARNING
+
+			if (interrupt && text) {
+				//如果附加文本头部不是MARK，则需要中断
+				interrupt = wcsstr(text, EX_WARNING_MARK) != text;
+			}
+#endif // !EX_CFG_DEBUG_INTERRUPT_WARNING
+
+			if (interrupt) {
+				ExAssertFmtCallInfo(SUCCEEDED(status), file, line, buffer);
+			}
+
 #elif defined(EX_CFG_DEBUG_OUTPUT)
 			if (file) {
 				wchar_t file_info[EX_CFG_SIZEOF_FORMAT_BUF]{};

@@ -8,6 +8,9 @@
  */
 #pragma once
 
+#define EX_WARNING_MARK		L"[警告]"
+#define EX_WARNING(TXT)	EX_WARNING_MARK TXT
+
 namespace ExDirectUI
 {
 	typedef bool(CALLBACK* ExStatusHandleProc)(HRESULT status, LPCWSTR file, int line, LPCWSTR text) NOTHROW;

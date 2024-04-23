@@ -34,7 +34,7 @@ namespace ExDirectUI
 		try
 		{
 			auto render = ExModuleUtils::Instance()->GetRender();
-			
+
 
 			return S_OK;
 		}
