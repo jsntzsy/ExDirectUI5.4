@@ -12,9 +12,117 @@
 #include "resource/package.h"
 #include "src/resource/theme.h"
 #include "common/object_impl.hpp"
+#include "common/string.hpp"
+
+#ifdef new
+#undef new
+#endif // new
+
+#include "../ThirdParts/pugixml/pugixml.hpp"
 
 namespace ExDirectUI
 {
+	std::wstring EXOBJCALL ExTheme::ToString() const
+	{
+		return ExString::format(L"ExTheme(class_count: %zu)", m_classes.size());
+	}
+
+	ExTheme::ExTheme(const IExPackage* package)
+	{
+		ExPackageInfo info{};
+		throw_if_failed(package->GetPackageInfo(&info), L"获取数据包信息失败");
+		throw_if_false(info.type == ExPackageType::ThemePackage, EE_UNMATCH, L"数据包不是主题包");
+
+		ExPackageItemInfo xml_file{};
+		throw_if_failed(
+			package->GetItemInfo(ExAtom(L"theme.xml"), &xml_file),
+			L"获取主题描述文件失败"
+		);
+
+		pugi::xml_document xml;
+		auto result = xml.load_buffer(xml_file.data, xml_file.size);
+		throw_if_false(result, EE_FORMAT, L"解析主题描述文件失败");
+
+		pugi::xml_node root = xml.child(L"Theme");
+		throw_if_false(root, EE_FORMAT, L"主题描述文件格式错误");
+
+#pragma region 解析主题包信息
+
+		pugi::xml_attribute attr = root.attribute(L"name");
+		throw_if_false(attr, EE_FORMAT, L"缺少必要的属性");
+		wcscpy_s(m_info.name, attr.value());
+
+		attr = root.attribute(L"version");
+		if (attr) { wcscpy_s(m_info.version, attr.value()); }
+		else { m_info.version[0] = L'\0'; }
+
+		attr = root.attribute(L"author");
+		if (attr) { wcscpy_s(m_info.author, attr.value()); }
+		else { m_info.author[0] = L'\0'; }
+
+		attr = root.attribute(L"description");
+		if (attr) { wcscpy_s(m_info.description, attr.value()); }
+		else { m_info.description[0] = L'\0'; }
+
+#pragma endregion
+
+		auto children = root.children();
+		for (auto ele : children) {
+			try
+			{
+				ParseElementNode(package, ele);
+			}
+			catch_continue({});
+		}
+
+	}
+
+	ExTheme::~ExTheme()
+	{
+		for (auto ele : m_classes) {
+			for (auto attr : ele.second.attributes) {
+				ExVariantClear(&attr.second);
+			}
+		}
+	}
+
+	void EXOBJCALL ExTheme::ParseElementNode(const IExPackage* package, pugi::xml_node& node)
+	{
+		ExThemeElementClassInfo ele{};
+		ele.name = node.name();
+		ele.atom = ExAtom(ele.name.c_str());
+
+		auto attr = node.attribute(L"base");
+		if (attr) {
+			EXATOM atom_base = ExAtom(attr.value());
+			auto base_ele = m_classes.find(atom_base);
+			if (base_ele != m_classes.end()) {
+				ele.base = &base_ele->second;
+			}
+		}
+
+		auto attrs = node.children();
+		for (auto anode : attrs) {
+			attr = anode.attribute(L"name");
+			if (attr) {
+				EXATOM atom_name = ExAtom(attr.value());
+				ExVariant value{};
+				if (SUCCEEDED(ExParseFromXmlNode(&anode, (IUnknown*)package, &value))) {
+					ele.attributes[atom_name] = value;
+				}
+				else {
+					std::wstringstream ss;
+					ss << L"未知的主题属性: ";
+					anode.print(ss);
+					ss << L"\n";
+					ExDbgOutput(ss.str().c_str());
+				}
+			}
+		}
+
+		m_classes[ele.atom] = ele;
+	}
+
 	HRESULT EXOBJCALL ExTheme::GetInfo(ExThemeInfo* r_info) const
 	{
 		CHECK_PARAM(r_info);
@@ -37,8 +145,8 @@ namespace ExDirectUI
 		if (it == m_classes.end()) { return false; }
 
 		auto cls_info = &it->second;
-		do{
-			
+		do {
+
 			if (cls_info->attributes.find(atom_attr) != cls_info->attributes.end()) {
 				return true;
 			}
@@ -92,7 +200,7 @@ namespace ExDirectUI
 	}
 
 	HRESULT EXOBJCALL ExTheme::DrawAttribute(IExCanvas* canvas, float left, float top,
-		float right, float bottom, EXATOM atom_class, EXATOM atom_attr, DWORD state, bool base) const
+		float right, float bottom, EXATOM atom_class, EXATOM atom_attr, DWORD state, DWORD draw_mode, bool base) const
 	{
 		CHECK_PARAM(atom_class != EXATOM_UNKNOWN);
 		CHECK_PARAM(atom_attr != EXATOM_UNKNOWN);
@@ -153,6 +261,37 @@ namespace ExDirectUI
 		}
 
 		return S_OK;
+	}
+
+	////////////////////////////
+
+
+	HRESULT EXAPI EXCALL ExThemeLoad(const byte_t* package_data, uint32_t package_size, const byte_t* key, uint32_t key_size, IExTheme** r_theme)
+	{
+		CHECK_PARAM(package_data);
+		CHECK_PARAM(r_theme);
+
+		ExAutoPtr<IExPackage> package;
+		handle_if_failed(
+			ExPackageLoad(package_data, package_size, key, key_size, &package),
+			L"加载数据包失败"
+		);
+		try
+		{
+			ExAutoPtr<ExTheme> theme = new ExTheme(package);
+			return theme->QueryInterface(r_theme);
+		}
+		catch_default({});
+	}
+
+	HRESULT EXAPI EXCALL ExThemeLoadFromPackage(const IExPackage* package, IExTheme** r_theme)
+	{
+		try
+		{
+			ExAutoPtr<ExTheme> theme = new ExTheme(package);
+			return theme->QueryInterface(r_theme);
+		}
+		catch_default({});
 	}
 
 }

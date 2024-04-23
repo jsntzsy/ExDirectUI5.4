@@ -6,7 +6,7 @@
         <Color name="background" value="#FFF3"/>
         <Color name="foreground" value="#000" />
         <Color name="border" value="#3333"/>
-        <Number name="opacity" value="255" />
+        <Channel name="opacity" value="255" />
         <Number name="sizebox-width" value="6" />
         <Size name="min-size" value="300,200" />
         <Size name="max-size" value="0,0" />

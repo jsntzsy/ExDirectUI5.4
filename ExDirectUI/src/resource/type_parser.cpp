@@ -92,7 +92,7 @@ namespace ExDirectUI
 		//计算原子号,并查表
 		EXATOM type = ExAtom(type_str);
 		auto it = g_resource_type_parsers.find(type);
-		handle_if_false(it != g_resource_type_parsers.end(), E_NOTIMPL, L"不支持的类型解析");
+		handle_if_false(it != g_resource_type_parsers.end(), E_NOTIMPL, EX_WARNING(L"不支持的类型解析"));
 
 		//先默认它是空的
 		V_VT(r_value) = VT_EMPTY;
@@ -116,7 +116,7 @@ namespace ExDirectUI
 
 		//查表
 		auto it = g_resource_type_parsers.find(type);
-		handle_if_false(it != g_resource_type_parsers.end(), E_NOTIMPL, L"不支持的类型解析");
+		handle_if_false(it != g_resource_type_parsers.end(), E_NOTIMPL, EX_WARNING(L"不支持的类型解析"));
 
 		//先默认它是空的
 		V_VT(r_value) = VT_EMPTY;

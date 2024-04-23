@@ -26,12 +26,12 @@ namespace ExDirectUI
 
 	interface IExTheme;
 	typedef VARIANT ExVariant;
-	
+
 	typedef bool (CALLBACK* ExThemeEnumClassProc)(IExTheme* theme, EXATOM class_atom,
 		LPCWSTR class_name, EXATOM base_class, LPARAM lparam);
 	typedef bool (CALLBACK* ExThemeEnumAttributeProc)(IExTheme* theme, EXATOM class_atom,
 		EXATOM attribute_atom, const ExVariant* value, LPARAM lparam);
-	
+
 	//////////////////////
 
 	interface IExClass;
@@ -48,16 +48,20 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL CopyAttribute(EXATOM atom_class, EXATOM atom_attr,
 			ExVariant* r_attr, bool base = false) const PURE;
 		EXMETHOD HRESULT EXOBJCALL DrawAttribute(IExCanvas* canvas, float left, float top,
-			float right, float bottom, EXATOM atom_class, EXATOM atom_attr, DWORD state, bool base = false) const PURE;
+			float right, float bottom, EXATOM atom_class, EXATOM atom_attr, DWORD state,
+			DWORD draw_mode, bool base = false) const PURE;
 
 		EXMETHOD HRESULT EXOBJCALL EnumClasses(ExThemeEnumClassProc proc, LPARAM lparam = 0) const PURE;
-		EXMETHOD HRESULT EXOBJCALL EnumAttributes(EXATOM class_atom, 
+		EXMETHOD HRESULT EXOBJCALL EnumAttributes(EXATOM class_atom,
 			ExThemeEnumAttributeProc proc, DWORD base_mode = 0, LPARAM lparam = 0) const PURE;
 
 	};
 
 	/////////////////////////////////
-	
 
+	HRESULT EXAPI EXCALL ExThemeLoad(const byte_t* package_data, uint32_t package_size,
+		const byte_t* key, uint32_t key_size, IExTheme** r_theme);
+
+	HRESULT EXAPI EXCALL ExThemeLoadFromPackage(const IExPackage* package, IExTheme** r_theme);
 
 }

@@ -500,7 +500,8 @@ namespace ExDirectUI
 	}
 
 	
-	HRESULT EXAPI EXCALL ExVariantDraw(IExCanvas* canvas, float left, float top, float right, float bottom, ExVariant* variant, DWORD state, LPARAM lparam)
+	HRESULT EXAPI EXCALL ExVariantDraw(IExCanvas* canvas, float left, float top, float right, float bottom, 
+		ExVariant* variant, DWORD state, DWORD draw_mode, LPARAM lparam)
 	{
 		CHECK_PARAM(canvas);
 		CHECK_PARAM(variant);
@@ -510,9 +511,16 @@ namespace ExDirectUI
 		{
 		case EVT_COLOR: {
 			EXARGB color = V_COLOR(variant);
-			ExAutoPtr<IExSolidBrush> brush;
-			return_if_failed(ExSolidBrushCreate(color, &brush), L"创建画刷失败");
-			hr = canvas->FillRect(brush, left, top, right, bottom);
+			if (draw_mode & ExVariantDrawMode::Fill) {
+				ExAutoPtr<IExSolidBrush> brush;
+				return_if_failed(ExSolidBrushCreate(color, &brush), L"创建画刷失败");
+				hr = canvas->FillRect(brush, left, top, right, bottom);
+			}
+			if (draw_mode & ExVariantDrawMode::Stroke) {
+				ExAutoPtr<IExPen> pen;
+				return_if_failed(ExPenCreate(color, 1, &pen), L"创建画笔失败");
+				hr = canvas->DrawRect(pen, left, top, right, bottom);
+			}
 		}break;
 		case EVT_DISPLAY_IMAGE: {
 			auto image = V_DISPLAY_IMAGE(variant);
@@ -603,7 +611,7 @@ namespace ExDirectUI
 
 
 		case EVT_EXOBJECT:
-			//这里在做判断
+			//这里在做判断(ExImage,ExPen,ExSolidBrush,ExLinearBrush,ExRadialBrush)
 			break;
 		default:
 			handle_if_failed(E_NOTIMPL, L"属性不支持绘制");

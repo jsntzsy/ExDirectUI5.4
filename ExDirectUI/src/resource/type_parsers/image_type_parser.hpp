@@ -156,6 +156,7 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL ParseFromXmlNode(EXATOM type, const pugi::xml_node* node,
 			IUnknown* owner, ExVariant* r_value) override
 		{
+			return_if_failed(ExVariantInit(r_value, EVT_STATE_IMAGE));
 			auto image = V_STATE_IMAGE(r_value);
 
 			auto attr = node->attribute(L"file");
@@ -209,6 +210,7 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL ParseFromString(EXATOM type, LPCWSTR str, IUnknown* owner,
 			ExVariant* r_value) override
 		{
+			return_if_failed(ExVariantInit(r_value, EVT_STATE_IMAGE));
 			auto image = V_STATE_IMAGE(r_value);
 			auto args = GetArgsMap(str);
 			auto value = GetArg(args, ATOM_FILE);

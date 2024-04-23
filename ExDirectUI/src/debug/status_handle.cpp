@@ -87,7 +87,7 @@ namespace ExDirectUI
 
 #ifndef EX_CFG_DEBUG_INTERRUPT_WARNING
 
-			if (interrupt && text) {
+			if (!interrupt && text) {
 				//如果附加文本头部不是MARK，则需要中断
 				interrupt = wcsstr(text, EX_WARNING_MARK) != text;
 			}

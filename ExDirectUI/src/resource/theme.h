@@ -21,8 +21,30 @@ namespace ExDirectUI
 
 	class ExTheme : public ExObjectImpl<IExTheme>
 	{
-	private:
+	public:
+		EX_BEGIN_INTERFACE_MAP();
+		EX_INTERFACE_ENTRY(IUnknown);
+		EX_INTERFACE_ENTRY(IExObject);
+		EX_INTERFACE_ENTRY(IExTheme);
+		EX_END_INTERFACE_MAP();
 
+	public:
+		EXMETHOD std::wstring EXOBJCALL ToString() const override;
+
+		EXMETHOD void* EXOBJCALL GetContext(int index) const override
+		{
+			switch (index)
+			{
+			case 0: return (void*)&m_classes;
+			case 1: return (void*)&m_info;
+			default: return __super::GetContext(index);
+			}
+		}
+
+		ExTheme(const IExPackage* package);
+		virtual ~ExTheme();
+
+		void EXOBJCALL ParseElementNode(const IExPackage* package, pugi::xml_node& node) MAYTHROW;
 
 	public:
 		EXMETHOD HRESULT EXOBJCALL GetInfo(ExThemeInfo* r_info) const override;
@@ -35,7 +57,8 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL CopyAttribute(EXATOM atom_class, EXATOM atom_attr,
 			ExVariant* r_attr, bool base = false) const override;
 		EXMETHOD HRESULT EXOBJCALL DrawAttribute(IExCanvas* canvas, float left, float top,
-			float right, float bottom, EXATOM atom_class, EXATOM atom_attr, DWORD state, bool base = false) const override;
+			float right, float bottom, EXATOM atom_class, EXATOM atom_attr, DWORD state, 
+			DWORD draw_mode, bool base = false) const override;
 
 		EXMETHOD HRESULT EXOBJCALL EnumClasses(ExThemeEnumClassProc proc, LPARAM lparam = 0) const override;
 		EXMETHOD HRESULT EXOBJCALL EnumAttributes(EXATOM class_atom,

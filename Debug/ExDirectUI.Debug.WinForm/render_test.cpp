@@ -14,20 +14,21 @@
 
 namespace ExDirectUI
 {
-	ExAutoPtr<IExRender> render = nullptr;
-	ExAutoPtr<IExCanvas> canvas = nullptr;
-	ExAutoPtr<IExImage> image_jpg = nullptr;
-	ExAutoPtr<IExImage> image_png = nullptr;
-	ExAutoPtr<IExImage> image_apng = nullptr;
-	ExAutoPtr<IExImage> image_gif = nullptr;
-	ExAutoPtr<IExImage> image_button = nullptr;
-	ExAutoPtr<IExImage> image_shadow = nullptr;
-	ExAutoPtr<IExImage> image_icon = nullptr;
-	ExAutoPtr<IExPen> pen = nullptr;
-	ExAutoPtr<IExSolidBrush> solid_brush = nullptr;
-	ExAutoPtr<IExLinearBrush> linear_brush = nullptr;
-	ExAutoPtr<IExRadialBrush> radial_brush = nullptr;
-	ExAutoPtr<IExImageBrush> image_brush = nullptr;
+	IExRender* render = nullptr;
+	IExCanvas* canvas = nullptr;
+	IExImage* image_jpg = nullptr;
+	IExImage* image_png = nullptr;
+	IExImage* image_apng = nullptr;
+	IExImage* image_gif = nullptr;
+	IExImage* image_button = nullptr;
+	IExImage* image_shadow = nullptr;
+	IExImage* image_icon = nullptr;
+	IExPen* pen = nullptr;
+	IExSolidBrush* solid_brush = nullptr;
+	IExLinearBrush* linear_brush = nullptr;
+	IExRadialBrush* radial_brush = nullptr;
+	IExImageBrush* image_brush = nullptr;
+	IExTheme* theme = nullptr;
 	EXATOM atom_fontawesome = EXATOM_UNKNOWN;
 
 	enum _TestPartValues {
@@ -36,11 +37,12 @@ namespace ExDirectUI
 		TEXT,
 		IMAGE,
 		EFFECT,
+		THEME,
 
 		_TEST_PART_COUNT,
 	};
 
-	_TestPartValues test_part = FIGURE;
+	_TestPartValues test_part = THEME;
 
 	std::vector<ExRectF> _RenderTest_SplitRect(ExRectF& bounds, int rows, int cells, ExPointF min_size = {})
 	{
@@ -94,27 +96,31 @@ namespace ExDirectUI
 		ExDataReadFile(_ROOT_(L"_res/font/fontawesome.ttf"), &data);
 		render->LoadFontFile(data.data, data.size, &atom_fontawesome);
 		ExDataFree(&data);
+
+		ExDataReadFile(_ROOT_(L"_res/theme/test.ext"), &data);
+		ExThemeLoad(data.data, data.size, nullptr, 0, &theme);
+		ExDataFree(&data);
 	}
 
 	void _RenderTest_ReleaseObjects_()
 	{
 		render->UnLoadFontFile(atom_fontawesome);
 
-		image_png.Release();
-		image_apng.Release();
-		image_gif.Release();
-		image_button.Release();
-		image_shadow.Release();
-		image_jpg.Release();
-		image_icon.Release();
+		SAFE_RELEASE(image_png);
+		SAFE_RELEASE(image_apng);
+		SAFE_RELEASE(image_gif);
+		SAFE_RELEASE(image_button);
+		SAFE_RELEASE(image_shadow);
+		SAFE_RELEASE(image_jpg);
+		SAFE_RELEASE(image_icon);
+		SAFE_RELEASE(image_brush);
+		SAFE_RELEASE(radial_brush);
+		SAFE_RELEASE(linear_brush);
+		SAFE_RELEASE(solid_brush);
+		SAFE_RELEASE(pen);
+		SAFE_RELEASE(canvas);
+		SAFE_RELEASE(theme);
 
-		image_brush.Release();
-		radial_brush.Release();
-		linear_brush.Release();
-		solid_brush.Release();
-		pen.Release();
-		canvas.Release();
-		render.Release();
 	}
 
 	void _RenderTest_Paint_(const PAINTSTRUCT& ps)
@@ -128,18 +134,18 @@ namespace ExDirectUI
 			canvas->BeginDraw();
 			canvas->Clear(COLOR_GRAY);
 			canvas->SetAntiAliasMode(ExAntiAliasMode::AllHighQuality);
-			
+
 			client.Inflate(-50, -50);
-			canvas->DrawShadow(
-				solid_brush, _expand_rect_(client),
-				30, 0, 0, 0, 0,
-				0, +10
-			);
+			//canvas->DrawShadow(
+			//	solid_brush, _expand_rect_(client),
+			//	30, 0, 0, 0, 0,
+			//	0, +10
+			//);
 
 #pragma region 绘制测试代码
 			int l_test_part = test_part;
 			//l_test_part = EFFECT;
-			
+
 			//测试基本图形绘制和填充
 			if (l_test_part == FIGURE) {
 
@@ -577,23 +583,37 @@ namespace ExDirectUI
 					else if (i == 2) {
 						render->CreateEffectByName(L"ExDirectUI.3DPerspectiveEffect", 0, &effect);
 						effect->SetSource(image_button);
-						
+
 						float rotate_angle[3] = { 0,30,0 };
 						effect->SetParam(1, rotate_angle);
-						
+
 						float n = 200;
 						effect->SetParam(3, &n);
-						
+
 					}
 					else if (i == 3) {
-						
+
 					}
 
 					if (effect) { canvas->DrawEffect(effect, rect.left, rect.top); }
 				}
-				
-			}
 
+			}
+			//测试主题绘制
+			else if (l_test_part == THEME) {
+				
+				theme->DrawAttribute(
+					canvas,
+					_expand_rect_(client),
+					ExAtom(L"Window"),
+					ExAtom(L"background"),
+					0,ExVariantDrawMode::Fill
+				);
+				
+
+
+
+			}
 #pragma endregion
 
 

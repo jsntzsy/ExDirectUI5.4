@@ -46,6 +46,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExDirectUI.ImageDecoder.WIC
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExDirectUI.Render.Direct2D", "Drawing\Render\ExDirectUI.Render.Direct2D\ExDirectUI.Render.Direct2D.vcxproj", "{BA217339-92E6-4687-A894-855E6F205E4B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resource", "Resource", "{17E5C630-84D3-47BC-8243-92B283FF673B}"
+	ProjectSection(SolutionItems) = preProject
+		_res\theme\theme.xml = _res\theme\theme.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64

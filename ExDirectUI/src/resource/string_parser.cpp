@@ -548,7 +548,7 @@ namespace ExDirectUI
 		CHECK_PARAM(r_value);
 
 		uint8_t units[4]{};
-		return_if_failed(ExParseToRectF(str, (ExRectF*)&r_value, units));
+		return_if_failed(ExParseToRectF(str, (ExRectF*)r_value, units));
 		r_value->flags = 0;
 
 		for (int i = 0; i < 4; i++) {
