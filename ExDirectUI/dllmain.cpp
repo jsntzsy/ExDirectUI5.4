@@ -36,12 +36,26 @@ namespace ExDirectUI
 		{
 			auto render = ExModuleUtils::Instance()->GetRender();
 
-			ExVariant v{};
-			ExParseFromString(ATOM_MATRIX,
-				L"translate:100,200 reset:",
-				nullptr, &v);
-			auto mx = V_MATRIX(&v);
-			ExVariantClear(&v);
+			ExPackageInfo pi = {
+				ExPackageType::ThemePackage,
+				0x00,
+				0,
+				L"ExDirectUI.Theme.Default"
+			};
+
+			//ExData data{};
+			//ExPackageBuildFromDirectory(
+			//	&pi,
+			//	_ROOT_(L"_res/theme/test/"),
+			//	L"*",
+			//	ExPackageBuildFlags::Subdirectories,
+			//	nullptr, 0,
+			//	nullptr, 0,
+			//	&data
+			//);
+			//
+			//ExDataWriteFile(_ROOT_(L"_res/theme/test.ext"), data.data, data.size);
+			//ExDataFree(&data);
 
 			return S_OK;
 		}

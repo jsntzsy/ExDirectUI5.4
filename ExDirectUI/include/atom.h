@@ -186,6 +186,9 @@
 #define ATOM_RESET				0x432057A0		// 原子号: reset
 #define ATOM_MULTIPLY			0x2B0D619D		// 原子号: multiply
 
+#define ATOM_NONE				0x9A92CFBD		// 原子号: none
+#define ATOM_PARAM				0x1CA1648D		// 原子号: param
+#define ATOM_TEXTURE			0xDD5E6F00		// 原子号: texture
 
 
 

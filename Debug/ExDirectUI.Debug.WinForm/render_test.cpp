@@ -610,8 +610,40 @@ namespace ExDirectUI
 					0,ExVariantDrawMode::Fill
 				);
 				
+				ExVariant var_round{};
+				theme->GetAttribute(
+					ExAtom(L"Window"),
+					ExAtom(L"round"),
+					&var_round
+				);
 
+				ExRectF* round = nullptr;
+				theme->GetAttributeData(
+					ExAtom(L"Window"),
+					ExAtom(L"round"),
+					(const void**)&round
+				);
 
+				ExEleShadowInfo* shadow = nullptr;
+				theme->GetAttributeData(
+					ExAtom(L"Window"),
+					ExAtom(L"shadow"),
+					(const void**)&shadow
+				);
+
+				if (shadow && shadow->type == ExEleShadowType::Param) {
+					auto& param = shadow->info.param;
+					ExAutoPtr<IExSolidBrush> brush;
+					ExSolidBrushCreate(param.normal, &brush);
+					canvas->DrawShadow(
+						brush,
+						_expand_rect_(client),
+						param.size,
+						_expand_rect_ptr_(round),
+						_expand_point_(param.offset)
+					);
+
+				}
 
 			}
 #pragma endregion

@@ -178,11 +178,17 @@ namespace ExDirectUI
 	};
 }
 
-#define _expand_point_(point)	point.x, point.y
-#define _expand_rect_(rect)	rect.left, rect.top, rect.right, rect.bottom
+#define _expand_point_(point)		point.x, point.y
+#define _expand_rect_(rect)			rect.left, rect.top, rect.right, rect.bottom
 
-#define _expand_point_split_(point, _split_)	point.x _split_ point.y
-#define _expand_rect_split_(rect, _split_)	rect.left _split_ rect.top _split_ rect.right _split_ rect.bottom
+#define _expand_point_ptr_(point)	point->x, point->y
+#define _expand_rect_ptr_(rect)		rect->left, rect->top, rect->right, rect->bottom
+
+#define _expand_point_split_(point, _split_)		point.x _split_ point.y
+#define _expand_rect_split_(rect, _split_)			rect.left _split_ rect.top _split_ rect.right _split_ rect.bottom
+
+#define _expand_point_ptr_split_(point, _split_)	point->x _split_ point->y
+#define _expand_rect_ptr_split_(rect, _split_)		rect->left _split_ rect->top _split_ rect->right _split_ rect->bottom
 
 
 

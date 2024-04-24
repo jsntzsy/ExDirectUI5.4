@@ -78,9 +78,16 @@ namespace ExDirectUI
 	{
 		inline DWORD _ToShadowType(LPCWSTR str)
 		{
-			uint32_t type = 0;
-			ExParseToUInt32(str, &type);
-			return type;
+			static const DWORD _KV_SHADOW_TYPE_[][2] = {
+				{ATOM_NONE, ExEleShadowType::None},
+				{ATOM_PARAM, ExEleShadowType::Param},
+				{ATOM_TEXTURE, ExEleShadowType::Texture},
+				{ATOM_IMAGE, ExEleShadowType::Texture},
+			};
+
+			DWORD value = ExEleShadowType::None;
+			ExParseToConst(str, _KV_SHADOW_TYPE_, _countof(_KV_SHADOW_TYPE_), &value);
+			return value;
 		}
 
 	public:

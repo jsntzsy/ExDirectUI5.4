@@ -177,6 +177,19 @@ namespace ExDirectUI
 		handle_ex(EE_NOEXISTS, L"未找到指定的属性");
 	}
 
+	HRESULT EXOBJCALL ExTheme::GetAttributeData(EXATOM atom_class, EXATOM atom_attr, const void** r_attr_data,
+		VARTYPE* r_attr_type, bool base) const
+	{
+		CHECK_PARAM(r_attr_data);
+		
+		ExVariant var{};
+		return_if_failed(GetAttribute(atom_class, atom_attr, &var, base));
+		return_if_failed(ExVariantGetValuePtr(&var, (void**)r_attr_data), *r_attr_data = nullptr);
+		if (r_attr_type) { *r_attr_type = V_VT(&var); }
+
+		return S_OK;
+	}
+
 	HRESULT EXOBJCALL ExTheme::CopyAttribute(EXATOM atom_class, EXATOM atom_attr, ExVariant* r_attr, bool base) const
 	{
 		CHECK_PARAM(atom_class != EXATOM_UNKNOWN);

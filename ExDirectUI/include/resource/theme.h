@@ -45,6 +45,8 @@ namespace ExDirectUI
 
 		EXMETHOD HRESULT EXOBJCALL GetAttribute(EXATOM atom_class, EXATOM atom_attr,
 			ExVariant* r_attr, bool base = false) const PURE;
+		EXMETHOD HRESULT EXOBJCALL GetAttributeData(EXATOM atom_class, EXATOM atom_attr,
+			const void** r_attr_data, VARTYPE* r_attr_type = nullptr, bool base = false) const PURE;
 		EXMETHOD HRESULT EXOBJCALL CopyAttribute(EXATOM atom_class, EXATOM atom_attr,
 			ExVariant* r_attr, bool base = false) const PURE;
 		EXMETHOD HRESULT EXOBJCALL DrawAttribute(IExCanvas* canvas, float left, float top,
