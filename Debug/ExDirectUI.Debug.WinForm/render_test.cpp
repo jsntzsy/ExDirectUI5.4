@@ -601,49 +601,92 @@ namespace ExDirectUI
 			}
 			//测试主题绘制
 			else if (l_test_part == THEME) {
-				
-				theme->DrawAttribute(
-					canvas,
-					_expand_rect_(client),
-					ExAtom(L"Window"),
-					ExAtom(L"background"),
-					0,ExVariantDrawMode::Fill
-				);
-				
-				ExVariant var_round{};
-				theme->GetAttribute(
-					ExAtom(L"Window"),
-					ExAtom(L"round"),
-					&var_round
-				);
 
-				ExRectF* round = nullptr;
-				theme->GetAttributeData(
-					ExAtom(L"Window"),
-					ExAtom(L"round"),
-					(const void**)&round
-				);
-
-				ExEleShadowInfo* shadow = nullptr;
-				theme->GetAttributeData(
-					ExAtom(L"Window"),
-					ExAtom(L"shadow"),
-					(const void**)&shadow
-				);
-
-				if (shadow && shadow->type == ExEleShadowType::Param) {
-					auto& param = shadow->info.param;
-					ExAutoPtr<IExSolidBrush> brush;
-					ExSolidBrushCreate(param.normal, &brush);
-					canvas->DrawShadow(
-						brush,
+				{
+					theme->DrawAttribute(
+						canvas,
 						_expand_rect_(client),
-						param.size,
-						_expand_rect_ptr_(round),
-						_expand_point_(param.offset)
+						ExAtom(L"Window"),
+						ExAtom(L"background"),
+						0, ExVariantDrawMode::Fill
 					);
 
+					ExVariant var_round{};
+					theme->GetAttribute(
+						ExAtom(L"Window"),
+						ExAtom(L"round"),
+						&var_round
+					);
+
+					ExRectF* round = nullptr;
+					theme->GetAttributeData(
+						ExAtom(L"Window"),
+						ExAtom(L"round"),
+						(const void**)&round
+					);
+
+					ExEleShadowInfo* shadow = nullptr;
+					theme->GetAttributeData(
+						ExAtom(L"Window"),
+						ExAtom(L"shadow"),
+						(const void**)&shadow
+					);
+
+					if (shadow && shadow->type == ExEleShadowType::Param) {
+						auto& param = shadow->info.param;
+						ExAutoPtr<IExSolidBrush> brush;
+						ExSolidBrushCreate(param.normal, &brush);
+						canvas->DrawShadow(
+							brush,
+							_expand_rect_(client),
+							param.size,
+							_expand_rect_ptr_(round),
+							_expand_point_(param.offset)
+						);
+					}
+
 				}
+
+
+				//将区域分割为 3 行 4 列
+				const int padding = 10;
+				auto rects = _RenderTest_SplitRect(client,
+					3, 4, { 100,100 }
+				);
+
+				//绘制填充基本图形
+				for (int i = 0; i < (int)rects.size(); i++) {
+					int type = i % 4;
+					int mode = i / 4;
+
+					auto& rect = rects[i];
+					canvas->DrawRect(pen, rect.left, rect.top, rect.right, rect.bottom);
+					rect.Inflate(-padding, -padding);
+
+					if (type == 0) {
+						theme->DrawAttribute(
+							canvas,
+							_expand_rect_(rect),
+							ExAtom(L"Button"),
+							ExAtom(L"background-texture"),
+							pow(2, mode),
+							ExVariantDrawMode::Fill,
+							true
+						);
+
+
+					}
+
+
+
+
+				}
+
+
+
+
+
+
 
 			}
 #pragma endregion
