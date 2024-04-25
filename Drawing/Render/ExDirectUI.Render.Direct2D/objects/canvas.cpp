@@ -277,7 +277,7 @@ namespace ExDirectUI
 		m_clip_region.Release();
 		return S_OK;
 	}
-	HRESULT EXOBJCALL ExCanvasD2D::GetTransform(ExMatrixElements* r_matrix) const
+	HRESULT EXOBJCALL ExCanvasD2D::GetTransform(ExMatrix* r_matrix) const
 	{
 		CHECK_PARAM(r_matrix);
 
@@ -288,7 +288,7 @@ namespace ExDirectUI
 		m_dc->GetTransform((D2D1_MATRIX_3X2_F*)r_matrix);
 		return S_OK;
 	}
-	HRESULT EXOBJCALL ExCanvasD2D::SetTransform(const ExMatrixElements* matrix)
+	HRESULT EXOBJCALL ExCanvasD2D::SetTransform(const ExMatrix* matrix)
 	{
 		//必须在绘制过程中
 		handle_if_false(m_drawing, EE_NOREADY, L"必须在绘制过程中设置");

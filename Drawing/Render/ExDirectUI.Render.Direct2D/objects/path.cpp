@@ -568,7 +568,7 @@ namespace ExDirectUI
 		}
 		catch_default({});
 	}
-	HRESULT EXOBJCALL ExPathD2D::HitTest(float x, float y, const ExMatrixElements* tranform) const
+	HRESULT EXOBJCALL ExPathD2D::HitTest(float x, float y, const ExMatrix* tranform) const
 	{
 		// 判断是否正在描述路径
 		handle_if_false(!m_sink, EE_NOREADY, L"正在描述路径");
@@ -589,7 +589,7 @@ namespace ExDirectUI
 		//根据命中结果返回
 		return hit ? S_OK : S_FALSE;
 	}
-	HRESULT EXOBJCALL ExPathD2D::HitTestStroke(const IExPen* pen, float x, float y, const ExMatrixElements* tranform) const
+	HRESULT EXOBJCALL ExPathD2D::HitTestStroke(const IExPen* pen, float x, float y, const ExMatrix* tranform) const
 	{
 		// 判断是否正在描述路径
 		handle_if_false(!m_sink, EE_NOREADY, L"正在描述路径");
@@ -613,7 +613,7 @@ namespace ExDirectUI
 		//根据命中结果返回
 		return hit ? S_OK : S_FALSE;
 	}
-	HRESULT EXOBJCALL ExPathD2D::GetBounds(ExRectF* r_rect, const ExMatrixElements* tranform) const
+	HRESULT EXOBJCALL ExPathD2D::GetBounds(ExRectF* r_rect, const ExMatrix* tranform) const
 	{
 		CHECK_PARAM(r_rect);
 

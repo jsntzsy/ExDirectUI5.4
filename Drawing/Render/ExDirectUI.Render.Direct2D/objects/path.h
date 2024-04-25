@@ -75,9 +75,9 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL AddText(const IExFont* font, LPCWSTR text, uint32_t text_length, DWORD text_format,
 			float left, float top, float right, float bottom) override;
 
-		EXMETHOD HRESULT EXOBJCALL HitTest(float x, float y, const ExMatrixElements* tranform) const override;
-		EXMETHOD HRESULT EXOBJCALL HitTestStroke(const IExPen* pen, float x, float y, const ExMatrixElements* tranform) const override;
-		EXMETHOD HRESULT EXOBJCALL GetBounds(ExRectF* r_rect, const ExMatrixElements* tranform) const override;
+		EXMETHOD HRESULT EXOBJCALL HitTest(float x, float y, const ExMatrix* tranform) const override;
+		EXMETHOD HRESULT EXOBJCALL HitTestStroke(const IExPen* pen, float x, float y, const ExMatrix* tranform) const override;
+		EXMETHOD HRESULT EXOBJCALL GetBounds(ExRectF* r_rect, const ExMatrix* tranform) const override;
 
 	private:
 		static void MakeRoundRectFigure(ID2D1GeometrySink* sink, float left, float top, float right, float bottom,

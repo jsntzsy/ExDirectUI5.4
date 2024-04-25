@@ -10,18 +10,13 @@
 
 namespace ExDirectUI
 {
-	/// 矩阵元素3x2
-	struct ExMatrixElements3x2
+	/// 矩阵对象3x2
+	struct ExMatrix3x2
 	{
 		float _11, _12;
 		float _21, _22;
 		float _31, _32;
-	};
 
-	/// 矩阵对象3x2
-	class ExMatrix3x2 : public ExMatrixElements3x2
-	{
-	public:
 		ExMatrix3x2()
 		{
 			_11 = 1.0f; _12 = 0.0f;
@@ -34,14 +29,13 @@ namespace ExDirectUI
 			_21 = m21; _22 = m22;
 			_31 = m31; _32 = m32;
 		}
-		ExMatrix3x2(const ExMatrixElements3x2& elements)
+		ExMatrix3x2(const ExMatrix3x2& elements)
 		{
 			_11 = elements._11; _12 = elements._12;
 			_21 = elements._21; _22 = elements._22;
 			_31 = elements._31; _32 = elements._32;
 		}
 
-	public:
 		inline ExMatrix3x2& Reset()
 		{
 			_11 = 1.0f; _12 = 0.0f;
@@ -56,7 +50,7 @@ namespace ExDirectUI
 			_31 = m31; _32 = m32;
 			return *this;
 		}
-		inline ExMatrix3x2& SetElements(const ExMatrixElements3x2& elements)
+		inline ExMatrix3x2& SetElements(const ExMatrix3x2& elements)
 		{
 			_11 = elements._11; _12 = elements._12;
 			_21 = elements._21; _22 = elements._22;
@@ -90,7 +84,7 @@ namespace ExDirectUI
 			return true;
 		}
 
-		inline ExMatrix3x2& Multiply(const ExMatrixElements3x2& src, bool prepend = false)
+		inline ExMatrix3x2& Multiply(const ExMatrix3x2& src, bool prepend = false)
 		{
 			ExMatrix3x2 dst = *this;
 			if (prepend)
@@ -154,18 +148,17 @@ namespace ExDirectUI
 		}
 
 		inline operator bool() const { return !IsIdentity(); }
-		inline ExMatrix3x2& operator* (const ExMatrixElements3x2& src) { return Multiply(src); }
+		inline ExMatrix3x2& operator* (const ExMatrix3x2& src) { return Multiply(src); }
 		inline ExMatrix3x2& operator>>(ExPointF& point) const { return Transform(&point); }
 		inline ExMatrix3x2& operator>>(ExRectF& rect) const { return Transform(&rect); }
 		inline operator float* () { return *this; }
-		inline operator ExMatrixElements3x2& () { return *this; }
+		inline operator ExMatrix3x2& () { return *this; }
 		inline float operator[] (int index) const MAYTHROW
 		{
 			ExAssert(index >= 0 && index < 6);
 			return ((float*)this)[index];
 		}
 
-	public:
 		inline static ExMatrix3x2 MakeIdentity() { return ExMatrix3x2(); }
 		inline static ExMatrix3x2 MakeTranslate(float x, float y)
 		{
@@ -211,7 +204,7 @@ namespace ExDirectUI
 				-org_y * tan_y
 			);
 		}
-		inline static ExMatrix3x2 MakeMultiply(const ExMatrixElements3x2& m1, const ExMatrixElements3x2& m2)
+		inline static ExMatrix3x2 MakeMultiply(const ExMatrix3x2& m1, const ExMatrix3x2& m2)
 		{
 			ExMatrix3x2 mx;
 			mx._11 = m1._11 * m2._11 + m1._12 * m2._21;
@@ -222,9 +215,9 @@ namespace ExDirectUI
 			mx._32 = m1._31 * m2._12 + m1._32 * m2._22 + m2._32;
 			return mx;
 		}
+	
 	};
 
-	typedef ExMatrixElements3x2 ExMatrixElements;
 	typedef ExMatrix3x2 ExMatrix;
 
 }

@@ -288,7 +288,7 @@ namespace ExDirectUI
 		}
 		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRenderD2D::CreatePathRegion(const IExPath* path, const ExMatrixElements* tranform, IExRegion** r_region)
+	HRESULT EXOBJCALL ExRenderD2D::CreatePathRegion(const IExPath* path, const ExMatrix* tranform, IExRegion** r_region)
 	{
 		try
 		{

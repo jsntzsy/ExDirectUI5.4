@@ -26,11 +26,11 @@ namespace ExDirectUI
 	EXINTERFACE("FDB71403-DFC2-4338-85D8-E0BA99294F1C") IExRegion : public IExRenderObject
 	{
 		EXMETHOD HRESULT EXOBJCALL CombineWithRect(float left, float top, float right, float bottom,
-			ExRegionCombineMode mode, const ExMatrixElements * tranform = nullptr) PURE;
+			ExRegionCombineMode mode, const ExMatrix * tranform = nullptr) PURE;
 		EXMETHOD HRESULT EXOBJCALL CombineWithPath(const IExPath* path, ExRegionCombineMode mode,
-			const ExMatrixElements* tranform = nullptr) PURE;
+			const ExMatrix* tranform = nullptr) PURE;
 		EXMETHOD HRESULT EXOBJCALL CombineWithRegion(const IExRegion* region, ExRegionCombineMode mode,
-			const ExMatrixElements* tranform = nullptr) PURE;
+			const ExMatrix* tranform = nullptr) PURE;
 
 		EXMETHOD HRESULT EXOBJCALL HitTest(float x, float y) const PURE;
 		EXMETHOD HRESULT EXOBJCALL GetBounds(ExRectF* r_bounds_rect) const PURE;
@@ -40,6 +40,6 @@ namespace ExDirectUI
 
 	HRESULT EXAPI EXCALL ExRegionCreate(IExRegion** r_region, bool infinite = false);
 	HRESULT EXAPI EXCALL ExRegionCreateFromRect(float left, float top, float right, float bottom, IExRegion** r_region);
-	HRESULT EXAPI EXCALL ExRegionCreateFromPath(const IExPath* path, const ExMatrixElements* tranform, IExRegion** r_region);
+	HRESULT EXAPI EXCALL ExRegionCreateFromPath(const IExPath* path, const ExMatrix* tranform, IExRegion** r_region);
 	
 }

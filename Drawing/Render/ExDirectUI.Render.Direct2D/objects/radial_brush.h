@@ -50,8 +50,8 @@ namespace ExDirectUI
 			const ExGradientPoint* points, uint32_t count);
 		virtual ~ExRadialBrushD2D();
 
-		EXMETHOD HRESULT EXOBJCALL GetTransform(ExMatrixElements* r_tranform) const override;
-		EXMETHOD HRESULT EXOBJCALL SetTransform(const ExMatrixElements* tranform) override;
+		EXMETHOD HRESULT EXOBJCALL GetTransform(ExMatrix* r_tranform) const override;
+		EXMETHOD HRESULT EXOBJCALL SetTransform(const ExMatrix* tranform) override;
 
 		EXMETHOD HRESULT EXOBJCALL GetExtendMode(ExBrushExtendMode* r_mode) const override;
 		EXMETHOD HRESULT EXOBJCALL SetExtendMode(ExBrushExtendMode mode) override;

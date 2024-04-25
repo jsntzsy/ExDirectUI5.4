@@ -91,7 +91,7 @@ namespace ExDirectUI
 		
 		throw_if_failed(geometry->QueryInterface(&m_geometry), L"查询接口失败");
 	}
-	ExRegionD2D::ExRegionD2D(const IExPath* path, const ExMatrixElements* tranform)
+	ExRegionD2D::ExRegionD2D(const IExPath* path, const ExMatrix* tranform)
 	{
 		D2D1_MATRIX_3X2_F matrix = Matrix(tranform);
 
@@ -106,7 +106,7 @@ namespace ExDirectUI
 
 		throw_if_failed(geometry->QueryInterface(&m_geometry), L"查询接口失败");
 	}
-	ExRegionD2D::ExRegionD2D(const IExRegion* region, const ExMatrixElements* tranform)
+	ExRegionD2D::ExRegionD2D(const IExRegion* region, const ExMatrix* tranform)
 	{
 		D2D1_MATRIX_3X2_F matrix = Matrix(tranform);
 
@@ -125,7 +125,7 @@ namespace ExDirectUI
 	}
 	
 	HRESULT EXOBJCALL ExRegionD2D::CombineWithRect(float left, float top, float right, float bottom,
-		ExRegionCombineMode mode, const ExMatrixElements* tranform)
+		ExRegionCombineMode mode, const ExMatrix* tranform)
 	{
 		//确定矩形边界
 		_offset_(left, top, right, bottom);
@@ -145,7 +145,7 @@ namespace ExDirectUI
 			return S_OK;
 		}catch_default({});
 	}
-	HRESULT EXOBJCALL ExRegionD2D::CombineWithPath(const IExPath* path, ExRegionCombineMode mode, const ExMatrixElements* tranform)
+	HRESULT EXOBJCALL ExRegionD2D::CombineWithPath(const IExPath* path, ExRegionCombineMode mode, const ExMatrix* tranform)
 	{
 		CHECK_PARAM(path);
 
@@ -157,7 +157,7 @@ namespace ExDirectUI
 		}
 		catch_default({});
 	}
-	HRESULT EXOBJCALL ExRegionD2D::CombineWithRegion(const IExRegion* region, ExRegionCombineMode mode, const ExMatrixElements* tranform)
+	HRESULT EXOBJCALL ExRegionD2D::CombineWithRegion(const IExRegion* region, ExRegionCombineMode mode, const ExMatrix* tranform)
 	{
 		CHECK_PARAM(region);
 
@@ -198,7 +198,7 @@ namespace ExDirectUI
 	}
 
 	ID2D1Geometry* EXOBJCALL ExRegionD2D::Combine(ID2D1Geometry* geometry1, ID2D1Geometry* geometry2,
-		ExRegionCombineMode mode, const ExMatrixElements* tranform_matrix)
+		ExRegionCombineMode mode, const ExMatrix* tranform_matrix)
 	{
 		ExAutoPtr<ID2D1PathGeometry> new_geometry;
 

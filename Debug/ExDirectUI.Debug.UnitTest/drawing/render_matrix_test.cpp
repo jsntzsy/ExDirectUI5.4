@@ -47,7 +47,7 @@ protected:
 		return -1;
 	}
 
-	inline int MatrixEquals(const ExMatrixElements3x2& m1, const D2D1::Matrix3x2F& m2)
+	inline int MatrixEquals(const ExMatrix3x2& m1, const D2D1::Matrix3x2F& m2)
 	{
 		float* m1_ = (float*)&m1;
 		float* m2_ = (float*)&m2;

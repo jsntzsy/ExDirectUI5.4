@@ -35,7 +35,7 @@ namespace ExDirectUI
 			matrix._31 == 0.0F && matrix._32 == 0.0F;
 	}
 
-	inline D2D1_MATRIX_3X2_F Matrix(const ExMatrixElements3x2& matrix)
+	inline D2D1_MATRIX_3X2_F Matrix(const ExMatrix3x2& matrix)
 	{
 		return D2D1::Matrix3x2F(
 			matrix._11, matrix._12,
@@ -43,7 +43,7 @@ namespace ExDirectUI
 			matrix._31, matrix._32
 		);
 	}
-	inline D2D1_MATRIX_3X2_F Matrix(const ExMatrixElements3x2* matrix)
+	inline D2D1_MATRIX_3X2_F Matrix(const ExMatrix3x2* matrix)
 	{
 		if (matrix == nullptr) { return D2D1::Matrix3x2F::Identity(); }
 		return D2D1::Matrix3x2F{
@@ -52,9 +52,9 @@ namespace ExDirectUI
 			matrix->_31, matrix->_32
 		};
 	}
-	inline ExMatrixElements3x2 Matrix(const D2D1_MATRIX_3X2_F& matrix)
+	inline ExMatrix3x2 Matrix(const D2D1_MATRIX_3X2_F& matrix)
 	{
-		return ExMatrixElements3x2{
+		return ExMatrix3x2{
 			matrix._11, matrix._12,
 			matrix._21, matrix._22,
 			matrix._31, matrix._32

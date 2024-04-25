@@ -42,14 +42,14 @@ namespace ExDirectUI
 	ExCanvasBrushD2D::~ExCanvasBrushD2D()
 	{
 	}
-	HRESULT EXOBJCALL ExCanvasBrushD2D::GetTransform(ExMatrixElements* r_tranform) const
+	HRESULT EXOBJCALL ExCanvasBrushD2D::GetTransform(ExMatrix* r_tranform) const
 	{
 		CHECK_PARAM(r_tranform);
 
 		m_brush->GetTransform((D2D1_MATRIX_3X2_F*)r_tranform);
 		return S_OK;
 	}
-	HRESULT EXOBJCALL ExCanvasBrushD2D::SetTransform(const ExMatrixElements* tranform)
+	HRESULT EXOBJCALL ExCanvasBrushD2D::SetTransform(const ExMatrix* tranform)
 	{
 		D2D1_MATRIX_3X2_F mx = Matrix(tranform);
 		m_brush->SetTransform(mx);

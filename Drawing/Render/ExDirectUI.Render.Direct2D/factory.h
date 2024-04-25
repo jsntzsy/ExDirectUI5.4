@@ -88,7 +88,7 @@ namespace ExDirectUI
 			float radius_left_top, float radius_right_top, float radius_right_bottom, float radius_left_bottom,
 			IExRegion** r_region) override;
 		EXMETHOD HRESULT EXOBJCALL CreateEllipseRegion(float left, float top, float right, float bottom, IExRegion** r_region) override;
-		EXMETHOD HRESULT EXOBJCALL CreatePathRegion(const IExPath* path, const ExMatrixElements* tranform, IExRegion** r_region) override;
+		EXMETHOD HRESULT EXOBJCALL CreatePathRegion(const IExPath* path, const ExMatrix* tranform, IExRegion** r_region) override;
 
 		EXMETHOD HRESULT EXOBJCALL CreatePen(EXARGB color, float width, IExPen** r_pen) override;
 		EXMETHOD HRESULT EXOBJCALL CreatePenFromBrush(const IExBrush* brush, float width, IExPen** r_pen) override;

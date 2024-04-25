@@ -47,9 +47,9 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL AddText(const IExFont* font, LPCWSTR text, uint32_t text_length, DWORD text_format,
 			float left, float top, float right, float bottom) PURE;
 
-		EXMETHOD HRESULT EXOBJCALL HitTest(float x, float y, const ExMatrixElements* tranform) const PURE;
-		EXMETHOD HRESULT EXOBJCALL HitTestStroke(const IExPen* pen, float x, float y, const ExMatrixElements* tranform) const PURE;
-		EXMETHOD HRESULT EXOBJCALL GetBounds(ExRectF* r_rect, const ExMatrixElements* tranform) const PURE;
+		EXMETHOD HRESULT EXOBJCALL HitTest(float x, float y, const ExMatrix* tranform) const PURE;
+		EXMETHOD HRESULT EXOBJCALL HitTestStroke(const IExPen* pen, float x, float y, const ExMatrix* tranform) const PURE;
+		EXMETHOD HRESULT EXOBJCALL GetBounds(ExRectF* r_rect, const ExMatrix* tranform) const PURE;
 
 	};
 

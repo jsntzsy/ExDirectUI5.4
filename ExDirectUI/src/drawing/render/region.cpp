@@ -32,7 +32,7 @@ namespace ExDirectUI
 		return g_drawing_render->CreateRectRegion(left, top, right, bottom, r_region);
 	}
 
-	HRESULT EXAPI EXCALL ExRegionCreateFromPath(const IExPath* path, const ExMatrixElements* tranform, IExRegion** r_region)
+	HRESULT EXAPI EXCALL ExRegionCreateFromPath(const IExPath* path, const ExMatrix* tranform, IExRegion** r_region)
 	{
 		CHECK_PARAM(path);
 		CHECK_PARAM(r_region);

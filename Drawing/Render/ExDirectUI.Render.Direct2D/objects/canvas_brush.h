@@ -40,8 +40,8 @@ namespace ExDirectUI
 		ExCanvasBrushD2D(const IExCanvasTarget* target_src, ExBrushExtendMode extend_mode, EXCHANNEL alpha);
 		virtual ~ExCanvasBrushD2D();
 
-		EXMETHOD HRESULT EXOBJCALL GetTransform(ExMatrixElements* r_tranform) const override;
-		EXMETHOD HRESULT EXOBJCALL SetTransform(const ExMatrixElements* tranform) override;
+		EXMETHOD HRESULT EXOBJCALL GetTransform(ExMatrix* r_tranform) const override;
+		EXMETHOD HRESULT EXOBJCALL SetTransform(const ExMatrix* tranform) override;
 
 		EXMETHOD HRESULT EXOBJCALL GetExtendMode(ExBrushExtendMode* r_mode) const override;
 		EXMETHOD HRESULT EXOBJCALL SetExtendMode(ExBrushExtendMode mode) override;

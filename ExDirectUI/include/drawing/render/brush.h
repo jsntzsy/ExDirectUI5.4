@@ -33,8 +33,8 @@ namespace ExDirectUI
 	/// 渲染器画刷接口
 	EXINTERFACE("6AECD323-B229-4B26-A741-6E57EB82BF3C") IExBrush : public IExRenderObject
 	{
-		EXMETHOD HRESULT EXOBJCALL GetTransform(ExMatrixElements* r_tranform) const PURE;
-		EXMETHOD HRESULT EXOBJCALL SetTransform(const ExMatrixElements * tranform) PURE;
+		EXMETHOD HRESULT EXOBJCALL GetTransform(ExMatrix* r_tranform) const PURE;
+		EXMETHOD HRESULT EXOBJCALL SetTransform(const ExMatrix * tranform) PURE;
 
 		EXMETHOD HRESULT EXOBJCALL GetExtendMode(ExBrushExtendMode* r_mode) const PURE;
 		EXMETHOD HRESULT EXOBJCALL SetExtendMode(ExBrushExtendMode mode) PURE;

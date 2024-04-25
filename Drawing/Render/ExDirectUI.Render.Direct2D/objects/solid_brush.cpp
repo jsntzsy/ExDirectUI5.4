@@ -22,11 +22,11 @@ namespace ExDirectUI
 	ExSolidBrushD2D::~ExSolidBrushD2D()
 	{
 	}
-	HRESULT EXOBJCALL ExSolidBrushD2D::GetTransform(ExMatrixElements* r_tranform) const
+	HRESULT EXOBJCALL ExSolidBrushD2D::GetTransform(ExMatrix* r_tranform) const
 	{
 		handle_ex(E_NOTIMPL, L"不支持的操作");
 	}
-	HRESULT EXOBJCALL ExSolidBrushD2D::SetTransform(const ExMatrixElements* tranform)
+	HRESULT EXOBJCALL ExSolidBrushD2D::SetTransform(const ExMatrix* tranform)
 	{
 		handle_ex(E_NOTIMPL, L"不支持的操作");
 	}

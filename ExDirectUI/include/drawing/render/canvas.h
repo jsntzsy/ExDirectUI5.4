@@ -177,8 +177,8 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL SetClipRegion(IExRegion* clip_regioin) PURE;
 		EXMETHOD HRESULT EXOBJCALL ResetClip() PURE;
 
-		EXMETHOD HRESULT EXOBJCALL GetTransform(ExMatrixElements* r_matrix) const PURE;
-		EXMETHOD HRESULT EXOBJCALL SetTransform(const ExMatrixElements* matrix) PURE;
+		EXMETHOD HRESULT EXOBJCALL GetTransform(ExMatrix* r_matrix) const PURE;
+		EXMETHOD HRESULT EXOBJCALL SetTransform(const ExMatrix* matrix) PURE;
 
 		EXMETHOD HRESULT EXOBJCALL GetDC(HDC* r_dc) PURE;
 		EXMETHOD HRESULT EXOBJCALL ReleaseDC() PURE;
