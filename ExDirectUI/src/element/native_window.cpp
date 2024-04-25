@@ -10,6 +10,7 @@
 #include "stdafx.h"
 #include "element/native_window.h"
 #include "src/app/engine.h"
+#include "src/drawing/render/factory.h"
 
 namespace ExDirectUI
 {
@@ -94,9 +95,65 @@ namespace ExDirectUI
 		return (WNDPROC)SetWindowLongPtr(window, GWLP_WNDPROC, (LONG_PTR)new_proc);
 	}
 
+	DWORD EXAPI EXCALL ExWndModifyStyle(HWND window, DWORD style_add, DWORD style_remove, bool ex_style)
+	{
+		CHECK_PARAM_RET(window, 0);
 
+		int index = ex_style ? GWL_EXSTYLE : GWL_STYLE;
+		DWORD style = (DWORD)GetWindowLong(window, index);
+		
+		style |= style_add;
+		style &= ~style_remove;
 
+		return (DWORD)SetWindowLong(window, index, style);
+	}
 
+	WPARAM EXAPI EXCALL ExWndMessageLoop()
+	{
+		MSG msg{};
+		while (GetMessageW(&msg, NULL, 0, 0)) {
+			TranslateMessage(&msg);
+			DispatchMessageW(&msg);
+		}
+		return msg.wParam;
+	}
+
+	void EXAPI EXCALL ExWndDoEvent()
+	{
+		MSG msg{};
+		while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
+			//if (!IsDialogMessageW(NULL, &msg))
+			{
+				TranslateMessage(&msg);
+				DispatchMessageW(&msg);
+			}
+		}
+	}
+
+	HICON EXAPI EXCALL ExWndGetIcon(HWND window, bool small_icon)
+	{
+		HICON icon = (HICON)SendMessageW(window, WM_GETICON, small_icon ? ICON_SMALL : ICON_BIG, 0);
+		if (!icon) {
+			icon = (HICON)GetClassLongPtrW(window, small_icon ? GCLP_HICONSM : GCLP_HICON);
+		}
+		return icon;
+	}
+
+	//uint32_t EXAPI EXCALL ExWndGetDPI(HWND window)
+	//{
+	//	FLOAT dpi = g_drawing_render;
+	//	if (_GetDpiFromMonitor && hWnd)
+	//	{
+	//		HMONITOR hMonitor = MonitorFromWindow(hWnd, MONITOR_DEFAULTTONEAREST);
+	//		if (hMonitor)
+	//		{
+	//			UINT dpiX = 0, dpiY = 0;
+	//			if (SUCCEEDED(_GetDpiFromMonitor(hMonitor, 0, &dpiX, &dpiY)))	//MDT_EFFECTIVE_DPI
+	//				dpi = dpiX / 96.0F;
+	//		}
+	//	}
+	//	return dpi;
+	//}
 
 }
 
