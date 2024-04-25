@@ -15,7 +15,7 @@
 
 namespace ExDirectUI
 {
-	
+
 	//后期可能改为内存池分配(超过指定尺寸的按普通申请,小于某个尺寸则用内存池)
 #define V_NEW(size)			exalloc(size)
 #define V_FREE(ptr,size)	exfree(ptr)
@@ -186,6 +186,33 @@ namespace ExDirectUI
 		}
 
 		return S_OK;
+	}
+
+	HRESULT EXAPI EXCALL ExVariantChangeType(ExVariant* dest_variant, const ExVariant* src_variant, WORD flags, VARTYPE vt)
+	{
+		CHECK_PARAM(dest_variant);
+		CHECK_PARAM(src_variant);
+
+		if (!V_ISEXT(src_variant)) {
+			return VariantChangeType(dest_variant, src_variant, flags, vt);
+		}
+
+		*dest_variant = *src_variant;
+		if (vt == VT_BSTR) {
+			V_VT(dest_variant) = vt;
+			return ExVariantToString(dest_variant, VT_EMPTY, &V_BSTR(dest_variant));
+		}
+
+		switch (V_VT(dest_variant))
+		{
+		case EVT_CHANNEL: V_VT(dest_variant) = VT_UI1; break;
+		case EVT_COLOR: V_VT(dest_variant) = VT_UI4; break;
+		case EVT_FLAGS: V_VT(dest_variant) = VT_UI4; break;
+		case EVT_EXOBJECT: V_VT(dest_variant) = VT_UNKNOWN; break;
+		default:  V_VT(dest_variant) = VT_BYREF; break;
+		}
+
+		return VariantChangeType(dest_variant, dest_variant, flags, vt);
 	}
 
 	HRESULT EXAPI EXCALL ExVariantToString(ExVariant* variant, VARTYPE vt, BSTR* r_str)
@@ -487,7 +514,7 @@ namespace ExDirectUI
 
 		return S_OK;
 	}
-	
+
 
 	/////////////////////////
 
@@ -512,8 +539,8 @@ namespace ExDirectUI
 		return shadow->info.texture.src_normal;
 	}
 
-	
-	HRESULT EXAPI EXCALL ExVariantDraw(IExCanvas* canvas, float left, float top, float right, float bottom, 
+
+	HRESULT EXAPI EXCALL ExVariantDraw(IExCanvas* canvas, float left, float top, float right, float bottom,
 		ExVariant* variant, DWORD state, DWORD draw_mode, LPARAM lparam)
 	{
 		CHECK_PARAM(canvas);
@@ -609,7 +636,7 @@ namespace ExDirectUI
 				auto& texture = shadow->info.texture;
 				EXCHANNEL alpha = ALPHA_OPAQUE;
 				ExRectF& src = _StateToRectF(shadow, state, alpha);
-				
+
 				if (!texture.grids.IsEmpty()) {
 					hr = canvas->DrawGridsImagePart(
 						texture.image, left, top, right, bottom,
@@ -627,7 +654,7 @@ namespace ExDirectUI
 			}
 			else { hr = S_FALSE; }
 		}break;
-			
+
 
 
 		case EVT_EXOBJECT:

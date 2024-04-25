@@ -52,6 +52,10 @@ namespace ExDirectUI
 			return float_eq(x, pt.x) && float_eq(y, pt.y);
 		}
 
+		inline ExPointF Rounding()
+		{
+			return ExPointF(roundf(x), roundf(y));
+		}
 
 		ExPoint ToPoint() const;
 	};
@@ -100,6 +104,17 @@ namespace ExDirectUI
 			return rc;
 		}
 
+		inline ExRect CenterOf(float width, float height)
+		{
+			return ExRect(
+				(left + right - width) / 2,
+				(top + bottom - height) / 2,
+				(left + right + width) / 2,
+				(top + bottom + height) / 2
+			);
+		}
+
+
 		inline bool operator==(ExRect& rc) const
 		{
 			return left == rc.left && top == rc.top && right == rc.right && bottom == rc.bottom;
@@ -147,6 +162,21 @@ namespace ExDirectUI
 			rc.right = max(left, right);
 			rc.bottom = max(top, bottom);
 			return rc;
+		}
+
+		inline ExRectF Rounding()
+		{
+			return ExRectF(roundf(left), roundf(top), roundf(right), roundf(bottom));
+		}
+
+		inline ExRectF CenterOf(float width, float height)
+		{
+			return ExRectF(
+				(left + right - width) / 2,
+				(top + bottom - height) / 2,
+				(left + right + width) / 2,
+				(top + bottom + height) / 2
+			);
 		}
 
 		inline bool operator==(ExRectF& rc) const

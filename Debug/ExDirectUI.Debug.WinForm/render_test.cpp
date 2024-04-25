@@ -648,10 +648,10 @@ namespace ExDirectUI
 				}
 
 
-				//将区域分割为 3 行 4 列
+				//将区域分割为 4 行 4 列
 				const int padding = 10;
 				auto rects = _RenderTest_SplitRect(client,
-					3, 4, { 100,100 }
+					4, 4, { 100,100 }
 				);
 
 				//绘制填充基本图形
@@ -662,6 +662,7 @@ namespace ExDirectUI
 					auto& rect = rects[i];
 					canvas->DrawRect(pen, rect.left, rect.top, rect.right, rect.bottom);
 					rect.Inflate(-padding, -padding);
+					rect = rect.Rounding();
 
 					if (type == 0) {
 						theme->DrawAttribute(
@@ -673,20 +674,42 @@ namespace ExDirectUI
 							ExVariantDrawMode::Fill,
 							true
 						);
+					}
+					else if (type == 1) {
+						theme->DrawAttribute(
+							canvas,
+							_expand_rect_(rect),
+							ExAtom(L"SysButton"),
+							ExAtom(L"close-texture"),
+							pow(2, mode),
+							ExVariantDrawMode::Fill,
+							false
+						);
+					}
+					else if (type == 2) {
+						
+						ExVariant v_box_size{};
+						theme->GetAttribute(
+							ExAtom(L"CheckBox"),
+							ExAtom(L"box-size"),
+							&v_box_size
+						);
+						ExVariantChangeType(&v_box_size, &v_box_size, 0, VT_R4);
 
+						ExRectF rc = rect.CenterOf(V_R4(&v_box_size), V_R4(&v_box_size)).Rounding();
 
+						theme->DrawAttribute(
+							canvas,
+							_expand_rect_(rc),
+							ExAtom(L"CheckBox"),
+							ExAtom(L"half-box-texture"),
+							pow(2, mode),
+							ExVariantDrawMode::Fill,
+							false
+						);
 					}
 
-
-
-
 				}
-
-
-
-
-
-
 
 			}
 #pragma endregion
@@ -717,7 +740,7 @@ namespace ExDirectUI
 		case WM_CREATE:
 			render = ExDbgGetModuleUtils()->GetRender();
 			_RenderTest_InitObjects_();
-			SetTimer(window, 100, 5000, nullptr);
+			//SetTimer(window, 100, 5000, nullptr);
 			break;
 		case WM_DESTROY:
 			_RenderTest_ReleaseObjects_();

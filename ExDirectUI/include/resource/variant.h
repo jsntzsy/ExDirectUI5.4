@@ -58,6 +58,7 @@ namespace ExDirectUI
 	HRESULT EXAPI EXCALL ExVariantInit(ExVariant* variant, VARTYPE vt = VT_EMPTY);
 	HRESULT EXAPI EXCALL ExVariantClear(ExVariant* variant);
 	HRESULT EXAPI EXCALL ExVariantCopy(ExVariant* dest_variant, const ExVariant* src_variant);
+	HRESULT EXAPI EXCALL ExVariantChangeType(ExVariant* dest_variant, const ExVariant* src_variant, WORD flags, VARTYPE vt);
 	HRESULT EXAPI EXCALL ExVariantToString(ExVariant* variant, VARTYPE vt, BSTR* r_str);
 	HRESULT EXAPI EXCALL ExVariantGetValuePtr(ExVariant* variant, void** r_value);
 	HRESULT EXAPI EXCALL ExVariantDraw(IExCanvas* canvas, float left, float top, float right, float bottom, 
