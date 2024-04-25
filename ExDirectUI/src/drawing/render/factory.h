@@ -15,6 +15,7 @@ namespace ExDirectUI
 	extern IExRender* g_drawing_render;
 	extern ExFontInfo g_drawing_default_font;
 	extern DWORD g_drawing_antialias_mode;
+	extern uint32_t g_drawing_default_dpi;
 
 	typedef BOOL(WINAPI* _UpdateLayeredWindowIndirectProc)(HWND window, const UPDATELAYEREDWINDOWINFO* ulwi);
 	extern _UpdateLayeredWindowIndirectProc _UpdateLayeredWindowIndirect;

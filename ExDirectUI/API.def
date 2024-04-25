@@ -32,6 +32,8 @@ EXPORTS
 		ExModuleUnLoad
 		ExModuleGetInfo
 		ExModuleInvoke
+	;辅助功能函数
+		ExSleep
 
 ;渲染层
 	;图像解码器
@@ -126,6 +128,25 @@ EXPORTS
 		ExVariantGetValuePtr
 		ExVariantInit
 		ExVariantToString
+		ExVariantChangeType
+		ExVariantDraw
+	;主题管理
+		ExThemeLoad
+		ExThemeLoadFromPackage
+
+;UI元素层
+	;原生窗口操作
+		ExWndSubClass
+		ExWndGetHICON
+		ExWndCreate	
+		ExWndGetDPI	
+		ExWndMessageLoop	
+		ExWndModifyStyle	
+		ExWndRegister	
+		ExWndRegisterEx	
+		ExWndDoEvent
+		ExWndCenterTo
+
 
 ;调试层
 	;状态处理

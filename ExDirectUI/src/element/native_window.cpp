@@ -9,11 +9,45 @@
 
 #include "stdafx.h"
 #include "element/native_window.h"
+#include "src/kernel/winapi.h"
 #include "src/app/engine.h"
 #include "src/drawing/render/factory.h"
+#include "src/element/native_window.h"
 
 namespace ExDirectUI
 {
+	ATOM g_element_default_wnd_class_atom = 0;
+	_GetDpiForMonitorProc _GetDpiForMonitor = nullptr;
+	
+
+	void EXCALL _ExWnd_Init(const ExEngineInitInfo* init_info)
+	{
+		if (init_info->default_class_name) {
+			g_element_default_wnd_class_atom = ExWndRegister(
+				init_info->default_class_name, DefWindowProcW
+			);
+		}
+		
+		if (g_winapi_shcore) {
+			_GetDpiForMonitor = (_GetDpiForMonitorProc)
+				GetProcAddress(g_winapi_shcore, "GetDpiForMonitor");
+		}
+		
+	}
+
+	void EXCALL _ExWnd_UnInit()
+	{
+		_GetDpiForMonitor = nullptr;
+
+		if (g_element_default_wnd_class_atom) {
+			UnregisterClassW(
+				(LPCWSTR)g_element_default_wnd_class_atom, 
+				g_engine_instance
+			);
+		}
+		
+	}
+
 	ATOM EXAPI EXCALL ExWndRegister(LPCWSTR class_name, WNDPROC wnd_proc, DWORD style)
 	{
 		return ExWndRegisterEx(class_name, wnd_proc, style);
@@ -130,7 +164,7 @@ namespace ExDirectUI
 		}
 	}
 
-	HICON EXAPI EXCALL ExWndGetIcon(HWND window, bool small_icon)
+	HICON EXAPI EXCALL ExWndGetHICON(HWND window, bool small_icon)
 	{
 		HICON icon = (HICON)SendMessageW(window, WM_GETICON, small_icon ? ICON_SMALL : ICON_BIG, 0);
 		if (!icon) {
@@ -139,21 +173,22 @@ namespace ExDirectUI
 		return icon;
 	}
 
-	//uint32_t EXAPI EXCALL ExWndGetDPI(HWND window)
-	//{
-	//	FLOAT dpi = g_drawing_render;
-	//	if (_GetDpiFromMonitor && hWnd)
-	//	{
-	//		HMONITOR hMonitor = MonitorFromWindow(hWnd, MONITOR_DEFAULTTONEAREST);
-	//		if (hMonitor)
-	//		{
-	//			UINT dpiX = 0, dpiY = 0;
-	//			if (SUCCEEDED(_GetDpiFromMonitor(hMonitor, 0, &dpiX, &dpiY)))	//MDT_EFFECTIVE_DPI
-	//				dpi = dpiX / 96.0F;
-	//		}
-	//	}
-	//	return dpi;
-	//}
+	uint32_t EXAPI EXCALL ExWndGetDPI(HWND window)
+	{
+		uint32_t dpi = g_drawing_default_dpi;
+		
+		if (_GetDpiForMonitor && window) {
+			HMONITOR monitor = MonitorFromWindow(window, MONITOR_DEFAULTTONEAREST);
+			if (monitor) {
+				UINT dpi_x = 0, dpi_y = 0;
+				if (SUCCEEDED(_GetDpiForMonitor(monitor, 0, &dpi_x, &dpi_y))) { 	//MDT_EFFECTIVE_DPI
+					dpi = dpi_x;
+				}
+			}
+		}
+
+		return dpi;
+	}
 
 }
 

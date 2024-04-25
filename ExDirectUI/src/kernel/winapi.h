@@ -14,6 +14,8 @@ namespace ExDirectUI
 
 	extern HMODULE g_winapi_ntdll;
 	extern HMODULE g_winapi_user32;
+	extern HMODULE g_winapi_shcore;
+	
 	extern _RtlComputeCrc32Proc _RtlComputeCrc32;
 
 	HRESULT _ExWinAPI_Init(const ExEngineInitInfo* init_info);

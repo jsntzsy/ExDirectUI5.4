@@ -36,6 +36,7 @@
 #include "kernel/data.h"
 #include "kernel/new.h"
 #include "kernel/module.h"
+#include "kernel/winapi.h"
 
 #include "drawing/image_decoder.h"
 #include "drawing/render.h"
@@ -48,6 +49,8 @@
 #include "resource/package.h"
 #include "resource/theme.h"
 
+#include "element/native_window.h"
+#include "element/element.h"
 
 
 #include "debug/status_handle.h"

@@ -20,6 +20,7 @@ namespace ExDirectUI
 	DWORD EXAPI EXCALL ExWndModifyStyle(HWND window, DWORD style_add = 0, DWORD style_remove = 0, bool ex_style = false);
 	WPARAM EXAPI EXCALL ExWndMessageLoop();
 	void EXAPI EXCALL ExWndDoEvent();
-	HICON EXAPI EXCALL ExWndGetIcon(HWND window, bool small_icon);
+	HICON EXAPI EXCALL ExWndGetHICON(HWND window, bool small_icon);
+	uint32_t EXAPI EXCALL ExWndGetDPI(HWND window);
 
 }

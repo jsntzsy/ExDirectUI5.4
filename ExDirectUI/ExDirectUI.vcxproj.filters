@@ -527,6 +527,12 @@
     <ClInclude Include="src\element\thunk_window.h">
       <Filter>element\window</Filter>
     </ClInclude>
+    <ClInclude Include="src\element\native_window.h">
+      <Filter>element\window</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kernel\winapi.h">
+      <Filter>kernel\winapi</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="API.def">

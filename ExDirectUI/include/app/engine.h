@@ -66,6 +66,9 @@ namespace ExDirectUI
 		/// 抗锯齿模式
 		DWORD antialias_mode;
 
+		/// 默认窗口类名
+		LPCWSTR default_class_name;
+		
 	};
 
 

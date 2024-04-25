@@ -14,6 +14,8 @@ namespace ExDirectUI
 {
 	HMODULE g_winapi_ntdll = NULL;
 	HMODULE g_winapi_user32 = NULL;
+	HMODULE g_winapi_shcore = NULL;
+
 	_RtlComputeCrc32Proc _RtlComputeCrc32 = nullptr;
 
 	HRESULT _ExWinAPI_Init(const ExEngineInitInfo* init_info)
@@ -26,15 +28,59 @@ namespace ExDirectUI
 
 		g_winapi_user32 = LoadLibraryW(L"user32.dll");
 		handle_if_false(g_winapi_user32, EE_LOST_NECESSARY, L"user32.dll加载失败");
-		
+
+		g_winapi_shcore = LoadLibraryW(L"shcore.dll");
+
 		return S_OK;
 	}
 	void _ExWinAPI_UnInit()
 	{
 		_RtlComputeCrc32 = nullptr;
+		SAFE_FREE(g_winapi_shcore, FreeLibrary);
 		SAFE_FREE(g_winapi_user32, FreeLibrary);
 		SAFE_FREE(g_winapi_ntdll, FreeLibrary);
 	}
+
+	/////////////////////////////////
+
+	bool EXAPI EXCALL ExSleep(uint64_t us, bool block)
+	{
+		LARGE_INTEGER li{};
+		li.QuadPart = us * -10;
+
+		HANDLE timer = CreateWaitableTimer(nullptr, false, nullptr);
+		return_if_false(timer, {}, false);
+
+		return_if_false(
+			SetWaitableTimer(
+				timer, &li, 0,
+				nullptr, nullptr, false
+			), { CloseHandle(timer); }, false
+		);
+
+		if (block) {
+			WaitForSingleObject(timer, INFINITE);
+		}
+		else {
+			while (MsgWaitForMultipleObjects(1, &timer, false,
+				INFINITE, QS_ALLEVENTS)) {
+				ExWndDoEvent();
+			}
+		}
+
+		CloseHandle(timer);
+		return true;
+	}
+
+
+
+
+
+
+
+
+
+
 }
 
 
