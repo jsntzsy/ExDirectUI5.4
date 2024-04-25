@@ -104,7 +104,7 @@ namespace ExDirectUI
 			return rc;
 		}
 
-		inline ExRect CenterOf(float width, float height)
+		inline ExRect CenterRect(float width, float height)
 		{
 			return ExRect(
 				(left + right - width) / 2,
@@ -169,7 +169,7 @@ namespace ExDirectUI
 			return ExRectF(roundf(left), roundf(top), roundf(right), roundf(bottom));
 		}
 
-		inline ExRectF CenterOf(float width, float height)
+		inline ExRectF CenterRect(float width, float height)
 		{
 			return ExRectF(
 				(left + right - width) / 2,

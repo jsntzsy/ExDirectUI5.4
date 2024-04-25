@@ -195,6 +195,8 @@
     <ClCompile Include="src\drawing\render\radial_brush.cpp" />
     <ClCompile Include="src\drawing\render\region.cpp" />
     <ClCompile Include="src\drawing\render\solid_brush.cpp" />
+    <ClCompile Include="src\element\element.cpp" />
+    <ClCompile Include="src\element\native_window.cpp" />
     <ClCompile Include="src\kernel\atom.cpp" />
     <ClCompile Include="src\kernel\data.cpp" />
     <ClCompile Include="src\kernel\memory.cpp" />
@@ -254,6 +256,8 @@
     <ClInclude Include="include\drawing\render\radial_brush.h" />
     <ClInclude Include="include\drawing\render\region.h" />
     <ClInclude Include="include\drawing\render\solid_brush.h" />
+    <ClInclude Include="include\element\element.h" />
+    <ClInclude Include="include\element\native_window.h" />
     <ClInclude Include="include\ExDirectUI.h" />
     <ClInclude Include="include\kernel\atom.h" />
     <ClInclude Include="include\kernel\data.h" />
@@ -273,6 +277,8 @@
     <ClInclude Include="src\drawing\image_decoder.h" />
     <ClInclude Include="src\drawing\render\factory.h" />
     <ClInclude Include="src\drawing\render\font.h" />
+    <ClInclude Include="src\element\element.h" />
+    <ClInclude Include="src\element\thunk_window.h" />
     <ClInclude Include="src\kernel\builtin_modules.hpp" />
     <ClInclude Include="src\kernel\builtin_modules_define.h" />
     <ClInclude Include="src\kernel\module.h" />

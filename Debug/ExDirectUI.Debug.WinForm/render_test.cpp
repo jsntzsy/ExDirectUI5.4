@@ -696,7 +696,7 @@ namespace ExDirectUI
 						);
 						ExVariantChangeType(&v_box_size, &v_box_size, 0, VT_R4);
 
-						ExRectF rc = rect.CenterOf(V_R4(&v_box_size), V_R4(&v_box_size)).Rounding();
+						ExRectF rc = rect.CenterRect(V_R4(&v_box_size), V_R4(&v_box_size)).Rounding();
 
 						theme->DrawAttribute(
 							canvas,

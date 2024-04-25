@@ -279,6 +279,12 @@
     <ClCompile Include="src\resource\theme.cpp">
       <Filter>resource\theme</Filter>
     </ClCompile>
+    <ClCompile Include="src\element\element.cpp">
+      <Filter>element\ui_element</Filter>
+    </ClCompile>
+    <ClCompile Include="src\element\native_window.cpp">
+      <Filter>element\window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -508,6 +514,18 @@
     </ClInclude>
     <ClInclude Include="src\resource\type_parsers\brush_type_parser.hpp">
       <Filter>resource\parser\type_parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\element\element.h">
+      <Filter>element\ui_element</Filter>
+    </ClInclude>
+    <ClInclude Include="include\element\element.h">
+      <Filter>element\ui_element</Filter>
+    </ClInclude>
+    <ClInclude Include="include\element\native_window.h">
+      <Filter>element\window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\element\thunk_window.h">
+      <Filter>element\window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
