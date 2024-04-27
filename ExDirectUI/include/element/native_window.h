@@ -10,6 +10,8 @@
 
 namespace ExDirectUI
 {
+	typedef DWORD(CALLBACK* ExMessageLoopProc)(MSG* msg);
+
 	ATOM EXAPI EXCALL ExWndRegister(LPCWSTR class_name, WNDPROC wnd_proc, DWORD style = -1);
 	ATOM EXAPI EXCALL ExWndRegisterEx(LPCWSTR class_name, WNDPROC wnd_proc, DWORD style = -1,
 		HICON icon = NULL, HICON icon_small = NULL, HCURSOR cursor = NULL, HBRUSH brush = NULL);
@@ -19,6 +21,7 @@ namespace ExDirectUI
 	WNDPROC EXAPI EXCALL ExWndSubClass(HWND window, WNDPROC new_proc);
 	DWORD EXAPI EXCALL ExWndModifyStyle(HWND window, DWORD style_add = 0, DWORD style_remove = 0, bool ex_style = false);
 	WPARAM EXAPI EXCALL ExWndMessageLoop();
+	WPARAM EXAPI EXCALL ExWndMessageLoopEx(HWND window = NULL, HACCEL accelerator = NULL, ExMessageLoopProc msg_proc = nullptr);
 	void EXAPI EXCALL ExWndDoEvent();
 	HICON EXAPI EXCALL ExWndGetHICON(HWND window, bool small_icon);
 	uint32_t EXAPI EXCALL ExWndGetDPI(HWND window);

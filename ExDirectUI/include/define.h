@@ -145,6 +145,10 @@ enum _##name##_Enum_::Values
 
 #pragma region 去除define
 
+#undef SendMessage
+#undef PostMessage
+#undef DispatchMessage
+
 #undef LoadModule
 #undef FreeModule
 #undef GetObject

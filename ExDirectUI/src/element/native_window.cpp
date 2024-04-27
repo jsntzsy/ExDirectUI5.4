@@ -18,7 +18,7 @@ namespace ExDirectUI
 {
 	ATOM g_element_default_wnd_class_atom = 0;
 	_GetDpiForMonitorProc _GetDpiForMonitor = nullptr;
-	
+
 
 	void EXCALL _ExWnd_Init(const ExEngineInitInfo* init_info)
 	{
@@ -27,12 +27,12 @@ namespace ExDirectUI
 				init_info->default_class_name, DefWindowProcW
 			);
 		}
-		
+
 		if (g_winapi_shcore) {
 			_GetDpiForMonitor = (_GetDpiForMonitorProc)
 				GetProcAddress(g_winapi_shcore, "GetDpiForMonitor");
 		}
-		
+
 	}
 
 	void EXCALL _ExWnd_UnInit()
@@ -41,11 +41,11 @@ namespace ExDirectUI
 
 		if (g_element_default_wnd_class_atom) {
 			UnregisterClassW(
-				(LPCWSTR)g_element_default_wnd_class_atom, 
+				(LPCWSTR)g_element_default_wnd_class_atom,
 				g_engine_instance
 			);
 		}
-		
+
 	}
 
 	ATOM EXAPI EXCALL ExWndRegister(LPCWSTR class_name, WNDPROC wnd_proc, DWORD style)
@@ -125,7 +125,7 @@ namespace ExDirectUI
 	{
 		CHECK_PARAM_RET(window, nullptr);
 		CHECK_PARAM_RET(new_proc, nullptr);
-		
+
 		return (WNDPROC)SetWindowLongPtr(window, GWLP_WNDPROC, (LONG_PTR)new_proc);
 	}
 
@@ -135,7 +135,7 @@ namespace ExDirectUI
 
 		int index = ex_style ? GWL_EXSTYLE : GWL_STYLE;
 		DWORD style = (DWORD)GetWindowLong(window, index);
-		
+
 		style |= style_add;
 		style &= ~style_remove;
 
@@ -149,6 +149,31 @@ namespace ExDirectUI
 			TranslateMessage(&msg);
 			DispatchMessageW(&msg);
 		}
+		return msg.wParam;
+	}
+
+	WPARAM EXAPI EXCALL ExWndMessageLoopEx(HWND window, HACCEL accelerator, ExMessageLoopProc msg_proc)
+	{
+		MSG msg = {};
+
+		while (GetMessageW(&msg, NULL, 0, 0)) {
+
+			if (msg_proc) {
+				DWORD result = msg_proc(&msg);
+				if (result == 1) { break; }
+				if (result == 2) { continue; }
+			}
+
+			if (accelerator == NULL || !TranslateAcceleratorW(window, accelerator, &msg)) {
+				if (!IsDialogMessageW(window, &msg)) {
+					TranslateMessage(&msg);
+					DispatchMessageW(&msg);
+				}
+			}
+
+			if (window && !IsWindow(window)) { break; }
+		}
+
 		return msg.wParam;
 	}
 
@@ -166,6 +191,8 @@ namespace ExDirectUI
 
 	HICON EXAPI EXCALL ExWndGetHICON(HWND window, bool small_icon)
 	{
+		CHECK_PARAM_RET(window, NULL);
+
 		HICON icon = (HICON)SendMessageW(window, WM_GETICON, small_icon ? ICON_SMALL : ICON_BIG, 0);
 		if (!icon) {
 			icon = (HICON)GetClassLongPtrW(window, small_icon ? GCLP_HICONSM : GCLP_HICON);
@@ -175,8 +202,9 @@ namespace ExDirectUI
 
 	uint32_t EXAPI EXCALL ExWndGetDPI(HWND window)
 	{
+		CHECK_PARAM_RET(window, 0);
+
 		uint32_t dpi = g_drawing_default_dpi;
-		
 		if (_GetDpiForMonitor && window) {
 			HMONITOR monitor = MonitorFromWindow(window, MONITOR_DEFAULTTONEAREST);
 			if (monitor) {
