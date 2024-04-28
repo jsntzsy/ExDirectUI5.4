@@ -134,5 +134,14 @@ namespace ExDirectUI
 
 #pragma endregion
 
+	inline void* ExThunkWindow(ExThunkWindowProc wnd_proc, LPVOID ptr)
+	{
+		ExThunkWindowData* thunk_data = (ExThunkWindowData*)VirtualAlloc(
+			nullptr, sizeof(ExThunkWindowData), MEM_COMMIT,
+			PAGE_EXECUTE_READWRITE
+		);
+
+		return thunk_data ? thunk_data->Init(wnd_proc, ptr) : nullptr;
+	}
 
 }

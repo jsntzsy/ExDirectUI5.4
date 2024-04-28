@@ -533,6 +533,9 @@
     <ClInclude Include="include\kernel\winapi.h">
       <Filter>kernel\winapi</Filter>
     </ClInclude>
+    <ClInclude Include="include\element\event.hpp">
+      <Filter>element</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="API.def">

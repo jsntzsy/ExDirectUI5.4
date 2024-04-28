@@ -54,13 +54,14 @@ namespace ExDirectUI
 		EWM_NOTIFY,								///< 元素消息：事件通告 <wParam:元素ID, lParam:事件信息>
 
 		EWM_GETATTR,							///< 元素消息：获取属性 <wParam:属性ID, lParam:接收属性的指针>
-		EWM_SETATTR,							///< 元素消息：设置属性 <wParam:属性ID, lParam:参数属性数组,第0个为新值指针,第1个为旧值指针(可能为空)>
+		EWM_SETATTR,							///< 元素消息：设置属性 <wParam:属性ID, lParam:参数属性数组,第0个为新值,第1个为旧值(可能为空)>
 		EWM_GETCOLOR,							///< 元素消息：获取颜色 <wParam:颜色ID, lParam:接收颜色的指针>
-		EWM_SETCOLOR,							///< 元素消息：设置颜色 <wParam:颜色ID, lParam:颜色指针数组,第0个为新值指针,第1个为旧值指针(可能为空)>
+		EWM_SETCOLOR,							///< 元素消息：设置颜色 <wParam:颜色ID, lParam:颜色指针数组,第0个为新值,第1个为旧值(可能为空)>
 		EWM_SETUISTATE,							///< 元素消息：设置UI状态 <wParam:L:是否为移除,H:是否重画,lParam:状态>
 		EWM_PARENTCHANGE,						///< 元素消息：父元素变更 <wParam:原父元素对象, lParam:新父元素对象>
 		EWM_GETPROP,							///< 元素消息：获取用户属性 <wParam:属性ID, lParam:接收属性的指针>
-		EWM_SETPROP,							///< 元素消息：设置用户属性 <wParam:属性ID, lParam:参数属性数组,第0个为新值指针,第1个为旧值指针(可能为空)>
+		EWM_SETPROP,							///< 元素消息：设置用户属性 <wParam:属性ID, lParam:参数属性数组,第0个为新值,第1个为旧值(可能为空)>
+		EWM_REMOVEPROP,							///< 元素消息：移除用户属性 <wParam:属性ID, lParam:参数属性值>
 
 		EWM_LBUTTONCLICK,						///< 元素消息：左键单击 <wParam:鼠标参数, lParam:坐标>
 		EWM_RBUTTONCLICK,						///< 元素消息：右键单击 <wParam:鼠标参数, lParam:坐标>
@@ -82,7 +83,16 @@ namespace ExDirectUI
 		EWM_CUSTOMDRAW,							///< 元素消息：自定义绘制 <wParam:绘制步骤, lParam:画布句柄>
 		EWM_APPLY_EFFECT,						///< 元素消息：应用效果 <wParam:L:是否为后处理,H:暂不使用, lParam:画布句柄>
 		EWM_UPDATE_CAPTION_BAR,					///< 元素消息：更新标题栏 <wParam:窗口区域, lParam:标题栏相关控件数组指针>
-	
+
+	};
+
+	enum ExElementSetPosFlags
+	{
+		SWP_EX_EXTEND_SHADOW = 0x10000000,		///< 窗口位置标识：扩展尺寸至阴影区
+
+		SWP_EX_UPDATE = 0x20000000,				///< 控件位置标识：立即更新
+		SWP_EX_NO_DPI = 0x40000000,				///< 控件位置标识：不处理DPI
+		SWP_EX_AUTOSIZE = 0x80000000,			///< 控件位置标识：自动调整大小
 	};
 
 	//元素颜色索引
@@ -164,6 +174,9 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL GetElementByNodeID(EXATOM node_id, IExElement** r_element) const PURE;
 		EXMETHOD HRESULT EXOBJCALL GetElementByName(LPCWSTR name, IExElement** r_element) const PURE;
 		EXMETHOD HRESULT EXOBJCALL GetElementFromPoint(long x, long y, DWORD flags, IExElement** r_element) const PURE;
+
+		EXMETHOD HRESULT EXOBJCALL Move(long left, long top, long width, long height, bool redraw = true) PURE;
+		EXMETHOD HRESULT EXOBJCALL SetPos(IExElement* ele_after, long left, long top, long width, long height, DWORD flags) PURE;
 
 	};
 

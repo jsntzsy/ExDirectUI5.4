@@ -257,6 +257,7 @@
     <ClInclude Include="include\drawing\render\region.h" />
     <ClInclude Include="include\drawing\render\solid_brush.h" />
     <ClInclude Include="include\element\element.h" />
+    <ClInclude Include="include\element\event.hpp" />
     <ClInclude Include="include\element\native_window.h" />
     <ClInclude Include="include\ExDirectUI.h" />
     <ClInclude Include="include\kernel\atom.h" />
