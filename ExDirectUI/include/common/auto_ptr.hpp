@@ -16,28 +16,24 @@ namespace ExDirectUI
 	public:
 		ExAutoPtr() throw() { m_obj = nullptr; }
 
-		ExAutoPtr(int nNull) throw()
+		ExAutoPtr(int none) throw()
 		{
-			(void)nNull;
+			(void)none;
 			m_obj = nullptr;
 		}
 
-		ExAutoPtr(T* ptr, bool bRef = false) throw()
+		ExAutoPtr(T* ptr, bool ref = false) throw()
 		{
 			m_obj = ptr;
-			if (m_obj != nullptr && bRef)
-			{
+			if (m_obj != nullptr && ref) {
 				m_obj->AddRef();
 			}
 		}
 
-		ExAutoPtr(const ExAutoPtr& pSrc) throw()
+		ExAutoPtr(const ExAutoPtr& src) throw()
 		{
-			m_obj = pSrc.m_obj;
-			if (m_obj)
-			{
-				m_obj->AddRef();
-			}
+			m_obj = src.m_obj;
+			if (m_obj) { m_obj->AddRef(); }
 		}
 
 		~ExAutoPtr() throw()
@@ -93,14 +89,12 @@ namespace ExDirectUI
 
 		T* operator=(T* lp) throw()
 		{
-			if (*this != lp)
-			{
-				if (m_obj)
-					m_obj->Release();
+			if (*this != lp) {
+
+				if (m_obj) { m_obj->Release(); }
 
 				m_obj = lp;
-				if (m_obj)
-					m_obj->AddRef();
+				if (m_obj) { m_obj->AddRef(); }
 
 			}
 			return *this;
@@ -108,23 +102,18 @@ namespace ExDirectUI
 
 		T* operator<<(T* p) throw()
 		{
-			if (*this != p)
-			{
-				Attach(p);
-			}
+			if (*this != p) { Attach(p); }
 			return *this;
 		}
 
 		T* operator=(const ExAutoPtr<T>& p) throw()
 		{
-			if (*this != p)
-			{
-				if (m_obj)
-					m_obj->Release();
+			if (*this != p) {
+
+				if (m_obj){ m_obj->Release(); }
 
 				m_obj = p;
-				if (m_obj)
-					m_obj->AddRef();
+				if (m_obj){ m_obj->AddRef(); }
 
 			}
 			return *this;
@@ -142,31 +131,27 @@ namespace ExDirectUI
 
 		T** ReleaseGetAddr() throw()
 		{
-			T* pTemp = m_obj;
-			if (pTemp)
-			{
+			T* tmp = m_obj;
+			if (tmp) {
 				m_obj = nullptr;
-				pTemp->Release();
+				tmp->Release();
 			}
 			return &m_obj;
 		}
 		long Release() throw()
 		{
-			long nRef = 0;
-			T* pTemp = m_obj;
-			if (pTemp)
-			{
+			long ref = 0;
+			T* tmp = m_obj;
+			if (tmp) {
 				m_obj = nullptr;
-				nRef = pTemp->Release();
+				ref = tmp->Release();
 			}
-			return nRef;
+			return ref;
 		}
 
 		void Attach(T* p2) throw()
 		{
-			if (m_obj)
-				m_obj->Release();
-
+			if (m_obj){ m_obj->Release(); }
 			m_obj = p2;
 		}
 
@@ -179,11 +164,10 @@ namespace ExDirectUI
 
 		void CopyTo(T** ppT)
 		{
-			if (!ppT) throw ExException(ES_NULL);
+			CHECK_PARAM_RET(ppT);
 
 			*ppT = m_obj;
-			if (m_obj)
-				m_obj->AddRef();
+			if (m_obj) { m_obj->AddRef(); }
 		}
 
 	protected:

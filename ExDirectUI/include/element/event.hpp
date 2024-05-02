@@ -16,22 +16,22 @@ namespace ExDirectUI
 	class ExDelegate
 	{
 	public:
-		using handler_func_t = bool(*)(Args..., ResultType& r_result);
+		using handler_func_t = bool(CALLBACK*)(Args..., ResultType* r_result);
 
-		void AddHandler(handler_func_t fn)
+		bool AddHandler(handler_func_t fn)
 		{
 			auto it = std::find(m_handlers.begin(), m_handlers.end(), fn);
-			if (it == m_handlers.end()) {
-				m_handlers.push_back(fn);
-			}
+			if (it != m_handlers.end()) { return false; }
+			m_handlers.push_back(fn);
+			return true;
 		}
 
-		void RemoveHandler(handler_func_t fn)
+		bool RemoveHandler(handler_func_t fn)
 		{
 			auto it = std::find(m_handlers.begin(), m_handlers.end(), fn);
-			if (it != m_handlers.end()) {
-				m_handlers.erase(it);
-			}
+			if (it == m_handlers.end()) { return false; }
+			m_handlers.erase(it);
+			return true;
 		}
 
 		void ClearHandlers() { m_handlers.clear(); }
@@ -40,7 +40,7 @@ namespace ExDirectUI
 		{
 			ResultType result = ResultType();
 			for (auto handler : m_handlers) {
-				if (handler(args..., result)) { break; }
+				if (handler(args..., &result)) { break; }
 			}
 			return result;
 		}
