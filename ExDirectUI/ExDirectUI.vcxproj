@@ -197,6 +197,7 @@
     <ClCompile Include="src\drawing\render\solid_brush.cpp" />
     <ClCompile Include="src\element\element.cpp" />
     <ClCompile Include="src\element\native_window.cpp" />
+    <ClCompile Include="src\element\window.cpp" />
     <ClCompile Include="src\kernel\atom.cpp" />
     <ClCompile Include="src\kernel\data.cpp" />
     <ClCompile Include="src\kernel\memory.cpp" />
@@ -259,6 +260,7 @@
     <ClInclude Include="include\element\element.h" />
     <ClInclude Include="include\element\event.hpp" />
     <ClInclude Include="include\element\native_window.h" />
+    <ClInclude Include="include\element\window.h" />
     <ClInclude Include="include\ExDirectUI.h" />
     <ClInclude Include="include\kernel\atom.h" />
     <ClInclude Include="include\kernel\data.h" />
@@ -282,6 +284,7 @@
     <ClInclude Include="src\element\element.h" />
     <ClInclude Include="src\element\native_window.h" />
     <ClInclude Include="src\element\thunk_window.h" />
+    <ClInclude Include="src\element\window.h" />
     <ClInclude Include="src\kernel\builtin_modules.hpp" />
     <ClInclude Include="src\kernel\builtin_modules_define.h" />
     <ClInclude Include="src\kernel\module.h" />

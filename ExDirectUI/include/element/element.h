@@ -99,10 +99,10 @@ namespace ExDirectUI
 	EXENUM(ExElementColor)
 	{
 		Background = -1,				///< 颜色索引：背景
-			Foreground = -2,				///< 颜色索引：前景
-			Border = -3,					///< 颜色索引：边框
+		Foreground = -2,				///< 颜色索引：前景
+		Border = -3,					///< 颜色索引：边框
 
-			UserBegin = -4,					///< 颜色索引：用户自定义开始
+		UserBegin = -4,					///< 颜色索引：用户自定义开始
 	};
 
 	EXINTERFACE("A1F2CBAA-7F39-4D67-9B14-EF3D7EEB3AF6") IExElement : public IExObject
@@ -162,14 +162,15 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL GetTheme(IExTheme** r_theme) PURE;
 		EXMETHOD HRESULT EXOBJCALL SetTheme(IExTheme* theme) PURE;
 
-		EXMETHOD HRESULT EXOBJCALL GetRelationElement(ExElementRelation relation,
-			IExElement** r_element) PURE;
 		EXMETHOD HRESULT EXOBJCALL FindChild(IExElement** r_element , IExElement* ele_after = nullptr,
 			EXATOM atom_class = EXATOM_UNKNOWN, LPCWSTR text = nullptr) PURE;
 		EXMETHOD HRESULT EXOBJCALL FindChildEx(IExElement** r_element, IExElement* ele_after = nullptr,
 			ExElementMatchProc match_proc = nullptr, LPARAM lparam = 0) PURE;
 		EXMETHOD HRESULT EXOBJCALL EnumChildren(ExElementEnumProc enum_proc, LPARAM lparam = 0) PURE;
 
+		EXMETHOD HRESULT EXOBJCALL GetParent(IExElement** r_parent) PURE;
+		EXMETHOD HRESULT EXOBJCALL GetParentEx(IExElement** r_parent, IExElement** r_owner) PURE;
+		EXMETHOD HRESULT EXOBJCALL GetRelationElement(ExElementRelation relation, IExElement** r_element) PURE;
 		EXMETHOD HRESULT EXOBJCALL GetElementByID(EXATOM id, IExElement** r_element) PURE;
 		EXMETHOD HRESULT EXOBJCALL GetElementByNodeID(EXATOM node_id, IExElement** r_element) PURE;
 		EXMETHOD HRESULT EXOBJCALL GetElementByName(LPCWSTR name, IExElement** r_element) PURE;
@@ -177,6 +178,11 @@ namespace ExDirectUI
 
 		EXMETHOD HRESULT EXOBJCALL Move(long left, long top, long width, long height, bool redraw = true) PURE;
 		EXMETHOD HRESULT EXOBJCALL SetPos(IExElement* ele_after, long left, long top, long width, long height, DWORD flags) PURE;
+
+		EXMETHOD HRESULT EXOBJCALL GetRect(ExRect* r_rect) PURE;
+		EXMETHOD HRESULT EXOBJCALL GetRectEx(ExRect* r_rect, int from) PURE;
+		EXMETHOD HRESULT EXOBJCALL GetClientRect(ExRect* r_client_rect) PURE;
+
 
 	};
 

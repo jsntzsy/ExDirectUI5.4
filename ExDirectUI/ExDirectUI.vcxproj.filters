@@ -285,6 +285,9 @@
     <ClCompile Include="src\element\native_window.cpp">
       <Filter>element\window</Filter>
     </ClCompile>
+    <ClCompile Include="src\element\window.cpp">
+      <Filter>element\window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -535,6 +538,12 @@
     </ClInclude>
     <ClInclude Include="include\element\event.hpp">
       <Filter>element</Filter>
+    </ClInclude>
+    <ClInclude Include="src\element\window.h">
+      <Filter>element\window</Filter>
+    </ClInclude>
+    <ClInclude Include="include\element\window.h">
+      <Filter>element\window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

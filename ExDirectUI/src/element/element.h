@@ -22,7 +22,8 @@ namespace ExDirectUI
 		}
 	};
 
-	class ExElementBase : public IExElement
+	template<class T>
+	class ExElementBase : public T
 	{
 	protected:
 		virtual LRESULT EXOBJCALL OnMessage(uint32_t message, WPARAM wparam, LPARAM lparam);
@@ -57,11 +58,11 @@ namespace ExDirectUI
 		int m_properties_count{};
 		ExAutoPtr<IExTheme> m_theme;
 
-		ExAutoPtr<ExElementBase> m_ele_parent;
-		ExAutoPtr<ExElementBase> m_ele_child_first;
-		ExAutoPtr<ExElementBase> m_ele_child_last;
-		ExAutoPtr<ExElementBase> m_ele_prev;
-		ExAutoPtr<ExElementBase> m_ele_next;
+		ExElementBase* m_ele_parent = nullptr;
+		ExElementBase* m_ele_child_first = nullptr;
+		ExElementBase* m_ele_child_last = nullptr;
+		ExElementBase* m_ele_prev = nullptr;
+		ExElementBase* m_ele_next = nullptr;
 
 	};
 
