@@ -23,7 +23,7 @@ namespace ExDirectUI
 			void* values;
 		};
 
-		ExElementProperties(int count)
+		ExElementProperties(int count = 0)
 		{
 			SetCount(count);
 		}
@@ -34,6 +34,7 @@ namespace ExDirectUI
 
 			if (type > 0) { arr = new std::vector<LONG_PTR>(type); }
 			else if (type < 0) { map = new std::unordered_map<EXATOM, LONG_PTR>(); }
+			else { values = nullptr; }
 		}
 
 		void Reset()
