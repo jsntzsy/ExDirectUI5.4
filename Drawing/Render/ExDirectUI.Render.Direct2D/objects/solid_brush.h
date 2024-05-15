@@ -22,10 +22,10 @@ namespace ExDirectUI
 		EX_END_INTERFACE_MAP();
 
 	public:
-		EXMETHOD std::wstring EXOBJCALL ToString() const override
+		EXMETHOD BSTR EXOBJCALL ToString() const override
 		{
 			EXARGB argb = Color(m_brush->GetColor());
-			return ExString::format(L"ExSolidBrushD2D(color: #%08X)", argb);
+			return ExSysAllocStringFormat(L"ExSolidBrushD2D(color: #%08X)", argb);
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

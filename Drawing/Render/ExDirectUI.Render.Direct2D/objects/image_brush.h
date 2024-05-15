@@ -22,9 +22,11 @@ namespace ExDirectUI
 		EX_END_INTERFACE_MAP();
 
 	public:
-		EXMETHOD std::wstring EXOBJCALL ToString() const override
+		EXMETHOD BSTR EXOBJCALL ToString() const override
 		{
-			return ExString::format(L"ExImageBrushD2D(image: 0x%p)", m_image.Get());
+			return ExSysAllocStringFormat(
+				L"ExImageBrushD2D(image: 0x%p)", m_image.Get()
+			);
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

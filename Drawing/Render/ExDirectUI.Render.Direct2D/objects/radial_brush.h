@@ -22,10 +22,9 @@ namespace ExDirectUI
 		EX_END_INTERFACE_MAP();
 
 	public:
-		EXMETHOD std::wstring EXOBJCALL ToString() const override
+		EXMETHOD BSTR EXOBJCALL ToString() const override
 		{
-
-			return ExString::format(
+			return ExSysAllocStringFormat(
 				L"ExRadialBrushD2D(bounds: %f,%f,%f,%f, offset: %fx%f, "
 				"inside_color: #%08X, outside_color:#%08X)",
 				_expand_rect_(m_bounds), _expand_point_(m_center_offset),

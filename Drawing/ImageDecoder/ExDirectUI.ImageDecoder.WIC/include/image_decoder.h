@@ -28,9 +28,9 @@ namespace ExDirectUI
 		ExImageDecoderWIC();
 		virtual ~ExImageDecoderWIC();
 
-		EXMETHOD std::wstring EXOBJCALL ToString() const override
+		EXMETHOD BSTR EXOBJCALL ToString() const override
 		{
-			return L"ExImageDecoderWIC(core: WindowsImageCodec, support_format: PNG/JPG/GIF/BMP)";
+			return SysAllocString(L"ExImageDecoderWIC(core: WindowsImageCodec, support_format: PNG/JPG/GIF/BMP)");
 		}
 		
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override

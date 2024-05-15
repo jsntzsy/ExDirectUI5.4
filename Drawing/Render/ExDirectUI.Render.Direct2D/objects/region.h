@@ -22,9 +22,12 @@ namespace ExDirectUI
 		EX_END_INTERFACE_MAP();
 
 	public:
-		EXMETHOD std::wstring EXOBJCALL ToString() const override
+		EXMETHOD BSTR EXOBJCALL ToString() const override
 		{
-			return ExString::format(L"ExRegionD2D(geometry: 0x%p)", m_geometry.Get());
+			return ExSysAllocStringFormat(
+				L"ExRegionD2D(geometry: 0x%p)", 
+				m_geometry.Get()
+			);
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

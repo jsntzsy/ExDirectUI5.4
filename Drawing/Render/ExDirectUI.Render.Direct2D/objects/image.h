@@ -22,9 +22,10 @@ namespace ExDirectUI
 		EX_END_INTERFACE_MAP();
 
 	public:
-		EXMETHOD std::wstring EXOBJCALL ToString() const override
+		EXMETHOD BSTR EXOBJCALL ToString() const override
 		{
-			return ExString::format(L"ExImageD2D(size: %ux%u, frame: %u/%u)",
+			return ExSysAllocStringFormat(
+				L"ExImageD2D(size: %ux%u, frame: %u/%u)",
 				m_width, m_height, m_cur_frame, GetFrameCount()
 			);
 		}

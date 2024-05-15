@@ -21,9 +21,9 @@ namespace ExDirectUI
 		EX_END_INTERFACE_MAP();
 
 	public:
-		EXMETHOD std::wstring EXOBJCALL ToString() const override
+		EXMETHOD BSTR EXOBJCALL ToString() const override
 		{
-			return ExString::format(L"ExBitmapDeviceD2D(size: %ux%u)", m_mdc.width, m_mdc.height);
+			return ExSysAllocStringFormat(L"ExBitmapDeviceD2D(size: %ux%u)", m_mdc.width, m_mdc.height);
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{
@@ -63,10 +63,12 @@ namespace ExDirectUI
 		EX_END_INTERFACE_MAP();
 
 	public:
-		EXMETHOD std::wstring EXOBJCALL ToString() const override
+		EXMETHOD BSTR EXOBJCALL ToString() const override
 		{
-			return ExString::format(L"ExWindowDeviceD2D(window: 0x%p, size: %ux%u)",
-				m_window, m_size.cx, m_size.cy);
+			return ExSysAllocStringFormat(
+				L"ExWindowDeviceD2D(window: 0x%p, size: %ux%u)",
+					m_window, m_size.cx, m_size.cy
+			);
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{
@@ -114,10 +116,12 @@ namespace ExDirectUI
 		EX_END_INTERFACE_MAP();
 
 	public:
-		EXMETHOD std::wstring EXOBJCALL ToString() const override
+		EXMETHOD BSTR EXOBJCALL ToString() const override
 		{
-			return ExString::format(L"ExCompositionWindowDeviceD2D(window: 0x%p, size: %ux%u)",
-				m_window, m_size.cx, m_size.cy);
+			return ExSysAllocStringFormat(
+				L"ExCompositionWindowDeviceD2D(window: 0x%p, size: %ux%u)",
+				m_window, m_size.cx, m_size.cy
+			);
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

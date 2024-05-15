@@ -199,9 +199,10 @@ namespace ExDirectUI
 		}
 
 	public:
-		EXMETHOD std::wstring EXOBJCALL ToString() const override
+		EXMETHOD BSTR EXOBJCALL ToString() const override
 		{
-			return ExString::format(L"ExResPool(item_size: %u, count: %u)",
+			return ExSysAllocStringFormat(
+				L"ExResPool(item_size: %u, count: %u)",
 				m_pool.GetBlockSize() - sizeof(ExResPoolItemHeader), m_res.size()
 			);
 		}

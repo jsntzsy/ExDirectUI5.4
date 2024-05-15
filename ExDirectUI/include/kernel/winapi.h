@@ -11,4 +11,6 @@
 namespace ExDirectUI
 {
 	bool EXAPI EXCALL ExSleep(uint64_t us, bool block = false);
+
+	BSTR EXAPI ExSysAllocStringFormat(LPCWSTR format, ...);
 }

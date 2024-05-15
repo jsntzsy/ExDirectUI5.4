@@ -8,6 +8,7 @@
  */
 #pragma once
 #include "common/object_impl.hpp"
+#include "common/string.hpp"
 
 namespace ExDirectUI
 {
@@ -29,7 +30,12 @@ namespace ExDirectUI
 		EX_END_INTERFACE_MAP();
 
 	public:
-		EXMETHOD std::wstring EXOBJCALL ToString() const override;
+		EXMETHOD BSTR EXOBJCALL ToString() const override
+		{
+			return ExSysAllocStringFormat(
+				L"ExTheme(class_count: %zu)", m_classes.size()
+			);
+		}
 
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

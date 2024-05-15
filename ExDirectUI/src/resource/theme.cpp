@@ -22,11 +22,6 @@
 
 namespace ExDirectUI
 {
-	std::wstring EXOBJCALL ExTheme::ToString() const
-	{
-		return ExString::format(L"ExTheme(class_count: %zu)", m_classes.size());
-	}
-
 	ExTheme::ExTheme(const IExPackage* package)
 	{
 		ExPackageInfo info{};

@@ -13,7 +13,7 @@
 #include "element/event.hpp"
 
 namespace ExDirectUI
-{
+{/*
 	LRESULT EXOBJCALL ExElementBase::OnMessage(uint32_t message, WPARAM wparam, LPARAM lparam)
 	{
 		return this->DefMessage(message, wparam, lparam);
@@ -208,6 +208,7 @@ namespace ExDirectUI
 		}
 		return S_OK;
 	}
+	*/
 
 }
 

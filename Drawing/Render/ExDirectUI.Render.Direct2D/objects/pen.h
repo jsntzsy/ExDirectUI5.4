@@ -21,9 +21,10 @@ namespace ExDirectUI
 		EX_END_INTERFACE_MAP();
 
 	public:
-		EXMETHOD std::wstring EXOBJCALL ToString() const override
+		EXMETHOD BSTR EXOBJCALL ToString() const override
 		{
-			return ExString::format(L"ExPenD2D(width: %f, dash_style: 0x%04X)",
+			return ExSysAllocStringFormat(
+				L"ExPenD2D(width: %f, dash_style: 0x%04X)",
 				m_width, m_dash_style
 			);
 		}

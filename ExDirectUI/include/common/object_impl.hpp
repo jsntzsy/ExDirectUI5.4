@@ -72,9 +72,9 @@ namespace ExDirectUI
 
 		// IExObject
 
-		EXMETHOD std::wstring EXOBJCALL ToString() const override 
+		EXMETHOD BSTR EXOBJCALL ToString() const override 
 		{
-			return L"ExObject()";
+			return SysAllocString(L"ExObject()");
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

@@ -25,9 +25,12 @@ namespace ExDirectUI
 		EX_END_INTERFACE_MAP();
 
 	public:
-		EXMETHOD std::wstring EXOBJCALL ToString() const override
+		EXMETHOD BSTR EXOBJCALL ToString() const override
 		{
-			return ExString::format(L"ExPackage(item_count: %zu)", m_items.size());
+			return ExSysAllocStringFormat(
+				L"ExPackage(item_count: %zu)", 
+				m_items.size()
+			);
 		}
 
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override

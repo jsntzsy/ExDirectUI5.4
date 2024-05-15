@@ -25,9 +25,9 @@ namespace ExDirectUI
 
 	public:
 
-		EXMETHOD std::wstring EXOBJCALL ToString() const override
+		EXMETHOD BSTR EXOBJCALL ToString() const override
 		{
-			return L"ExRenderD2D(core: Direct2D/DWrite/WindowsImageCodec)";
+			return SysAllocString(L"ExRenderD2D(core: Direct2D/DWrite/WindowsImageCodec)");
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

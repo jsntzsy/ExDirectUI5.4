@@ -26,9 +26,9 @@ namespace ExDirectUI
 
 	public:
 
-		EXMETHOD std::wstring EXOBJCALL ToString() const override
+		EXMETHOD BSTR EXOBJCALL ToString() const override
 		{
-			return L"ExImageDecoderLibPng(core: libpng, support_format: PNG/APNG)";
+			return SysAllocString(L"ExImageDecoderLibPng(core: libpng, support_format: PNG/APNG)");
 		}
 		EXMETHOD void* EXOBJCALL GetContext(int index) const override
 		{

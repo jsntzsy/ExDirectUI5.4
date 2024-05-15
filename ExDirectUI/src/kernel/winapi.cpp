@@ -72,6 +72,20 @@ namespace ExDirectUI
 		return true;
 	}
 
+	BSTR EXAPI ExSysAllocStringFormat(LPCWSTR format, ...)
+	{
+		CHECK_PARAM_RET(format, nullptr);
+
+		va_list args;
+		va_start(args, format);
+		int len = _vscwprintf(format, args);
+		BSTR result = SysAllocStringLen(nullptr, len);
+		return_if_false(E_OUTOFMEMORY, L"分配字符串内存失败", nullptr);
+		vswprintf_s(result, len, format, args);
+		va_end(args);
+		return result;
+	}
+
 
 
 

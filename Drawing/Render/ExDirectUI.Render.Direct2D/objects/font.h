@@ -65,10 +65,11 @@ namespace ExDirectUI
 		EX_END_INTERFACE_MAP();
 
 	public:
-		EXMETHOD std::wstring EXOBJCALL ToString() const override
+		EXMETHOD BSTR EXOBJCALL ToString() const override
 		{
 			const auto info = m_context->info;
-			return ExString::format(L"ExFontD2D(name: %s, size: %u, style: 0x%04X, file: 0x%08X)", 
+			return ExSysAllocStringFormat(
+				L"ExFontD2D(name: %s, size: %u, style: 0x%04X, file: 0x%08X)",
 				info.name, info.size, info.style, info.file_atom
 			);
 		}
