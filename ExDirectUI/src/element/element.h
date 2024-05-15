@@ -12,15 +12,40 @@
 
 namespace ExDirectUI
 {
-	union ExElementProperties
+	struct ExElementProperties
 	{
-		std::vector<LONG_PTR> arr;
-		std::unordered_map<EXATOM, LONG_PTR> map;
+		int type;	// -1为map,0为无,1为array
 
-		ExElementProperties() {
-			ZeroMemory(this, sizeof(ExElementProperties));
+		union
+		{
+			std::vector<LONG_PTR>* arr;
+			std::unordered_map<EXATOM, LONG_PTR>* map;
+			void* values;
+		};
+
+		ExElementProperties(int count)
+		{
+			SetCount(count);
+		}
+
+		void SetCount(int count) MAYTHROW
+		{
+			Reset();
+
+			if (type > 0) { arr = new std::vector<LONG_PTR>(type); }
+			else if (type < 0) { map = new std::unordered_map<EXATOM, LONG_PTR>(); }
+		}
+
+		void Reset()
+		{
+			if (values == nullptr) { return; }
+			if (type == 1) { delete arr; }
+			else if (type == -1) { delete map; }
+			values = nullptr;
 		}
 	};
+
+
 
 	template<class T>
 	class ExElementBase : public T
@@ -55,7 +80,6 @@ namespace ExDirectUI
 
 		std::unordered_map<uint32_t, ExEventDelegate> m_events;
 		ExElementProperties m_properties{};
-		int m_properties_count{};
 		ExAutoPtr<IExTheme> m_theme;
 
 		ExElementBase* m_ele_parent = nullptr;

@@ -13,13 +13,15 @@
 #include "element/event.hpp"
 
 namespace ExDirectUI
-{/*
-	LRESULT EXOBJCALL ExElementBase::OnMessage(uint32_t message, WPARAM wparam, LPARAM lparam)
+{
+	template<class T>
+	LRESULT EXOBJCALL ExElementBase<T>::OnMessage(uint32_t message, WPARAM wparam, LPARAM lparam)
 	{
 		return this->DefMessage(message, wparam, lparam);
 	}
 
-	LRESULT EXOBJCALL ExElementBase::DefMessage(uint32_t message, WPARAM wparam, LPARAM lparam)
+	template<class T>
+	LRESULT EXOBJCALL ExElementBase<T>::DefMessage(uint32_t message, WPARAM wparam, LPARAM lparam)
 	{
 		switch (message)
 		{
@@ -37,14 +39,14 @@ namespace ExDirectUI
 			return S_OK;
 		}
 		case EWM_REMOVEPROP: {
-			if (m_properties_count < 0) {
+			if (m_properties.type < 0) {
 				auto it = m_properties.map.find(wparam);
 				if (it == m_properties.map.end()) { return S_FALSE; }
 				m_properties.map.erase(it);
 			}
-			else if (m_properties_count > 0) {
+			else if (m_properties.type > 0) {
 				int index = wparam;
-				if (m_properties_count <= index) { return S_FALSE; }
+				if (m_properties.type <= index) { return S_FALSE; }
 				m_properties.arr[index] = 0;
 			}
 			else { return E_NOTIMPL; }
@@ -56,7 +58,8 @@ namespace ExDirectUI
 		return 0;
 	}
 
-	HRESULT EXOBJCALL ExElementBase::BroadcastMessageToChildren(uint32_t message, WPARAM wparam,
+	template<class T>
+	HRESULT EXOBJCALL ExElementBase<T>::BroadcastMessageToChildren(uint32_t message, WPARAM wparam,
 		LPARAM lparam, bool async, ExElementBroadcastFilterProc filter_proc, LPARAM lparam_filter)
 	{
 		ExElementBase* element = m_ele_child_first;
@@ -75,7 +78,8 @@ namespace ExDirectUI
 		return S_OK;
 	}
 
-	HRESULT EXOBJCALL ExElementBase::AddEventHandler(uint32_t event, ExElementEventHandlerProc event_proc, DWORD flags)
+	template<class T>
+	HRESULT EXOBJCALL ExElementBase<T>::AddEventHandler(uint32_t event, ExElementEventHandlerProc event_proc, DWORD flags)
 	{
 		CHECK_PARAM(event != 0);
 		CHECK_PARAM(event_proc);
@@ -84,7 +88,8 @@ namespace ExDirectUI
 		return S_OK;
 	}
 
-	HRESULT EXOBJCALL ExElementBase::RemoveEventHandler(uint32_t event, ExElementEventHandlerProc event_proc)
+	template<class T>
+	HRESULT EXOBJCALL ExElementBase<T>::RemoveEventHandler(uint32_t event, ExElementEventHandlerProc event_proc)
 	{
 		CHECK_PARAM(event != 0);
 		CHECK_PARAM(event_proc);
@@ -93,7 +98,8 @@ namespace ExDirectUI
 		return S_OK;
 	}
 
-	HRESULT EXOBJCALL ExElementBase::NotifyEvent(uint32_t event, WPARAM wparam, LPARAM lparam, LRESULT* r_result)
+	template<class T>
+	HRESULT EXOBJCALL ExElementBase<T>::NotifyEvent(uint32_t event, WPARAM wparam, LPARAM lparam, LRESULT* r_result)
 	{
 		CHECK_PARAM(event != 0);
 
@@ -106,57 +112,48 @@ namespace ExDirectUI
 		return S_OK;
 	}
 
-	inline LONG_PTR* EXOBJCALL ExElementBase::GetPropertyPtr(EXATOM id)
+	template<class T>
+	inline LONG_PTR* EXOBJCALL ExElementBase<T>::GetPropertyPtr(EXATOM id)
 	{
-		if (m_properties_count < 0) {
+		if (m_properties.type < 0) {
 			return &m_properties.map[id];
 		}
-		else if (m_properties_count > 0) {
+		else if (m_properties.type > 0) {
 			int index = id;
-			if (m_properties_count <= index) { return nullptr; }
+			if (m_properties.arr->size() <= index) { return nullptr; }
 			return &m_properties.arr[index];
 		}
 		return nullptr;
 	}
 
-	HRESULT EXOBJCALL ExElementBase::InitPropertyList(int property_count)
+	template<class T>
+	HRESULT EXOBJCALL ExElementBase<T>::InitPropertyList(int property_count)
 	{
-		if (m_properties_count < 0) {
-			m_properties.map.clear();
-		}
-		else if (m_properties_count > 0) {
-			m_properties.arr.clear();
-		}
-
-		if (property_count > 0) {
-			m_properties.arr = std::vector<LONG_PTR>((size_t)property_count);
-		}
-		else if (property_count < 0) {
-			m_properties.map = std::unordered_map<EXATOM, LONG_PTR>();
-		}
-
-		m_properties_count = property_count;
+		m_properties.SetCount(property_count);
 		return S_OK;
 	}
 
-	uint32_t EXOBJCALL ExElementBase::GetPropertyCount()
+	template<class T>
+	uint32_t EXOBJCALL ExElementBase<T>::GetPropertyCount()
 	{
-		if (m_properties_count < 0) {
-			return m_properties.map.size();
+		if (m_properties.type < 0) {
+			return m_properties.map->size();
 		}
-		else if (m_properties_count > 0) {
-			return m_properties.arr.size();
+		else if (m_properties.type > 0) {
+			return m_properties.arr->size();
 		}
 		return 0;
 	}
 
-	HRESULT EXOBJCALL ExElementBase::GetProperty(EXATOM id, LONG_PTR* r_value)
+	template<class T>
+	HRESULT EXOBJCALL ExElementBase<T>::GetProperty(EXATOM id, LONG_PTR* r_value)
 	{
 		CHECK_PARAM(r_value);
 		return (HRESULT)DispatchMessage(EWM_GETPROP, id, (LPARAM)r_value);
 	}
 
-	HRESULT EXOBJCALL ExElementBase::SetProperty(EXATOM id, LONG_PTR value)
+	template<class T>
+	HRESULT EXOBJCALL ExElementBase<T>::SetProperty(EXATOM id, LONG_PTR value)
 	{
 		auto old_value = GetPropertyPtr(id);
 		handle_if_false(old_value, E_FAIL, L"获取原始值失败");
@@ -165,25 +162,27 @@ namespace ExDirectUI
 		return (HRESULT)DispatchMessage(EWM_SETPROP, id, (LPARAM)values);
 	}
 
-	HRESULT EXOBJCALL ExElementBase::RemoveProperty(EXATOM id)
+	template<class T>
+	HRESULT EXOBJCALL ExElementBase<T>::RemoveProperty(EXATOM id)
 	{
 		auto value = GetPropertyPtr(id);
 		handle_if_false(value, E_FAIL, L"获取当前值失败");
 		return (HRESULT)DispatchMessage(EWM_REMOVEPROP, id, (LPARAM)*value);
 	}
 
-	HRESULT EXOBJCALL ExElementBase::EnumProperty(ExElementPropertyEnumProc enum_proc, LPARAM lparam)
+	template<class T>
+	HRESULT EXOBJCALL ExElementBase<T>::EnumProperty(ExElementPropertyEnumProc enum_proc, LPARAM lparam)
 	{
 		CHECK_PARAM(enum_proc);
 
-		if (m_properties_count < 0) {
-			for (auto& it : m_properties.map) {
+		if (m_properties.type < 0) {
+			for (auto& it : *m_properties.map) {
 				if (enum_proc(this, it.first, it.second, lparam)) { return S_FALSE; }
 			}
 		}
-		else if (m_properties_count > 0) {
-			for (uint32_t i = 0; i < (size_t)m_properties.arr.size(); i++) {
-				if (enum_proc(this, i, m_properties.arr[i], lparam)) { return S_FALSE; }
+		else if (m_properties.type > 0) {
+			for (uint32_t i = 0; i < (size_t)m_properties.arr->size(); i++) {
+				if (enum_proc(this, i, m_properties.arr->operator[i], lparam)) { return S_FALSE; }
 			}
 		}
 		else { return E_NOTIMPL; }
@@ -191,14 +190,16 @@ namespace ExDirectUI
 		return S_OK;
 	}
 
-	HRESULT EXOBJCALL ExElementBase::GetTheme(IExTheme** r_theme)
+	template<class T>
+	HRESULT EXOBJCALL ExElementBase<T>::GetTheme(IExTheme** r_theme)
 	{
 		CHECK_PARAM(r_theme);
 		handle_if_false(m_theme, E_HANDLE, L"主题对象为空");
 		return m_theme->QueryInterface(r_theme);
 	}
 
-	HRESULT EXOBJCALL ExElementBase::SetTheme(IExTheme* theme)
+	template<class T>
+	HRESULT EXOBJCALL ExElementBase<T>::SetTheme(IExTheme* theme)
 	{
 		CHECK_PARAM(theme);
 
@@ -208,7 +209,7 @@ namespace ExDirectUI
 		}
 		return S_OK;
 	}
-	*/
+	
 
 }
 
