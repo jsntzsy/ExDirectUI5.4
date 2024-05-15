@@ -72,15 +72,11 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL RemoveProperty(EXATOM id) override;
 		EXMETHOD HRESULT EXOBJCALL EnumProperty(ExElementPropertyEnumProc enum_proc, LPARAM lparam) override;
 
-		EXMETHOD HRESULT EXOBJCALL GetTheme(IExTheme** r_theme) override;
-		EXMETHOD HRESULT EXOBJCALL SetTheme(IExTheme* theme) override;
-
 	protected:
 		int m_id{};
 
 		std::unordered_map<uint32_t, ExEventDelegate> m_events;
 		ExElementProperties m_properties{};
-		ExAutoPtr<IExTheme> m_theme;
 
 		ExElementBase* m_ele_parent = nullptr;
 		ExElementBase* m_ele_child_first = nullptr;

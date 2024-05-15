@@ -55,13 +55,12 @@ namespace ExDirectUI
 
 		EWM_GETATTR,							///< 元素消息：获取属性 <wParam:属性ID, lParam:接收属性的指针>
 		EWM_SETATTR,							///< 元素消息：设置属性 <wParam:属性ID, lParam:参数属性数组,第0个为新值,第1个为旧值(可能为空)>
-		EWM_GETCOLOR,							///< 元素消息：获取颜色 <wParam:颜色ID, lParam:接收颜色的指针>
-		EWM_SETCOLOR,							///< 元素消息：设置颜色 <wParam:颜色ID, lParam:颜色指针数组,第0个为新值,第1个为旧值(可能为空)>
-		EWM_SETUISTATE,							///< 元素消息：设置UI状态 <wParam:L:是否为移除,H:是否重画,lParam:状态>
-		EWM_PARENTCHANGE,						///< 元素消息：父元素变更 <wParam:原父元素对象, lParam:新父元素对象>
 		EWM_GETPROP,							///< 元素消息：获取用户属性 <wParam:属性ID, lParam:接收属性的指针>
 		EWM_SETPROP,							///< 元素消息：设置用户属性 <wParam:属性ID, lParam:参数属性数组,第0个为新值,第1个为旧值(可能为空)>
 		EWM_REMOVEPROP,							///< 元素消息：移除用户属性 <wParam:属性ID, lParam:参数属性值>
+		EWM_GETCOLOR,							///< 元素消息：获取颜色 <wParam:颜色ID, lParam:接收颜色的指针>
+		EWM_SETCOLOR,							///< 元素消息：设置颜色 <wParam:颜色ID, lParam:颜色指针数组,第0个为新值,第1个为旧值(可能为空)>
+		EWM_SETUISTATE,							///< 元素消息：设置UI状态 <wParam:L:是否为移除,H:是否重画,lParam:状态>
 
 		EWM_LBUTTONCLICK,						///< 元素消息：左键单击 <wParam:鼠标参数, lParam:坐标>
 		EWM_RBUTTONCLICK,						///< 元素消息：右键单击 <wParam:鼠标参数, lParam:坐标>
@@ -77,6 +76,7 @@ namespace ExDirectUI
 
 		EWM_EASING_FRAME,						///< 元素消息：缓动帧 <wParam:缓动id, lParam:缓动信息指针>
 
+		EWM_PARENT_CHANGE,						///< 元素消息：父元素变更 <wParam:原父元素对象, lParam:新父元素对象>
 		EWM_UPDATE_THEME,						///< 元素消息：更新主题 <wParam:更新类型, lParam:新主题句柄>
 		EWM_CLIENT_CHANGED,						///< 元素消息：客户区改变 <wParam:0, lParam:新客户区矩形>
 		EWM_CALC_CONTENT_SIZE,					///< 元素消息：计算内容尺寸 <wParam:画布句柄, lParam:接收内容尺寸的ExPointF指针> 

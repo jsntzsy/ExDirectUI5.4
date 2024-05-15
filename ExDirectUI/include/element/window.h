@@ -20,9 +20,6 @@ namespace ExDirectUI
 		EXMETHOD HRESULT EXOBJCALL PopupTrayIcon(LPCWSTR text, LPCWSTR title, DWORD flags) PURE;
 
 
-
-
-
 	};
 
 }

@@ -190,27 +190,6 @@ namespace ExDirectUI
 		return S_OK;
 	}
 
-	template<class T>
-	HRESULT EXOBJCALL ExElementBase<T>::GetTheme(IExTheme** r_theme)
-	{
-		CHECK_PARAM(r_theme);
-		handle_if_false(m_theme, E_HANDLE, L"主题对象为空");
-		return m_theme->QueryInterface(r_theme);
-	}
-
-	template<class T>
-	HRESULT EXOBJCALL ExElementBase<T>::SetTheme(IExTheme* theme)
-	{
-		CHECK_PARAM(theme);
-
-		if (m_theme != theme) {
-			SendMessage(EWM_UPDATE_THEME, 0, (LPARAM)theme);
-			m_theme = theme;
-		}
-		return S_OK;
-	}
-	
-
 }
 
 
