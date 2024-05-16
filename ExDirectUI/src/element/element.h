@@ -52,7 +52,7 @@ namespace ExDirectUI
 	class ExElementBase : public T
 	{
 	protected:
-		virtual LRESULT EXOBJCALL OnMessage(uint32_t message, WPARAM wparam, LPARAM lparam);
+		virtual LRESULT EXOBJCALL OnMessage(uint32_t message, WPARAM wparam, LPARAM lparam, bool& r_handled);
 
 	public:
 		EXMETHOD LRESULT EXOBJCALL DefMessage(uint32_t message, WPARAM wparam, LPARAM lparam) override;
@@ -86,5 +86,22 @@ namespace ExDirectUI
 		ExElementBase* m_ele_next = nullptr;
 
 	};
+
+
+#define EX_MESSAGE_MAP_BEGIN()																					\
+		LRESULT _RESULT_ = 0;																					\
+		switch(message) {																							
+
+
+#define EX_MESSAGE_MAP_END()																					\
+		}																										\
+		if(r_handled == false) { _RESULT_ = __super::OnMessage(message, wparam, lparam, r_handled); }			\
+		return _RESULT_;
+
+
+#define EX_MESSAGE_MAP_ON(msg, todo)		case msg: { todo; r_handled = true; }break;
+#define EX_MESSAGE_MAP_INVOKE(msg, fn)		case msg: { r_handled = fn(message,wparam,lparam, _RESULT_); }break;
+#define EX_MESSAGE_MAP_ARGS(msg, fn, ...)	case msg: { _RESULT_ = fn(__VA_ARGS__); r_handled = true; }break;
+
 
 }

@@ -15,8 +15,9 @@
 namespace ExDirectUI
 {
 	template<class T>
-	LRESULT EXOBJCALL ExElementBase<T>::OnMessage(uint32_t message, WPARAM wparam, LPARAM lparam)
+	LRESULT EXOBJCALL ExElementBase<T>::OnMessage(uint32_t message, WPARAM wparam, LPARAM lparam, bool& r_handled)
 	{
+		r_handled = false;
 		return this->DefMessage(message, wparam, lparam);
 	}
 

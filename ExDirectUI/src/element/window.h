@@ -16,7 +16,7 @@ namespace ExDirectUI
 	{
 	protected:
 		static LRESULT CALLBACK OnMessageDispatch(void* ptr, uint32_t message, WPARAM wparam, LPARAM lparam);
-		virtual LRESULT EXOBJCALL OnMessage(uint32_t message, WPARAM wparam, LPARAM lparam);
+		virtual LRESULT EXOBJCALL OnMessage(uint32_t message, WPARAM wparam, LPARAM lparam, bool& r_handled);
 
 	public:
 
@@ -120,8 +120,14 @@ namespace ExDirectUI
 
 
 
+		protected:
+			virtual bool EXOBJCALL OnWindowReady(uint32_t message, WPARAM wparam, LPARAM lparam, LRESULT& r_result);
+			virtual bool EXOBJCALL OnWindowDestroy(uint32_t message, WPARAM wparam, LPARAM lparam, LRESULT& r_result);
+
+
 	protected:
 		HWND m_handle{};
+		void* m_thunk_data{};
 		WNDPROC m_old_proc{};
 
 

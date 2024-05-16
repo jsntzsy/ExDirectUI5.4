@@ -16,21 +16,25 @@ namespace ExDirectUI
 {
 	LRESULT ExWindow::OnMessageDispatch(void* ptr, uint32_t message, WPARAM wparam, LPARAM lparam)
 	{
-		return static_cast<ExWindow*>(ptr)->OnMessage(message, wparam, lparam);
+		bool handled = false;
+		return static_cast<ExWindow*>(ptr)->OnMessage(message, wparam, lparam, handled);
 	}
 
-	LRESULT EXOBJCALL ExWindow::OnMessage(uint32_t message, WPARAM wparam, LPARAM lparam)
+	LRESULT EXOBJCALL ExWindow::OnMessage(uint32_t message, WPARAM wparam, LPARAM lparam, bool& r_handled)
 	{
-
-
-
+		LRESULT _RESULT_ = 0;
 		
-		return 0;
+		EX_MESSAGE_MAP_BEGIN();
+		EX_MESSAGE_MAP_INVOKE(EWM_READY, OnWindowReady);
+		EX_MESSAGE_MAP_INVOKE(WM_DESTROY, OnWindowDestroy);
+
+
+		EX_MESSAGE_MAP_END();
 	}
 
 	LRESULT EXOBJCALL ExWindow::DefMessage(uint32_t message, WPARAM wparam, LPARAM lparam)
 	{
-		return 0;
+		return CallWindowProcW(m_old_proc, m_handle, message, wparam, lparam);
 	}
 
 	///////////
@@ -55,7 +59,8 @@ namespace ExDirectUI
 
 	LRESULT EXOBJCALL ExWindow::DispatchMessage(uint32_t message, WPARAM wparam, LPARAM lparam)
 	{
-		return this->OnMessage(message, wparam, lparam);
+		bool handled = false;
+		return this->OnMessage(message, wparam, lparam, handled);
 	}
 
 	bool EXOBJCALL ExWindow::IsVisible()
@@ -97,12 +102,13 @@ namespace ExDirectUI
 
 	bool EXOBJCALL ExWindow::IsRedrawable()
 	{
-		
+		return false;
 	}
 
 	HRESULT EXOBJCALL ExWindow::SetRedrawable(bool redrawable)
 	{
 		//return SendMessage(WM_SETREDRAW, (WPARAM)redrawable, 0);
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::Invalidate(RECT* invalidate_rect)
@@ -117,12 +123,12 @@ namespace ExDirectUI
 
 	HRESULT EXOBJCALL ExWindow::GetAttribute(int index, LONG_PTR* r_value)
 	{
-
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::SetAttribute(int index, LONG_PTR r_value, LONG_PTR* r_old_value)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	uint32_t EXOBJCALL ExWindow::GetTextLength()
@@ -157,127 +163,127 @@ namespace ExDirectUI
 
 	HRESULT EXOBJCALL ExWindow::GetFont(IExFont** r_font)
 	{
-
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::SetFont(IExFont* font, bool redraw)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::SetFontFromInfo(ExFontInfo font_info)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::GetColor(int index, EXARGB* r_color)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::SetColor(int index, EXARGB color, bool redraw)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::GetBackgroundImage(ExDisplayImageInfo* r_image)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::SetBackgroundImage(ExDisplayImageInfo* image, bool redraw)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::SetBackgroundImageState(bool play, int frame, bool update)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::GetTheme(IExTheme** r_theme)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::SetTheme(IExTheme* theme)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::FindChild(IExElement** r_element, IExElement* ele_after, EXATOM atom_class, LPCWSTR text)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::FindChildEx(IExElement** r_element, IExElement* ele_after, ExElementMatchProc match_proc, LPARAM lparam)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::EnumChildren(ExElementEnumProc enum_proc, LPARAM lparam)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::GetParent(IExElement** r_parent)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::GetParentEx(IExElement** r_parent, IExElement** r_owner)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::GetRelationElement(ExElementRelation relation, IExElement** r_element)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::GetElementByID(EXATOM id, IExElement** r_element)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::GetElementByNodeID(EXATOM node_id, IExElement** r_element)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::GetElementByName(LPCWSTR name, IExElement** r_element)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::GetElementFromPoint(long x, long y, DWORD flags, IExElement** r_element)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::Move(long left, long top, long width, long height, bool redraw)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::SetPos(IExElement* ele_after, long left, long top, long width, long height, DWORD flags)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::GetRect(ExRect* r_rect)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::GetRectEx(ExRect* r_rect, int from)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::GetClientRect(ExRect* r_client_rect)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT ExWindow::Show(DWORD mode) noexcept
@@ -287,17 +293,30 @@ namespace ExDirectUI
 
 	HRESULT EXOBJCALL ExWindow::ShowEx(DWORD mode)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::SetTrayIcon(HICON icon, LPCWSTR tips)
 	{
-		
+		return E_NOTIMPL;
 	}
 
 	HRESULT EXOBJCALL ExWindow::PopupTrayIcon(LPCWSTR text, LPCWSTR title, DWORD flags)
 	{
-		
+		return E_NOTIMPL;
+	}
+
+	//////////////////////////
+
+	bool EXOBJCALL ExWindow::OnWindowReady(uint32_t message, WPARAM wparam, LPARAM lparam, LRESULT& r_result)
+	{
+		return false;
+	}
+	bool EXOBJCALL ExWindow::OnWindowDestroy(uint32_t message, WPARAM wparam, LPARAM lparam, LRESULT& r_result)
+	{
+		if (m_thunk_data) { ExThunkWindowFree(m_thunk_data); }
+
+		return false;
 	}
 
 }
