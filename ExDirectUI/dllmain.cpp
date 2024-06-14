@@ -12,6 +12,8 @@
 #include "common/string.hpp"
 #include "atom.h"
 
+#include "src/element/window.h"
+
 #define _ROOT_(path)	(L"../../../../" path)
 
 BOOL APIENTRY DllMain(HMODULE module_handle, DWORD reason, LPVOID reserved)
@@ -30,32 +32,37 @@ BOOL APIENTRY DllMain(HMODULE module_handle, DWORD reason, LPVOID reserved)
 
 namespace ExDirectUI
 {
+	LRESULT _ExWnd_TestClass_WndProc(HWND window, uint32_t msg, WPARAM wparam, LPARAM lparam)
+	{
+		switch (msg)
+		{
+		case WM_DESTROY: PostQuitMessage(0); break;
+		default: return DefWindowProcW(window, msg, wparam, lparam);
+		}
+		return 0;
+	}
+
 	EXTERN_C HRESULT EXAPI APIENTRY ExDbgEntry(HINSTANCE instance)
 	{
 		try
 		{
 			auto render = ExModuleUtils::Instance()->GetRender();
 
-			ExPackageInfo pi = {
-				ExPackageType::ThemePackage,
-				0x00,
-				0,
-				L"ExDirectUI.Theme.Default"
-			};
+			ExWndRegister(L"ExDirectUI.Window.Test", _ExWnd_TestClass_WndProc);
 
-			//ExData data{};
-			//ExPackageBuildFromDirectory(
-			//	&pi,
-			//	_ROOT_(L"_res/theme/test/"),
-			//	L"*",
-			//	ExPackageBuildFlags::Subdirectories,
-			//	nullptr, 0,
-			//	nullptr, 0,
-			//	&data
-			//);
-			//
-			//ExDataWriteFile(_ROOT_(L"_res/theme/test.ext"), data.data, data.size);
-			//ExDataFree(&data);
+			HWND window = ExWndCreate(NULL, 10, 10, 400, 300, L"ExDirectUI.Window.Test",
+				L"ExDirectUI.Window.Test");
+
+			ExWindow* w = new ExWindow(window, 0);
+			//w->Update();x
+			//w->Show(SW_SHOW);
+
+
+			UpdateWindow(window);
+			ShowWindow(window, SW_SHOW);
+
+			ExWndMessageLoop();
+
 
 			return S_OK;
 		}

@@ -9,9 +9,16 @@
 #pragma once
 #include "src/element/element.h"
 #include "common/object_impl.hpp"
+#include "element/window.h"
 
 namespace ExDirectUI
 {
+	struct ExWindowFlags
+	{
+		bool validate : 1;
+	};
+
+
 	class ExWindow : public ExElementBase<ExObjectImpl<IExWindow>>
 	{
 	protected:
@@ -129,7 +136,7 @@ namespace ExDirectUI
 		HWND m_handle{};
 		void* m_thunk_data{};
 		WNDPROC m_old_proc{};
-
+		ExWindowFlags m_flags{};
 
 
 	};

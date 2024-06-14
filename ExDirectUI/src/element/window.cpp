@@ -11,6 +11,7 @@
 #include "element/window.h"
 #include "src/element/window.h"
 #include "src/element/thunk_window.h"
+#include <common/string.hpp>
 
 namespace ExDirectUI
 {
@@ -22,13 +23,13 @@ namespace ExDirectUI
 
 	LRESULT EXOBJCALL ExWindow::OnMessage(uint32_t message, WPARAM wparam, LPARAM lparam, bool& r_handled)
 	{
-		LRESULT _RESULT_ = 0;
-		
 		EX_MESSAGE_MAP_BEGIN();
 		EX_MESSAGE_MAP_INVOKE(EWM_READY, OnWindowReady);
 		EX_MESSAGE_MAP_INVOKE(WM_DESTROY, OnWindowDestroy);
 
 
+
+		default:  ExDbgOutput(ExString::format(L"Message: 0x%04X  wParam: 0x%08X  lParam: 0x%08X \n", message, wparam, lparam).c_str());
 		EX_MESSAGE_MAP_END();
 	}
 
@@ -41,10 +42,22 @@ namespace ExDirectUI
 
 	ExWindow::ExWindow(HWND window, DWORD style)
 	{
+		m_thunk_data = ExThunkWindowAlloc(ExWindow::OnMessageDispatch, this);
+		throw_if_false(m_thunk_data, E_OUTOFMEMORY, L"窗口回调转换代码申请失败");
+		m_old_proc = (WNDPROC)SetWindowLongPtr(window, GWLP_WNDPROC, (LONG_PTR)m_thunk_data);
+		throw_if_false(m_old_proc, E_FAIL, L"窗口回调函数设置失败");
+
+
+		m_flags.validate = true;
+		m_handle = window;
+		SendMessage(EWM_READY, 0, 0);
 	}
 
 	ExWindow::~ExWindow()
 	{
+		if (m_flags.validate) {
+			DispatchMessage(WM_DESTROY, 0, 0);
+		}
 	}
 
 	LRESULT ExWindow::SendMessage(uint32_t message, WPARAM wparam, LPARAM lparam) 
@@ -310,12 +323,16 @@ namespace ExDirectUI
 
 	bool EXOBJCALL ExWindow::OnWindowReady(uint32_t message, WPARAM wparam, LPARAM lparam, LRESULT& r_result)
 	{
+		ExDbgOutput(L"OnWindowReady");
 		return false;
 	}
 	bool EXOBJCALL ExWindow::OnWindowDestroy(uint32_t message, WPARAM wparam, LPARAM lparam, LRESULT& r_result)
 	{
-		if (m_thunk_data) { ExThunkWindowFree(m_thunk_data); }
-
+		if (m_flags.validate) {
+			if (m_old_proc) { SetWindowLongPtr(m_handle, GWLP_WNDPROC, (LONG_PTR)m_old_proc); }
+			if (m_thunk_data) { ExThunkWindowFree(m_thunk_data); }
+			m_flags.validate = false;
+		}
 		return false;
 	}
 
