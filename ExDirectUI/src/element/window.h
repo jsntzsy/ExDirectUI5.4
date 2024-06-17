@@ -127,6 +127,7 @@ namespace ExDirectUI
 
 
 
+
 		protected:
 			virtual bool EXOBJCALL OnWindowReady(uint32_t message, WPARAM wparam, LPARAM lparam, LRESULT& r_result);
 			virtual bool EXOBJCALL OnWindowDestroy(uint32_t message, WPARAM wparam, LPARAM lparam, LRESULT& r_result);

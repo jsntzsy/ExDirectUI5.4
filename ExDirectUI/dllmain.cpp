@@ -54,12 +54,8 @@ namespace ExDirectUI
 				L"ExDirectUI.Window.Test");
 
 			ExWindow* w = new ExWindow(window, 0);
-			//w->Update();x
-			//w->Show(SW_SHOW);
-
-
-			UpdateWindow(window);
-			ShowWindow(window, SW_SHOW);
+			w->Update();
+			w->Show(SW_SHOW);
 
 			ExWndMessageLoop();
 
