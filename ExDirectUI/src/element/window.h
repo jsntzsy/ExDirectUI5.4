@@ -55,8 +55,9 @@ namespace ExDirectUI
 
 
 	public:
-		ExWindow(HWND window, DWORD style);
+		ExWindow(HWND window, DWORD style, IExTheme* theme);
 		virtual EXOBJCALL ~ExWindow();
+
 
 		EXMETHOD LRESULT EXOBJCALL SendMessage(uint32_t message, WPARAM wparam, LPARAM lparam) override;
 		EXMETHOD LRESULT EXOBJCALL PostMessage(uint32_t message, WPARAM wparam, LPARAM lparam) override;
@@ -131,6 +132,10 @@ namespace ExDirectUI
 			virtual bool EXOBJCALL OnWindowReady(uint32_t message, WPARAM wparam, LPARAM lparam, LRESULT& r_result);
 			virtual bool EXOBJCALL OnWindowDestroy(uint32_t message, WPARAM wparam, LPARAM lparam, LRESULT& r_result);
 
+			virtual void EXOBJCALL _ThunkWindow(HWND handle) MAYTHROW;
+			virtual void EXOBJCALL _InitTheme(IExTheme* theme) MAYTHROW;
+			virtual void EXOBJCALL _SetUIStyle(DWORD style) MAYTHROW;
+
 
 	protected:
 		HWND m_handle{};
@@ -138,6 +143,7 @@ namespace ExDirectUI
 		WNDPROC m_old_proc{};
 		ExWindowFlags m_flags{};
 
+		DWORD m_uistyle{};
 
 	};
 

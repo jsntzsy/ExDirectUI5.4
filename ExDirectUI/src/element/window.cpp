@@ -40,16 +40,13 @@ namespace ExDirectUI
 
 	///////////
 
-	ExWindow::ExWindow(HWND window, DWORD style)
+	ExWindow::ExWindow(HWND window, DWORD style, IExTheme* theme)
 	{
-		m_thunk_data = ExThunkWindowAlloc(ExWindow::OnMessageDispatch, this);
-		throw_if_false(m_thunk_data, E_OUTOFMEMORY, L"窗口回调转换代码申请失败");
-		m_old_proc = (WNDPROC)SetWindowLongPtr(window, GWLP_WNDPROC, (LONG_PTR)m_thunk_data);
-		throw_if_false(m_old_proc, E_FAIL, L"窗口回调函数设置失败");
-
+		_ThunkWindow(window);
+		_InitTheme(theme);
+		_SetUIStyle(style);
 
 		m_flags.validate = true;
-		m_handle = window;
 		SendMessage(EWM_READY, 0, 0);
 	}
 
@@ -324,6 +321,7 @@ namespace ExDirectUI
 	bool EXOBJCALL ExWindow::OnWindowReady(uint32_t message, WPARAM wparam, LPARAM lparam, LRESULT& r_result)
 	{
 		ExDbgOutput(L"OnWindowReady");
+
 		return false;
 	}
 	bool EXOBJCALL ExWindow::OnWindowDestroy(uint32_t message, WPARAM wparam, LPARAM lparam, LRESULT& r_result)
@@ -335,6 +333,28 @@ namespace ExDirectUI
 		}
 		return false;
 	}
+
+	void EXOBJCALL ExWindow::_ThunkWindow(HWND handle)
+	{
+		m_thunk_data = ExThunkWindowAlloc(ExWindow::OnMessageDispatch, this);
+		throw_if_false(m_thunk_data, E_OUTOFMEMORY, L"窗口回调转换代码申请失败");
+		m_old_proc = (WNDPROC)SetWindowLongPtr(handle, GWLP_WNDPROC, (LONG_PTR)m_thunk_data);
+		throw_if_false(m_old_proc, E_FAIL, L"窗口回调函数设置失败");
+		m_handle = handle;
+	}
+
+	void EXOBJCALL ExWindow::_InitTheme(IExTheme* theme)
+	{
+
+	}
+
+	void EXOBJCALL ExWindow::_SetUIStyle(DWORD style)
+	{
+		m_uistyle = style;
+		SetWindowLongPtr(m_handle, GWL_STYLE, 0xFFFFFFFF);
+	}
+
+
 
 }
 

@@ -32,7 +32,7 @@ BOOL APIENTRY DllMain(HMODULE module_handle, DWORD reason, LPVOID reserved)
 
 namespace ExDirectUI
 {
-	LRESULT _ExWnd_TestClass_WndProc(HWND window, uint32_t msg, WPARAM wparam, LPARAM lparam)
+	LRESULT CALLBACK _ExWnd_TestClass_WndProc(HWND window, uint32_t msg, WPARAM wparam, LPARAM lparam)
 	{
 		switch (msg)
 		{
@@ -53,13 +53,10 @@ namespace ExDirectUI
 			HWND window = ExWndCreate(NULL, 10, 10, 400, 300, L"ExDirectUI.Window.Test",
 				L"ExDirectUI.Window.Test");
 
-			ExWindow* w = new ExWindow(window, 0);
-			//w->Update();x
-			//w->Show(SW_SHOW);
+			ExWindow* w = new ExWindow(window, 0, nullptr);
+			w->Update();x
+			w->Show(SW_SHOW);
 
-
-			UpdateWindow(window);
-			ShowWindow(window, SW_SHOW);
 
 			ExWndMessageLoop();
 
@@ -74,5 +71,5 @@ namespace ExDirectUI
 		auto utils = ExModuleUtils::Instance();
 		return utils;
 	}
-	
+
 }

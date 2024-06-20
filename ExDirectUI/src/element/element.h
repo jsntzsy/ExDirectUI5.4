@@ -153,7 +153,7 @@ namespace ExDirectUI
 				return &(*m_properties.map)[id];
 			}
 			else if (m_properties.type > 0) {
-				int index = id;
+				uint32_t index = id;
 				if (m_properties.arr->size() <= index) { return nullptr; }
 				return &(*m_properties.arr)[index];
 			}
