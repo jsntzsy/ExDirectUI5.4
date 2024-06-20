@@ -54,7 +54,7 @@ namespace ExDirectUI
 				L"ExDirectUI.Window.Test");
 
 			ExWindow* w = new ExWindow(window, 0, nullptr);
-			w->Update();x
+			w->Update();
 			w->Show(SW_SHOW);
 
 

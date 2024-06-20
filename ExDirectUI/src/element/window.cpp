@@ -11,8 +11,8 @@
 #include "element/window.h"
 #include "src/element/window.h"
 #include "src/element/thunk_window.h"
-#include <common/string.hpp>
-
+#include "common/string.hpp"
+#include <CommCtrl.h>
 namespace ExDirectUI
 {
 	LRESULT ExWindow::OnMessageDispatch(void* ptr, uint32_t message, WPARAM wparam, LPARAM lparam)
@@ -42,11 +42,14 @@ namespace ExDirectUI
 
 	ExWindow::ExWindow(HWND window, DWORD style, IExTheme* theme)
 	{
-		_ThunkWindow(window);
-		_InitTheme(theme);
-		_SetUIStyle(style);
+		m_thunk_data = ExThunkWindowAlloc(ExWindow::OnMessageDispatch, this);
+		throw_if_false(m_thunk_data, E_OUTOFMEMORY, L"窗口回调转换代码申请失败");
+		m_old_proc = (WNDPROC)SetWindowLongPtr(window, GWLP_WNDPROC, (LONG_PTR)m_thunk_data);
+		throw_if_false(m_old_proc, E_FAIL, L"窗口回调函数设置失败");
+
 
 		m_flags.validate = true;
+		m_handle = window;
 		SendMessage(EWM_READY, 0, 0);
 	}
 
@@ -112,7 +115,7 @@ namespace ExDirectUI
 
 	bool EXOBJCALL ExWindow::IsRedrawable()
 	{
-		return false;
+		return true;
 	}
 
 	HRESULT EXOBJCALL ExWindow::SetRedrawable(bool redrawable)
@@ -283,7 +286,8 @@ namespace ExDirectUI
 
 	HRESULT EXOBJCALL ExWindow::GetRect(ExRect* r_rect)
 	{
-		return E_NOTIMPL;
+		CHECK_PARAM(r_rect);
+		return GetWindowRect(m_handle, r_rect) ? S_OK : S_FALSE;
 	}
 
 	HRESULT EXOBJCALL ExWindow::GetRectEx(ExRect* r_rect, int from)
@@ -298,12 +302,12 @@ namespace ExDirectUI
 
 	HRESULT ExWindow::Show(DWORD mode) noexcept
 	{
-		return E_NOTIMPL;
+		return ShowWindow(m_handle, mode) ? S_OK : S_FALSE;
 	}
 
 	HRESULT EXOBJCALL ExWindow::ShowEx(DWORD mode)
 	{
-		return E_NOTIMPL;
+		return ShowWindow(m_handle, mode) ? S_OK : S_FALSE;
 	}
 
 	HRESULT EXOBJCALL ExWindow::SetTrayIcon(HICON icon, LPCWSTR tips)
